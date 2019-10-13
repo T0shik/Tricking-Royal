@@ -1,0 +1,94 @@
+﻿@using System.Collections.Generic
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Http.Authentication
+
+@model LoginViewModel
+@inject SignInManager<ApplicationUser> SignInManager
+
+@{
+    ViewData["Title"] = "Log in";
+}
+<div class="hero">
+    <div class="hero-body">
+        <div class="has-text-centered">
+            <div class="column is-4-desktop is-offset-4-desktop  is-6-tablet is-offset-3-tablet">
+                <h3 class="title is-font-rock has-text-weight-bold has-text-primary">Tricking Royal</h3>
+                <div class="box is-faded">
+                    <h3 class="title has-text-white">Login</h3>
+                    <div class="field">
+                        @foreach (var scheme in Model.ExternalAuth)
+                        {
+                            <form asp-controller="account" asp-action="ExternalLogin"
+                                  method="post" asp-route-returnUrl="@Model.ReturnUrl">
+                                <button class="button is-link"
+                                        type="submit"
+                                        name="provider"
+                                        value="@scheme.Name">
+                                    <div class="columns is-mobile">
+                                        <div class="column">
+                                            <span class="icon">
+                                                <i class="fa-fw fa-2x fab fa-facebook"></i>
+                                            </span>
+                                        </div>
+                                        <div class="column">
+                                            <span>
+                                                Continue with @scheme.DisplayName
+                                            </span>
+                                        </div>
+                                    </div>
+                                </button>
+                            </form>
+                        }
+                    </div>
+                    <form asp-controller="Account" asp-action="Login" method="post">
+                        <div asp-validation-summary="All" class="help is-danger"></div>
+                        <input type="hidden" asp-for="ReturnUrl" />
+                        <div class="field">
+                            <div class="control has-icons-left">
+                                <span class="icon is-medium is-left">
+                                    <i class="fas fa-envelope"></i>
+                                </span>
+                                <input class="input" asp-for="Email" autocomplete="email" placeholder="Email" autofocus="">
+                                <span asp-validation-for="Email" class="help is-danger"></span>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="control has-icons-left">
+                                <span class="icon is-medium is-left">
+                                    <i class="fas fa-lock"></i>
+                                </span>
+                                <input class="input" asp-for="Password" autocomplete="password" placeholder="Password">
+                                <span asp-validation-for="Password" class="help is-danger"></span>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="checkbox has-text-white">
+                                <input type="checkbox" asp-for="RememberMe" autocomplete="remember-me">
+                                Remember me
+                            </label>
+                        </div>
+                        <div class="field">
+                            <div class="columns is-mobile">
+                                <div class="column">
+                                    <a class="button is-outlined is-fullwidth" asp-action="Register" asp-route-returnurl="@Model.ReturnUrl">
+                                        Register
+                                    </a>
+                                </div>
+                                <div class="column">
+                                    <button type="submit" class="button is-info is-fullwidth">Login</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="field">
+                        <a class="has-text-grey-lighter has-text-weight-bold" asp-action="ForgotPassword">Forgot Password?</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

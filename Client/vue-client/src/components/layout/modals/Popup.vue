@@ -1,0 +1,44 @@
+<template>
+    <v-snackbar :value="display" top multi-line right 
+                @input="hide" @click="hide" :timeout="timeout">
+        <span class="pr-2">{{ message }}</span>
+        <v-progress-circular v-if="progress" color="primary" indeterminate></v-progress-circular>
+        <v-icon v-else :class="iconType.color">{{iconType.icon}}</v-icon>
+    </v-snackbar>
+</template>
+
+<script>
+    import {mapState, mapMutations} from "vuex";
+    import {mdiAlertBox, mdiCheckCircle, mdiShieldAlert} from "@mdi/js";
+
+    export default {
+        methods: {
+            ...mapMutations({
+                hide: "HIDE_POPUP"
+            })
+        },
+        computed: {
+            ...mapState({
+                display: state => state.popup.display,
+                message: state => state.popup.message,
+                type: state => state.popup.type,
+                progress: state => state.popup.progress
+            }),
+            iconType() {
+                switch (this.type) {
+                    case 'success':
+                        return {color: 'green--text', icon: mdiCheckCircle};
+                    case 'warning':
+                        return {color: 'orange--text', icon: mdiAlertBox};
+                    case 'error':
+                        return {color: 'red--text', icon: mdiShieldAlert};
+                    default:
+                        return {color: '', icon: null}
+                }
+            },
+            timeout() {
+                return this.progress ? 0 : 3000;
+            }
+        }
+    };
+</script>

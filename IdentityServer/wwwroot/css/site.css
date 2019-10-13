@@ -1,0 +1,50 @@
+﻿html, body {
+    min-height: 100vh;
+}
+
+    html.has-navbar-fixed-bottom {
+        padding-bottom: 0 !important;
+    }
+
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    color: #fff;
+    background-color: black;
+    background-image: url('../content/images/tr_logo_big.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.level {
+    padding: 0 0.5rem;
+}
+
+.is-faded {
+    background-color: rgba(18, 30, 9, 0.66);
+}
+
+.is-font-rock {
+    font-family: 'Rock Salt';
+}
+
+.has-text-primary,
+a.has-text-primary,
+a.has-text-primary:hover {
+    color: #9a48ab !important;
+    text-shadow: 0 0 10px black;
+}
+
+.is-hoverless {
+    background-color: transparent !important;
+}
+
+.hero-body {
+    padding: 3rem 0;
+}
+
+.input::placeholder {
+    color: #666;
+    opacity: 1;
+}

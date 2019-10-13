@@ -1,0 +1,39 @@
+﻿@model IndexViewModel
+@{
+    ViewData["Title"] = "Manage your account";
+    var message = ViewData["StatusMessage"].ToString();
+}
+
+@if (!String.IsNullOrEmpty(message))
+{
+
+    <div id="notification" class="notification is-warning">
+        <button class="delete" onclick="hideNotification()"></button>
+        @message
+    </div>
+}
+<div class="hero">
+    <div class="hero-body">
+        <div class="has-text-centered">
+            <div class="column is-4-desktop is-offset-4-desktop  is-6-tablet is-offset-3-tablet">
+                <div class="box is-faded">
+                    <h3 class="title has-text-white">Manage Account</h3>
+                    <div class="field">
+                        <a class="button is-fullwidth is-large" asp-action="ChangePassword">Change Password</a>
+                    </div>
+                    <div class="field">
+                        <a class="button is-medium" asp-controller="Home" asp-action="Index">Back</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        var hideNotification = function () {
+            document.getElementById('notification').classList.add('is-hidden')
+        }
+    </script>
+}

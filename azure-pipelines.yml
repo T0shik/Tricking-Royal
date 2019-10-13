@@ -1,0 +1,48 @@
+trigger:
+  - master
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  buildConfiguration: 'Release'
+
+steps:
+  - task: UseDotNet@2
+    inputs:
+      packageType: 'sdk'
+      useGlobalJson: true
+
+  - script: dotnet restore
+    displayName: 'Restore Packages'
+    condition: succeeded()
+
+  - script: dotnet build --configuration $(buildConfiguration)
+    displayName: 'Build'
+    condition: succeeded()
+
+  - script: dotnet test --configuration $(buildConfiguration) --verbosity normal
+    condition: succeeded()
+    displayName: 'Run Tests'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'Create Artifacts'
+    inputs:
+      command: publish
+      projects: |
+        **/Battles.Client.csproj
+        **/Battles.Api.csproj
+        **/Battles.Cdn.csproj
+        **/IdentityServer.csproj
+      publishWebProjects: false
+      arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+      zipAfterPublish: true
+      modifyOutputPath: true
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifacts'
+    inputs:
+      pathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      artifactName: 'TrickingRoyal'
+
+

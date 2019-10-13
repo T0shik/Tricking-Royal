@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html class="has-navbar-fixed-bottom">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tricking Royal</title>
+    <link rel="icon" href="~/content/images/favicon.png" type="image/png" />
+    <meta name="description" content="Tricking Royal a platform for tricking battles online.">
+    <meta property="og:title" content="Tricking Royal" />
+    <meta property="og:url" content="http://trickingroyal.com/" />
+    <meta property="og:description" content="Tricking Royal a platform for tricking battles online.">
+    <meta property="og:image" content="~/main_300x200.png">
+
+    <link href="https://fonts.googleapis.com/css?family=Rock+Salt" rel="stylesheet">
+
+    <environment names="Development">
+        <link href="~/css/bulma.css" rel="stylesheet" />
+        <link rel="stylesheet" href="~/css/site.css" />
+    </environment>
+    <environment names="Staging,Production">
+        <link href="~/css/bulma.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+    </environment>
+</head>
+<body>
+    @inject SignInManager<ApplicationUser> SignInManager
+
+    @if (SignInManager.IsSignedIn(User))
+    {
+
+        <nav class="navbar is-black is-fixed-top" role="navigation" aria-label="main navigation">
+            <div class="container">
+                <div class="navbar-brand">
+                    <a class="navbar-item is-font-rock is-size-4 has-text-primary has-text-weight-bold" asp-controller="Home" asp-action="Index">
+                        Tricking Royal
+                    </a>
+                    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
+                </div>
+
+                <div id="navbarBasicExample" class="navbar-menu has-background-black has-text-centered">
+                    <div class="navbar-start">
+                        <a class="navbar-item has-text-white is-hoverless" asp-area="" asp-controller="Manage" asp-action="Index">
+                            <strong>Manage Account</strong>
+                        </a>
+                        <a class="navbar-item has-text-white is-hoverless" asp-area="" asp-controller="Home" asp-action="Privacy">
+                            <strong>Privacy Policy</strong>
+                        </a>
+                    </div>
+
+                    <div class="navbar-end">
+                        @{
+                            await Html.RenderPartialAsync("_LoginPartial");
+                        }
+                    </div>
+                </div>
+            </div>
+        </nav>
+    }
+    <div class="container body-content">
+        @RenderBody()
+    </div>
+    @{
+        await Html.RenderPartialAsync("_CookieConsentPartial");
+    }
+
+    <environment names="Development">
+        <script src="~/js/jquery.js"></script>
+        <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
+                asp-fallback-src="~/js/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"
+                integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
+        </script>
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+    </environment>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

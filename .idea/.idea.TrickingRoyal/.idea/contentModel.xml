@@ -1,0 +1,1381 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\Toshik\.nuget\packages\microsoft.net.test.sdk\16.0.1\build\netcoreapp1.0" t="Include">
+      <e p="Microsoft.NET.Test.Sdk.Program.cs" t="Include" />
+    </e>
+    <e p="C:\Users\Toshik\.nuget\packages\xunit.runner.visualstudio\2.4.0\build\netcoreapp1.0\xunit.runner.reporters.netcoreapp10.dll" t="Include" />
+    <e p="C:\Users\Toshik\.nuget\packages\xunit.runner.visualstudio\2.4.0\build\netcoreapp1.0\xunit.runner.utility.netcoreapp10.dll" t="Include" />
+    <e p="C:\Users\Toshik\.nuget\packages\xunit.runner.visualstudio\2.4.0\build\netcoreapp1.0\xunit.runner.visualstudio.dotnetcore.testadapter.dll" t="Include" />
+    <e p="C:\Users\Toshik\.Rider2019.2\config\consoles\db" t="IncludeRecursive" />
+    <e p="C:\Users\Toshik\.Rider2019.2\config\Extensions" t="IncludeRecursive" />
+    <e p="C:\Users\Toshik\.Rider2019.2\config\scratches" t="IncludeRecursive" />
+    <e p="C:\Users\Toshik\.Rider2019.2\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\Toshik\.Rider2019.2\system\resharper-host\local\Transient\ReSharperHost\v192\SolutionCaches\_TrickingRoyal.-167241190.00" t="ExcludeRecursive" />
+    <e p="D:\WS\Visual Studio 2017\TrickingRoyal" t="IncludeFlat">
+      <e p="Battles" t="IncludeRecursive">
+        <e p="attributes" t="Include">
+          <e p="ServiceAttribute.cs" t="Include" />
+        </e>
+        <e p="Battles.csproj" t="IncludeRecursive" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Configuration" t="Include">
+          <e p="Routing.cs" t="Include" />
+        </e>
+        <e p="Enums" t="Include">
+          <e p="EvaluationType.cs" t="Include" />
+          <e p="MatchRole.cs" t="Include" />
+          <e p="Mode.cs" t="Include" />
+          <e p="NotificationConfigurationType.cs" t="Include" />
+          <e p="NotificationMessageType.cs" t="Include" />
+          <e p="Skill.cs" t="Include" />
+          <e p="Status.cs" t="Include" />
+          <e p="Surface.cs" t="Include" />
+          <e p="TurnType.cs" t="Include" />
+          <e p="Winner.cs" t="Include" />
+        </e>
+        <e p="Extensions" t="Include">
+          <e p="EnumExtensions.cs" t="Include" />
+          <e p="StringExtensions.cs" t="Include" />
+        </e>
+        <e p="Helpers" t="Include">
+          <e p="UrlHelper.cs" t="Include" />
+        </e>
+        <e p="Interfaces" t="Include">
+          <e p="IOpponentChecker.cs" t="Include" />
+        </e>
+        <e p="Models" t="Include">
+          <e p="Comment.cs" t="Include" />
+          <e p="Decision.cs" t="Include" />
+          <e p="Evaluation.cs" t="Include" />
+          <e p="Like.cs" t="Include" />
+          <e p="Match.cs" t="Include" />
+          <e p="MatchUser.cs" t="Include" />
+          <e p="NotificationConfiguration.cs" t="Include" />
+          <e p="NotificationMessage.cs" t="Include" />
+          <e p="SubComment.cs" t="Include" />
+          <e p="UserInformation.cs" t="Include" />
+          <e p="Video.cs" t="Include" />
+        </e>
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netstandard2.0" t="Include">
+              <e p="Battles.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Rules" t="Include">
+          <e p="Evaluations" t="Include">
+            <e p="ResultsCalculator.cs" t="Include" />
+          </e>
+          <e p="Levels" t="Include">
+            <e p="LevelSystem.cs" t="Include" />
+            <e p="UserInformationExtensions.cs" t="Include" />
+          </e>
+          <e p="Matches" t="Include">
+            <e p="Actions" t="Include">
+              <e p="Create" t="Include">
+                <e p="MatchCreator.cs" t="Include" />
+                <e p="MatchSettings.cs" t="Include" />
+              </e>
+              <e p="Join" t="Include">
+                <e p="MatchDoorman.cs" t="Include" />
+              </e>
+              <e p="Update" t="Include">
+                <e p="CopyCatManager.cs" t="Include" />
+                <e p="IMatchManager.cs" t="Include" />
+                <e p="OneUpManager.cs" t="Include" />
+                <e p="ThreeRoundPassManager.cs" t="Include" />
+                <e p="UpdateSettings.cs" t="Include" />
+              </e>
+            </e>
+            <e p="Extensions" t="Include">
+              <e p="InformationExtensions.cs" t="Include" />
+              <e p="MatchUsersExtensions.cs" t="Include" />
+              <e p="OpportunityExtensions.cs" t="Include" />
+            </e>
+            <e p="Helpers" t="Include">
+              <e p="CopyCatHelper.cs" t="Include" />
+            </e>
+            <e p="MatchActionFactory.cs" t="Include" />
+            <e p="MatchExceptions.cs" t="Include" />
+          </e>
+        </e>
+      </e>
+      <e p="Battles.Api" t="IncludeRecursive">
+        <e p="appsettings.json" t="Include" />
+        <e p="appsettings.Production.json" t="Include" />
+        <e p="Battles.Api.csproj" t="IncludeRecursive" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Controllers" t="Include">
+          <e p="AnonController.cs" t="Include" />
+          <e p="CommentsController.cs" t="Include" />
+          <e p="EvaluationsController.cs" t="Include" />
+          <e p="LikesController.cs" t="Include" />
+          <e p="MatchesController.cs" t="Include" />
+          <e p="NotificationsController.cs" t="Include" />
+          <e p="PlatformController.cs" t="Include" />
+          <e p="UsersController.cs" t="Include" />
+        </e>
+        <e p="CustomTokenRetriever.cs" t="Include" />
+        <e p="Infrastructure" t="Include">
+          <e p="BaseController.cs" t="Include" />
+          <e p="ServiceRegistrar.cs" t="Include" />
+        </e>
+        <e p="NotificationProcessor.cs" t="Include" />
+        <e p="Notifications" t="Include">
+          <e p="Dispatchers" t="Include">
+            <e p="DispatcherFactory.cs" t="Include" />
+            <e p="EmailDispatcher.cs" t="Include" />
+            <e p="IDispatcher.cs" t="Include" />
+            <e p="OneSignalDispatcher.cs" t="Include" />
+          </e>
+          <e p="INotificationSender.cs" t="Include" />
+          <e p="NotificationQueue.cs" t="Include" />
+          <e p="NotificationServices.cs" t="Include" />
+          <e p="Settings" t="Include">
+            <e p="EmailSettings.cs" t="Include" />
+            <e p="OneSignal.cs" t="Include" />
+          </e>
+        </e>
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp2.2" t="Include">
+              <e p="Battles.Api.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Program.cs" t="Include" />
+        <e p="Properties" t="Include">
+          <e p="launchSettings.json" t="Include" />
+        </e>
+        <e p="secrets.json" t="Include" />
+        <e p="Settings" t="Include">
+          <e p="OAuth.cs" t="Include" />
+          <e p="Resource.cs" t="Include" />
+        </e>
+        <e p="Startup.cs" t="Include" />
+      </e>
+      <e p="Battles.Application" t="IncludeRecursive">
+        <e p="Battles.Application.csproj" t="IncludeRecursive" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Configuration" t="Include">
+          <e p="AppSettings.cs" t="Include" />
+          <e p="ReputationAwards.cs" t="Include" />
+        </e>
+        <e p="Extensions" t="Include">
+          <e p="DateTimeExtensions.cs" t="Include" />
+          <e p="DbSetExtensions.cs" t="Include" />
+          <e p="MatchExtensions.cs" t="Include" />
+          <e p="QueryExtensions.cs" t="Include" />
+          <e p="TimeSpanExtensions.cs" t="Include" />
+        </e>
+        <e p="Interfaces" t="Include">
+          <e p="INotificationQueue.cs" t="Include" />
+        </e>
+        <e p="Jobs" t="Include">
+          <e p="HangfireJobs.cs" t="Include" />
+          <e p="HangfireJobsServiceRegister.cs" t="Include" />
+          <e p="IHangfireJobs.cs" t="Include" />
+        </e>
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp2.2" t="Include">
+              <e p="Battles.Application.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Services" t="Include">
+          <e p="Comments" t="Include">
+            <e p="Commands" t="Include">
+              <e p="CreateCommentCommand.cs" t="Include" />
+              <e p="CreateSubCommentCommand.cs" t="Include" />
+            </e>
+            <e p="Queries" t="Include">
+              <e p="GetCommentsQuery.cs" t="Include" />
+              <e p="GetSubCommentsQuery.cs" t="Include" />
+            </e>
+          </e>
+          <e p="Evaluations" t="Include">
+            <e p="Commands" t="Include">
+              <e p="CloseCompleteEvaluationCommand.cs" t="Include" />
+              <e p="CloseFlagEvaluationCommand.cs" t="Include" />
+              <e p="VoteCommand.cs" t="Include" />
+            </e>
+            <e p="Queries" t="Include">
+              <e p="GetEvaluationCountQuery.cs" t="Include" />
+              <e p="GetEvaluationsQuery.cs" t="Include" />
+              <e p="GetVoteResultsQuery.cs" t="Include" />
+            </e>
+          </e>
+          <e p="Likes" t="Include">
+            <e p="Commands" t="Include">
+              <e p="LikeMatchCommand.cs" t="Include" />
+            </e>
+          </e>
+          <e p="Matches" t="Include">
+            <e p="Commands" t="Include">
+              <e p="CreateMatchCommand.cs" t="Include" />
+              <e p="DeleteMatchCommand.cs" t="Include" />
+              <e p="FlagMatchCommand.cs" t="Include" />
+              <e p="ForfeitMatchCommand.cs" t="Include" />
+              <e p="JoinMatchCommand.cs" t="Include" />
+              <e p="PassRoundCommand.cs" t="Include" />
+              <e p="ReadyMatchCommand.cs" t="Include" />
+              <e p="TimeoutMatchCommand.cs" t="Include" />
+              <e p="UpdateMatchCommand.cs" t="Include" />
+              <e p="UpdateMatchVideoCommand.cs" t="Include" />
+            </e>
+            <e p="Queries" t="Include">
+              <e p="GetAnonMatchesQuery.cs" t="Include" />
+              <e p="GetMatchesQuery.cs" t="Include" />
+              <e p="GetMatchQuery.cs" t="Include" />
+            </e>
+          </e>
+          <e p="Notifications" t="Include">
+            <e p="Commands" t="Include">
+              <e p="ClearNotificationsCommand.cs" t="Include" />
+              <e p="TouchNotificationCommand.cs" t="Include" />
+            </e>
+            <e p="Queries" t="Include">
+              <e p="GetNotificationsQuery.cs" t="Include" />
+            </e>
+          </e>
+          <e p="Platform" t="Include">
+            <e p="Queries" t="Include">
+              <e p="GetPlatformInfoQuery.cs" t="Include" />
+              <e p="GetRankingQuery.cs" t="Include" />
+            </e>
+          </e>
+          <e p="Users" t="Include">
+            <e p="Commands" t="Include">
+              <e p="ActivateUserCommand.cs" t="Include" />
+              <e p="ConfigureNotificationSubscriptionCommand.cs" t="Include" />
+              <e p="LevelUpCommand.cs" t="Include" />
+              <e p="UpdateUserCommand.cs" t="Include" />
+              <e p="UpdateUserPictureCommand.cs" t="Include" />
+            </e>
+            <e p="Queries" t="Include">
+              <e p="GetUserNotificationConfigQuery.cs" t="Include" />
+              <e p="GetUserQuery.cs" t="Include" />
+              <e p="GetUsersQuery.cs" t="Include" />
+              <e p="UserNameAvailableQuery.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="SubServices" t="Include">
+          <e p="OpponentChecker.cs" t="Include" />
+          <e p="SubServiceSpec.cs" t="Include" />
+        </e>
+        <e p="ViewModels" t="Include">
+          <e p="BaseResponse.cs" t="Include" />
+          <e p="CanUpdateViewModel.cs" t="Include" />
+          <e p="CommentViewModel.cs" t="Include" />
+          <e p="DescisionResultsViewModel.cs" t="Include" />
+          <e p="EvaluationViewModel.cs" t="Include" />
+          <e p="Matches" t="Include">
+            <e p="MatchCommentsViewModel.cs" t="Include" />
+            <e p="MatchUserViewModel.cs" t="Include" />
+            <e p="MatchViewModel.cs" t="Include" />
+            <e p="VideoViewModel.cs" t="Include" />
+          </e>
+          <e p="NotificationConfigViewModel.cs" t="Include" />
+          <e p="NotificationsViewModel.cs" t="Include" />
+          <e p="PlatformStatsViewModel.cs" t="Include" />
+          <e p="UserViewModel.cs" t="Include" />
+        </e>
+      </e>
+      <e p="Battles.Cdn" t="IncludeRecursive">
+        <e p="appsettings.json" t="Include" />
+        <e p="appsettings.Production.json" t="Include" />
+        <e p="Battles.Cdn.csproj" t="IncludeRecursive" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Controllers" t="Include">
+          <e p="ContentController.cs" t="Include" />
+          <e p="ImageController.cs" t="Include" />
+          <e p="VideoController.cs" t="Include" />
+        </e>
+        <e p="ffmpeg" t="Include">
+          <e p="ffmpeg.exe" t="Include" />
+          <e p="ffplay.exe" t="Include" />
+          <e p="ffprobe.exe" t="Include" />
+        </e>
+        <e p="FileServices" t="Include">
+          <e p="BaseFileManager.cs" t="Include" />
+          <e p="FileStreams.cs" t="Include" />
+          <e p="ImageManager.cs" t="Include" />
+          <e p="VideoManager.cs" t="Include" />
+        </e>
+        <e p="Infrastructure" t="Include">
+          <e p="BaseController.cs" t="Include" />
+        </e>
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp2.2" t="Include">
+              <e p="Battles.Cdn.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Program.cs" t="Include" />
+        <e p="Properties" t="Include">
+          <e p="launchSettings.json" t="Include" />
+        </e>
+        <e p="Settings" t="Include">
+          <e p="FilePaths.cs" t="Include" />
+          <e p="OAuth.cs" t="Include" />
+          <e p="Resource.cs" t="Include" />
+          <e p="Routing.cs" t="Include" />
+        </e>
+        <e p="Startup.cs" t="Include" />
+        <e p="ViewModels" t="Include">
+          <e p="Response.cs" t="Include" />
+          <e p="TrimOptions.cs" t="Include" />
+          <e p="VideoInfo.cs" t="Include" />
+        </e>
+        <e p="wwwroot" t="Include">
+          <e p="content" t="Include">
+            <e p="match" t="Include">
+              <e p="1" t="Include">
+                <e p="c_05-10-2019-00-25-09.mp4" t="Include" />
+                <e p="c_05-10-2019-11-06-32.mp4" t="Include" />
+                <e p="c_05-10-2019-11-08-55.mp4" t="Include" />
+                <e p="c_05-10-2019-11-10-44.mp4" t="Include" />
+                <e p="c_05-10-2019-11-13-54.mp4" t="Include" />
+                <e p="c_05-10-2019-11-18-39.mp4" t="Include" />
+                <e p="c_05-10-2019-11-23-52.mp4" t="Include" />
+                <e p="c_05-10-2019-14-11-43.mp4" t="Include" />
+                <e p="c_05-10-2019-14-25-05.mp4" t="Include" />
+                <e p="c_05-10-2019-14-26-16.mp4" t="Include" />
+                <e p="c_05-10-2019-14-32-27.mp4" t="Include" />
+                <e p="c_05-10-2019-14-34-03.mp4" t="Include" />
+                <e p="c_05-10-2019-14-40-09.mp4" t="Include" />
+                <e p="c_05-10-2019-14-41-17.mp4" t="Include" />
+                <e p="c_05-10-2019-14-48-16.mp4" t="Include" />
+                <e p="c_05-10-2019-14-49-28.mp4" t="Include" />
+                <e p="c_05-10-2019-14-54-00.mp4" t="Include" />
+                <e p="c_05-10-2019-14-59-42.mp4" t="Include" />
+                <e p="c_05-10-2019-15-01-12.mp4" t="Include" />
+                <e p="c_05-10-2019-15-03-35.mp4" t="Include" />
+                <e p="c_05-10-2019-15-04-54.mp4" t="Include" />
+                <e p="thumb_05-10-2019-00-25-09.jpg" t="Include" />
+                <e p="thumb_05-10-2019-11-06-32.jpg" t="Include" />
+                <e p="thumb_05-10-2019-11-08-55.jpg" t="Include" />
+                <e p="thumb_05-10-2019-11-10-44.jpg" t="Include" />
+                <e p="thumb_05-10-2019-11-13-54.jpg" t="Include" />
+                <e p="thumb_05-10-2019-11-18-39.jpg" t="Include" />
+                <e p="thumb_05-10-2019-11-23-52.jpg" t="Include" />
+                <e p="thumb_05-10-2019-14-11-43.jpg" t="Include" />
+                <e p="thumb_05-10-2019-14-25-05.jpg" t="Include" />
+                <e p="thumb_05-10-2019-14-26-16.jpg" t="Include" />
+                <e p="thumb_05-10-2019-14-32-27.jpg" t="Include" />
+                <e p="thumb_05-10-2019-14-34-03.jpg" t="Include" />
+                <e p="thumb_05-10-2019-14-40-09.jpg" t="Include" />
+                <e p="thumb_05-10-2019-14-41-17.jpg" t="Include" />
+                <e p="thumb_05-10-2019-14-48-16.jpg" t="Include" />
+                <e p="thumb_05-10-2019-14-49-28.jpg" t="Include" />
+                <e p="thumb_05-10-2019-14-54-00.jpg" t="Include" />
+                <e p="thumb_05-10-2019-14-59-42.jpg" t="Include" />
+                <e p="thumb_05-10-2019-15-01-12.jpg" t="Include" />
+                <e p="thumb_05-10-2019-15-03-35.jpg" t="Include" />
+                <e p="thumb_05-10-2019-15-04-54.jpg" t="Include" />
+              </e>
+              <e p="10" t="Include">
+                <e p="c_13-10-2019-15-24-55.mp4" t="Include" />
+                <e p="c_13-10-2019-15-26-50.mp4" t="Include" />
+                <e p="c_13-10-2019-15-32-04.mp4" t="Include" />
+                <e p="c_13-10-2019-15-32-38.mp4" t="Include" />
+                <e p="c_13-10-2019-15-32-48.mp4" t="Include" />
+                <e p="c_13-10-2019-15-53-55.mp4" t="Include" />
+                <e p="thumb_13-10-2019-15-24-55.jpg" t="Include" />
+                <e p="thumb_13-10-2019-15-26-50.jpg" t="Include" />
+                <e p="thumb_13-10-2019-15-32-04.jpg" t="Include" />
+                <e p="thumb_13-10-2019-15-32-38.jpg" t="Include" />
+                <e p="thumb_13-10-2019-15-32-48.jpg" t="Include" />
+                <e p="thumb_13-10-2019-15-53-55.jpg" t="Include" />
+              </e>
+              <e p="1026" t="Include">
+                <e p="c_14-09-2019-22-12-25.mp4" t="Include" />
+                <e p="c_14-09-2019-22-12-55.mp4" t="Include" />
+                <e p="c_14-09-2019-22-18-11.mp4" t="Include" />
+                <e p="thumb_14-09-2019-22-12-25.jp2" t="Include" />
+                <e p="thumb_14-09-2019-22-12-55.jp2" t="Include" />
+                <e p="thumb_14-09-2019-22-18-11.jp2" t="Include" />
+              </e>
+              <e p="1028" t="Include">
+                <e p="c_15-09-2019-19-53-32.mp4" t="Include" />
+                <e p="c_15-09-2019-20-08-01.mp4" t="Include" />
+                <e p="c_15-09-2019-20-08-52.mp4" t="Include" />
+                <e p="thumb_15-09-2019-19-53-32.jp2" t="Include" />
+                <e p="thumb_15-09-2019-20-08-01.jp2" t="Include" />
+                <e p="thumb_15-09-2019-20-08-52.jp2" t="Include" />
+              </e>
+              <e p="1029" t="Include">
+                <e p="c_15-09-2019-21-11-05.mp4" t="Include" />
+                <e p="c_15-09-2019-21-12-52.mp4" t="Include" />
+                <e p="c_15-09-2019-21-19-21.mp4" t="Include" />
+                <e p="c_15-09-2019-21-21-05.mp4" t="Include" />
+                <e p="c_15-09-2019-21-29-51.mp4" t="Include" />
+                <e p="c_15-09-2019-21-35-19.mp4" t="Include" />
+                <e p="c_15-09-2019-21-45-19.mp4" t="Include" />
+                <e p="c_15-09-2019-21-45-53.mp4" t="Include" />
+                <e p="c_15-09-2019-22-03-52.mp4" t="Include" />
+                <e p="thumb_15-09-2019-21-11-05.jp2" t="Include" />
+                <e p="thumb_15-09-2019-21-12-52.jp2" t="Include" />
+                <e p="thumb_15-09-2019-21-19-21.jp2" t="Include" />
+                <e p="thumb_15-09-2019-21-21-05.jp2" t="Include" />
+                <e p="thumb_15-09-2019-21-29-51.jp2" t="Include" />
+                <e p="thumb_15-09-2019-21-35-19.jp2" t="Include" />
+                <e p="thumb_15-09-2019-21-45-19.jp2" t="Include" />
+                <e p="thumb_15-09-2019-21-45-53.jp2" t="Include" />
+                <e p="thumb_15-09-2019-22-03-52.jp2" t="Include" />
+              </e>
+              <e p="1030" t="Include">
+                <e p="c_15-09-2019-22-19-33.mp4" t="Include" />
+                <e p="c_15-09-2019-22-19-48.mp4" t="Include" />
+                <e p="c_15-09-2019-22-21-03.mp4" t="Include" />
+                <e p="c_15-09-2019-22-21-20.mp4" t="Include" />
+                <e p="c_15-09-2019-22-24-40.mp4" t="Include" />
+                <e p="c_15-09-2019-22-24-55.mp4" t="Include" />
+                <e p="thumb_15-09-2019-22-19-33.jp2" t="Include" />
+                <e p="thumb_15-09-2019-22-19-48.jp2" t="Include" />
+                <e p="thumb_15-09-2019-22-21-03.jp2" t="Include" />
+                <e p="thumb_15-09-2019-22-21-20.jp2" t="Include" />
+                <e p="thumb_15-09-2019-22-24-40.jp2" t="Include" />
+                <e p="thumb_15-09-2019-22-24-55.jp2" t="Include" />
+              </e>
+              <e p="1032" t="Include">
+                <e p="c_15-09-2019-22-48-01.mp4" t="Include" />
+                <e p="c_15-09-2019-22-48-14.mp4" t="Include" />
+                <e p="c_15-09-2019-22-48-15.mp4" t="Include" />
+                <e p="c_15-09-2019-22-48-25.mp4" t="Include" />
+                <e p="c_15-09-2019-22-48-26.mp4" t="Include" />
+                <e p="c_21-09-2019-10-31-50.mp4" t="Include" />
+                <e p="c_21-09-2019-12-44-16.mp4" t="Include" />
+                <e p="c_21-09-2019-12-45-19.mp4" t="Include" />
+                <e p="thumb_15-09-2019-22-48-01.jp2" t="Include" />
+                <e p="thumb_15-09-2019-22-48-14.jp2" t="Include" />
+                <e p="thumb_15-09-2019-22-48-15.jp2" t="Include" />
+                <e p="thumb_15-09-2019-22-48-25.jp2" t="Include" />
+                <e p="thumb_15-09-2019-22-48-26.jp2" t="Include" />
+                <e p="thumb_21-09-2019-10-31-50.jp2" t="Include" />
+                <e p="thumb_21-09-2019-12-44-16.jp2" t="Include" />
+                <e p="thumb_21-09-2019-12-45-19.jp2" t="Include" />
+              </e>
+              <e p="1033" t="Include">
+                <e p="c_22-09-2019-00-01-12.mp4" t="Include" />
+                <e p="c_22-09-2019-00-01-25.mp4" t="Include" />
+                <e p="c_22-09-2019-00-01-40.mp4" t="Include" />
+                <e p="c_22-09-2019-00-30-20.mp4" t="Include" />
+                <e p="c_22-09-2019-00-30-28.mp4" t="Include" />
+                <e p="c_22-09-2019-00-30-44.mp4" t="Include" />
+                <e p="thumb_22-09-2019-00-01-12.jp2" t="Include" />
+                <e p="thumb_22-09-2019-00-01-25.jp2" t="Include" />
+                <e p="thumb_22-09-2019-00-01-40.jp2" t="Include" />
+                <e p="thumb_22-09-2019-00-30-20.jp2" t="Include" />
+                <e p="thumb_22-09-2019-00-30-28.jp2" t="Include" />
+                <e p="thumb_22-09-2019-00-30-44.jp2" t="Include" />
+              </e>
+              <e p="1040" t="Include">
+                <e p="c_22-09-2019-14-40-59.mp4" t="Include" />
+                <e p="c_22-09-2019-14-42-24.mp4" t="Include" />
+                <e p="c_22-09-2019-14-44-08.mp4" t="Include" />
+                <e p="c_22-09-2019-14-44-55.mp4" t="Include" />
+                <e p="c_22-09-2019-15-32-35.mp4" t="Include" />
+                <e p="c_22-09-2019-15-33-15.mp4" t="Include" />
+                <e p="c_22-09-2019-15-36-55.mp4" t="Include" />
+                <e p="c_22-09-2019-15-39-20.mp4" t="Include" />
+                <e p="c_22-09-2019-15-41-39.mp4" t="Include" />
+                <e p="c_22-09-2019-15-44-51.mp4" t="Include" />
+                <e p="c_22-09-2019-15-47-36.mp4" t="Include" />
+                <e p="c_22-09-2019-15-51-20.mp4" t="Include" />
+                <e p="c_22-09-2019-16-02-48.mp4" t="Include" />
+                <e p="c_22-09-2019-16-06-21.mp4" t="Include" />
+                <e p="c_22-09-2019-16-07-30.mp4" t="Include" />
+                <e p="c_22-09-2019-16-08-56.mp4" t="Include" />
+                <e p="c_22-09-2019-16-11-06.mp4" t="Include" />
+                <e p="c_22-09-2019-16-13-35.mp4" t="Include" />
+                <e p="c_22-09-2019-16-16-29.mp4" t="Include" />
+                <e p="c_22-09-2019-16-24-50.mp4" t="Include" />
+                <e p="thumb_22-09-2019-14-40-59.jp2" t="Include" />
+                <e p="thumb_22-09-2019-14-42-24.jp2" t="Include" />
+                <e p="thumb_22-09-2019-14-44-08.jp2" t="Include" />
+                <e p="thumb_22-09-2019-14-44-55.jp2" t="Include" />
+                <e p="thumb_22-09-2019-15-32-35.jp2" t="Include" />
+                <e p="thumb_22-09-2019-15-33-15.jp2" t="Include" />
+                <e p="thumb_22-09-2019-15-36-55.jp2" t="Include" />
+                <e p="thumb_22-09-2019-15-39-20.jp2" t="Include" />
+                <e p="thumb_22-09-2019-15-41-39.jp2" t="Include" />
+                <e p="thumb_22-09-2019-15-44-51.jp2" t="Include" />
+                <e p="thumb_22-09-2019-15-47-36.jp2" t="Include" />
+                <e p="thumb_22-09-2019-15-51-20.jp2" t="Include" />
+                <e p="thumb_22-09-2019-16-02-48.jp2" t="Include" />
+                <e p="thumb_22-09-2019-16-06-21.jp2" t="Include" />
+                <e p="thumb_22-09-2019-16-07-30.jp2" t="Include" />
+                <e p="thumb_22-09-2019-16-08-56.jp2" t="Include" />
+                <e p="thumb_22-09-2019-16-11-06.jp2" t="Include" />
+                <e p="thumb_22-09-2019-16-13-35.jp2" t="Include" />
+                <e p="thumb_22-09-2019-16-16-29.jp2" t="Include" />
+                <e p="thumb_22-09-2019-16-24-50.jp2" t="Include" />
+              </e>
+              <e p="1041" t="Include">
+                <e p="c_22-09-2019-12-50-19.mp4" t="Include" />
+                <e p="c_22-09-2019-14-33-28.mp4" t="Include" />
+                <e p="thumb_22-09-2019-12-50-19.jp2" t="Include" />
+                <e p="thumb_22-09-2019-14-33-28.jp2" t="Include" />
+              </e>
+              <e p="1042" t="Include">
+                <e p="c_22-09-2019-19-20-37.mp4" t="Include" />
+                <e p="c_22-09-2019-20-31-31.mp4" t="Include" />
+                <e p="c_22-09-2019-20-43-00.mp4" t="Include" />
+                <e p="c_22-09-2019-20-46-50.mp4" t="Include" />
+                <e p="c_22-09-2019-21-11-52.mp4" t="Include" />
+                <e p="thumb_22-09-2019-19-20-37.jp2" t="Include" />
+                <e p="thumb_22-09-2019-20-31-31.jp2" t="Include" />
+                <e p="thumb_22-09-2019-20-43-00.jp2" t="Include" />
+                <e p="thumb_22-09-2019-20-46-50.jp2" t="Include" />
+                <e p="thumb_22-09-2019-21-11-52.jp2" t="Include" />
+              </e>
+              <e p="16" t="Include">
+                <e p="c_31-08-2019-01-10-53.mp4" t="Include" />
+                <e p="c_31-08-2019-01-15-12.mp4" t="Include" />
+                <e p="c_31-08-2019-01-15-54.mp4" t="Include" />
+                <e p="thumb_31-08-2019-01-10-53.jp2" t="Include" />
+                <e p="thumb_31-08-2019-01-15-12.jp2" t="Include" />
+                <e p="thumb_31-08-2019-01-15-54.jp2" t="Include" />
+              </e>
+              <e p="2" t="Include">
+                <e p="c_05-10-2019-22-34-39.mp4" t="Include" />
+                <e p="c_05-10-2019-22-38-49.mp4" t="Include" />
+                <e p="c_05-10-2019-22-47-56.mp4" t="Include" />
+                <e p="c_05-10-2019-22-55-59.mp4" t="Include" />
+                <e p="c_05-10-2019-22-56-39.mp4" t="Include" />
+                <e p="c_05-10-2019-23-00-20.mp4" t="Include" />
+                <e p="c_05-10-2019-23-01-34.mp4" t="Include" />
+                <e p="c_05-10-2019-23-13-38.mp4" t="Include" />
+                <e p="c_05-10-2019-23-19-16.mp4" t="Include" />
+                <e p="c_05-10-2019-23-20-08.mp4" t="Include" />
+                <e p="c_06-10-2019-00-41-03.mp4" t="Include" />
+                <e p="c_06-10-2019-00-44-20.mp4" t="Include" />
+                <e p="c_06-10-2019-00-48-49.mp4" t="Include" />
+                <e p="c_06-10-2019-00-50-17.mp4" t="Include" />
+                <e p="c_06-10-2019-00-55-15.mp4" t="Include" />
+                <e p="c_06-10-2019-00-56-00.mp4" t="Include" />
+                <e p="c_06-10-2019-00-58-57.mp4" t="Include" />
+                <e p="thumb_05-10-2019-22-34-39.jpg" t="Include" />
+                <e p="thumb_05-10-2019-22-38-49.jpg" t="Include" />
+                <e p="thumb_05-10-2019-22-47-56.jpg" t="Include" />
+                <e p="thumb_05-10-2019-22-55-59.jpg" t="Include" />
+                <e p="thumb_05-10-2019-22-56-39.jpg" t="Include" />
+                <e p="thumb_05-10-2019-23-00-20.jpg" t="Include" />
+                <e p="thumb_05-10-2019-23-01-34.jpg" t="Include" />
+                <e p="thumb_05-10-2019-23-13-38.jpg" t="Include" />
+                <e p="thumb_05-10-2019-23-19-16.jpg" t="Include" />
+                <e p="thumb_05-10-2019-23-20-08.jpg" t="Include" />
+                <e p="thumb_06-10-2019-00-41-03.jpg" t="Include" />
+                <e p="thumb_06-10-2019-00-44-20.jpg" t="Include" />
+                <e p="thumb_06-10-2019-00-48-49.jpg" t="Include" />
+                <e p="thumb_06-10-2019-00-50-17.jpg" t="Include" />
+                <e p="thumb_06-10-2019-00-55-15.jpg" t="Include" />
+                <e p="thumb_06-10-2019-00-56-00.jpg" t="Include" />
+                <e p="thumb_06-10-2019-00-58-57.jpg" t="Include" />
+              </e>
+              <e p="2042" t="Include">
+                <e p="c_28-09-2019-13-50-27.mp4" t="Include" />
+                <e p="c_28-09-2019-14-01-41.mp4" t="Include" />
+                <e p="c_28-09-2019-14-03-05.mp4" t="Include" />
+                <e p="c_28-09-2019-14-03-29.mp4" t="Include" />
+                <e p="thumb_28-09-2019-13-50-27.jp2" t="Include" />
+                <e p="thumb_28-09-2019-14-01-41.jp2" t="Include" />
+                <e p="thumb_28-09-2019-14-03-05.jp2" t="Include" />
+                <e p="thumb_28-09-2019-14-03-29.jp2" t="Include" />
+              </e>
+              <e p="2046" t="Include">
+                <e p="c_29-09-2019-15-55-21.mp4" t="Include" />
+                <e p="c_29-09-2019-16-28-01.mp4" t="Include" />
+                <e p="c_29-09-2019-16-29-41.mp4" t="Include" />
+                <e p="c_29-09-2019-16-29-53.mp4" t="Include" />
+                <e p="c_29-09-2019-16-30-09.mp4" t="Include" />
+                <e p="c_29-09-2019-16-34-08.mp4" t="Include" />
+                <e p="c_29-09-2019-16-34-33.mp4" t="Include" />
+                <e p="c_29-09-2019-16-35-52.mp4" t="Include" />
+                <e p="c_29-09-2019-16-36-31.mp4" t="Include" />
+                <e p="c_29-09-2019-16-36-47.mp4" t="Include" />
+                <e p="thumb_29-09-2019-15-55-21.jp2" t="Include" />
+                <e p="thumb_29-09-2019-16-28-01.jp2" t="Include" />
+                <e p="thumb_29-09-2019-16-29-41.jp2" t="Include" />
+                <e p="thumb_29-09-2019-16-29-53.jp2" t="Include" />
+                <e p="thumb_29-09-2019-16-30-09.jp2" t="Include" />
+                <e p="thumb_29-09-2019-16-34-08.jp2" t="Include" />
+                <e p="thumb_29-09-2019-16-34-33.jp2" t="Include" />
+                <e p="thumb_29-09-2019-16-35-52.jp2" t="Include" />
+                <e p="thumb_29-09-2019-16-36-31.jp2" t="Include" />
+                <e p="thumb_29-09-2019-16-36-47.jp2" t="Include" />
+              </e>
+              <e p="2047" t="Include">
+                <e p="c_29-09-2019-17-02-02.mp4" t="Include" />
+                <e p="c_29-09-2019-17-03-52.mp4" t="Include" />
+                <e p="thumb_29-09-2019-17-02-02.jp2" t="Include" />
+                <e p="thumb_29-09-2019-17-03-52.jp2" t="Include" />
+              </e>
+              <e p="2048" t="Include">
+                <e p="c_29-09-2019-17-05-37.mp4" t="Include" />
+                <e p="thumb_29-09-2019-17-05-37.jp2" t="Include" />
+              </e>
+              <e p="2054" t="Include">
+                <e p="c_29-09-2019-18-01-12.mp4" t="Include" />
+                <e p="c_29-09-2019-18-01-29.mp4" t="Include" />
+                <e p="c_29-09-2019-18-01-36.mp4" t="Include" />
+                <e p="c_29-09-2019-18-02-06.mp4" t="Include" />
+                <e p="c_29-09-2019-18-02-55.mp4" t="Include" />
+                <e p="c_29-09-2019-18-07-15.mp4" t="Include" />
+                <e p="thumb_29-09-2019-18-01-12.jp2" t="Include" />
+                <e p="thumb_29-09-2019-18-01-29.jp2" t="Include" />
+                <e p="thumb_29-09-2019-18-01-36.jp2" t="Include" />
+                <e p="thumb_29-09-2019-18-02-06.jp2" t="Include" />
+                <e p="thumb_29-09-2019-18-02-55.jp2" t="Include" />
+                <e p="thumb_29-09-2019-18-07-15.jp2" t="Include" />
+              </e>
+              <e p="2055" t="Include">
+                <e p="c_29-09-2019-18-11-01.mp4" t="Include" />
+                <e p="c_29-09-2019-18-12-38.mp4" t="Include" />
+                <e p="c_29-09-2019-18-14-24.mp4" t="Include" />
+                <e p="c_29-09-2019-18-15-52.mp4" t="Include" />
+                <e p="c_29-09-2019-18-16-02.mp4" t="Include" />
+                <e p="c_29-09-2019-18-16-13.mp4" t="Include" />
+                <e p="c_29-09-2019-18-16-28.mp4" t="Include" />
+                <e p="thumb_29-09-2019-18-11-01.jp2" t="Include" />
+                <e p="thumb_29-09-2019-18-12-38.jp2" t="Include" />
+                <e p="thumb_29-09-2019-18-14-24.jp2" t="Include" />
+                <e p="thumb_29-09-2019-18-15-52.jp2" t="Include" />
+                <e p="thumb_29-09-2019-18-16-02.jp2" t="Include" />
+                <e p="thumb_29-09-2019-18-16-13.jp2" t="Include" />
+                <e p="thumb_29-09-2019-18-16-28.jp2" t="Include" />
+              </e>
+              <e p="2056" t="Include">
+                <e p="c_29-09-2019-18-19-46.mp4" t="Include" />
+                <e p="c_29-09-2019-18-19-56.mp4" t="Include" />
+                <e p="thumb_29-09-2019-18-19-46.jp2" t="Include" />
+                <e p="thumb_29-09-2019-18-19-56.jp2" t="Include" />
+              </e>
+              <e p="2059" t="Include">
+                <e p="c_29-09-2019-18-22-27.mp4" t="Include" />
+                <e p="c_29-09-2019-18-23-52.mp4" t="Include" />
+                <e p="c_29-09-2019-18-25-16.mp4" t="Include" />
+                <e p="c_29-09-2019-18-26-31.mp4" t="Include" />
+                <e p="thumb_29-09-2019-18-22-27.jp2" t="Include" />
+                <e p="thumb_29-09-2019-18-23-52.jp2" t="Include" />
+                <e p="thumb_29-09-2019-18-25-16.jp2" t="Include" />
+                <e p="thumb_29-09-2019-18-26-31.jp2" t="Include" />
+              </e>
+              <e p="2060" t="Include">
+                <e p="c_29-09-2019-18-32-54.mp4" t="Include" />
+                <e p="c_29-09-2019-18-33-07.mp4" t="Include" />
+                <e p="c_29-09-2019-18-33-36.mp4" t="Include" />
+                <e p="c_29-09-2019-18-33-55.mp4" t="Include" />
+                <e p="c_29-09-2019-18-34-11.mp4" t="Include" />
+                <e p="c_29-09-2019-18-34-29.mp4" t="Include" />
+                <e p="c_29-09-2019-18-34-46.mp4" t="Include" />
+                <e p="c_29-09-2019-18-35-09.mp4" t="Include" />
+                <e p="c_29-09-2019-18-35-35.mp4" t="Include" />
+                <e p="c_29-09-2019-18-35-58.mp4" t="Include" />
+                <e p="c_29-09-2019-18-36-20.mp4" t="Include" />
+                <e p="thumb_29-09-2019-18-32-54.jp2" t="Include" />
+                <e p="thumb_29-09-2019-18-33-07.jp2" t="Include" />
+                <e p="thumb_29-09-2019-18-33-36.jp2" t="Include" />
+                <e p="thumb_29-09-2019-18-33-55.jp2" t="Include" />
+                <e p="thumb_29-09-2019-18-34-11.jp2" t="Include" />
+                <e p="thumb_29-09-2019-18-34-29.jp2" t="Include" />
+                <e p="thumb_29-09-2019-18-34-46.jp2" t="Include" />
+                <e p="thumb_29-09-2019-18-35-09.jp2" t="Include" />
+                <e p="thumb_29-09-2019-18-35-35.jp2" t="Include" />
+                <e p="thumb_29-09-2019-18-35-58.jp2" t="Include" />
+                <e p="thumb_29-09-2019-18-36-20.jp2" t="Include" />
+              </e>
+              <e p="2061" t="Include">
+                <e p="c_29-09-2019-20-32-34.mp4" t="Include" />
+                <e p="c_29-09-2019-20-37-51.mp4" t="Include" />
+                <e p="thumb_29-09-2019-20-32-34.jpg" t="Include" />
+                <e p="thumb_29-09-2019-20-37-51.jpg" t="Include" />
+              </e>
+              <e p="22" t="Include">
+                <e p="c_31-08-2019-10-49-31.mp4" t="Include" />
+                <e p="c_31-08-2019-10-49-56.mp4" t="Include" />
+                <e p="thumb_31-08-2019-10-49-31.jp2" t="Include" />
+                <e p="thumb_31-08-2019-10-49-56.jp2" t="Include" />
+              </e>
+              <e p="23" t="Include">
+                <e p="c_31-08-2019-11-30-38.mp4" t="Include" />
+                <e p="c_31-08-2019-11-31-49.mp4" t="Include" />
+                <e p="c_31-08-2019-11-39-59.mp4" t="Include" />
+                <e p="c_31-08-2019-11-41-13.mp4" t="Include" />
+                <e p="thumb_31-08-2019-11-30-38.jp2" t="Include" />
+                <e p="thumb_31-08-2019-11-31-49.jp2" t="Include" />
+                <e p="thumb_31-08-2019-11-39-59.jp2" t="Include" />
+                <e p="thumb_31-08-2019-11-41-13.jp2" t="Include" />
+              </e>
+              <e p="24" t="Include">
+                <e p="c_01-09-2019-11-32-05.mp4" t="Include" />
+                <e p="c_01-09-2019-11-38-17.mp4" t="Include" />
+                <e p="c_31-08-2019-11-47-31.mp4" t="Include" />
+                <e p="c_31-08-2019-11-47-49.mp4" t="Include" />
+                <e p="c_31-08-2019-11-48-19.mp4" t="Include" />
+                <e p="c_31-08-2019-21-07-46.mp4" t="Include" />
+                <e p="c_31-08-2019-21-08-10.mp4" t="Include" />
+                <e p="c_31-08-2019-21-20-40.mp4" t="Include" />
+                <e p="c_31-08-2019-21-22-53.mp4" t="Include" />
+                <e p="thumb_01-09-2019-11-32-05.jp2" t="Include" />
+                <e p="thumb_01-09-2019-11-38-17.jp2" t="Include" />
+                <e p="thumb_31-08-2019-11-47-31.jp2" t="Include" />
+                <e p="thumb_31-08-2019-11-47-49.jp2" t="Include" />
+                <e p="thumb_31-08-2019-11-48-19.jp2" t="Include" />
+                <e p="thumb_31-08-2019-21-07-46.jp2" t="Include" />
+                <e p="thumb_31-08-2019-21-08-10.jp2" t="Include" />
+                <e p="thumb_31-08-2019-21-20-40.jp2" t="Include" />
+                <e p="thumb_31-08-2019-21-22-53.jp2" t="Include" />
+              </e>
+              <e p="25" t="Include">
+                <e p="c_07-09-2019-00-10-52.mp4" t="Include" />
+                <e p="c_07-09-2019-00-12-08.mp4" t="Include" />
+                <e p="c_07-09-2019-11-57-31.mp4" t="Include" />
+                <e p="thumb_07-09-2019-00-10-52.jp2" t="Include" />
+                <e p="thumb_07-09-2019-00-12-08.jp2" t="Include" />
+                <e p="thumb_07-09-2019-11-57-31.jp2" t="Include" />
+              </e>
+              <e p="26" t="Include">
+                <e p="c_08-09-2019-13-17-31.mp4" t="Include" />
+                <e p="thumb_08-09-2019-13-17-31.jp2" t="Include" />
+              </e>
+              <e p="27" t="Include">
+                <e p="c_08-09-2019-17-22-04.mp4" t="Include" />
+                <e p="c_08-09-2019-17-23-05.mp4" t="Include" />
+                <e p="c_08-09-2019-17-26-01.mp4" t="Include" />
+                <e p="c_08-09-2019-17-26-46.mp4" t="Include" />
+                <e p="c_08-09-2019-17-27-20.mp4" t="Include" />
+                <e p="c_08-09-2019-17-27-49.mp4" t="Include" />
+                <e p="c_08-09-2019-17-28-13.mp4" t="Include" />
+                <e p="thumb_08-09-2019-17-22-04.jp2" t="Include" />
+                <e p="thumb_08-09-2019-17-23-05.jp2" t="Include" />
+                <e p="thumb_08-09-2019-17-26-01.jp2" t="Include" />
+                <e p="thumb_08-09-2019-17-26-46.jp2" t="Include" />
+                <e p="thumb_08-09-2019-17-27-20.jp2" t="Include" />
+                <e p="thumb_08-09-2019-17-27-49.jp2" t="Include" />
+                <e p="thumb_08-09-2019-17-28-13.jp2" t="Include" />
+              </e>
+              <e p="3" t="Include">
+                <e p="c_06-10-2019-01-14-26.mp4" t="Include" />
+                <e p="c_06-10-2019-01-14-41.mp4" t="Include" />
+                <e p="c_06-10-2019-01-14-47.mp4" t="Include" />
+                <e p="c_06-10-2019-01-14-55.mp4" t="Include" />
+                <e p="c_06-10-2019-01-15-01.mp4" t="Include" />
+                <e p="c_06-10-2019-01-15-27.mp4" t="Include" />
+                <e p="c_06-10-2019-01-15-59.mp4" t="Include" />
+                <e p="c_06-10-2019-01-30-00.mp4" t="Include" />
+                <e p="c_06-10-2019-01-30-31.mp4" t="Include" />
+                <e p="c_06-10-2019-01-34-25.mp4" t="Include" />
+                <e p="c_06-10-2019-01-36-34.mp4" t="Include" />
+                <e p="c_06-10-2019-01-36-50.mp4" t="Include" />
+                <e p="thumb_06-10-2019-01-14-26.jpg" t="Include" />
+                <e p="thumb_06-10-2019-01-14-41.jpg" t="Include" />
+                <e p="thumb_06-10-2019-01-14-47.jpg" t="Include" />
+                <e p="thumb_06-10-2019-01-14-55.jpg" t="Include" />
+                <e p="thumb_06-10-2019-01-15-01.jpg" t="Include" />
+                <e p="thumb_06-10-2019-01-15-27.jpg" t="Include" />
+                <e p="thumb_06-10-2019-01-15-59.jpg" t="Include" />
+                <e p="thumb_06-10-2019-01-30-00.jpg" t="Include" />
+                <e p="thumb_06-10-2019-01-30-31.jpg" t="Include" />
+                <e p="thumb_06-10-2019-01-34-25.jpg" t="Include" />
+                <e p="thumb_06-10-2019-01-36-34.jpg" t="Include" />
+                <e p="thumb_06-10-2019-01-36-50.jpg" t="Include" />
+              </e>
+              <e p="5" t="Include">
+                <e p="c_06-10-2019-14-00-31.mp4" t="Include" />
+                <e p="c_06-10-2019-16-04-36.mp4" t="Include" />
+                <e p="c_06-10-2019-16-07-51.mp4" t="Include" />
+                <e p="c_06-10-2019-16-08-11.mp4" t="Include" />
+                <e p="thumb_06-10-2019-14-00-31.jpg" t="Include" />
+                <e p="thumb_06-10-2019-16-04-36.jpg" t="Include" />
+                <e p="thumb_06-10-2019-16-07-51.jpg" t="Include" />
+                <e p="thumb_06-10-2019-16-08-11.jpg" t="Include" />
+              </e>
+              <e p="6" t="Include">
+                <e p="c_06-10-2019-16-36-22.mp4" t="Include" />
+                <e p="c_06-10-2019-17-28-20.mp4" t="Include" />
+                <e p="c_06-10-2019-17-28-37.mp4" t="Include" />
+                <e p="c_06-10-2019-17-41-44.mp4" t="Include" />
+                <e p="c_06-10-2019-17-42-00.mp4" t="Include" />
+                <e p="thumb_06-10-2019-16-36-22.jpg" t="Include" />
+                <e p="thumb_06-10-2019-17-28-20.jpg" t="Include" />
+                <e p="thumb_06-10-2019-17-28-37.jpg" t="Include" />
+                <e p="thumb_06-10-2019-17-41-44.jpg" t="Include" />
+                <e p="thumb_06-10-2019-17-42-00.jpg" t="Include" />
+              </e>
+              <e p="7" t="Include">
+                <e p="c_06-10-2019-18-04-52.mp4" t="Include" />
+                <e p="c_06-10-2019-18-05-22.mp4" t="Include" />
+                <e p="c_06-10-2019-18-05-26.mp4" t="Include" />
+                <e p="c_06-10-2019-18-12-08.mp4" t="Include" />
+                <e p="c_06-10-2019-18-42-11.mp4" t="Include" />
+                <e p="c_06-10-2019-18-42-45.mp4" t="Include" />
+                <e p="c_06-10-2019-18-50-28.mp4" t="Include" />
+                <e p="c_06-10-2019-18-51-57.mp4" t="Include" />
+                <e p="thumb_06-10-2019-18-04-52.jpg" t="Include" />
+                <e p="thumb_06-10-2019-18-05-22.jpg" t="Include" />
+                <e p="thumb_06-10-2019-18-05-26.jpg" t="Include" />
+                <e p="thumb_06-10-2019-18-12-08.jpg" t="Include" />
+                <e p="thumb_06-10-2019-18-42-11.jpg" t="Include" />
+                <e p="thumb_06-10-2019-18-42-45.jpg" t="Include" />
+                <e p="thumb_06-10-2019-18-50-28.jpg" t="Include" />
+                <e p="thumb_06-10-2019-18-51-57.jpg" t="Include" />
+              </e>
+              <e p="8" t="Include">
+                <e p="c_06-10-2019-19-03-31.mp4" t="Include" />
+                <e p="c_06-10-2019-19-03-51.mp4" t="Include" />
+                <e p="c_06-10-2019-19-05-29.mp4" t="Include" />
+                <e p="c_06-10-2019-19-06-02.mp4" t="Include" />
+                <e p="c_06-10-2019-19-06-21.mp4" t="Include" />
+                <e p="c_06-10-2019-19-06-39.mp4" t="Include" />
+                <e p="thumb_06-10-2019-19-03-31.jpg" t="Include" />
+                <e p="thumb_06-10-2019-19-03-51.jpg" t="Include" />
+                <e p="thumb_06-10-2019-19-05-29.jpg" t="Include" />
+                <e p="thumb_06-10-2019-19-06-02.jpg" t="Include" />
+                <e p="thumb_06-10-2019-19-06-21.jpg" t="Include" />
+                <e p="thumb_06-10-2019-19-06-39.jpg" t="Include" />
+              </e>
+              <e p="9" t="Include">
+                <e p="c_06-10-2019-22-05-47.mp4" t="Include" />
+                <e p="c_06-10-2019-22-06-04.mp4" t="Include" />
+                <e p="thumb_06-10-2019-22-05-47.jpg" t="Include" />
+                <e p="thumb_06-10-2019-22-06-04.jpg" t="Include" />
+              </e>
+            </e>
+            <e p="user" t="Include">
+              <e p="4e80fb9e-0075-4b1b-a922-c00ceaeb5aca" t="Include">
+                <e p="img_27-08-2019-20-15-12.jpg" t="Include" />
+              </e>
+              <e p="5d4f3e66-8f57-4155-8915-91699be6aa54" t="Include">
+                <e p="img_22-09-2019-16-58-18.jpg" t="Include" />
+              </e>
+            </e>
+          </e>
+          <e p="static" t="Include">
+            <e p="img" t="Include">
+              <e p="kojos-tricklab.png" t="Include" />
+              <e p="logo_final.png" t="Include" />
+              <e p="logo_trans.png" t="Include" />
+              <e p="main_1200x600.png" t="Include" />
+              <e p="main_128x128.png" t="Include" />
+              <e p="main_144x144.png" t="Include" />
+              <e p="main_152x152.png" t="Include" />
+              <e p="main_192x192.png" t="Include" />
+              <e p="main_300x200.png" t="Include" />
+              <e p="main_384x384.png" t="Include" />
+              <e p="main_512x512.png" t="Include" />
+              <e p="main_full.png" t="Include" />
+            </e>
+          </e>
+        </e>
+      </e>
+      <e p="Battles.Tests" t="IncludeRecursive">
+        <e p="Battles.Tests.csproj" t="IncludeRecursive" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="EvaluationTests" t="Include">
+          <e p="ResultsCalculatorTests.cs" t="Include" />
+        </e>
+        <e p="LevelSystemTests.cs" t="Include" />
+        <e p="Matches" t="Include">
+          <e p="MatchCreationTests.cs" t="Include" />
+          <e p="MatchJoinTests.cs" t="Include" />
+          <e p="MatchTests.cs" t="Include" />
+        </e>
+        <e p="Mocks" t="Include">
+          <e p="MatchMockCreator.cs" t="Include" />
+          <e p="OpponentCheckerMock.cs" t="Include" />
+          <e p="RoutingMock.cs" t="Include" />
+          <e p="UserMockCreator.cs" t="Include" />
+        </e>
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp2.2" t="Include">
+              <e p="Battles.Tests.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+      </e>
+      <e p="Client" t="IncludeRecursive">
+        <e p="Battles.Client.csproj" t="IncludeRecursive" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp2.2" t="Include">
+              <e p="Battles.Client.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Program.cs" t="Include" />
+        <e p="Properties" t="Include">
+          <e p="launchSettings.json" t="Include" />
+        </e>
+        <e p="Startup.cs" t="Include" />
+        <e p="vue-client" t="Include">
+          <e p=".browserslistrc" t="Include" />
+          <e p=".env" t="Include" />
+          <e p=".env.production" t="Include" />
+          <e p=".eslintrc.js" t="Include" />
+          <e p=".gitignore" t="Include" />
+          <e p=".vscode" t="Include">
+            <e p="settings.json" t="Include" />
+          </e>
+          <e p="babel.config.js" t="Include" />
+          <e p="dist" t="Include">
+            <e p="css" t="Include">
+              <e p="app.7bb8b28b.css" t="Include" />
+              <e p="battle.7aa87034.css" t="Include" />
+              <e p="battle~landing~tribunal~user~watch.e9c1b04c.css" t="Include" />
+              <e p="chunk-vendors.91584d54.css" t="Include" />
+              <e p="create.1dc9eba4.css" t="Include" />
+              <e p="find.2affdc31.css" t="Include" />
+              <e p="landing.10cc17cc.css" t="Include" />
+              <e p="tribunal.1de7e96a.css" t="Include" />
+              <e p="user.ab92f73d.css" t="Include" />
+            </e>
+            <e p="img" t="Include">
+              <e p="icons" t="Include">
+                <e p="main_128x128.png" t="Include" />
+                <e p="main_144x144.png" t="Include" />
+                <e p="main_152x152.png" t="Include" />
+                <e p="main_16x16.png" t="Include" />
+                <e p="main_192x192.png" t="Include" />
+                <e p="main_256x256.png" t="Include" />
+                <e p="main_32x32.png" t="Include" />
+                <e p="main_384x384.png" t="Include" />
+                <e p="main_512x512.png" t="Include" />
+              </e>
+            </e>
+            <e p="index.html" t="Include" />
+            <e p="js" t="Include">
+              <e p="app.d7daead4.js" t="Include" />
+              <e p="app.d7daead4.js.map" t="Include" />
+              <e p="battle.bb739517.js" t="Include" />
+              <e p="battle.bb739517.js.map" t="Include" />
+              <e p="battle~landing~tribunal~user~watch.7467315c.js" t="Include" />
+              <e p="battle~landing~tribunal~user~watch.7467315c.js.map" t="Include" />
+              <e p="chunk-vendors.746bbda1.js" t="Include" />
+              <e p="chunk-vendors.746bbda1.js.map" t="Include" />
+              <e p="create.c7943b48.js" t="Include" />
+              <e p="create.c7943b48.js.map" t="Include" />
+              <e p="find.bf8af54f.js" t="Include" />
+              <e p="find.bf8af54f.js.map" t="Include" />
+              <e p="landing.48eab4af.js" t="Include" />
+              <e p="landing.48eab4af.js.map" t="Include" />
+              <e p="skill.d508c9c1.js" t="Include" />
+              <e p="skill.d508c9c1.js.map" t="Include" />
+              <e p="tribunal.98c2f248.js" t="Include" />
+              <e p="tribunal.98c2f248.js.map" t="Include" />
+              <e p="user.bd16eaee.js" t="Include" />
+              <e p="user.bd16eaee.js.map" t="Include" />
+              <e p="watch.078eebdc.js" t="Include" />
+              <e p="watch.078eebdc.js.map" t="Include" />
+            </e>
+            <e p="manifest.json" t="Include" />
+            <e p="OneSignalSDKUpdaterWorker.js" t="Include" />
+            <e p="OneSignalSDKWorker.js" t="Include" />
+            <e p="precache-manifest.b1a228b76d83c29f51154185df321d3f.js" t="Include" />
+            <e p="robots.txt" t="Include" />
+            <e p="service-worker.js" t="Include" />
+            <e p="static" t="Include">
+              <e p="callback.html" t="Include" />
+              <e p="oidc-client.min.js" t="Include" />
+              <e p="silent.html" t="Include" />
+            </e>
+          </e>
+          <e p="node_modules\@mdi\js" t="IncludeRecursive" />
+          <e p="node_modules\@types" t="IncludeRecursive">
+            <e p="events" t="IncludeRecursive" />
+            <e p="minimatch" t="IncludeRecursive" />
+            <e p="node" t="IncludeRecursive" />
+          </e>
+          <e p="node_modules\@vue\cli-plugin-babel" t="IncludeRecursive" />
+          <e p="node_modules\@vue\cli-plugin-eslint" t="IncludeRecursive" />
+          <e p="node_modules\@vue\cli-plugin-pwa" t="IncludeRecursive" />
+          <e p="node_modules\@vue\cli-service" t="IncludeRecursive" />
+          <e p="node_modules\@vue\component-compiler-utils" t="IncludeRecursive" />
+          <e p="node_modules\address" t="IncludeRecursive" />
+          <e p="node_modules\axios" t="IncludeRecursive" />
+          <e p="node_modules\axios-progress-bar" t="IncludeRecursive" />
+          <e p="node_modules\babel-eslint" t="IncludeRecursive" />
+          <e p="node_modules\chalk" t="IncludeRecursive" />
+          <e p="node_modules\cli-highlight" t="IncludeRecursive" />
+          <e p="node_modules\commander" t="IncludeRecursive" />
+          <e p="node_modules\dotenv-expand" t="IncludeRecursive" />
+          <e p="node_modules\eslint" t="IncludeRecursive" />
+          <e p="node_modules\eslint-plugin-vue" t="IncludeRecursive" />
+          <e p="node_modules\javascript-stringify" t="IncludeRecursive" />
+          <e p="node_modules\oidc-client" t="IncludeRecursive" />
+          <e p="node_modules\portfinder" t="IncludeRecursive" />
+          <e p="node_modules\postcss" t="IncludeRecursive" />
+          <e p="node_modules\postcss-selector-parser" t="IncludeRecursive" />
+          <e p="node_modules\register-service-worker" t="IncludeRecursive" />
+          <e p="node_modules\sass" t="IncludeRecursive" />
+          <e p="node_modules\sass-loader" t="IncludeRecursive" />
+          <e p="node_modules\source-map" t="IncludeRecursive" />
+          <e p="node_modules\terser" t="IncludeRecursive" />
+          <e p="node_modules\vue" t="IncludeRecursive" />
+          <e p="node_modules\vue-cli-plugin-vuetify" t="IncludeRecursive" />
+          <e p="node_modules\vue-loader" t="IncludeRecursive" />
+          <e p="node_modules\vue-router" t="IncludeRecursive" />
+          <e p="node_modules\vue-template-compiler" t="IncludeRecursive" />
+          <e p="node_modules\vuetify" t="IncludeRecursive" />
+          <e p="node_modules\vuetify-loader" t="IncludeRecursive" />
+          <e p="node_modules\vuex" t="IncludeRecursive" />
+          <e p="package-lock.json" t="Include" />
+          <e p="package.json" t="Include" />
+          <e p="postcss.config.js" t="Include" />
+          <e p="public" t="Include">
+            <e p="img" t="Include">
+              <e p="icons" t="Include">
+                <e p="main_128x128.png" t="Include" />
+                <e p="main_144x144.png" t="Include" />
+                <e p="main_152x152.png" t="Include" />
+                <e p="main_16x16.png" t="Include" />
+                <e p="main_192x192.png" t="Include" />
+                <e p="main_256x256.png" t="Include" />
+                <e p="main_32x32.png" t="Include" />
+                <e p="main_384x384.png" t="Include" />
+                <e p="main_512x512.png" t="Include" />
+              </e>
+            </e>
+            <e p="index.html" t="Include" />
+            <e p="manifest.json" t="Include" />
+            <e p="OneSignalSDKUpdaterWorker.js" t="Include" />
+            <e p="OneSignalSDKWorker.js" t="Include" />
+            <e p="robots.txt" t="Include" />
+            <e p="static" t="Include">
+              <e p="callback.html" t="Include" />
+              <e p="oidc-client.min.js" t="Include" />
+              <e p="silent.html" t="Include" />
+            </e>
+          </e>
+          <e p="README.md" t="Include" />
+          <e p="src" t="Include">
+            <e p="App.vue" t="Include" />
+            <e p="assets" t="Include" />
+            <e p="components" t="Include">
+              <e p="layout" t="Include">
+                <e p="modals" t="Include">
+                  <e p="Confirmation.vue" t="Include" />
+                  <e p="Connecting.vue" t="Include" />
+                  <e p="MatchMenu.vue" t="Include" />
+                  <e p="Popup.vue" t="Include" />
+                </e>
+                <e p="Navbar.vue" t="Include" />
+                <e p="SideMenu.vue" t="Include" />
+                <e p="UserLayout.vue" t="Include" />
+                <e p="VisitorLayout.vue" t="Include" />
+              </e>
+              <e p="match" t="Include">
+                <e p="Comments" t="Include">
+                  <e p="Comment.vue" t="Include" />
+                  <e p="CommentInput.vue" t="Include" />
+                  <e p="CommentSection.vue" t="Include" />
+                  <e p="MainComment.vue" t="Include" />
+                  <e p="SubComment.vue" t="Include" />
+                </e>
+                <e p="MatchHeader.vue" t="Include" />
+                <e p="MatchPlayer.vue" t="Include" />
+                <e p="modals" t="Include">
+                  <e p="UpdateMatch.vue" t="Include" />
+                </e>
+                <e p="OpenMatch.vue" t="Include" />
+                <e p="players" t="Include">
+                  <e p="CopyCat.vue" t="Include" />
+                  <e p="OneUp.vue" t="Include" />
+                  <e p="ThreeRoundPass.vue" t="Include" />
+                  <e p="VideoPlayer.vue" t="Include" />
+                </e>
+              </e>
+              <e p="Shared" t="Include">
+                <e p="index.js" t="Include" />
+                <e p="ProfileImage.vue" t="Include" />
+              </e>
+              <e p="tribunal" t="Include">
+                <e p="modals" t="Include">
+                  <e p="TribunalVoting.vue" t="Include" />
+                </e>
+                <e p="voting" t="Include">
+                  <e p="Complete.vue" t="Include" />
+                  <e p="Flag.vue" t="Include" />
+                </e>
+              </e>
+              <e p="user" t="Include">
+                <e p="EditProfile.vue" t="Include" />
+              </e>
+            </e>
+            <e p="data" t="Include">
+              <e p="api.js" t="Include" />
+              <e p="enum.js" t="Include" />
+              <e p="matches.js" t="Include" />
+              <e p="perks.js" t="Include" />
+              <e p="skills.js" t="Include" />
+            </e>
+            <e p="main.js" t="Include" />
+            <e p="plugins" t="Include">
+              <e p="vuetify.js" t="Include" />
+            </e>
+            <e p="registerServiceWorker.js" t="Include" />
+            <e p="router.js" t="Include" />
+            <e p="stores" t="Include">
+              <e p="modules" t="Include">
+                <e p="comment.js" t="Include" />
+                <e p="confirmation.js" t="Include" />
+                <e p="layout.js" t="Include" />
+                <e p="matches.js" t="Include" />
+                <e p="menu.js" t="Include" />
+                <e p="notifications.js" t="Include" />
+                <e p="popup.js" t="Include" />
+                <e p="profile.js" t="Include" />
+                <e p="tribunal.js" t="Include" />
+                <e p="updateMatch.js" t="Include" />
+                <e p="user.js" t="Include" />
+                <e p="voting.js" t="Include" />
+              </e>
+              <e p="store.js" t="Include" />
+            </e>
+            <e p="styles" t="Include">
+              <e p="colors.scss" t="Include" />
+              <e p="main.scss" t="Include" />
+            </e>
+            <e p="views" t="Include">
+              <e p="Battles.vue" t="Include" />
+              <e p="Create.vue" t="Include" />
+              <e p="Find.vue" t="Include" />
+              <e p="Landing.vue" t="Include" />
+              <e p="SkillSelection.vue" t="Include" />
+              <e p="Tribunal.vue" t="Include" />
+              <e p="User.vue" t="Include" />
+              <e p="Watch.vue" t="Include" />
+            </e>
+          </e>
+          <e p="vue.config.js" t="Include" />
+        </e>
+      </e>
+      <e p="IdentityServer" t="IncludeRecursive">
+        <e p="appsettings.json" t="Include" />
+        <e p="appsettings.Production.json" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="bundleconfig.json" t="Include" />
+        <e p="Config.cs" t="Include" />
+        <e p="Configuration" t="Include">
+          <e p="AppSecrets.cs" t="Include" />
+          <e p="EmailSettings.cs" t="Include" />
+          <e p="Facebook.cs" t="Include" />
+          <e p="OAuth.cs" t="Include" />
+          <e p="Resource.cs" t="Include" />
+          <e p="Routing.cs" t="Include" />
+        </e>
+        <e p="Controllers" t="Include">
+          <e p="AccountController.cs" t="Include" />
+          <e p="HomeController.cs" t="Include" />
+          <e p="ManageController.cs" t="Include" />
+        </e>
+        <e p="DatabaseSeed.cs" t="Include" />
+        <e p="Extensions" t="Include">
+          <e p="HttpContextExtensions.cs" t="Include" />
+        </e>
+        <e p="IdentityServer.csproj" t="IncludeRecursive" />
+        <e p="Models" t="Include">
+          <e p="AccountViewModels" t="Include">
+            <e p="ExternalLoginConfirmationViewModel.cs" t="Include" />
+            <e p="ForgotPasswordViewModel.cs" t="Include" />
+            <e p="LoginViewModel.cs" t="Include" />
+            <e p="RegisterViewModel.cs" t="Include" />
+            <e p="ResetPasswordViewModel.cs" t="Include" />
+            <e p="SendCodeViewModel.cs" t="Include" />
+            <e p="VerifyCodeViewModel.cs" t="Include" />
+          </e>
+          <e p="HomeViewModels" t="Include">
+            <e p="ErrorViewModel.cs" t="Include" />
+          </e>
+          <e p="ManageViewModels" t="Include">
+            <e p="AddPhoneNumberViewModel.cs" t="Include" />
+            <e p="ChangePasswordViewModel.cs" t="Include" />
+            <e p="ConfigureTwoFactorViewModel.cs" t="Include" />
+            <e p="FactorViewModel.cs" t="Include" />
+            <e p="IndexViewModel.cs" t="Include" />
+            <e p="ManageLoginsViewModel.cs" t="Include" />
+            <e p="RemoveLoginViewModel.cs" t="Include" />
+            <e p="SetPasswordViewModel.cs" t="Include" />
+            <e p="VerifyPhoneNumberViewModel.cs" t="Include" />
+          </e>
+        </e>
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp2.2" t="Include">
+              <e p="IdentityServer.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Program.cs" t="Include" />
+        <e p="Properties" t="Include">
+          <e p="launchSettings.json" t="Include" />
+          <e p="PublishProfiles" t="Include">
+            <e p="CustomProfile.pubxml" t="Include" />
+            <e p="TRServer - Web Deploy.pubxml" t="Include" />
+            <e p="WebPublish-smartasp.pubxml" t="Include" />
+          </e>
+        </e>
+        <e p="Services" t="Include">
+          <e p="IdentityProfileService.cs" t="Include" />
+          <e p="IEmailSender.cs" t="Include" />
+          <e p="MessageServices.cs" t="Include" />
+        </e>
+        <e p="Startup.cs" t="Include" />
+        <e p="tempkey.rsa" t="Include" />
+        <e p="token.pfx" t="Include" />
+        <e p="views" t="Include">
+          <e p="_ViewImports.cshtml" t="Include" />
+          <e p="_ViewStart.cshtml" t="Include" />
+          <e p="Account" t="Include">
+            <e p="AccessDenied.cshtml" t="Include" />
+            <e p="ConfirmEmail.cshtml" t="Include" />
+            <e p="ExternalLoginConfirmation.cshtml" t="Include" />
+            <e p="ExternalLoginFailure.cshtml" t="Include" />
+            <e p="ForgotPassword.cshtml" t="Include" />
+            <e p="ForgotPasswordConfirmation.cshtml" t="Include" />
+            <e p="Lockout.cshtml" t="Include" />
+            <e p="Login.cshtml" t="Include" />
+            <e p="Register.cshtml" t="Include" />
+            <e p="ResetPassword.cshtml" t="Include" />
+            <e p="ResetPasswordConfirmation.cshtml" t="Include" />
+            <e p="SendCode.cshtml" t="Include" />
+            <e p="VerifyCode.cshtml" t="Include" />
+          </e>
+          <e p="Home" t="Include">
+            <e p="Index.cshtml" t="Include" />
+            <e p="Privacy.cshtml" t="Include" />
+          </e>
+          <e p="Manage" t="Include">
+            <e p="AddPhoneNumber.cshtml" t="Include" />
+            <e p="ChangePassword.cshtml" t="Include" />
+            <e p="Index.cshtml" t="Include" />
+            <e p="ManageLogins.cshtml" t="Include" />
+            <e p="SetPassword.cshtml" t="Include" />
+            <e p="VerifyPhoneNumber.cshtml" t="Include" />
+          </e>
+          <e p="Shared" t="Include">
+            <e p="_CookieConsentPartial.cshtml" t="Include" />
+            <e p="_Layout.cshtml" t="Include" />
+            <e p="_LoginPartial.cshtml" t="Include" />
+            <e p="_ValidationScriptsPartial.cshtml" t="Include" />
+            <e p="Error.cshtml" t="Include" />
+          </e>
+        </e>
+        <e p="wwwroot" t="Include">
+          <e p="content" t="Include">
+            <e p="images" t="Include">
+              <e p="favicon.png" t="Include" />
+              <e p="tr_logo_big.png" t="Include" />
+            </e>
+          </e>
+          <e p="css" t="Include">
+            <e p="bulma.css" t="Include" />
+            <e p="bulma.min.css" t="Include" />
+            <e p="site.css" t="Include" />
+            <e p="site.min.css" t="Include" />
+          </e>
+          <e p="js" t="Include">
+            <e p="jquery.js" t="Include" />
+            <e p="jquery.min.js" t="Include" />
+            <e p="jquery.min.map" t="Include" />
+            <e p="jquery.validate.js" t="Include" />
+            <e p="jquery.validate.min.js" t="Include" />
+            <e p="jquery.validate.unobtrusive.js" t="Include" />
+            <e p="jquery.validate.unobtrusive.min.js" t="Include" />
+            <e p="site.js" t="Include" />
+            <e p="site.min.js" t="Include" />
+          </e>
+          <e p="main_300x200.png" t="Include" />
+        </e>
+      </e>
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="src" t="Include" />
+      <e p="tests" t="Include" />
+      <e p="Tournament.Domain" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Entities" t="Include">
+          <e p="MatchConfiguration.cs" t="Include" />
+          <e p="Participant.cs" t="Include" />
+          <e p="StageDecision.cs" t="Include" />
+          <e p="StageMatch.cs" t="Include" />
+          <e p="StageVote.cs" t="Include" />
+          <e p="Tournament.cs" t="Include" />
+          <e p="TournamentMatch.cs" t="Include" />
+        </e>
+        <e p="Enumerations" t="Include">
+          <e p="Tournament.cs" t="Include" />
+        </e>
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp2.2" t="Include">
+              <e p="Tournaments.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Tournaments.csproj" t="IncludeRecursive" />
+      </e>
+      <e p="TrickingRoyal.Database" t="IncludeRecursive">
+        <e p="AppDbContext.cs" t="Include" />
+        <e p="ApplicationUser.cs" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="ef-migration-scripts.txt" t="Include" />
+        <e p="MatchQueriesExtensions.cs" t="Include" />
+        <e p="MatchUserQueriesExtensions.cs" t="Include" />
+        <e p="Migrations" t="Include">
+          <e p="App" t="Include">
+            <e p="20190817142116_init.cs" t="Include" />
+            <e p="20190817142116_init.Designer.cs" t="Include" />
+            <e p="20190831091532_battle_change.cs" t="Include" />
+            <e p="20190831091532_battle_change.Designer.cs" t="Include" />
+            <e p="20190914125535_level.cs" t="Include" />
+            <e p="20190914125535_level.Designer.cs" t="Include" />
+            <e p="20190915112650_votingPower.cs" t="Include" />
+            <e p="20190915112650_votingPower.Designer.cs" t="Include" />
+            <e p="20190915184705_videosRefactor.cs" t="Include" />
+            <e p="20190915184705_videosRefactor.Designer.cs" t="Include" />
+            <e p="20190915184941_videoDbSet.cs" t="Include" />
+            <e p="20190915184941_videoDbSet.Designer.cs" t="Include" />
+            <e p="20191004230421_notifications.cs" t="Include" />
+            <e p="20191004230421_notifications.Designer.cs" t="Include" />
+            <e p="20191005092339_notificationUserIdFix.cs" t="Include" />
+            <e p="20191005092339_notificationUserIdFix.Designer.cs" t="Include" />
+            <e p="20191005132350_notificationMessageUserIdFix.cs" t="Include" />
+            <e p="20191005132350_notificationMessageUserIdFix.Designer.cs" t="Include" />
+            <e p="AppDbContextModelSnapshot.cs" t="Include" />
+          </e>
+          <e p="IdentityServer" t="Include">
+            <e p="ConfigurationDb" t="Include">
+              <e p="20190817125939_InitialIdentityServerConfigurationDbMigration.cs" t="Include" />
+              <e p="20190817125939_InitialIdentityServerConfigurationDbMigration.Designer.cs" t="Include" />
+              <e p="ConfigurationDbContextModelSnapshot.cs" t="Include" />
+            </e>
+            <e p="PersistedGrantDb" t="Include">
+              <e p="20190817125504_InitialIdentityServerPersistedGrantDbMigration.cs" t="Include" />
+              <e p="20190817125504_InitialIdentityServerPersistedGrantDbMigration.Designer.cs" t="Include" />
+              <e p="PersistedGrantDbContextModelSnapshot.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netstandard2.0" t="Include">
+              <e p="TrickingRoyal.Database.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="ServiceSpec.cs" t="Include" />
+        <e p="TrickingRoyal.Database.csproj" t="IncludeRecursive" />
+        <e p="VideoQueriesExtensions.cs" t="Include" />
+      </e>
+      <e p="TrickingRoyal.sln" t="IncludeFlat" />
+    </e>
+  </component>
+</project>

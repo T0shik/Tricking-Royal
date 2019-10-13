@@ -1,0 +1,20 @@
+{
+  "name": "vue-client",
+  "short_name": "vue-client",
+  "icons": [
+    {
+      "src": "./img/icons/main-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./img/icons/main-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#30343f",
+  "theme_color": "#9a48ab"
+}
