@@ -1,6 +1,6 @@
 ﻿<template>
     <v-avatar :size="imgSize" color="secondary">
-        <img v-if="picture" :src="picture" alt="alt"/>
+        <img v-if="picture" :src="picture" alt="alt" :key="picture"/>
         <v-icon v-else>{{userIcon}}</v-icon>
         <span v-if="level" class="level">{{level}}</span>
     </v-avatar>
@@ -37,6 +37,7 @@
 
 <style lang="scss" scoped>
     @import '../../styles/colors';
+
     span.level {
         position: absolute;
         bottom: -0.2rem;

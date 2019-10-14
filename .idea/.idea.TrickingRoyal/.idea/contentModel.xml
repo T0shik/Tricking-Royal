@@ -926,6 +926,68 @@
             <e p="settings.json" t="Include" />
           </e>
           <e p="babel.config.js" t="Include" />
+          <e p="dist" t="Include">
+            <e p="css" t="Include">
+              <e p="app.a5595307.css" t="Include" />
+              <e p="battle.7aa87034.css" t="Include" />
+              <e p="battle~landing~tribunal~user~watch.20757738.css" t="Include" />
+              <e p="chunk-vendors.1a3ded8a.css" t="Include" />
+              <e p="create.1dc9eba4.css" t="Include" />
+              <e p="find.2affdc31.css" t="Include" />
+              <e p="landing.5c68fe33.css" t="Include" />
+              <e p="tribunal.b6511810.css" t="Include" />
+              <e p="user.ab92f73d.css" t="Include" />
+            </e>
+            <e p="img" t="Include">
+              <e p="icons" t="Include">
+                <e p="main_128x128.png" t="Include" />
+                <e p="main_144x144.png" t="Include" />
+                <e p="main_152x152.png" t="Include" />
+                <e p="main_16x16.png" t="Include" />
+                <e p="main_192x192.png" t="Include" />
+                <e p="main_256x256.png" t="Include" />
+                <e p="main_32x32.png" t="Include" />
+                <e p="main_384x384.png" t="Include" />
+                <e p="main_512x512.png" t="Include" />
+              </e>
+            </e>
+            <e p="index.html" t="Include" />
+            <e p="js" t="Include">
+              <e p="app.bd5d61f1.js" t="Include" />
+              <e p="app.bd5d61f1.js.map" t="Include" />
+              <e p="battle.82c02823.js" t="Include" />
+              <e p="battle.82c02823.js.map" t="Include" />
+              <e p="battle~landing~tribunal~user~watch.df20f6ad.js" t="Include" />
+              <e p="battle~landing~tribunal~user~watch.df20f6ad.js.map" t="Include" />
+              <e p="chunk-vendors.ee3ef8d5.js" t="Include" />
+              <e p="chunk-vendors.ee3ef8d5.js.map" t="Include" />
+              <e p="create.e6c47799.js" t="Include" />
+              <e p="create.e6c47799.js.map" t="Include" />
+              <e p="find.e9f2e6be.js" t="Include" />
+              <e p="find.e9f2e6be.js.map" t="Include" />
+              <e p="landing.ad15654d.js" t="Include" />
+              <e p="landing.ad15654d.js.map" t="Include" />
+              <e p="skill.f420c175.js" t="Include" />
+              <e p="skill.f420c175.js.map" t="Include" />
+              <e p="tribunal.cd55db8e.js" t="Include" />
+              <e p="tribunal.cd55db8e.js.map" t="Include" />
+              <e p="user.abb33721.js" t="Include" />
+              <e p="user.abb33721.js.map" t="Include" />
+              <e p="watch.f7072ce2.js" t="Include" />
+              <e p="watch.f7072ce2.js.map" t="Include" />
+            </e>
+            <e p="manifest.json" t="Include" />
+            <e p="OneSignalSDKUpdaterWorker.js" t="Include" />
+            <e p="OneSignalSDKWorker.js" t="Include" />
+            <e p="precache-manifest.99717670296ab1da964086381b92746a.js" t="Include" />
+            <e p="robots.txt" t="Include" />
+            <e p="service-worker.js" t="Include" />
+            <e p="static" t="Include">
+              <e p="callback.html" t="Include" />
+              <e p="oidc-client.min.js" t="Include" />
+              <e p="silent.html" t="Include" />
+            </e>
+          </e>
           <e p="node_modules\@mdi\js" t="IncludeRecursive" />
           <e p="node_modules\@types" t="IncludeRecursive">
             <e p="events" t="IncludeRecursive" />
@@ -934,7 +996,6 @@
           </e>
           <e p="node_modules\@vue\cli-plugin-babel" t="IncludeRecursive" />
           <e p="node_modules\@vue\cli-plugin-eslint" t="IncludeRecursive" />
-          <e p="node_modules\@vue\cli-plugin-pwa" t="IncludeRecursive" />
           <e p="node_modules\@vue\cli-service" t="IncludeRecursive" />
           <e p="node_modules\@vue\component-compiler-utils" t="IncludeRecursive" />
           <e p="node_modules\address" t="IncludeRecursive" />
@@ -952,7 +1013,6 @@
           <e p="node_modules\portfinder" t="IncludeRecursive" />
           <e p="node_modules\postcss" t="IncludeRecursive" />
           <e p="node_modules\postcss-selector-parser" t="IncludeRecursive" />
-          <e p="node_modules\register-service-worker" t="IncludeRecursive" />
           <e p="node_modules\sass" t="IncludeRecursive" />
           <e p="node_modules\sass-loader" t="IncludeRecursive" />
           <e p="node_modules\source-map" t="IncludeRecursive" />
@@ -1060,7 +1120,6 @@
               <e p="vuetify.js" t="Include" />
             </e>
             <e p="router.js" t="Include" />
-            <e p="service-worker.js" t="Include" />
             <e p="stores" t="Include">
               <e p="modules" t="Include">
                 <e p="comment.js" t="Include" />
