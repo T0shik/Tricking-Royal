@@ -1,0 +1,60 @@
+<template>
+    <div>
+        <v-carousel v-model="slide" v-if="match.videos.length > 0" hide-delimiters :show-arrows="match.videos.length > 1">
+            <v-carousel-item v-for="(item, index) in match.videos" :key="item.video">
+                <video-player :video="item.video" :thumb="item.thumb" :isPlaying="index === slide"></video-player>
+                <div class="round-tag">Round {{index + 1}}</div>
+            </v-carousel-item>
+        </v-carousel>
+        <div v-else class="pa-3 title text-center">{{match.turn}}'s turn to upload</div>
+        <div v-if="match.chain[0]" class="pa-1">{{match.chain[0]}}</div>
+        <div v-if="match.canGo" class="text-center">
+            <v-btn color="info"
+                   @click="$emit('respond')"
+                   :loading="loading"
+                   :disabled="loading">Respond
+            </v-btn>
+        </div>
+    </div>
+</template>
+
+<script>
+    import VideoPlayer from "./VideoPlayer.vue";
+
+    export default {
+        props: {
+            match: {
+                required: true,
+                type: Object,
+            },
+            loading: {
+                required: true,
+                type: Boolean,
+            }
+        },
+        components: {
+            VideoPlayer,
+        },
+        data() {
+            return {
+                slide: 0,
+            };
+        },
+        created() {
+            this.slide = this.match.videos.length - 1;
+        }
+    };
+</script>
+
+<style lang="scss" scoped>
+    .round-tag {
+        position: absolute;
+        bottom: 1rem;
+        left: 50%;
+        font-size: 25px;
+        font-weight: bold;
+        text-shadow: 0 0 4px #000;
+        transform: translateX(-50%);
+        opacity: 0.7;
+    }
+</style>

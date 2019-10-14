@@ -1,0 +1,37 @@
+﻿@using Microsoft.AspNetCore.Http.Features
+
+@{
+    var consentFeature = Context.Features.Get<ITrackingConsentFeature>();
+    var showBanner = !consentFeature?.CanTrack ?? false;
+    var cookieString = consentFeature?.CreateConsentCookie();
+}
+
+@if (showBanner)
+{
+    <nav class="level is-marginless is-warning navbar is-fixed-top" id="cookieConsent">
+        <div class="level-left">
+            <div class="level-item has-text-centered ">
+                <span class="has-text-weight-bold">
+                    We use persistent cookies to keep you logged in, we don't keep any ad related cookies
+                </span>
+            </div>
+        </div>
+        <div class="level-right">
+            <div class="level-item has-text-centered">
+                <div class="buttons">
+                    <a asp-controller="Home" asp-action="Privacy" class="button is-text has-text-link">Learn More</a>
+                    <button type="button" class="button is-primary" data-cookie-string="@cookieString">Accept</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <script>
+        (function () {
+            document.querySelector("#cookieConsent button[data-cookie-string]").addEventListener("click", function (el) {
+                document.cookie = el.target.dataset.cookieString;
+                document.querySelector("#cookieConsent").classList.add("is-hidden");
+            }, false);
+        })();
+    </script>
+}

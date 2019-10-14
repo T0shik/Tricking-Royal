@@ -1,0 +1,101 @@
+@import './colors';
+
+body {
+  overflow: hidden;
+}
+
+.font-rock,
+.v-application .font-rock,
+.v-application .headline.font-rock,
+.v-application .title.font-rock {
+  font-family: 'Rock Salt' !important;
+}
+
+a {
+  text-decoration: none;
+}
+
+.main-card {
+  max-width: 480px;
+  width: 100%;
+  margin-bottom: 4rem;
+}
+
+.v-bottom-navigation {
+  z-index: 3;
+}
+
+.to-top {
+  @media screen and (max-width: 960px) {
+    display: none;
+  }
+}
+
+.score-board {
+  margin-top: 0.2rem;
+  text-align: center;
+
+  span {
+    border-bottom: 1px solid $primary;
+  }
+}
+
+.p-relative {
+  position: relative;
+}
+.refresh-button.v-btn.v-btn--fab.v-btn--fixed {
+  bottom: 72px;
+  z-index: 5;
+}
+
+// Below this line the importance of the CSS is questionable
+//----------------------------------------------------------
+
+//.v-carousel {
+//  box-shadow: none;
+//
+//  .v-carousel__controls {
+//    background: transparent;
+//  }
+//
+//  .v-btn--active {
+//    color: $primary;
+//  }
+//
+//  .v-icon {
+//    opacity: 1;
+//  }
+//
+//  &:before {
+//    opacity: 0.5;
+//  }
+//}
+
+#nprogress {
+  .bar {
+    background-color: $primary !important;
+  }
+
+  .spinner {
+    display: none !important;
+  }
+}
+
+.v-window__container,
+.v-carousel,
+.v-responsive {
+  height: auto !important;
+}
+
+.v-dialog {
+  margin: 0;
+}
+
+.v-overlay--active:before {
+  opacity: 0.69;
+}
+
+.hover:hover {
+  cursor: pointer;
+}
+

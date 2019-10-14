@@ -1,0 +1,53 @@
+<template>
+    <v-card-title>
+        <v-container class="pa-0">
+            <v-row dense>
+                <v-col class="d-flex align-center" cols="5">
+                    <router-link class="white--text" :to="`/user/${host.displayName}`">
+                        <profile-img :picture="host.picture" :level="host.level"></profile-img>
+                        <span>{{host.displayName}}</span>
+                    </router-link>
+                </v-col>
+                <v-col class="d-flex align-center justify-center title font-rock" cols="2">
+                    VS
+                </v-col>
+                <v-col class="d-flex align-center justify-end" cols="5">
+                    <router-link class="white--text" :to="`/user/${opponent.displayName}`">
+                        <span>{{opponent.displayName}}</span>
+                        <profile-img :picture="opponent.picture" :level="opponent.level"></profile-img>
+                    </router-link>
+                </v-col>
+            </v-row>
+        </v-container>
+    </v-card-title>
+</template>
+
+<script>
+    export default {
+        props: {
+            users: {
+                type: Array,
+                required: true
+            }
+        },
+        computed: {
+            host() {
+                return this.users.filter(x => x.role === 0)[0];
+            },
+            opponent() {
+                return this.users.filter(x => x.role === 1)[0];
+            }
+        }
+    };
+</script>
+
+<style lang="scss" scoped>
+    .v-card__title {
+        padding: 2px 4px;
+    }
+
+    span {
+        padding: 0 2px;
+        font-size: 12px;
+    }
+</style>

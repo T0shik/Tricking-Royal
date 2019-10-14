@@ -1,0 +1,22 @@
+# System Files
+.vs/
+**/obj
+**/bin
+**/Properties
+*.csproj.user
+**/node_modules
+
+# Local Resources
+Battles.Cdn/wwwroot/content
+Battles.Cdn/ffmpeg/**
+Battles.Tests/TestResults
+**/wwwroot/lib
+
+# Sensitive Data
+tempkey.rsa
+*.pfx
+**/secrets.json
+
+# Log Files
+**/logs
+**/*.log
