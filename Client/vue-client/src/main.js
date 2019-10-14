@@ -4,7 +4,7 @@ import vuetify from './plugins/vuetify';
 import router from './router'
 import {store} from './stores/store'
 import "./components/shared/index"
-import './registerServiceWorker'
+import './service-worker'
 import Axios from 'axios'
 
 import {loadProgressBar} from 'axios-progress-bar'

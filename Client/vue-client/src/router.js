@@ -11,6 +11,7 @@ const router = new Router({
         {
             path: '/',
             name: 'landing',
+            alias: "/index.html",
             meta: {
                 auth: false,
                 profile: false
