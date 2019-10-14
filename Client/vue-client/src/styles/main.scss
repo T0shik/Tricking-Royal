@@ -23,6 +23,11 @@ a {
 
 .v-bottom-navigation {
   z-index: 3;
+  
+  position: absolute;
+  @media screen and (max-width: 960px) {
+    position: fixed;
+  }
 }
 
 .to-top {

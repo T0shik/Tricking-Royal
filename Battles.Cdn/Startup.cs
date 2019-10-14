@@ -17,17 +17,17 @@ namespace Battles.Cdn
     {
         private readonly IConfiguration _config;
         private readonly IHostingEnvironment _env;
+        private readonly OAuth _oAuth;
 
         public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
             _config = configuration;
             _env = env;
+            _oAuth = _config.GetSection("OAuth").Get<OAuth>();
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
-            var oAuth = _config.GetSection("OAuth").Get<OAuth>();
-
             services.AddSingleton(_config.GetSection("FilePaths").Get<FilePaths>());
 
             var connectionString = _config.GetConnectionString("DefaultConnection");
@@ -47,11 +47,11 @@ namespace Battles.Cdn
             services.AddAuthentication("Bearer")
                 .AddIdentityServerAuthentication(options =>
                 {
-                    options.Authority = oAuth.Routing.Server;
+                    options.Authority = _oAuth.Routing.Server;
                     options.RequireHttpsMetadata = _env.IsProduction();
 
-                    options.ApiName = oAuth.Cdn.Name;
-                    options.ApiSecret = oAuth.Cdn.ResourceSecret.ToSha256();
+                    options.ApiName = _oAuth.Cdn.Name;
+                    options.ApiSecret = _oAuth.Cdn.ResourceSecret.ToSha256();
                 });
 
             services.AddMvc(options =>
@@ -66,17 +66,7 @@ namespace Battles.Cdn
                 .AddSingleton<ImageManager>()
                 .AddSingleton<VideoManager>();
 
-            if (_env.IsDevelopment())
-            {
-                services.AddCors(options =>
-                {
-                    options.AddPolicy("AllowAll",
-                        p => p.AllowAnyOrigin()
-                            .AllowAnyHeader()
-                            .AllowAnyMethod()
-                            .AllowCredentials());
-                });
-            }
+            SetupCors(services);
         }
 
         public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
@@ -95,7 +85,35 @@ namespace Battles.Cdn
 
             app.UseResponseCompression();
 
-            app.UseMvc();
+            app.UseCors(_env.IsDevelopment() ? "AllowAll" : "AllowClient")
+                .UseMvc();
+        }
+
+
+        private void SetupCors(IServiceCollection services)
+        {
+            if (_env.IsDevelopment())
+            {
+                services.AddCors(options =>
+                {
+                    options.AddPolicy("AllowAll",
+                        p => p.AllowAnyOrigin()
+                            .AllowAnyHeader()
+                            .AllowAnyMethod()
+                            .AllowCredentials());
+                });
+            }
+            else
+            {
+                services.AddCors(options =>
+                {
+                    options.AddPolicy("AllowClient",
+                        p => p.WithOrigins(_oAuth.Routing.Client)
+                            .AllowAnyHeader()
+                            .AllowAnyMethod()
+                            .AllowCredentials());
+                });
+            }
         }
     }
 }
