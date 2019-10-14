@@ -2,7 +2,7 @@
     <v-app-bar app clipped-left color="secondary">
         <router-link class="d-flex align-center" to="/battles">
             <v-avatar size="48">
-                <img src="https://cdn.trickingroyal.com/image/static/logo_final.png"/>
+                <img src="https://cdn.trickingroyal.com/static/logo_final.png"/>
             </v-avatar>
             <span
                     class="headline font-rock font-weight-black ml-1 primary--text hidden-sm-and-down"

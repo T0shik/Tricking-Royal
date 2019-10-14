@@ -28,7 +28,7 @@
             </v-btn>
         </div>
 
-        <v-bottom-navigation class="secondary" mandatory absolute v-model="type" ref="nav" grow>
+        <v-bottom-navigation class="secondary" mandatory v-model="type" ref="nav" grow>
             <v-btn class="pa-0" color="primary" text :to="'/battles/history'" value="history">
                 <span>History</span>
                 <v-icon>{{icons.history}}</v-icon>

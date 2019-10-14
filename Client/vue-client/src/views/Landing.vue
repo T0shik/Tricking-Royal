@@ -1,19 +1,14 @@
 <template>
-    <div>
+    <div v-resize="onResize">
         <v-parallax
-                v-resize="onResize"
                 src="https://cdn.trickingroyal.com/static/main_full.png"
                 :height="windowSize.y"
                 px-0
         >
             <v-layout align-center column justify-center>
                 <v-spacer></v-spacer>
-                <h1
-                        class="display-3 hidden-xs-only font-weight-bold primary--text mb-3 font-rock"
-                >Tricking Royal</h1>
-                <h1
-                        class="display-1 hidden-sm-and-up font-weight-bold primary--text mb-3 font-rock"
-                >Tricking Royal</h1>
+                <h1 class="font-weight-bold primary--text mb-3 font-rock"
+                    :class="windowSize.x < 600 ? 'display-1' : 'display-3'">Tricking Royal</h1>
                 <h4 class="title">Online Tricking Battles</h4>
                 <v-btn color="info" @click="login">Sign In</v-btn>
                 <!--                <a-->
@@ -116,7 +111,7 @@
                 <h1>New Way to Battle</h1>
             </div>
             <div class="main-card" v-if="matches && matches.length > 0">
-                <MatchPlayer v-for="match in matches" :key="match.key" :disabled="true" :match="match" ></MatchPlayer>
+                <MatchPlayer v-for="match in matches" :key="match.key" :disabled="true" :match="match"></MatchPlayer>
                 <div class="text-center">
                     <v-btn color="primary" v-if="!endReached" @click="loadMatches">load more</v-btn>
                 </div>
@@ -163,51 +158,49 @@
     import axios from "axios";
 
     export default {
-        data() {
-            return {
-                icons: {
-                    battles: mdiSwordCross,
-                    community: mdiAccountGroup,
-                    tribunal: mdiScaleBalance,
-                    stats: mdiChartBar,
-                    social: mdiEarth,
-                    open: mdiPackageVariant
+        data: () => ({
+            icons: {
+                battles: mdiSwordCross,
+                community: mdiAccountGroup,
+                tribunal: mdiScaleBalance,
+                stats: mdiChartBar,
+                social: mdiEarth,
+                open: mdiPackageVariant
+            },
+            logos: {
+                kojo: `${process.env.VUE_APP_CDN}/static/kojos-tricklab.png`
+            },
+            connecting: false,
+            heightSet: false,
+            windowSize: {
+                x: 0,
+                y: 0
+            },
+            matches: [],
+            loading: true,
+            index: 0,
+            endReached: false,
+            plugs: [
+                {
+                    name: "Social",
+                    description: "Love the project? Check out our social media!",
+                    links: [
+                        {href: "https://www.facebook.com/trickingroyal", icon: mdiFacebook},
+                        {href: "https://www.instagram.com/tricking_royal", icon: mdiInstagram}
+                    ]
                 },
-                logos: {
-                    kojo: `${process.env.VUE_APP_CDN}/static/kojos-tricklab.png`
-                },
-                connecting: false,
-                heightSet: false,
-                windowSize: {
-                    x: 0,
-                    y: 0
-                },
-                matches: [],
-                loading: true,
-                index: 0,
-                endReached: false,
-                plugs: [
-                    {
-                        name: "Social",
-                        description: "Love the project? Check out our social media!",
-                        links: [
-                            {href: "https://www.facebook.com/trickingroyal", icon: mdiFacebook},
-                            {href: "https://www.instagram.com/tricking_royal", icon: mdiInstagram}
-                        ]
-                    },
-                    {
-                        name: "Support",
-                        description: "Help support this project!",
-                        links: [
-                            {href: "paypallink", icon: mdiPaypal},
-                            {
-                                href: "https://www.patreon.com/raw_coding",
-                                icon: mdiPatreon
-                            }]
-                    }
-                ]
-            };
-        },
+                {
+                    name: "Support",
+                    description: "Help support this project!",
+                    links: [
+                        {href: "paypallink", icon: mdiPaypal},
+                        {
+                            href: "https://www.patreon.com/raw_coding",
+                            icon: mdiPatreon
+                        }]
+                }
+            ]
+        }),
         created() {
             this.onResize();
             this.loadMatches();
@@ -226,9 +219,12 @@
                 this.$store.state.userMgr.signinRedirect();
             },
             onResize() {
-                if (this.heightSet) return;
-                this.heightSet = true;
-                this.windowSize = {x: window.innerWidth, y: window.innerHeight};
+                if (this.heightSet) {
+                    this.windowSize = {x: window.innerWidth, y: this.windowSize.y};
+                } else {
+                    this.heightSet = true;
+                    this.windowSize = {x: window.innerWidth, y: window.innerHeight};
+                }
             }
         },
         computed: {

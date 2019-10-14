@@ -1,6 +1,7 @@
 <template>
     <v-layout class="pa-2 lighten-2" column justify-center align-center fill-height>
-        <h1 class="display-3">Skill Selection</h1>
+        <h1 class="display-3 hidden-xs-only">Skill Selection</h1>
+        <h1 class="display-1 hidden-sm-and-up">Skill Selection</h1>
         <h1 class="title mb-3 text-xs-center" style="max-width: 500px"
         >Pick an option that best represents your skill level you can always change it later.</h1>
         <v-card color="secondary" class="mx-auto" max-width="500" min-width="300" width="100%">
