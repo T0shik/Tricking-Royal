@@ -16,8 +16,9 @@ development machine.
 ### Prerequisites
 
 - [ASP.NET Core](https://dotnet.microsoft.com/download) - The main `c#` based server side platform. Global version set to `v2.2.300` in `global.json` file in the root of the project.
-- [Nodejs](https://nodejs.org/en/) - you will need nodejs to use the `npm` `(node package manager)` and run the vue client.
+- [Nodejs](https://nodejs.org/en/) - You will need nodejs to use the `npm` `(node package manager)` and run the vue client.
 - [MSSQL](https://www.microsoft.com/en-us/sql-server/sql-server-downloads) - You will ether need to download and install the Microsoft SQL server or use the build in Visual Studio local database. 
+- [FFMPEG](https://www.ffmpeg.org/download.html) - Used to trim and downscale videos once they are uploaded.   
 
 ### Installing 
 
@@ -26,6 +27,7 @@ All we are trying to achieve is getting the code on to your computer and making 
 1. After setting up the prerequisites, `git clone` or `fork` this repository.
 2. Set the `DefaultConnection` connection string in the `appsettings.json` file, to connect to your database in the following projects: `IdentityServer` `Battles.Cdn` `Battles.Api`. Example (replace `<param>`): `"Data Source=<Server>;Database=<DatabaseName>;Integrated Security=True;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"`. If you are using the MSSQL server you might need to setup database access permissions.
 3. Create the database using the `entity framework core` `Update Database` command located in `./TrickingRoyal/src/TrickingRoyal.Database/ef-migration-scripts.txt` file. Example: `dotnet ef database update -c AppDbContext -s ../IdentityServer`
+4. Place the `FFMPEG` executables in the `Battles.Cdn` project in a `ffmpeg` folder (create the folder if not there). If you would like a different file path for the executables change the `VideoEditingExecutables` variable in `appsettings.json`.
 
 You can verify that the connection is successful by checking if the tables are populated in the database.
 
