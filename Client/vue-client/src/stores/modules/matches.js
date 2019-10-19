@@ -57,6 +57,7 @@ export default {
             }
         },
         toggleLoading(state, loader) {
+            console.log(`toggling loader ${loader}, current value: ${state[loader]}`);
             state[loader] = !state[loader];
         },
         saveType(state, type) {
@@ -78,11 +79,15 @@ export default {
             commit('saveType', type);
 
             if (force || getters.stale || getters.old || getters.matches.length === 0) {
-                dispatch('loadMatches', type);
+                dispatch('loadMatches', {type});
             }
         },
-        loadMatches({commit}, type) {
-            commit('toggleLoading', 'loading');
+        loadMatches({state, commit}, {type, toggle = true}) {
+            console.log(`Loading ${type} matches, loading toggled: ${toggle}`);
+            if (!state.loading && toggle) {
+                commit('toggleLoading', 'loading');
+            }
+            
             getMatches(type, 0)
                 .then(({data}) => {
                     commit('setMatches', {
@@ -94,7 +99,9 @@ export default {
                     console.error("ERROR GETTING MATCHES", error)
                 })
                 .then(() => {
-                    commit('toggleLoading', 'loading');
+                    if (toggle) {
+                        commit('toggleLoading', 'loading');
+                    }
                 })
         },
         loadMoreMatches({getters, commit}) {
@@ -112,9 +119,14 @@ export default {
                     commit('toggleLoading', 'loadingMore');
                 })
         },
-        refreshMatches({state, commit, dispatch}, type) {
+        refreshMatches({state, commit, dispatch}, {type, toggle}) {
             commit("setStale");
-            dispatch("loadMatches", type === null || type === undefined ? state.type : type);
+            let payload = {
+                type: type === null || type === undefined ? state.type : type,
+                toggle
+            };
+
+            dispatch("loadMatches", payload);
         },
         deleteMatch({dispatch, commit}, matchId) {
             commit('toggleLoading', 'loading');
@@ -125,8 +137,8 @@ export default {
                 if (data.success) {
                     commit("INCREMENT_HOSTING_COUNT", -1, {root: true});
                     commit('toggleLoading', 'loading');
-                    dispatch("refreshMatches", MATCH_TYPES.HOSTED);
-                    dispatch("refreshMatches", MATCH_TYPES.OPEN);
+                    dispatch("refreshMatches", {type: MATCH_TYPES.HOSTED, toggle: false});
+                    dispatch("refreshMatches", {type: MATCH_TYPES.OPEN});
                 }
             });
         },

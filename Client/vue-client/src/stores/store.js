@@ -16,6 +16,7 @@ import popup from "./modules/popup";
 import confirmation from "./modules/confirmation";
 import comment from "./modules/comment";
 import voting from "./modules/voting";
+import {LAYOUT} from "../data/enum";
 
 axios.defaults.baseURL = process.env.VUE_APP_API;
 
@@ -40,7 +41,8 @@ axios.interceptors.response.use(
                     } else {
                         console.log("silent refresh complete, failed signing out.");
                         store.commit("SIGN_OUT");
-                        store.commit('SET_LAYOUT', 'visitor-layout');
+                        store.commit('layout/setLayout', LAYOUT.LOADING, {root: true});
+
                         router.push('landing');
                         console.log("do we reach this ting or we are redirected back to auth.");
                     }
@@ -121,14 +123,14 @@ export const store = new Vuex.Store({
                     let appId = '';
                     if (success) {
                         const {data: profile} = await axios.get('users/me');
-                        if (profile.activated) {
-                            commit('SET_LAYOUT', 'user-layout');
-                        }
+                        commit('layout/setLayout', profile.activated ? LAYOUT.USER : LAYOUT.VISITOR, {root: true});
                         commit('UPDATE_PROFILE', profile);
                         dispatch('LOAD_TRIBUNAL_COUNT');
                         dispatch('notifications/getNotifications');
                         const {data: oneSignalId} = await axios.get('platform/one-signal');
                         appId = oneSignalId;
+                    } else {
+                        commit('layout/setLayout', LAYOUT.VISITOR, {root: true});
                     }
 
                     commit('COMPLETE_INIT', success);
@@ -138,7 +140,7 @@ export const store = new Vuex.Store({
         SIGN_OUT(context) {
             this.state.userMgr.signoutRedirect();
             context.commit("SIGN_OUT");
-            context.commit('SET_LAYOUT', 'visitor-layout');
+            context.commit('layout/setLayout', LAYOUT.LOADING, {root: true});
         }
     },
     modules: {
@@ -148,9 +150,9 @@ export const store = new Vuex.Store({
         voting,
         matches,
         updateMatch,
+        layout,
 
         //todo namespace these
-        layout,
         profile,
         popup,
         user,

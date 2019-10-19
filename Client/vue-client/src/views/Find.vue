@@ -1,6 +1,6 @@
 <template>
     <div class="main-card">
-        <v-btn @click="refreshMatches(null)" color="primary" fixed bottom small left fab>
+        <v-btn @click="refreshMatches({})" color="primary" fixed bottom small left fab>
             <v-icon>{{icons.refresh}}</v-icon>
         </v-btn>
         <div class="ma-5 d-flex flex-column align-center" v-if="loading">

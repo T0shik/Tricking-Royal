@@ -1,26 +1,12 @@
-import Vue from "vue";
-import Vuex from "vuex"
+import {LAYOUT} from "../../data/enum";
 
-Vue.use(Vuex)
-//---Layouts
-//visitor-layout
-//user-layout
 export default {
+    namespaced: true,
     state: {
-        layout: 'visitor-layout',
-        navbar: false
-    },
-    getters: {
-        GET_LAYOUT: state => {
-            return state.layout;
-        },
-        HAS_NAVBAR: state => {
-            return state.navbar
-        }
+        layout: LAYOUT.LOADING,
     },
     mutations: {
-        SET_LAYOUT(state, payload) {
-            state.navbar = payload === 'user-layout'
+        setLayout(state, payload) {
             state.layout = payload
         }
     }
