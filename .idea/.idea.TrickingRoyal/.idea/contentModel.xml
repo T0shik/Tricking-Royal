@@ -295,11 +295,7 @@
           <e p="ImageController.cs" t="Include" />
           <e p="VideoController.cs" t="Include" />
         </e>
-        <e p="ffmpeg" t="Include">
-          <e p="ffmpeg.exe" t="Include" />
-          <e p="ffplay.exe" t="Include" />
-          <e p="ffprobe.exe" t="Include" />
-        </e>
+        <e p="ffmpeg" t="Include" />
         <e p="FileServices" t="Include">
           <e p="BaseFileManager.cs" t="Include" />
           <e p="FileStreams.cs" t="Include" />

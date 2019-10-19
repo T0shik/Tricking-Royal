@@ -16,6 +16,7 @@ namespace Battles.Cdn.FileServices
     public class VideoManager : BaseFileManager
     {
         private readonly string _matchVideos;
+        private readonly string _ffmpegPath;
         private readonly ILogger<VideoManager> _logger;
 
         public VideoManager(
@@ -24,6 +25,9 @@ namespace Battles.Cdn.FileServices
             ILogger<VideoManager> logger)
         {
             _matchVideos = env.IsProduction() ? filePaths.Videos : Path.Combine(env.WebRootPath, filePaths.Videos);
+            _ffmpegPath = env.IsProduction()
+                              ? filePaths.VideoEditingExecutables
+                              : Path.Combine(env.ContentRootPath, filePaths.VideoEditingExecutables);
             _logger = logger;
         }
 
@@ -99,7 +103,7 @@ namespace Battles.Cdn.FileServices
             var tempThumbName = $"temp_{thumbName}";
             var tempThumbPath = Path.Combine(savePath, tempThumbName);
 
-            FFmpeg.ExecutablesPath = Path.Combine(Directory.GetCurrentDirectory(), "ffmpeg");
+            FFmpeg.ExecutablesPath = _ffmpegPath;
 
             var mediaInfo = await MediaInfo.Get(inputFile);
             var videoStream = mediaInfo.VideoStreams.First();
