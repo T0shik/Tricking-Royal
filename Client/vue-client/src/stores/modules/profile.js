@@ -1,4 +1,5 @@
 import axios from "axios";
+import {LAYOUT} from "../../data/enum";
 
 export default {
     state: {
@@ -9,7 +10,7 @@ export default {
             return state.profile;
         },
         HOST_LIMIT_REACHED: state => {
-            return state.profile === null || state.profile.hosting >= state.profile.hostingLimit 
+            return state.profile === null || state.profile.hosting >= state.profile.hostingLimit
         },
         JOIN_LIMIT_REACHED: state => {
             return state.profile === null || state.profile.joined >= state.profile.joinedLimit;
@@ -32,7 +33,7 @@ export default {
     actions: {
         UPDATE_PROFILE({commit}, payload) {
             commit('UPDATE_PROFILE', payload);
-            commit('SET_LAYOUT', 'user-layout')
+            commit('SET_LAYOUT', LAYOUT.USER, {root: true})
         },
         REFRESH_PROFILE({commit}) {
             axios.get('users/me')

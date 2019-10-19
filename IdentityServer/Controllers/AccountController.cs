@@ -1,10 +1,8 @@
-﻿using Battles.Domain.Models;
-using IdentityServer.Extensions;
+﻿using IdentityServer.Extensions;
 using IdentityServer.Models.AccountViewModels;
 using IdentityServer.Services;
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -28,7 +26,6 @@ namespace IdentityServer.Controllers
         private readonly IIdentityServerInteractionService _interaction;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
-        private readonly IConfiguration _config;
 
         public AccountController(
             AppDbContext ctx,
@@ -46,7 +43,6 @@ namespace IdentityServer.Controllers
 
             _emailSender = emailSender;
             _logger = loggerFactory.CreateLogger<AccountController>();
-            _config = config;
         }
 
         [HttpGet]
@@ -55,14 +51,13 @@ namespace IdentityServer.Controllers
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> Login(string returnUrl = null) =>
-            _signInManager.IsSignedIn(HttpContext.User) ?
-                BackToHome() :
-                View(new LoginViewModel()
+            _signInManager.IsSignedIn(HttpContext.User)
+                ? BackToHome()
+                : View(new LoginViewModel()
                 {
                     ExternalAuth = await HttpContext.GetExternalProvidersAsync(),
                     ReturnUrl = returnUrl
                 });
-
 
         [HttpPost]
         [AllowAnonymous]
@@ -85,7 +80,9 @@ namespace IdentityServer.Controllers
                         return View(model);
                     }
 
-                    var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, lockoutOnFailure: false);
+                    var result =
+                        await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe,
+                                                                 lockoutOnFailure: false);
 
                     if (result.Succeeded)
                     {
@@ -93,12 +90,15 @@ namespace IdentityServer.Controllers
                         {
                             return Redirect(model.ReturnUrl);
                         }
+
                         return Redirect("~/");
                     }
+
                     if (result.RequiresTwoFactor)
                     {
-                        return RedirectToAction(nameof(SendCode), new { model.ReturnUrl, model.RememberMe });
+                        return RedirectToAction(nameof(SendCode), new {model.ReturnUrl, model.RememberMe});
                     }
+
                     if (result.IsLockedOut)
                     {
                         _logger.LogWarning(2, "User account locked out.");
@@ -124,17 +124,16 @@ namespace IdentityServer.Controllers
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Register(string returnUrl = null) =>
-            _signInManager.IsSignedIn(HttpContext.User) ?
-                BackToHome() :
-                View(new RegisterViewModel
+            _signInManager.IsSignedIn(HttpContext.User)
+                ? BackToHome()
+                : View(new RegisterViewModel
                 {
                     ReturnUrl = returnUrl
                 });
 
-
         [HttpPost]
         [AllowAnonymous]
-        public IActionResult BackToLogin(string returnUrl = null) => RedirectToAction("Login", new { returnUrl });
+        public IActionResult BackToLogin(string returnUrl = null) => RedirectToAction("Login", new {returnUrl});
 
         [HttpPost]
         [AllowAnonymous]
@@ -148,7 +147,7 @@ namespace IdentityServer.Controllers
             {
                 return View(model);
             }
-            
+
             var user = new ApplicationUser(model.Email);
             var result = await _userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
@@ -166,7 +165,7 @@ namespace IdentityServer.Controllers
             }
 
             AddErrors(result);
-            
+
             return View(model);
         }
 
@@ -176,10 +175,13 @@ namespace IdentityServer.Controllers
             await _signInManager.SignOutAsync();
             _logger.LogInformation(4, "User logged out.");
             var logout = await _interaction.GetLogoutContextAsync(logoutId);
-            if (String.IsNullOrEmpty(logout.PostLogoutRedirectUri))
+            
+            if (string.IsNullOrEmpty(logout.PostLogoutRedirectUri))
+            {
                 return RedirectToAction("Index", "Home");
-            else
-                return Redirect(logout.PostLogoutRedirectUri);
+            }
+
+            return Redirect(logout.PostLogoutRedirectUri);
         }
 
         [HttpPost]
@@ -188,7 +190,7 @@ namespace IdentityServer.Controllers
         public IActionResult ExternalLogin(string provider, string returnUrl = null)
         {
             // Request a redirect to the external login provider.
-            var redirectUrl = Url.Action(nameof(ExternalLoginCallback), "Account", new { ReturnUrl = returnUrl });
+            var redirectUrl = Url.Action(nameof(ExternalLoginCallback), "Account", new {ReturnUrl = returnUrl});
             var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
             return Challenge(properties, provider);
         }
@@ -202,6 +204,7 @@ namespace IdentityServer.Controllers
                 ModelState.AddModelError(string.Empty, $"Error from external provider: {remoteError}");
                 return View(nameof(Login));
             }
+
             var info = await _signInManager.GetExternalLoginInfoAsync();
             if (info == null)
             {
@@ -209,16 +212,20 @@ namespace IdentityServer.Controllers
             }
 
             // Sign in the user with this external login provider if the user already has a login.
-            var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false);
+            var result =
+                await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey,
+                                                              isPersistent: false);
             if (result.Succeeded)
             {
                 _logger.LogInformation(5, "User logged in with {Name} provider.", info.LoginProvider);
                 return RedirectToLocal(returnUrl);
             }
+
             if (result.RequiresTwoFactor)
             {
-                return RedirectToAction(nameof(SendCode), new { ReturnUrl = returnUrl });
+                return RedirectToAction(nameof(SendCode), new {ReturnUrl = returnUrl});
             }
+
             if (result.IsLockedOut)
             {
                 return View("Lockout");
@@ -244,13 +251,13 @@ namespace IdentityServer.Controllers
             {
                 return View(model);
             }
-            
+
             var info = await _signInManager.GetExternalLoginInfoAsync();
             if (info == null)
             {
                 return View("ExternalLoginFailure");
             }
-            
+
             var user = new ApplicationUser(model.Email);
             var result = await _userManager.CreateAsync(user);
             if (result.Succeeded)
@@ -269,6 +276,7 @@ namespace IdentityServer.Controllers
                     return RedirectToLocal(model.ReturnUrl);
                 }
             }
+
             AddErrors(result);
 
             return View(model);
@@ -278,15 +286,18 @@ namespace IdentityServer.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> ConfirmEmail(string userId, string code)
         {
-            if (userId == null || code == null)
+            if (userId == null
+                || code == null)
             {
                 return View("Error");
             }
+
             var user = await _userManager.FindByIdAsync(userId);
             if (user == null)
             {
                 return View("Error");
             }
+
             var result = await _userManager.ConfirmEmailAsync(user, code);
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
@@ -304,7 +315,7 @@ namespace IdentityServer.Controllers
             {
                 return View(model);
             }
-            
+
             var user = await _userManager.FindByEmailAsync(model.Email);
             if (user == null)
             {
@@ -312,9 +323,10 @@ namespace IdentityServer.Controllers
             }
 
             var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-            var callbackUrl = Url.Action(nameof(ResetPassword), "Account", new { userId = user.Id, code }, protocol: HttpContext.Request.Scheme);
+            var callbackUrl = Url.Action(nameof(ResetPassword), "Account", new {userId = user.Id, code},
+                                         protocol: HttpContext.Request.Scheme);
             await _emailSender.SendEmailAsync(model.Email, "Reset Password",
-                $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>");
+                                              $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>");
             return View("ForgotPasswordConfirmation");
         }
 
@@ -326,7 +338,6 @@ namespace IdentityServer.Controllers
         [AllowAnonymous]
         public IActionResult ResetPassword(string code = null) => code == null ? View("Error") : View();
 
-
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -336,17 +347,20 @@ namespace IdentityServer.Controllers
             {
                 return View(model);
             }
+
             var user = await _userManager.FindByEmailAsync(model.Email);
             if (user == null)
             {
                 // Don't reveal that the user does not exist
                 return RedirectToAction(nameof(AccountController.ResetPasswordConfirmation), "Account");
             }
+
             var result = await _userManager.ResetPasswordAsync(user, model.Code, model.Password);
             if (result.Succeeded)
             {
                 return RedirectToAction(nameof(AccountController.ResetPasswordConfirmation), "Account");
             }
+
             AddErrors(result);
             return View();
         }
@@ -364,9 +378,12 @@ namespace IdentityServer.Controllers
             {
                 return View("Error");
             }
+
             var userFactors = await _userManager.GetValidTwoFactorProvidersAsync(user);
-            var factorOptions = userFactors.Select(purpose => new SelectListItem { Text = purpose, Value = purpose }).ToList();
-            return View(new SendCodeViewModel { Providers = factorOptions, ReturnUrl = returnUrl, RememberMe = rememberMe });
+            var factorOptions = userFactors.Select(purpose => new SelectListItem {Text = purpose, Value = purpose})
+                                           .ToList();
+            return View(new SendCodeViewModel
+                            {Providers = factorOptions, ReturnUrl = returnUrl, RememberMe = rememberMe});
         }
 
         [HttpPost]
@@ -398,7 +415,12 @@ namespace IdentityServer.Controllers
                 await _emailSender.SendEmailAsync(await _userManager.GetEmailAsync(user), "Security Code", message);
             }
 
-            return RedirectToAction(nameof(VerifyCode), new { Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl, RememberMe = model.RememberMe });
+            return RedirectToAction(nameof(VerifyCode),
+                                    new
+                                    {
+                                        Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl,
+                                        RememberMe = model.RememberMe
+                                    });
         }
 
         [HttpGet]
@@ -423,11 +445,14 @@ namespace IdentityServer.Controllers
                 return View(model);
             }
 
-            var result = await _signInManager.TwoFactorSignInAsync(model.Provider, model.Code, model.RememberMe, model.RememberBrowser);
+            var result =
+                await _signInManager.TwoFactorSignInAsync(model.Provider, model.Code, model.RememberMe,
+                                                          model.RememberBrowser);
             if (result.Succeeded)
             {
                 return RedirectToLocal(model.ReturnUrl);
             }
+
             if (result.IsLockedOut)
             {
                 _logger.LogWarning(7, "User account locked out.");
@@ -443,8 +468,7 @@ namespace IdentityServer.Controllers
         [HttpGet]
         public IActionResult AccessDenied() => View();
 
-
-        #region Helpers
+#region Helpers
 
         private void AddErrors(IdentityResult result)
         {
@@ -461,6 +485,6 @@ namespace IdentityServer.Controllers
 
         private IActionResult RedirectToUrl(string url) => Redirect(url);
 
-        #endregion
+#endregion
     }
 }
