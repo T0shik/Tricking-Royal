@@ -11,7 +11,6 @@ const router = new Router({
         {
             path: '/',
             name: 'landing',
-            alias: "/index.html",
             meta: {
                 auth: false,
                 profile: false
@@ -30,6 +29,7 @@ const router = new Router({
         {
             path: '/battles/:type?/:id?',
             name: 'battles',
+            alias: "/index.html",
             meta: {
                 auth: true,
                 profile: true
