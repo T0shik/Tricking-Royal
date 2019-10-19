@@ -1057,6 +1057,7 @@
             <e p="assets" t="Include" />
             <e p="components" t="Include">
               <e p="layout" t="Include">
+                <e p="LoadingLayout.vue" t="Include" />
                 <e p="modals" t="Include">
                   <e p="Confirmation.vue" t="Include" />
                   <e p="Connecting.vue" t="Include" />
@@ -1112,6 +1113,9 @@
               <e p="matches.js" t="Include" />
               <e p="perks.js" t="Include" />
               <e p="skills.js" t="Include" />
+            </e>
+            <e p="logger" t="Include">
+              <e p="logger.js" t="Include" />
             </e>
             <e p="main.js" t="Include" />
             <e p="plugins" t="Include">

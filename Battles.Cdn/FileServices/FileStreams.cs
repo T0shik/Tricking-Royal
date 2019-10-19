@@ -14,17 +14,19 @@ namespace Battles.Cdn.FileServices
             IHostingEnvironment env,
             FilePaths filePaths)
         {
-            _matchVideos = Path.Combine(env.WebRootPath, filePaths.Videos);
-            _userImages = Path.Combine(env.WebRootPath, filePaths.UserImages);
+            _matchVideos = env.IsProduction() ? filePaths.Videos : Path.Combine(env.WebRootPath, filePaths.Videos);
+            _userImages = env.IsProduction()
+                              ? filePaths.UserImages
+                              : Path.Combine(env.WebRootPath, filePaths.UserImages);
             _staticImages = Path.Combine(env.WebRootPath, filePaths.StaticImages);
         }
-        
+
         public FileStream StaticImageStream(string fileName) =>
             FileStream(Path.Combine(_staticImages, fileName));
 
         public FileStream UserImageStream(string id, string fileName) =>
             FileStream(Path.Combine(_userImages, id, fileName));
-        
+
         public FileStream VideoStream(string id, string fileName) =>
             FileStream(Path.Combine(_matchVideos, id, fileName));
 
