@@ -4,11 +4,12 @@ import vuetify from './plugins/vuetify';
 import router from './router'
 import {store} from './stores/store'
 import "./components/shared/index"
+import "./registerServiceWorker"
 import Axios from 'axios'
+import Logger from "./logger/logger";
 
 import {loadProgressBar} from 'axios-progress-bar'
 import 'axios-progress-bar/dist/nprogress.css'
-import Logger from "./logger/logger";
 
 loadProgressBar();
 
