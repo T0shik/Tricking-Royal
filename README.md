@@ -1,4 +1,4 @@
-# TrickingRoyal [![Build Status](https://antonwieslander.visualstudio.com/TrickingRoyal/_apis/build/status/T0shik.TrickingRoyalTest?branchName=master)](https://antonwieslander.visualstudio.com/TrickingRoyal/_build/latest?definitionId=4&branchName=master)
+# TrickingRoyal [![Build Status](https://antonwieslander.visualstudio.com/TrickingRoyal/_apis/build/status/T0shik.TrickingRoyalTest?branchName=master)](https://antonwieslander.visualstudio.com/TrickingRoyal/_build/latest?definitionId=5&branchName=master)
 
 Social Network for online Tricking battles. The aim of this project is to provide a platform for Trickers to connect with each other share content and push each other out of the comfort zone in a playful rewarding way.
 
