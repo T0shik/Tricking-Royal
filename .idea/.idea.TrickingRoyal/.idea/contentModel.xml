@@ -979,7 +979,7 @@
             <e p="manifest.json" t="Include" />
             <e p="OneSignalSDKUpdaterWorker.js" t="Include" />
             <e p="OneSignalSDKWorker.js" t="Include" />
-            <e p="precache-manifest.412fb1e49d76cb5d275d0893493850c8.js" t="Include" />
+            <e p="precache-manifest.84476540baa3957f930c6c04245b477f.js" t="Include" />
             <e p="robots.txt" t="Include" />
             <e p="service-worker.js" t="Include" />
             <e p="static" t="Include">
