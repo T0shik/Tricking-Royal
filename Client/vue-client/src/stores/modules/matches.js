@@ -3,6 +3,7 @@ import Vuex from "vuex"
 import router from "../../router";
 import {MATCH_TYPES} from "../../data/enum";
 import {deleteMatch, getMatches, joinMatch} from "../../data/api";
+import Logger from "../../logger/logger";
 
 Vue.use(Vuex);
 
@@ -57,7 +58,7 @@ export default {
             }
         },
         toggleLoading(state, loader) {
-            console.log(`toggling loader ${loader}, current value: ${state[loader]}`);
+            Logger.log(`toggling loader ${loader}, current value: ${state[loader]}`);
             state[loader] = !state[loader];
         },
         saveType(state, type) {
@@ -83,7 +84,7 @@ export default {
             }
         },
         loadMatches({state, commit}, {type, toggle = true}) {
-            console.log(`Loading ${type} matches, loading toggled: ${toggle}`);
+            Logger.log(`Loading ${type} matches, loading toggled: ${toggle}`);
             if (!state.loading && toggle) {
                 commit('toggleLoading', 'loading');
             }

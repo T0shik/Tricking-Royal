@@ -38,6 +38,7 @@
     <Content Include="vue-client\src\data\api.js" />
     <Content Include="vue-client\src\data\enum.js" />
     <Content Include="vue-client\src\data\perks.js" />
+    <Content Include="vue-client\src\logger\logger.js" />
     <Content Include="vue-client\vue.config.js" />
     <None Remove="$(SpaRoot)**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
