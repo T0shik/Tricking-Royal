@@ -32,11 +32,13 @@
     <Content Include="vue-client\public\OneSignalSDKUpdaterWorker.js" />
     <Content Include="vue-client\public\OneSignalSDKWorker.js" />
     <Content Include="vue-client\public\static\oidc-client.min.js" />
+    <Content Include="vue-client\src\components\layout\LoadingLayout.vue" />
     <Content Include="vue-client\src\components\shared\index.js" />
     <Content Include="vue-client\src\components\shared\ProfileImage.vue" />
     <Content Include="vue-client\src\data\api.js" />
     <Content Include="vue-client\src\data\enum.js" />
     <Content Include="vue-client\src\data\perks.js" />
+    <Content Include="vue-client\src\logger\logger.js" />
     <Content Include="vue-client\vue.config.js" />
     <None Remove="$(SpaRoot)**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />

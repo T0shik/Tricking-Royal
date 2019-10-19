@@ -27,3 +27,9 @@ export const NOTIFICATION_TYPE = {
     WEB: 1,
     EMAIL: 2
 };
+
+export const LAYOUT = {
+    LOADING: 'loading-layout',
+    VISITOR: 'visitor-layout',
+    USER: 'user-layout',
+};

@@ -118,8 +118,8 @@
                                         </v-btn>
                                     </v-list-item-action>
                                     <v-list-item-content>
-                                        <v-list-item-title>Email (click icon to {{emailConfig.enabled ? 'disable' :
-                                            'enable'}})
+                                        <v-list-item-title>
+                                            Email (click icon to {{emailConfig.enabled ? 'disable' : 'enable'}})
                                         </v-list-item-title>
                                         <v-list-item-subtitle>
                                             {{emailConfig.notificationId}}

@@ -3,18 +3,19 @@
   "short_name": "TrickingRoyal",
   "icons": [
     {
-      "src": "https://cdn.trickingroyal.com/image/static/main_192x192.png",
+      "src": "https://cdn.trickingroyal.com/static/main_192x192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "https://cdn.trickingroyal.com/image/static/main_512x512.png",
+      "src": "https://cdn.trickingroyal.com/static/main_512x512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
   ],
-  "start_url": "/index.html",
+  "start_url": "/",
   "display": "standalone",
+  "orientation": "portrait-primary",
   "background_color": "#30343f",
   "theme_color": "#9a48ab"
 }

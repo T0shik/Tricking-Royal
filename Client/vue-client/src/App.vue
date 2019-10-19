@@ -7,7 +7,8 @@
 <script>
     import VisitorLayout from "./components/layout/VisitorLayout";
     import UserLayout from "./components/layout/UserLayout";
-    import {mapGetters} from "vuex";
+    import LoadingLayout from "./components/layout/LoadingLayout";
+    import {mapState} from "vuex";
     import {NOTIFICATION_TYPE} from "./data/enum";
 
     export default {
@@ -29,7 +30,7 @@
                         OneSignal.addListenerForNotificationOpened(({data}) => {
                             let {id, navigation, type} = data;
                             this.$store.dispatch('notifications/touchNotificationById', id);
-                            this.$store.dispatch('matches/refreshMatches');
+                            this.$store.dispatch('matches/refreshMatches', null);
                             this.$store.dispatch('REFRESH_PROFILE');
                             this.open(navigation, type);
                             createOneSignalEventListener();
@@ -95,13 +96,10 @@
         },
         components: {
             VisitorLayout,
-            UserLayout
+            UserLayout,
+            LoadingLayout,
         },
-        computed: {
-            ...mapGetters({
-                layout: "GET_LAYOUT"
-            })
-        }
+        computed: mapState('layout', ['layout'])
     };
 </script>
 

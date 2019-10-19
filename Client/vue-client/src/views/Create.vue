@@ -142,7 +142,7 @@
             }),
             ...mapActions('matches', ['setType', "deleteMatch", "refreshMatches"]),
             ...mapActions({
-                popup: "DISPLAY_POPUP",
+                popup: "DISPLAY_POPUP_DEFAULT",
             }),
             create() {
                 if (this.loading) return;
@@ -153,17 +153,12 @@
                     surface: this.form.surface.value,
                     turnTime: this.form.turnTime
                 }).then(({data}) => {
-                        const {message, success} = data;
-                        if (success) {
-                            this.refreshMatches(MATCH_TYPES.HOSTED);
-                            this.refreshMatches(MATCH_TYPES.OPEN);
+                        if (data.success) {
+                            this.refreshMatches({type: MATCH_TYPES.HOSTED, toggle: false});
                             this.$router.push("/find-battle");
                             this.incrementHosting(1);
                         }
-                        this.popup({
-                            message: message,
-                            type: success ? "success" : "error"
-                        });
+                        this.popup(data);
                     }
                 )
                     .then(() => {
