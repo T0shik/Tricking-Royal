@@ -1,5 +1,4 @@
 import axios from "axios";
-import {LAYOUT} from "../../data/enum";
 
 export default {
     state: {
