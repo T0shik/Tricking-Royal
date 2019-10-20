@@ -8,7 +8,7 @@
 
 # Local Resources
 Battles.Cdn/wwwroot/content
-Battles.Cdn/ffmpeg/**
+Battles.Cdn/ffmpeg
 Battles.Tests/TestResults
 **/wwwroot/lib
 

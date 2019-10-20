@@ -132,7 +132,7 @@
                     return this.$axios.post(`/matches/${this.match.id}/pass`)
                         .then(({data}) => {
                             this.$store.dispatch('DISPLAY_POPUP_DEFAULT', data);
-                            this.$store.dispatch('matches/refreshMatches');
+                            this.$store.dispatch('matches/refreshMatches', {});
                         });
                 };
                 this.set({

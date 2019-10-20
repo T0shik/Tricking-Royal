@@ -15,7 +15,8 @@ namespace Battles.Cdn.FileServices
 {
     public class VideoManager : BaseFileManager
     {
-        private readonly string _videoPath;
+        private readonly string _matchVideos;
+        private readonly string _ffmpegPath;
         private readonly ILogger<VideoManager> _logger;
 
         public VideoManager(
@@ -23,7 +24,10 @@ namespace Battles.Cdn.FileServices
             IHostingEnvironment env,
             ILogger<VideoManager> logger)
         {
-            _videoPath = Path.Combine(env.WebRootPath, filePaths.Videos);
+            _matchVideos = env.IsProduction() ? filePaths.Videos : Path.Combine(env.WebRootPath, filePaths.Videos);
+            _ffmpegPath = env.IsProduction()
+                              ? filePaths.VideoEditingExecutables
+                              : Path.Combine(env.ContentRootPath, filePaths.VideoEditingExecutables);
             _logger = logger;
         }
 
@@ -31,7 +35,7 @@ namespace Battles.Cdn.FileServices
         {
             try
             {
-                var savePath = Path.Combine(_videoPath, id);
+                var savePath = Path.Combine(_matchVideos, id);
 
                 if (!Directory.Exists(savePath))
                 {
@@ -57,12 +61,14 @@ namespace Battles.Cdn.FileServices
             }
         }
 
-        public async Task<(bool Complete, Response Response)> TrimVideoAsync(string id, string video, double start,
-            double end)
+        public async Task<(bool Complete, Response Response)> TrimVideoAsync(string id,
+                                                                             string video,
+                                                                             double start,
+                                                                             double end)
         {
             try
             {
-                var savePath = Path.Combine(_videoPath, id);
+                var savePath = Path.Combine(_matchVideos, id);
                 var inputFile = Path.Combine(savePath, video);
 
                 var fileName = CreateFileName();
@@ -74,8 +80,8 @@ namespace Battles.Cdn.FileServices
                 TryRemoveFile(inputFile);
 
                 return !convertSuccess
-                    ? (false, new Response("Conversion Failed"))
-                    : (true, new Response(outputName, thumbName));
+                           ? (false, new Response("Conversion Failed"))
+                           : (true, new Response(outputName, thumbName));
             }
             catch (Exception e)
             {
@@ -97,7 +103,7 @@ namespace Battles.Cdn.FileServices
             var tempThumbName = $"temp_{thumbName}";
             var tempThumbPath = Path.Combine(savePath, tempThumbName);
 
-            FFmpeg.ExecutablesPath = Path.Combine(Directory.GetCurrentDirectory(), "ffmpeg");
+            FFmpeg.ExecutablesPath = _ffmpegPath;
 
             var mediaInfo = await MediaInfo.Get(inputFile);
             var videoStream = mediaInfo.VideoStreams.First();
@@ -115,11 +121,11 @@ namespace Battles.Cdn.FileServices
                     .Split(startSpan, duration);
 
                 var conversion = Conversion.New()
-                    .AddStream(videoStream)
-                    .AddStream(audioStream)
-                    .SetOutput(outputPath)
-                    .UseMultiThread(false)
-                    .SetPreset(ConversionPreset.Fast);
+                                           .AddStream(videoStream)
+                                           .AddStream(audioStream)
+                                           .SetOutput(outputPath)
+                                           .UseMultiThread(false)
+                                           .SetPreset(ConversionPreset.Fast);
 
                 await conversion.Start();
                 await Conversion.Snapshot(outputPath, tempThumbPath, new TimeSpan(0)).Start();
@@ -131,15 +137,14 @@ namespace Battles.Cdn.FileServices
             catch (Exception e)
             {
                 _logger.LogError(
-                    $"{e.Message} - input: {inputFile} - start: {startSpan} - end: {endSpan} - duration: {duration}");
+                                 $"{e.Message} - input: {inputFile} - start: {startSpan} - end: {endSpan} - duration: {duration}");
                 return false;
             }
         }
 
-
         public bool RemoveFile(string id, string fileName)
         {
-            return string.IsNullOrEmpty(fileName) && TryRemoveFile(Path.Combine(_videoPath, id, fileName));
+            return string.IsNullOrEmpty(fileName) && TryRemoveFile(Path.Combine(_matchVideos, id, fileName));
         }
 
         private static void OptimizeThumb(string tempThumbPath, string thumbPath)

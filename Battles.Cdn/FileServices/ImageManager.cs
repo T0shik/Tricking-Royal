@@ -24,7 +24,9 @@ namespace Battles.Cdn.FileServices
         {
             _env = env;
             _logger = logger;
-            _userImages = Path.Combine(_env.WebRootPath, filePaths.UserImages);
+            _userImages = env.IsProduction()
+                              ? filePaths.UserImages
+                              : Path.Combine(_env.WebRootPath, filePaths.UserImages);
             _staticImages = Path.Combine(_env.WebRootPath, filePaths.StaticImages);
         }
 

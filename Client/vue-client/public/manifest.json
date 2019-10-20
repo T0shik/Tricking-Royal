@@ -13,9 +13,10 @@
       "type": "image/png"
     }
   ],
-  "start_url": "/",
-  "display": "standalone",
-  "orientation": "portrait-primary",
+  "start_url": "/index.html",
   "background_color": "#30343f",
-  "theme_color": "#9a48ab"
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#9a48ab",
+  "orientation": "portrait-primary"
 }

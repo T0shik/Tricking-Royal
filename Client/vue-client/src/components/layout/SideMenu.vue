@@ -50,44 +50,46 @@
         </v-container>
         <p class="title ml-2 white--text">Menu</p>
         <v-list dense class="pt-0">
-            <v-list-item to="/battles">
-                <v-list-item-icon>
-                    <v-icon>{{icons.battle}}</v-icon>
-                </v-list-item-icon>
-                <v-list-item-content>
-                    <v-list-item-title>Battles</v-list-item-title>
-                </v-list-item-content>
-            </v-list-item>
-            <v-list-item to="/create-battle">
-                <v-list-item-icon>
-                    <v-icon>{{icons.add}}</v-icon>
-                </v-list-item-icon>
-                <v-list-item-content>
-                    <v-list-item-title>Create Battle</v-list-item-title>
-                </v-list-item-content>
-                <span>{{profile.hosting}}/{{profile.hostingLimit}}</span>
-            </v-list-item>
-            <v-list-item to="/find-battle">
-                <v-list-item-icon>
-                    <v-icon>{{icons.search}}</v-icon>
-                </v-list-item-icon>
-                <v-list-item-content>
-                    <v-list-item-title>Find Battle</v-list-item-title>
-                </v-list-item-content>
-                <span>{{profile.joined}}/{{profile.joinedLimit}}</span>
-            </v-list-item>
-            <v-list-item to="/tribunal">
-                <v-list-item-icon>
-                    <v-icon>{{icons.gavel}}</v-icon>
-                </v-list-item-icon>
-                <v-list-item-content>
-                    <v-list-item-title>Tribunal</v-list-item-title>
-                </v-list-item-content>
-                <span>
+            <v-list-item-group color="primary">
+                <v-list-item to="/battles">
+                    <v-list-item-icon>
+                        <v-icon>{{icons.battle}}</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-content>
+                        <v-list-item-title>Battles</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
+                <v-list-item to="/create-battle">
+                    <v-list-item-icon>
+                        <v-icon>{{icons.add}}</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-content>
+                        <v-list-item-title>Create Battle</v-list-item-title>
+                    </v-list-item-content>
+                    <span>{{profile.hosting}}/{{profile.hostingLimit}}</span>
+                </v-list-item>
+                <v-list-item to="/find-battle">
+                    <v-list-item-icon>
+                        <v-icon>{{icons.search}}</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-content>
+                        <v-list-item-title>Find Battle</v-list-item-title>
+                    </v-list-item-content>
+                    <span>{{profile.joined}}/{{profile.joinedLimit}}</span>
+                </v-list-item>
+                <v-list-item to="/tribunal">
+                    <v-list-item-icon>
+                        <v-icon>{{icons.gavel}}</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-content>
+                        <v-list-item-title>Tribunal</v-list-item-title>
+                    </v-list-item-content>
+                    <span>
                     <v-progress-circular v-if="loadingCount" :size="20" :width="2" indeterminate></v-progress-circular>
                     <span v-else>{{tribunalCount}}</span>
                 </span>
-            </v-list-item>
+                </v-list-item>
+            </v-list-item-group>
         </v-list>
         <v-dialog v-model="levelUp" :persistent="loading" max-width="500px">
             <v-card color="secondary">
