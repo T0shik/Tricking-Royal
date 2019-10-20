@@ -27,8 +27,8 @@
 </template>
 
 <script>
-    import axios from "axios";
     import skillList from "../data/skills.js";
+    import {LAYOUT} from "../data/enum";
 
     export default {
         data() {
@@ -42,10 +42,11 @@
             choose() {
                 if (this.loading) return;
                 this.loading = true;
-                axios
+                this.$axios
                     .post("/users", {skill: this.skill})
                     .then(({data}) => {
                         this.$store.dispatch("UPDATE_PROFILE", data);
+                        this.$store.commit('layout/setLayout', LAYOUT.USER, {root: true})
                         this.$router.replace("/battles");
                     })
                     .catch(err => {

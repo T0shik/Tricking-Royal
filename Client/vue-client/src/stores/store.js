@@ -123,8 +123,8 @@ export const store = new Vuex.Store({
                     let appId = '';
                     if (success) {
                         const {data: profile} = await axios.get('users/me');
-                        commit('layout/setLayout', profile.activated ? LAYOUT.USER : LAYOUT.VISITOR, {root: true});
                         commit('UPDATE_PROFILE', profile);
+                        commit('layout/setLayout', profile.activated ? LAYOUT.USER : LAYOUT.VISITOR, {root: true});
                         dispatch('LOAD_TRIBUNAL_COUNT');
                         dispatch('notifications/getNotifications');
                         const {data: oneSignalId} = await axios.get('platform/one-signal');
