@@ -37,61 +37,64 @@ namespace IdentityServer
 
             services.Configure<CookiePolicyOptions>(options =>
             {
-//                options.CheckConsentNeeded = context => _env.IsDevelopment()
-//                    ? !context.Request.Path.StartsWithSegments("/Server")
-//                      && !context.Request.Path.StartsWithSegments("/connect")
-//                      && !context.Request.PathBase.Value.Contains("api")
-//                    : !context.Request.Path.StartsWithSegments("/connect")
-//                      && !context.Request.Host.Value.Contains("api");
+                //                options.CheckConsentNeeded = context => _env.IsDevelopment()
+                //                    ? !context.Request.Path.StartsWithSegments("/Server")
+                //                      && !context.Request.Path.StartsWithSegments("/connect")
+                //                      && !context.Request.PathBase.Value.Contains("api")
+                //                    : !context.Request.Path.StartsWithSegments("/connect")
+                //                      && !context.Request.Host.Value.Contains("api");
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
             if (_env.IsProduction())
             {
                 services.AddDataProtection()
-                    .SetApplicationName("IdentityServer")
-                    .PersistKeysToFileSystem(new DirectoryInfo(_env.ContentRootPath));
+                        .SetApplicationName("IdentityServer")
+                        .PersistKeysToFileSystem(new DirectoryInfo(_env.ContentRootPath));
             }
 
             services.AddIdentity<ApplicationUser, IdentityRole>(IdentitySetupAction())
-                .AddEntityFrameworkStores<AppDbContext>()
-                .AddDefaultTokenProviders();
+                    .AddEntityFrameworkStores<AppDbContext>()
+                    .AddDefaultTokenProviders();
 
             var connectionString = _config.GetConnectionString("DefaultConnection");
             services.AddDbContext<AppDbContext>(options =>
-                options.UseSqlServer(connectionString));
+                                                    options.UseSqlServer(connectionString));
 
             AddIdentityServerConfiguration(services, connectionString);
 
             var facebook = _config.GetSection(nameof(Facebook)).Get<Facebook>();
             services.AddAuthentication()
-                .AddFacebook(options =>
-                {
-                    options.AppId = facebook.Id;
-                    options.AppSecret = facebook.Secret;
-                    options.Events.OnRemoteFailure = (context) =>
+                    .AddFacebook(options =>
                     {
-                        context.Response.Redirect("/account/login");
-                        context.HandleResponse();
-                        return System.Threading.Tasks.Task.FromResult(0);
-                    };
-                });
+                        options.AppId = facebook.Id;
+                        options.AppSecret = facebook.Secret;
+                        options.Events.OnRemoteFailure = (context) =>
+                        {
+                            context.Response.Redirect("/account/login");
+                            context.HandleResponse();
+                            return System.Threading.Tasks.Task.FromResult(0);
+                        };
+                    });
 
             SetupCors(services, routing.Client);
 
             services.AddTransient<IEmailSender, AuthMessageSender>();
 
+            services.AddHealthChecks();
             services.AddMvc();
         }
 
         public void Configure(IApplicationBuilder app,
-            ILoggerFactory loggerFactory)
+                              ILoggerFactory loggerFactory)
         {
+            app.UseCors(_env.IsDevelopment() ? "AllowAll" : "AllowClients");
+            app.UseHealthChecks("/healthcheck");
+            
             if (_env.IsDevelopment())
             {
-                app.UseCors("AllowAll")
-                    .UseDeveloperExceptionPage()
-                    .UseDatabaseErrorPage();
+                app.UseDeveloperExceptionPage()
+                   .UseDatabaseErrorPage();
             }
             else
             {
@@ -102,17 +105,16 @@ namespace IdentityServer
                     return next();
                 });
 
-                app.UseExceptionHandler("/Shared/Error")
-                    .UseCors("AllowClient");
+                app.UseExceptionHandler("/Shared/Error");
             }
-
+            
             app.UseCookiePolicy()
-                .UseStaticFiles()
-                .UseIdentityServer()
-                .UseMvcWithDefaultRoute();
+               .UseStaticFiles()
+               .UseIdentityServer()
+               .UseMvcWithDefaultRoute();
         }
 
-        #region Helpers
+#region Helpers
 
         private void AddIdentityServerConfiguration(
             IServiceCollection services,
@@ -142,22 +144,22 @@ namespace IdentityServer
 
             var migrationsAssembly = typeof(AppDbContext).GetTypeInfo().Assembly.GetName().Name;
             identityServiceBuilder.AddConfigurationStore(options =>
-                {
-                    options.ConfigureDbContext = builder =>
-                        builder.UseSqlServer(connectionString,
-                            sql => sql.MigrationsAssembly(migrationsAssembly));
-                })
-                .AddOperationalStore(options =>
-                {
-                    options.ConfigureDbContext = builder =>
-                        builder.UseSqlServer(connectionString,
-                            sql => sql.MigrationsAssembly(migrationsAssembly));
+                                  {
+                                      options.ConfigureDbContext = builder =>
+                                          builder.UseSqlServer(connectionString,
+                                                               sql => sql.MigrationsAssembly(migrationsAssembly));
+                                  })
+                                  .AddOperationalStore(options =>
+                                  {
+                                      options.ConfigureDbContext = builder =>
+                                          builder.UseSqlServer(connectionString,
+                                                               sql => sql.MigrationsAssembly(migrationsAssembly));
 
-                    options.EnableTokenCleanup = true;
-                    options.TokenCleanupInterval = 3600 * 24;
-                })
-                .AddAspNetIdentity<ApplicationUser>()
-                .AddProfileService<IdentityProfileService>();
+                                      options.EnableTokenCleanup = true;
+                                      options.TokenCleanupInterval = 3600 * 24;
+                                  })
+                                  .AddAspNetIdentity<ApplicationUser>()
+                                  .AddProfileService<IdentityProfileService>();
         }
 
         private void SetupCors(IServiceCollection services, string clientUrl)
@@ -167,10 +169,10 @@ namespace IdentityServer
                 services.AddCors(options =>
                 {
                     options.AddPolicy("AllowAll",
-                        p => p.AllowAnyOrigin()
-                            .AllowAnyHeader()
-                            .AllowAnyMethod()
-                            .AllowCredentials());
+                                      p => p.AllowAnyOrigin()
+                                            .AllowAnyHeader()
+                                            .AllowAnyMethod()
+                                            .AllowCredentials());
                 });
             }
             else
@@ -179,11 +181,11 @@ namespace IdentityServer
 
                 services.AddCors(options =>
                 {
-                    options.AddPolicy("AllowClient",
-                        p => p.WithOrigins(clientUrl)
-                            .AllowAnyHeader()
-                            .AllowAnyMethod()
-                            .AllowCredentials());
+                    options.AddPolicy("AllowClients",
+                                      p => p.WithOrigins(clientUrl, _config["HealthChecker"])
+                                            .AllowAnyHeader()
+                                            .AllowAnyMethod()
+                                            .AllowCredentials());
                 });
             }
         }
@@ -212,6 +214,6 @@ namespace IdentityServer
             };
         }
 
-        #endregion
+#endregion
     }
 }

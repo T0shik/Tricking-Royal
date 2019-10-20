@@ -916,6 +916,8 @@
         </e>
       </e>
       <e p="Client" t="IncludeRecursive">
+        <e p="appsettings.json" t="Include" />
+        <e p="appsettings.Production.json" t="Include" />
         <e p="Battles.Client.csproj" t="IncludeRecursive" />
         <e p="bin" t="ExcludeRecursive" />
         <e p="obj" t="ExcludeRecursive">
@@ -942,9 +944,9 @@
           <e p="babel.config.js" t="Include" />
           <e p="dist" t="Include">
             <e p="css" t="Include">
-              <e p="app.f47ae91f.css" t="Include" />
+              <e p="app.98a52d84.css" t="Include" />
               <e p="battle.7aa87034.css" t="Include" />
-              <e p="battle~landing~tribunal~user~watch.20757738.css" t="Include" />
+              <e p="battle~landing~tribunal~user~watch.7fd5035f.css" t="Include" />
               <e p="chunk-vendors.ef6797c8.css" t="Include" />
               <e p="create.a8a15f8c.css" t="Include" />
               <e p="find.2affdc31.css" t="Include" />
@@ -967,22 +969,22 @@
             </e>
             <e p="index.html" t="Include" />
             <e p="js" t="Include">
-              <e p="app.7d2999ea.js" t="Include" />
-              <e p="app.7d2999ea.js.map" t="Include" />
-              <e p="battle.ef07b2ce.js" t="Include" />
-              <e p="battle.ef07b2ce.js.map" t="Include" />
-              <e p="battle~landing~tribunal~user~watch.577196c0.js" t="Include" />
-              <e p="battle~landing~tribunal~user~watch.577196c0.js.map" t="Include" />
-              <e p="chunk-vendors.dd453a66.js" t="Include" />
-              <e p="chunk-vendors.dd453a66.js.map" t="Include" />
+              <e p="app.d8bf9853.js" t="Include" />
+              <e p="app.d8bf9853.js.map" t="Include" />
+              <e p="battle.ac5954c3.js" t="Include" />
+              <e p="battle.ac5954c3.js.map" t="Include" />
+              <e p="battle~landing~tribunal~user~watch.a663a35c.js" t="Include" />
+              <e p="battle~landing~tribunal~user~watch.a663a35c.js.map" t="Include" />
+              <e p="chunk-vendors.4d9226bb.js" t="Include" />
+              <e p="chunk-vendors.4d9226bb.js.map" t="Include" />
               <e p="create.219ecf1c.js" t="Include" />
               <e p="create.219ecf1c.js.map" t="Include" />
               <e p="find.333ceed4.js" t="Include" />
               <e p="find.333ceed4.js.map" t="Include" />
               <e p="landing.fb80b9e8.js" t="Include" />
               <e p="landing.fb80b9e8.js.map" t="Include" />
-              <e p="skill.2a400b59.js" t="Include" />
-              <e p="skill.2a400b59.js.map" t="Include" />
+              <e p="skill.08d0881d.js" t="Include" />
+              <e p="skill.08d0881d.js.map" t="Include" />
               <e p="tribunal.7245620c.js" t="Include" />
               <e p="tribunal.7245620c.js.map" t="Include" />
               <e p="user.ed15cd4f.js" t="Include" />
@@ -993,7 +995,7 @@
             <e p="manifest.json" t="Include" />
             <e p="OneSignalSDKUpdaterWorker.js" t="Include" />
             <e p="OneSignalSDKWorker.js" t="Include" />
-            <e p="precache-manifest.84476540baa3957f930c6c04245b477f.js" t="Include" />
+            <e p="precache-manifest.94045e213c653b2816441072237d3fbf.js" t="Include" />
             <e p="robots.txt" t="Include" />
             <e p="service-worker.js" t="Include" />
             <e p="static" t="Include">
