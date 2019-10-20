@@ -23,7 +23,7 @@
         </v-card>
         <div v-else>
             <MatchPlayer v-for="match in matches" :match="match" :key="match.key"></MatchPlayer>
-            <v-btn class="refresh-button" @click="refreshMatches(null)" color="primary" fixed bottom small left fab>
+            <v-btn class="refresh-button" @click="refreshMatches({})" color="primary" fixed bottom small left fab>
                 <v-icon>{{icons.refresh}}</v-icon>
             </v-btn>
         </div>

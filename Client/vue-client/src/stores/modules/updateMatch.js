@@ -108,7 +108,7 @@ export default {
                 video, thumb, move, index
             }).then(({data}) => {
                 dispatch('DISPLAY_POPUP_DEFAULT', data, {root: true});
-                dispatch('matches/refreshMatches', null, {root: true})
+                dispatch('matches/refreshMatches', {}, {root: true})
             }).catch(error => {
                 console.error("Error Uploading Video", error);
                 dispatch('DISPLAY_POPUP', {
@@ -123,7 +123,7 @@ export default {
         lockIn({commit, dispatch}, {id}) {
             axios.post(`/matches/${id}/three-round-pass/ready`).then(({data}) => {
                 dispatch('DISPLAY_POPUP_DEFAULT', data, {root: true});
-                dispatch('matches/refreshMatches', null, {root: true})
+                dispatch('matches/refreshMatches', {}, {root: true})
             }).catch(error => {
                 console.error("ERROR UPDATING MATCH", error)
             }).then(() => {

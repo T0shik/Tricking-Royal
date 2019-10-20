@@ -30,7 +30,7 @@
                         OneSignal.addListenerForNotificationOpened(({data}) => {
                             let {id, navigation, type} = data;
                             this.$store.dispatch('notifications/touchNotificationById', id);
-                            this.$store.dispatch('matches/refreshMatches', null);
+                            this.$store.dispatch('matches/refreshMatches', {});
                             this.$store.dispatch('REFRESH_PROFILE');
                             this.open(navigation, type);
                             createOneSignalEventListener();

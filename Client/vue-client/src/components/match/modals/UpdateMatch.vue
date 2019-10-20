@@ -69,7 +69,8 @@
 
                         <v-window-item :value="2">
                             <div class="px-4">
-                                <v-text-field v-model="move" :label="trickLabel"></v-text-field>
+                                <v-text-field v-model="move" :label="trickLabel" id="trick-input"
+                                              @focus="focusTrickInput"></v-text-field>
                             </div>
 
                             <v-divider></v-divider>
@@ -145,12 +146,11 @@
             },
             videoTimeUpdate() {
                 const video = this.$refs.video;
-                if (video)
-                    if (video.currentTime >= this.trim.value[1]) {
-                        video.pause();
-                        video.currentTime = this.trim.value[0];
-                        video.play();
-                    }
+                if (video && video.currentTime >= this.trim.value[1]) {
+                    video.pause();
+                    video.currentTime = this.trim.value[0];
+                    video.play();
+                }
             },
             selectFile() {
                 this.stage = 1;
@@ -159,6 +159,13 @@
                 const formData = new FormData();
                 formData.append("video", this.file);
                 this.uploadInitial(formData);
+            },
+            focusTrickInput() {
+                if (window.innerWidth < 960) {
+                    this.$logger.log("Screen should scroll to input");
+                    // this.$vuetify.goTo(this.$refs.trick, {container: '#match-update-modal'});
+                    document.getElementById('trick-input').scrollIntoView();
+                }
             },
             safeWatch(uploadStatus, action) {
                 let unwatch = null;
