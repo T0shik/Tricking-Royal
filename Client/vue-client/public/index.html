@@ -28,9 +28,15 @@
 </head>
 <body>
 <script>
-    var iOS = !!navigator.platform && /iPhone/.test(navigator.platform);
+    var iOS = (/iP(hone|od|ad)/.test(navigator.userAgent));
     if (iOS) {
-        document.querySelector('link[rel="manifest"]').setAttribute("rel", "no-on-ios");
+        var v = (navigator.appVersion).match(/OS (\d+)_(\d+)_?(\d+)?/);
+        var iOSversion = parseInt(v[1], 10);
+        if(iOSversion < 13) {
+            document.querySelector('link[rel="manifest"]').setAttribute("rel", "no-on-ios");
+
+
+        }
     }
 </script>
 <noscript>
