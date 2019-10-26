@@ -13,6 +13,8 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Battles.Models;
+using IdentityServer.Configuration;
+using Microsoft.Extensions.Options;
 using TrickingRoyal.Database;
 
 namespace IdentityServer.Controllers
@@ -25,7 +27,7 @@ namespace IdentityServer.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IIdentityServerInteractionService _interaction;
         private readonly IEmailSender _emailSender;
-        private readonly ILogger _logger;
+        private readonly ILogger<AccountController> _logger;
 
         public AccountController(
             AppDbContext ctx,
@@ -33,16 +35,14 @@ namespace IdentityServer.Controllers
             SignInManager<ApplicationUser> signInManager,
             IIdentityServerInteractionService interaction,
             IEmailSender emailSender,
-            ILoggerFactory loggerFactory,
-            IConfiguration config)
+            ILogger<AccountController> logger)
         {
             _ctx = ctx;
             _userManager = userManager;
             _signInManager = signInManager;
             _interaction = interaction;
-
             _emailSender = emailSender;
-            _logger = loggerFactory.CreateLogger<AccountController>();
+            _logger = logger;
         }
 
         [HttpGet]
@@ -65,7 +65,9 @@ namespace IdentityServer.Controllers
         public async Task<IActionResult> Login(LoginViewModel model, string button)
         {
             if (_signInManager.IsSignedIn(HttpContext.User))
+            {
                 return BackToHome();
+            }
 
             if (ModelState.IsValid)
             {
@@ -104,12 +106,10 @@ namespace IdentityServer.Controllers
                         _logger.LogWarning(2, "User account locked out.");
                         return View("Lockout");
                     }
-                    else
-                    {
-                        model.ExternalAuth = await HttpContext.GetExternalProvidersAsync();
-                        ModelState.AddModelError(string.Empty, "Incorrect username or password.");
-                        return View(model);
-                    }
+
+                    model.ExternalAuth = await HttpContext.GetExternalProvidersAsync();
+                    ModelState.AddModelError(string.Empty, "Incorrect username or password.");
+                    return View(model);
                 }
                 catch (Exception e)
                 {
@@ -161,6 +161,14 @@ namespace IdentityServer.Controllers
                 await _ctx.SaveChangesAsync();
                 await _signInManager.SignInAsync(user, isPersistent: false);
                 _logger.LogInformation(3, "User created a new account with password.");
+
+                var emailCode = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
+                var callbackUrl = Url.Action(nameof(ConfirmEmail), "Account", new {userId = user.Id, emailCode},
+                                             protocol: HttpContext.Request.Scheme);
+                await _emailSender.SendEmailAsync(model.Email, "Email Confirmation",
+                                                  $"Please confirm your email by clicking here: <a href='{callbackUrl}'>link</a>");
+
                 return RedirectToLocal(model.ReturnUrl);
             }
 
@@ -175,7 +183,7 @@ namespace IdentityServer.Controllers
             await _signInManager.SignOutAsync();
             _logger.LogInformation(4, "User logged out.");
             var logout = await _interaction.GetLogoutContextAsync(logoutId);
-            
+
             if (string.IsNullOrEmpty(logout.PostLogoutRedirectUri))
             {
                 return RedirectToAction("Index", "Home");
@@ -230,16 +238,14 @@ namespace IdentityServer.Controllers
             {
                 return View("Lockout");
             }
-            else
+
+            var email = info.Principal.FindFirstValue(ClaimTypes.Email);
+            return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel
             {
-                var email = info.Principal.FindFirstValue(ClaimTypes.Email);
-                return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel
-                {
-                    Email = email,
-                    ReturnUrl = returnUrl,
-                    LoginProvider = info.LoginProvider
-                });
-            }
+                Email = email,
+                ReturnUrl = returnUrl,
+                LoginProvider = info.LoginProvider
+            });
         }
 
         [HttpPost]
@@ -273,6 +279,7 @@ namespace IdentityServer.Controllers
                     await _ctx.SaveChangesAsync();
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation(6, "User created an account using {Name} provider.", info.LoginProvider);
+
                     return RedirectToLocal(model.ReturnUrl);
                 }
             }
@@ -284,7 +291,10 @@ namespace IdentityServer.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> ConfirmEmail(string userId, string code)
+        public async Task<IActionResult> ConfirmEmail(
+            string userId,
+            string code,
+            [FromServices] IOptions<OAuth> oAuthOptions)
         {
             if (userId == null
                 || code == null)
@@ -299,7 +309,12 @@ namespace IdentityServer.Controllers
             }
 
             var result = await _userManager.ConfirmEmailAsync(user, code);
-            return View(result.Succeeded ? "ConfirmEmail" : "Error");
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Login", new {returnUrl = $"{oAuthOptions.Value.Routing.Client}/battles"});
+            }
+
+            return Redirect(oAuthOptions.Value.Routing.Client);
         }
 
         [HttpGet]
@@ -352,13 +367,13 @@ namespace IdentityServer.Controllers
             if (user == null)
             {
                 // Don't reveal that the user does not exist
-                return RedirectToAction(nameof(AccountController.ResetPasswordConfirmation), "Account");
+                return RedirectToAction(nameof(ResetPasswordConfirmation), "Account");
             }
 
             var result = await _userManager.ResetPasswordAsync(user, model.Code, model.Password);
             if (result.Succeeded)
             {
-                return RedirectToAction(nameof(AccountController.ResetPasswordConfirmation), "Account");
+                return RedirectToAction(nameof(ResetPasswordConfirmation), "Account");
             }
 
             AddErrors(result);
