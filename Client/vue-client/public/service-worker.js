@@ -1,0 +1,1 @@
+﻿//service worker mock file for development environment
