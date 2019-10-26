@@ -162,12 +162,19 @@ namespace IdentityServer.Controllers
                 await _signInManager.SignInAsync(user, isPersistent: false);
                 _logger.LogInformation(3, "User created a new account with password.");
 
-                var emailCode = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                try
+                {
+                    var emailCode = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
-                var callbackUrl = Url.Action(nameof(ConfirmEmail), "Account", new {userId = user.Id, emailCode},
-                                             protocol: HttpContext.Request.Scheme);
-                await _emailSender.SendEmailAsync(model.Email, "Email Confirmation",
-                                                  $"Please confirm your email by clicking here: <a href='{callbackUrl}'>link</a>");
+                    var callbackUrl = Url.Action(nameof(ConfirmEmail), "Account", new {userId = user.Id, emailCode},
+                                                 protocol: HttpContext.Request.Scheme);
+                    await _emailSender.SendEmailAsync(model.Email, "Email Confirmation",
+                                                      $"Please confirm your email by clicking here: <a href='{callbackUrl}'>link</a>");
+                }
+                catch (Exception e)
+                {
+                    _logger.LogError("Failed to send email confirmation code", e);
+                }
 
                 return RedirectToLocal(model.ReturnUrl);
             }

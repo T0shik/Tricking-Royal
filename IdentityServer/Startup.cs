@@ -79,7 +79,7 @@ namespace IdentityServer
 
             SetupCors(services, routing.Client);
 
-            services.AddTransient<IEmailSender, AuthMessageSender>();
+            services.AddSingleton<IEmailSender, EmailSender>();
 
             services.AddHealthChecks();
             services.AddMvc();

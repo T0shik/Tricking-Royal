@@ -1239,9 +1239,9 @@
           </e>
         </e>
         <e p="Services" t="Include">
+          <e p="EmailSender.cs" t="Include" />
           <e p="IdentityProfileService.cs" t="Include" />
           <e p="IEmailSender.cs" t="Include" />
-          <e p="MessageServices.cs" t="Include" />
         </e>
         <e p="Startup.cs" t="Include" />
         <e p="tempkey.rsa" t="Include" />

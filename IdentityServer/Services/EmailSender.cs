@@ -11,19 +11,19 @@ using Microsoft.Extensions.Options;
 
 namespace IdentityServer.Services
 {
-    public class AuthMessageSender : IEmailSender
+    public class EmailSender : IEmailSender
     {
-        private readonly ILogger<AuthMessageSender> _logger;
+        private readonly ILogger<EmailSender> _logger;
         private readonly SmtpClient _client;
         private readonly EmailSettings _emailSettings;
 
-        public AuthMessageSender(
+        public EmailSender(
             IOptions<EmailSettings> emailOptions,
-            ILogger<AuthMessageSender> logger)
+            ILogger<EmailSender> logger)
         {
             _emailSettings = emailOptions.Value;
             _logger = logger;
-            _client = new SmtpClient(_emailSettings.Server)
+            _client = new SmtpClient(_emailSettings.Server, _emailSettings.Port)
             {
                 UseDefaultCredentials = false,
                 Credentials = new NetworkCredential(_emailSettings.Username, _emailSettings.Password),

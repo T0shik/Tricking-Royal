@@ -28,7 +28,7 @@ namespace Battles.Api.Notifications.Dispatchers
             _emailSettings = emailSettings;
             _routing = routing;
             _logger = logger;
-            _smtp = new SmtpClient(emailSettings.Server)
+            _smtp = new SmtpClient(emailSettings.Server, emailSettings.Port)
             {
                 Credentials = new NetworkCredential(emailSettings.Username, emailSettings.Password),
             };
