@@ -46,7 +46,8 @@
                     .post("/users", {skill: this.skill})
                     .then(({data}) => {
                         this.$store.dispatch("UPDATE_PROFILE", data);
-                        this.$store.commit('layout/setLayout', LAYOUT.USER, {root: true})
+                        this.$store.commit('layout/setLayout', LAYOUT.USER, {root: true});
+                        this.$store.dispatch('confirmation/notificationsPrompt', {}, {root: true});
                         this.$router.replace("/battles");
                     })
                     .catch(err => {

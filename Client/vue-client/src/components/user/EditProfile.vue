@@ -194,6 +194,7 @@
                 timeout: null,
 
                 validName: true,
+                pushEnabled: false,
                 displayNameRules: [
                     v => !!v || "Username is required",
                     () => this.validName || "Username already taken.",
@@ -233,6 +234,7 @@
                         youtube: profile.youtube,
                     };
 
+                    this.pushEnabled = await this.getPushState();
                     this.loadEmailConfig();
                 }
                 this.tempImage = "";
@@ -270,6 +272,8 @@
                 updateProfileImage: "UPDATE_PROFILE_IMAGE",
             }),
             ...mapActions({
+                enablePushNotifications: "notifications/showPrompt",
+                getPushState: "notifications/getPushState",
                 refreshProfile: "REFRESH_PROFILE",
                 popup: "DISPLAY_POPUP",
                 signOut: "SIGN_OUT",
@@ -360,16 +364,9 @@
                     .catch(error => {
                         console.error("ERROR UPLOADING IMAGE TODO HANDLE", error);
                     });
-            },
-            enablePushNotifications() {
-                // eslint-disable-next-line
-                OneSignal.showNativePrompt();
             }
         },
         computed: {
-            ...mapState({
-                pushEnabled: state => state.notifications.pushEnabled
-            }),
             skillList() {
                 return skillList;
             },

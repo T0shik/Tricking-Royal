@@ -15,7 +15,7 @@
         name: "App",
         created() {
             this.$store.dispatch("INIT")
-                .then(({success, appId}) => {
+                .then(({success, activated, appId}) => {
                     if (!success) return;
 
 // OneSignal instance is loaded in index.html
@@ -24,6 +24,7 @@
 // place to put it, and still have sane access to vuex & axios
 // probably want to wrap this
 // todo: move this fucker.
+                    this.$logger.log("[(App.vue).created] starting  OneSignal init.");
                     const OneSignal = window.OneSignal || [];
 
                     const createOneSignalEventListener = () => {
@@ -43,6 +44,7 @@
                             notificationClickHandlerAction: 'focus'
                         });
                         OneSignal.on('subscriptionChange', (subscribed) => {
+                            this.$logger.log("[(App.vue).created] subscribed? =>", subscribed);
                             OneSignal.getUserId().then(notificationId => {
                                 this.$axios.post("/notifications", {
                                     notificationId,
@@ -52,15 +54,17 @@
                                     console.error(err);
                                 })
                             });
-                            this.$store.commit('notifications/setPushState', subscribed)
                         });
                         OneSignal.on('notificationDisplay', () => {
                             this.$store.dispatch('notifications/resetNotifications');
                         });
                         createOneSignalEventListener();
-                    });
 
-                    this.$store.dispatch('notifications/setPushState');
+                        if (activated) {
+                            this.$store.dispatch('confirmation/notificationsPrompt', {}, {root: true});
+                        }
+                    });
+                    this.$logger.log("[(App.vue).created] finished OneSignal init.");
                 });
         },
         methods: {

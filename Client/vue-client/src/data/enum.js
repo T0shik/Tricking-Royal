@@ -33,3 +33,7 @@ export const LAYOUT = {
     VISITOR: 'visitor-layout',
     USER: 'user-layout',
 };
+
+export const STORAGE_KEYS = {
+    NOTIFICATION_PROMPT: 'tr_notification_prompt_time'  
+};

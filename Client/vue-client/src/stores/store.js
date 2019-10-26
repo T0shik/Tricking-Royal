@@ -120,11 +120,13 @@ export const store = new Vuex.Store({
                     }
                 })
                 .then(async success => {
-                    let appId = '';
+                    let appId = '',
+                        activated = false;
                     if (success) {
                         const {data: profile} = await axios.get('users/me');
                         commit('UPDATE_PROFILE', profile);
-                        commit('layout/setLayout', profile.activated ? LAYOUT.USER : LAYOUT.VISITOR, {root: true});
+                        activated = profile.activated;
+                        commit('layout/setLayout', activated ? LAYOUT.USER : LAYOUT.VISITOR, {root: true});
                         dispatch('LOAD_TRIBUNAL_COUNT');
                         dispatch('notifications/getNotifications');
                         const {data: oneSignalId} = await axios.get('platform/one-signal');
@@ -134,7 +136,7 @@ export const store = new Vuex.Store({
                     }
 
                     commit('COMPLETE_INIT', success);
-                    return {success, appId};
+                    return {success, activated, appId};
                 })
         },
         SIGN_OUT(context) {

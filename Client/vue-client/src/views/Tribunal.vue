@@ -19,8 +19,8 @@
                 <p>You can also take a look at the Flag section, see if anyone's been breaking the rules.</p>
             </v-card-text>
             <v-card-actions class="justify-center">
-                <v-btn color="primary" @click="type = 'history'">history</v-btn>
-                <v-btn color="primary" @click="type = 'flag'">flag</v-btn>
+                <v-btn color="primary" :to="'/tribunal/history'">history</v-btn>
+                <v-btn color="primary" :to="'/tribunal/flag'">flag</v-btn>
             </v-card-actions>
         </v-card>
         <div v-else>
