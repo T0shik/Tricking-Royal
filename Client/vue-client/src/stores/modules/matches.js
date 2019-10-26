@@ -97,7 +97,7 @@ export default {
                     })
                 })
                 .catch(error => {
-                    console.error("ERROR GETTING MATCHES", error)
+                    Logger.error("ERROR GETTING MATCHES", error)
                 })
                 .then(() => {
                     if (toggle) {
@@ -114,7 +114,7 @@ export default {
                     commit('addMatches', data)
                 })
                 .catch(error => {
-                    console.error("ERROR GETTING MATCHES", error)
+                    Logger.error("ERROR GETTING MATCHES", error)
                 })
                 .then(() => {
                     commit('toggleLoading', 'loadingMore');

@@ -17,6 +17,7 @@ import confirmation from "./modules/confirmation";
 import comment from "./modules/comment";
 import voting from "./modules/voting";
 import {LAYOUT} from "../data/enum";
+import Logger from "../logger/logger";
 
 axios.defaults.baseURL = process.env.VUE_APP_API;
 
@@ -24,31 +25,31 @@ axios.interceptors.response.use(
     response => response,
     error => {
         const {config, response: {status}} = error;
-        console.log(error, config, status);
+        Logger.log(error, config, status);
 
         if (status === 401) {
             if (!store.getters.REFRESHING_TOKEN) {
                 store.commit('UPDATE_TOKEN_ACTIVITY', true);
-                console.log("starting silent refresh on startup");
+                Logger.log("starting silent refresh on startup");
                 return store.state.userMgr.signinSilent().then((user) => {
                     if (user) {
-                        console.log("silent refresh complete, success refreshing token.");
+                        Logger.log("silent refresh complete, success refreshing token.");
 
                         let bearerToken = `bearer ${user.access_token}`;
                         axios.defaults.headers.common['Authorization'] = bearerToken;
                         config.headers['Authorization'] = bearerToken;
                         return axios.request(config);
                     } else {
-                        console.log("silent refresh complete, failed signing out.");
+                        Logger.log("silent refresh complete, failed signing out.");
                         store.commit("SIGN_OUT");
                         store.commit('layout/setLayout', LAYOUT.LOADING, {root: true});
 
                         router.push('landing');
-                        console.log("do we reach this ting or we are redirected back to auth.");
+                        Logger.log("do we reach this ting or we are redirected back to auth.");
                     }
                 })
                     .catch(e => {
-                        console.log("Failed to re-authenticate.", e);
+                        Logger.log("Failed to re-authenticate.", e);
                         if (e.error === 'login_required') {
                             store.state.userMgr.signinRedirect();
                         }
@@ -120,11 +121,13 @@ export const store = new Vuex.Store({
                     }
                 })
                 .then(async success => {
-                    let appId = '';
+                    let appId = '',
+                        activated = false;
                     if (success) {
                         const {data: profile} = await axios.get('users/me');
                         commit('UPDATE_PROFILE', profile);
-                        commit('layout/setLayout', profile.activated ? LAYOUT.USER : LAYOUT.VISITOR, {root: true});
+                        activated = profile.activated;
+                        commit('layout/setLayout', activated ? LAYOUT.USER : LAYOUT.VISITOR, {root: true});
                         dispatch('LOAD_TRIBUNAL_COUNT');
                         dispatch('notifications/getNotifications');
                         const {data: oneSignalId} = await axios.get('platform/one-signal');
@@ -134,7 +137,7 @@ export const store = new Vuex.Store({
                     }
 
                     commit('COMPLETE_INIT', success);
-                    return {success, appId};
+                    return {success, activated, appId};
                 })
         },
         SIGN_OUT(context) {

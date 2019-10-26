@@ -18,7 +18,6 @@ using Battles.Api.Settings;
 using Battles.Application.SubServices;
 using Microsoft.Extensions.Logging;
 using TrickingRoyal.Database;
-using Routing = Battles.Configuration.Routing;
 
 namespace Battles.Api
 {
@@ -47,45 +46,48 @@ namespace Battles.Api
 
             var connectionString = _config.GetConnectionString("DefaultConnection");
             services.AddTrickingRoyalDatabase(connectionString)
-                .AddHangfireServices()
-                .AddHangfire(options =>
-                    options.UseSqlServerStorage(connectionString));
+                    .AddHangfireServices()
+                    .AddHangfire(options => options.UseSqlServerStorage(connectionString));
 
             services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
-                .AddIdentityServerAuthentication(options =>
-                {
-                    options.Authority = _oAuth.Routing.Server;
-                    options.RequireHttpsMetadata = _env.IsProduction();
-
-                    options.ApiName = _oAuth.Api.Name;
-                    options.ApiSecret = _oAuth.Api.ResourceSecret.Sha256();
-
-                    options.TokenRetriever = httpRequest =>
+                    .AddIdentityServerAuthentication(options =>
                     {
-                        var fromHeader = TokenRetrieval.FromAuthorizationHeader();
-                        var fromQuery = TokenRetrieval.FromQueryString();
-                        return fromHeader(httpRequest) ?? fromQuery(httpRequest);
-                    };
-                });
+                        options.Authority = _oAuth.Routing.Server;
+                        options.RequireHttpsMetadata = _env.IsProduction();
+
+                        options.ApiName = _oAuth.Api.Name;
+                        options.ApiSecret = _oAuth.Api.ResourceSecret.Sha256();
+
+                        options.TokenRetriever = httpRequest =>
+                        {
+                            var fromHeader = TokenRetrieval.FromAuthorizationHeader();
+                            var fromQuery = TokenRetrieval.FromQueryString();
+                            return fromHeader(httpRequest) ?? fromQuery(httpRequest);
+                        };
+                    });
 
             SetupCors(services);
 
             services.AddBattlesServices()
-                .AddNotificationServices()
-                .AddSubServices()
-                .AddMediatR(typeof(GetUserQuery).GetTypeInfo().Assembly)
-                .AddHttpClient("default",
-                    config =>
-                    {
-                        config.DefaultRequestHeaders.Accept.Add(
-                            new MediaTypeWithQualityHeaderValue("application/json"));
-                    });
+                    .AddNotificationServices()
+                    .AddSubServices()
+                    .AddMediatR(typeof(GetUserQuery).GetTypeInfo().Assembly)
+                    .AddHttpClient("default",
+                                   config =>
+                                   {
+                                       config.DefaultRequestHeaders.Accept
+                                             .Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                                   });
 
+            services.AddHealthChecks();
             services.AddMvc();
         }
 
         public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
         {
+            app.UseCors(_env.IsDevelopment() ? "AllowAll" : "AllowClients");
+            app.UseHealthChecks("/healthcheck");
+
             if (_env.IsProduction())
             {
                 loggerFactory.AddFile("Logs/api-{Date}.log");
@@ -93,15 +95,12 @@ namespace Battles.Api
 
             app.UseHangfireServer();
 
-            RecurringJob.AddOrUpdate<IHangfireJobs>(
-                jobs => jobs.CloseExpiredMatches(), Cron.Hourly);
+            RecurringJob.AddOrUpdate<IHangfireJobs>(jobs => jobs.CloseExpiredMatches(), Cron.Hourly);
 
-            RecurringJob.AddOrUpdate<IHangfireJobs>(
-                jobs => jobs.CloseExpiredEvaluations(), Cron.Hourly);
+            RecurringJob.AddOrUpdate<IHangfireJobs>(jobs => jobs.CloseExpiredEvaluations(), Cron.Hourly);
 
             app.UseAuthentication()
-                .UseCors(_env.IsDevelopment() ? "AllowAll" : "AllowClient")
-                .UseMvc();
+               .UseMvc();
         }
 
         private void SetupCors(IServiceCollection services)
@@ -111,21 +110,21 @@ namespace Battles.Api
                 services.AddCors(options =>
                 {
                     options.AddPolicy("AllowAll",
-                        p => p.AllowAnyOrigin()
-                            .AllowAnyHeader()
-                            .AllowAnyMethod()
-                            .AllowCredentials());
+                                      p => p.AllowAnyOrigin()
+                                            .AllowAnyHeader()
+                                            .AllowAnyMethod()
+                                            .AllowCredentials());
                 });
             }
             else
             {
                 services.AddCors(options =>
                 {
-                    options.AddPolicy("AllowClient",
-                        p => p.WithOrigins(_oAuth.Routing.Client)
-                            .AllowAnyHeader()
-                            .AllowAnyMethod()
-                            .AllowCredentials());
+                    options.AddPolicy("AllowClients",
+                                      p => p.WithOrigins(_oAuth.Routing.Client, _config["HealthChecker"])
+                                            .AllowAnyHeader()
+                                            .AllowAnyMethod()
+                                            .AllowCredentials());
                 });
             }
         }

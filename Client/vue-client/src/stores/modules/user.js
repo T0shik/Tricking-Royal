@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex"
 import axios from 'axios'
+import Logger from "../../logger/logger";
 
 Vue.use(Vuex);
 
@@ -34,14 +35,12 @@ export default {
             state.user = payload
         },
         UPDATE_USER_MATCHES(state, payload) {
-            let { matches, type } = payload;
+            let {matches, type} = payload;
             if (type === 'history') {
                 state.history = matches
-            }
-            else if (type === 'active') {
+            } else if (type === 'active') {
                 state.active = matches
-            }
-            else if (type === 'open') {
+            } else if (type === 'open') {
                 state.open = matches
             }
         },
@@ -55,7 +54,7 @@ export default {
         }
     },
     actions: {
-        SET_USER({ commit }, payload) {
+        SET_USER({commit}, payload) {
             const {router, displayName, redirect} = payload;
             axios.get(`/users/${displayName}`)
                 .then(res => {
@@ -66,24 +65,23 @@ export default {
                         if (redirect) {
                             router.push(`/user/${displayName}`)
                         }
-                    }
-                    else if (status === 204) {
+                    } else if (status === 204) {
                         commit('UPDATE_USER', {})
                     }
                 })
                 .catch(err => {
-                    console.log("TODO: Handle getting user error", err)
+                    Logger.log("TODO: Handle getting user error", err)
                 })
         },
-        LOAD_USER_MATCHSE({ commit, getters }, payload) {
-            let { type } = payload;
-            let { displayName } = getters.GET_USER;
+        LOAD_USER_MATCHSE({commit, getters}, payload) {
+            let {type} = payload;
+            let {displayName} = getters.GET_USER;
             axios.get(`/matches?filter=${type}&displayName=${displayName}`)
                 .then(res => {
-                    commit('UPDATE_USER_MATCHES', { matches: res.data, type: type })
+                    commit('UPDATE_USER_MATCHES', {matches: res.data, type: type})
                 })
                 .catch(err => {
-                    console.log("TODO: Handle getting user error", err)
+                    Logger.log("TODO: Handle getting user error", err)
                 })
         }
     }

@@ -45,14 +45,14 @@ namespace Battles.Cdn
             });
 
             services.AddAuthentication("Bearer")
-                .AddIdentityServerAuthentication(options =>
-                {
-                    options.Authority = _oAuth.Routing.Server;
-                    options.RequireHttpsMetadata = _env.IsProduction();
+                    .AddIdentityServerAuthentication(options =>
+                    {
+                        options.Authority = _oAuth.Routing.Server;
+                        options.RequireHttpsMetadata = _env.IsProduction();
 
-                    options.ApiName = _oAuth.Cdn.Name;
-                    options.ApiSecret = _oAuth.Cdn.ResourceSecret.ToSha256();
-                });
+                        options.ApiName = _oAuth.Cdn.Name;
+                        options.ApiSecret = _oAuth.Cdn.ResourceSecret.ToSha256();
+                    });
 
             services.AddMvc(options =>
             {
@@ -63,14 +63,18 @@ namespace Battles.Cdn
             });
 
             services.AddSingleton<FileStreams>()
-                .AddSingleton<ImageManager>()
-                .AddSingleton<VideoManager>();
+                    .AddSingleton<ImageManager>()
+                    .AddSingleton<VideoManager>();
 
+            services.AddHealthChecks();
             SetupCors(services);
         }
 
         public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
         {
+            app.UseCors(_env.IsDevelopment() ? "AllowAll" : "AllowClients");
+            app.UseHealthChecks("/healthcheck");
+
             if (_env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -85,10 +89,8 @@ namespace Battles.Cdn
 
             app.UseResponseCompression();
 
-            app.UseCors(_env.IsDevelopment() ? "AllowAll" : "AllowClient")
-                .UseMvc();
+            app.UseMvc();
         }
-
 
         private void SetupCors(IServiceCollection services)
         {
@@ -97,21 +99,21 @@ namespace Battles.Cdn
                 services.AddCors(options =>
                 {
                     options.AddPolicy("AllowAll",
-                        p => p.AllowAnyOrigin()
-                            .AllowAnyHeader()
-                            .AllowAnyMethod()
-                            .AllowCredentials());
+                                      p => p.AllowAnyOrigin()
+                                            .AllowAnyHeader()
+                                            .AllowAnyMethod()
+                                            .AllowCredentials());
                 });
             }
             else
             {
                 services.AddCors(options =>
                 {
-                    options.AddPolicy("AllowClient",
-                        p => p.WithOrigins(_oAuth.Routing.Client)
-                            .AllowAnyHeader()
-                            .AllowAnyMethod()
-                            .AllowCredentials());
+                    options.AddPolicy("AllowClients",
+                                      p => p.WithOrigins(_oAuth.Routing.Client, _config["HealthChecker"])
+                                            .AllowAnyHeader()
+                                            .AllowAnyMethod()
+                                            .AllowCredentials());
                 });
             }
         }

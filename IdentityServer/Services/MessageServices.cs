@@ -6,53 +6,47 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
+using IdentityServer.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace IdentityServer.Services
 {
     public class AuthMessageSender : IEmailSender
     {
-        private readonly IConfiguration _config;
         private readonly ILogger<AuthMessageSender> _logger;
+        private readonly SmtpClient _client;
+        private readonly EmailSettings _emailSettings;
 
         public AuthMessageSender(
-            IConfiguration config,
+            IOptions<EmailSettings> emailOptions,
             ILogger<AuthMessageSender> logger)
         {
-            _config = config;
+            _emailSettings = emailOptions.Value;
             _logger = logger;
+            _client = new SmtpClient(_emailSettings.Server)
+            {
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(_emailSettings.Username, _emailSettings.Password),
+            };
         }
 
-        public async Task SendEmailAsync(string email, string subject, string message)
+        public Task SendEmailAsync(string email, string subject, string message)
         {
             try
             {
-                var client = new SmtpClient(_config["Email:SMTP"])
+                var mailMessage = new MailMessage(_emailSettings.Name, email, subject, message)
                 {
-                    UseDefaultCredentials = false,
-                    Credentials = new NetworkCredential(_config["Email:Username"], _config["Email:Password"])
+                    IsBodyHtml = true,
                 };
-                var mailMessage = new MailMessage
-                {
-                    To = { email },
-                    Subject = subject,
-                    Body = message,
-                    From = new MailAddress(_config["Email:Username"]),
-                    IsBodyHtml = true
-                };
-                await client.SendMailAsync(mailMessage);
-                return;
+
+                return _client.SendMailAsync(mailMessage);
             }
             catch (Exception e)
             {
                 _logger.LogError(e.Message);
-                return;
             }
-        }
 
-        public Task SendSmsAsync(string number, string message)
-        {
-            // Plug in your SMS service here to send a text message.
-            return Task.FromResult(0);
+            return Task.CompletedTask;
         }
     }
 }

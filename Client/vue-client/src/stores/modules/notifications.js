@@ -5,7 +5,6 @@ const initialState = () => ({
     notifications: [],
     index: 0,
     empty: false,
-    pushEnabled: false,
 });
 
 export default {
@@ -38,9 +37,6 @@ export default {
             state.notifications.forEach(x => x.new = false);
             state.open = false;
         },
-        setPushState(state, pushState) {
-            state.pushEnabled = pushState;
-        },
         resetNotifications(state) {
             Object.assign(state, initialState());
         }
@@ -55,14 +51,8 @@ export default {
                     });
                 })
         },
-        async setPushState({commit}) {
-            // eslint-disable-next-line
-            let pushState = await OneSignal.isPushNotificationsEnabled();
-            commit('setPushState', pushState);
-        },
         resetNotifications({commit, dispatch}) {
             commit('resetNotifications');
-            dispatch('setPushState');
             dispatch('getNotifications');
         },
         touchNotification({commit}, notification) {
@@ -81,6 +71,14 @@ export default {
                 .then(({data}) => {
                     dispatch('DISPLAY_POPUP_DEFAULT', data, {root: true});
                 });
+        },
+        showPrompt() {
+            // eslint-disable-next-line
+            OneSignal.showNativePrompt();
+        },
+        getPushState() {
+            // eslint-disable-next-line
+            return OneSignal.isPushNotificationsEnabled();
         },
     }
 }

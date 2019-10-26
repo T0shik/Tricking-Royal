@@ -1,5 +1,5 @@
 <template>
-    <v-dialog :value="display" @close="dismiss" max-width="320">
+    <v-dialog :value="display" @click:outside="dismiss" max-width="320">
         <v-card dark color="secondary">
             <v-card-title class="title">
                 <span>{{title}}</span>
@@ -15,7 +15,10 @@
                 <p>{{description}}</p>
             </v-card-text>
             <v-card-actions class="justify-center">
-                <v-btn color="warning" @click="confirm" :loading="loading" :disabled="loading">Pass</v-btn>
+                <v-btn color="primary" @click="confirm" :loading="loading" :disabled="loading">
+                    {{buttonText}}
+                </v-btn>
+                <v-btn text @click="dismiss">Close</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
@@ -36,7 +39,7 @@
             }
         },
         computed: {
-            ...mapState(['title', 'description', 'loading']),
+            ...mapState(['title', 'description', 'buttonText', 'loading']),
             ...mapGetters(['display']),
             icons() {
                 return {

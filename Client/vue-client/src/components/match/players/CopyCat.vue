@@ -16,7 +16,7 @@
                         :key="`${match.id}-${sIndex}-group`">
                     <div v-if="slide.videoPair.length > 0">
                         <v-carousel v-model="slide.value" :cycle="false" hide-delimiters>
-                            <v-carousel-item v-for="(video, pIndex) in slide.videoPair" 
+                            <v-carousel-item v-for="(video, pIndex) in slide.videoPair"
                                              :key="`ccc-${match.id}-${sIndex}-${pIndex}`">
                                 <div v-if="video.empty" class="text-center title pa-5 mt-4">
                                     {{match.participants[video.userIndex].displayName}} passed this round.
@@ -57,7 +57,7 @@
             </v-btn>
             <v-btn class="mt-2 warning"
                    v-if="match.canPass"
-                   @click="pass"
+                   @click="copyCatPass({id: match.id})"
                    :loading="loading"
                    :disabled="loading">
                 Pass
@@ -68,7 +68,7 @@
 
 <script>
     import VideoPlayer from "./VideoPlayer.vue";
-    import {mapMutations} from "vuex";
+    import {mapActions} from "vuex";
 
     export default {
         props: {
@@ -111,7 +111,7 @@
             }
         },
         methods: {
-            ...mapMutations('confirmation', ['set']),
+            ...mapActions('confirmation', ['copyCatPass']),
             createSlide(index) {
                 let offset = (index - 1) * 2;
                 let videoPair = [];
@@ -126,23 +126,6 @@
                     value: 0,
                     videoPair
                 }
-            },
-            pass() {
-                let action = () => {
-                    return this.$axios.post(`/matches/${this.match.id}/pass`)
-                        .then(({data}) => {
-                            this.$store.dispatch('DISPLAY_POPUP_DEFAULT', data);
-                            this.$store.dispatch('matches/refreshMatches', {});
-                        });
-                };
-                this.set({
-                    title: "Pass",
-                    description: [
-                        "Are you sure you want to pass this round?",
-                        "Pass this round if you can't repeat the combo."
-                    ],
-                    action
-                });
             },
             getUserByIndex(index) {
                 for (let i = 0; i < this.match.participants.length; i++) {

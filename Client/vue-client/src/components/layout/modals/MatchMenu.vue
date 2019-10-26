@@ -77,15 +77,14 @@
                     </v-window-item>
                 </v-window>
             </v-card-text>
-            <v-card-actions v-if="step > 0">
-                <v-btn @click="back" text>back</v-btn>
+            <v-card-actions class="justify-center" v-if="step > 0">
                 <v-btn v-if="menu"
-                       text
-                       class="primary--text"
+                       color="primary"
                        :disabled="menu.comment && !comment"
                        @click="menu.action.fn"
                 >{{menu.action.name}}
                 </v-btn>
+                <v-btn @click="back" text>back</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>

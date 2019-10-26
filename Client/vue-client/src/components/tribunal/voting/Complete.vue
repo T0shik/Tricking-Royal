@@ -32,25 +32,7 @@
                 <p>Loading Results</p>
                 <v-progress-circular color="primary" indeterminate></v-progress-circular>
             </div>
-            <v-row class="align-center" dense v-else-if="results">
-                <v-col cols="2">{{results.hostPercent}}%</v-col>
-                <v-col cols="8">
-                    <v-progress-linear
-                            class="align-center black--text"
-                            height="30px"
-                            :background-color="background"
-                            :color="color"
-                            :value="results.hostPercent"
-                    >
-                        <v-row class="px-4">
-                            <span class="title">{{results.hostVotes}}</span>
-                            <v-spacer></v-spacer>
-                            <span class="title">{{results.opponentVotes}}</span>
-                        </v-row>
-                    </v-progress-linear>
-                </v-col>
-                <v-col class="text-right" cols="2">{{results.opponentPercent}}%</v-col>
-            </v-row>
+            <VotingResults v-else-if="results"></VotingResults>
             <div v-else>
                 <v-btn
                         color="info"
@@ -69,6 +51,7 @@
 <script>
     import {mapMutations, mapActions, mapState} from "vuex";
     import {mdiClose} from "@mdi/js";
+    import VotingResults from "./VotingResults";
 
     export default {
         props: {
@@ -76,6 +59,9 @@
                 required: true,
                 type: Object
             }
+        },
+        components: {
+            VotingResults,
         },
         methods: {
             ...mapMutations('voting', ['setTarget']),
@@ -88,18 +74,7 @@
                 loading: state => state.loading,
                 loadingResults: state => state.loadingResults,
             }),
-            background() {
-                if (!this.results) return "";
-                return this.results.hostPercent > this.results.opponentPercent
-                    ? "purple darken-2"
-                    : "lime darken-2";
-            },
-            color() {
-                if (!this.results) return "";
-                return this.results.hostPercent > this.results.opponentPercent
-                    ? "lime darken-2"
-                    : "purple darken-2";
-            },
+          
             users() {
                 if (this.evaluation) return this.evaluation.participants;
                 else return null;
