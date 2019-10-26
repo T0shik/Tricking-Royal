@@ -38,11 +38,13 @@ export default {
         }
     },
     actions: {
-        vote({state, commit, dispatch}) {
+        vote({state, commit, dispatch}, {vote = null}) {
             commit('setLoading', true);
-
+            if (vote === null) {
+                vote = state.target;
+            }
             axios.post(`/evaluations/${state.evaluation.id}`, {
-                vote: state.target
+                vote
             })
                 .then(({data}) => {
                     dispatch('REFRESH_EVALUATIONS', null, {root: true});

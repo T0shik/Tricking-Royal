@@ -32,6 +32,7 @@ export default {
             Object.assign(state, payload);
         },
         dismiss(state) {
+            Logger.log("[confirmation.dismiss] dismissing.");
             Object.assign(state, initialState({}));
         },
         toggleLoading(state) {
@@ -57,7 +58,7 @@ export default {
                 action: () => {
                     return axios.post(`/matches/${id}/pass`)
                         .then(({data}) => {
-                            dispatch('DISPLAY_POPUP_DEFAULT', data);
+                            dispatch('DISPLAY_POPUP_DEFAULT', data, {root: true});
                             dispatch('matches/refreshMatches', {}, {root: true});
                         });
                 }

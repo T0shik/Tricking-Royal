@@ -24,7 +24,8 @@ export default new Vuetify({
                 skilled: '#189cea',
                 expert: '#b31e0f',
                 master: '#8509d2',
-                goat: '#efbe00'
+                goat: '#efbe00',
+                white: '#F8F8FF',
             }
         }
     }

@@ -730,6 +730,9 @@
               <e p="24" t="Include">
                 <e p="c_01-09-2019-11-32-05.mp4" t="Include" />
                 <e p="c_01-09-2019-11-38-17.mp4" t="Include" />
+                <e p="c_26-10-2019-11-54-33.mp4" t="Include" />
+                <e p="c_26-10-2019-12-00-32.mp4" t="Include" />
+                <e p="c_26-10-2019-12-00-58.mp4" t="Include" />
                 <e p="c_31-08-2019-11-47-31.mp4" t="Include" />
                 <e p="c_31-08-2019-11-47-49.mp4" t="Include" />
                 <e p="c_31-08-2019-11-48-19.mp4" t="Include" />
@@ -739,6 +742,9 @@
                 <e p="c_31-08-2019-21-22-53.mp4" t="Include" />
                 <e p="thumb_01-09-2019-11-32-05.jp2" t="Include" />
                 <e p="thumb_01-09-2019-11-38-17.jp2" t="Include" />
+                <e p="thumb_26-10-2019-11-54-33.jpg" t="Include" />
+                <e p="thumb_26-10-2019-12-00-32.jpg" t="Include" />
+                <e p="thumb_26-10-2019-12-00-58.jpg" t="Include" />
                 <e p="thumb_31-08-2019-11-47-31.jp2" t="Include" />
                 <e p="thumb_31-08-2019-11-47-49.jp2" t="Include" />
                 <e p="thumb_31-08-2019-11-48-19.jp2" t="Include" />
@@ -942,68 +948,6 @@
             <e p="settings.json" t="Include" />
           </e>
           <e p="babel.config.js" t="Include" />
-          <e p="dist" t="Include">
-            <e p="css" t="Include">
-              <e p="app.98a52d84.css" t="Include" />
-              <e p="battle.7aa87034.css" t="Include" />
-              <e p="battle~landing~tribunal~user~watch.7fd5035f.css" t="Include" />
-              <e p="chunk-vendors.ef6797c8.css" t="Include" />
-              <e p="create.a8a15f8c.css" t="Include" />
-              <e p="find.2affdc31.css" t="Include" />
-              <e p="landing.7071a9fc.css" t="Include" />
-              <e p="tribunal.b6511810.css" t="Include" />
-              <e p="user.ab92f73d.css" t="Include" />
-            </e>
-            <e p="img" t="Include">
-              <e p="icons" t="Include">
-                <e p="main_128x128.png" t="Include" />
-                <e p="main_144x144.png" t="Include" />
-                <e p="main_152x152.png" t="Include" />
-                <e p="main_16x16.png" t="Include" />
-                <e p="main_192x192.png" t="Include" />
-                <e p="main_256x256.png" t="Include" />
-                <e p="main_32x32.png" t="Include" />
-                <e p="main_384x384.png" t="Include" />
-                <e p="main_512x512.png" t="Include" />
-              </e>
-            </e>
-            <e p="index.html" t="Include" />
-            <e p="js" t="Include">
-              <e p="app.d8bf9853.js" t="Include" />
-              <e p="app.d8bf9853.js.map" t="Include" />
-              <e p="battle.ac5954c3.js" t="Include" />
-              <e p="battle.ac5954c3.js.map" t="Include" />
-              <e p="battle~landing~tribunal~user~watch.a663a35c.js" t="Include" />
-              <e p="battle~landing~tribunal~user~watch.a663a35c.js.map" t="Include" />
-              <e p="chunk-vendors.4d9226bb.js" t="Include" />
-              <e p="chunk-vendors.4d9226bb.js.map" t="Include" />
-              <e p="create.219ecf1c.js" t="Include" />
-              <e p="create.219ecf1c.js.map" t="Include" />
-              <e p="find.333ceed4.js" t="Include" />
-              <e p="find.333ceed4.js.map" t="Include" />
-              <e p="landing.fb80b9e8.js" t="Include" />
-              <e p="landing.fb80b9e8.js.map" t="Include" />
-              <e p="skill.08d0881d.js" t="Include" />
-              <e p="skill.08d0881d.js.map" t="Include" />
-              <e p="tribunal.7245620c.js" t="Include" />
-              <e p="tribunal.7245620c.js.map" t="Include" />
-              <e p="user.ed15cd4f.js" t="Include" />
-              <e p="user.ed15cd4f.js.map" t="Include" />
-              <e p="watch.746fb4d1.js" t="Include" />
-              <e p="watch.746fb4d1.js.map" t="Include" />
-            </e>
-            <e p="manifest.json" t="Include" />
-            <e p="OneSignalSDKUpdaterWorker.js" t="Include" />
-            <e p="OneSignalSDKWorker.js" t="Include" />
-            <e p="precache-manifest.94045e213c653b2816441072237d3fbf.js" t="Include" />
-            <e p="robots.txt" t="Include" />
-            <e p="service-worker.js" t="Include" />
-            <e p="static" t="Include">
-              <e p="callback.html" t="Include" />
-              <e p="oidc-client.min.js" t="Include" />
-              <e p="silent.html" t="Include" />
-            </e>
-          </e>
           <e p="node_modules\@mdi\js" t="IncludeRecursive" />
           <e p="node_modules\@types" t="IncludeRecursive">
             <e p="events" t="IncludeRecursive" />
@@ -1121,6 +1065,7 @@
                 <e p="voting" t="Include">
                   <e p="Complete.vue" t="Include" />
                   <e p="Flag.vue" t="Include" />
+                  <e p="VotingResults.vue" t="Include" />
                 </e>
               </e>
               <e p="user" t="Include">

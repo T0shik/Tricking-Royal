@@ -16,7 +16,7 @@
                         :key="`${match.id}-${sIndex}-group`">
                     <div v-if="slide.videoPair.length > 0">
                         <v-carousel v-model="slide.value" :cycle="false" hide-delimiters>
-                            <v-carousel-item v-for="(video, pIndex) in slide.videoPair" 
+                            <v-carousel-item v-for="(video, pIndex) in slide.videoPair"
                                              :key="`ccc-${match.id}-${sIndex}-${pIndex}`">
                                 <div v-if="video.empty" class="text-center title pa-5 mt-4">
                                     {{match.participants[video.userIndex].displayName}} passed this round.
@@ -57,7 +57,7 @@
             </v-btn>
             <v-btn class="mt-2 warning"
                    v-if="match.canPass"
-                   @click="copyCatPass(match.id)"
+                   @click="copyCatPass({id: match.id})"
                    :loading="loading"
                    :disabled="loading">
                 Pass

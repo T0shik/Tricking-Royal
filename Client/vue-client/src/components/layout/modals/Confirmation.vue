@@ -1,5 +1,5 @@
 <template>
-    <v-dialog :value="display" @close="dismiss" max-width="320">
+    <v-dialog :value="display" @click:outside="dismiss" max-width="320">
         <v-card dark color="secondary">
             <v-card-title class="title">
                 <span>{{title}}</span>
