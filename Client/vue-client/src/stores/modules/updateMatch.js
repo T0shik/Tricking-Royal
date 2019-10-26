@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import axios from 'axios'
 import {UPLOAD_STATUS} from "../../data/enum";
+import Logger from "../../logger/logger";
 
 Vue.use(Vuex);
 
@@ -64,7 +65,7 @@ export default {
                 commit('setInitialVideoName', data.video);
                 commit("setUploadStatus", UPLOAD_STATUS.INITIAL_FINISHED);
             }).catch(error => {
-                console.error("Error Uploading Video", error);
+                Logger.error("Error Uploading Video", error);
 
                 dispatch('DISPLAY_POPUP', {
                     message: "Error uploading video.",
@@ -91,7 +92,7 @@ export default {
                 });
                 commit("setUploadStatus", UPLOAD_STATUS.TRIM_FINISHED);
             }).catch(error => {
-                console.error("Error Editing Video", error);
+                Logger.error("Error Editing Video", error);
                 dispatch('DISPLAY_POPUP', {
                     message: "Error editing video.",
                     type: 'error'
@@ -110,7 +111,7 @@ export default {
                 dispatch('DISPLAY_POPUP_DEFAULT', data, {root: true});
                 dispatch('matches/refreshMatches', {}, {root: true})
             }).catch(error => {
-                console.error("Error Uploading Video", error);
+                Logger.error("Error Uploading Video", error);
                 dispatch('DISPLAY_POPUP', {
                     message: "Error uploading video.",
                     type: 'error'
@@ -125,7 +126,7 @@ export default {
                 dispatch('DISPLAY_POPUP_DEFAULT', data, {root: true});
                 dispatch('matches/refreshMatches', {}, {root: true})
             }).catch(error => {
-                console.error("ERROR UPDATING MATCH", error)
+                Logger.error("ERROR UPDATING MATCH", error)
             }).then(() => {
                 commit('reset');
                 dispatch('REFRESH_PROFILE', null, {root: true});

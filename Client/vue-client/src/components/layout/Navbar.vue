@@ -111,7 +111,7 @@
                                 this.users = data;
                             })
                             .catch(err => {
-                                console.error("TODO remove this", err);
+                                this.$logger.error("TODO remove this", err);
                             })
                             .then(() => {
                                 this.searching = false;

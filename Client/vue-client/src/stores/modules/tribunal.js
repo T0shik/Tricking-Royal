@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex"
 import axios from "axios";
+import Logger from "../../logger/logger";
 
 Vue.use(Vuex);
 
@@ -57,7 +58,7 @@ export default {
                     commit('SET_TRIBUNAL_LOADING', false)
                 })
                 .catch(err => {
-                    console.error("ERROR GETTING EVALUATIONS", err)
+                    Logger.error("ERROR GETTING EVALUATIONS", err)
                 })
         },
         REFRESH_EVALUATIONS({ commit, getters }) {
@@ -68,7 +69,7 @@ export default {
                     commit('SET_TRIBUNAL_LOADING', false);
                 })
                 .catch(err => {
-                    console.error("ERROR GETTING EVALUATIONS", err);
+                    Logger.error("ERROR GETTING EVALUATIONS", err);
                 })
         },
         LOAD_TRIBUNAL_COUNT({ commit }) {

@@ -51,7 +51,7 @@
                         this.$router.replace("/battles");
                     })
                     .catch(err => {
-                        console.log("TODO handle skill error", err);
+                        this.$logger.log("TODO handle skill error", err);
                     });
             }
         }

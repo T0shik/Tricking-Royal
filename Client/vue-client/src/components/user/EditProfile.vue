@@ -165,7 +165,7 @@
 <script>
     import axios from "axios";
     import skillList from "../../data/skills";
-    import {mapState, mapMutations, mapActions} from "vuex";
+    import {mapMutations, mapActions} from "vuex";
     import {
         mdiAccount, mdiBell, mdiBellOff,
         mdiCheck,
@@ -362,7 +362,7 @@
                         });
                     })
                     .catch(error => {
-                        console.error("ERROR UPLOADING IMAGE TODO HANDLE", error);
+                        this.$logger.error("ERROR UPLOADING IMAGE TODO HANDLE", error);
                     });
             }
         },

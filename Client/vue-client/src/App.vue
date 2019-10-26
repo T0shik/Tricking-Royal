@@ -51,7 +51,7 @@
                                     type: NOTIFICATION_TYPE.WEB,
                                     active: subscribed,
                                 }).catch(err => {
-                                    console.error(err);
+                                    this.$logger.error(err);
                                 })
                             });
                         });

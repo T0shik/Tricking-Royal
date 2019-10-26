@@ -169,7 +169,7 @@
                         this.popup(data);
                     })
                     .catch(err => {
-                        console.error(err)
+                        this.$logger.error(err)
                     })
                     .then(() => {
                         this.refreshProfile();
