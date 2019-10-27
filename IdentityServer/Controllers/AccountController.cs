@@ -49,19 +49,21 @@ namespace IdentityServer.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(string returnUrl = null) =>
-            _signInManager.IsSignedIn(HttpContext.User)
-                ? BackToHome()
-                : View(new LoginViewModel()
-                {
-                    ExternalAuth = await HttpContext.GetExternalProvidersAsync(),
-                    ReturnUrl = returnUrl
-                });
+        public async Task<IActionResult> Login(string returnUrl = null)
+        {
+            return _signInManager.IsSignedIn(HttpContext.User)
+                       ? BackToHome()
+                       : View(new LoginViewModel()
+                       {
+                           ExternalAuth = await HttpContext.GetExternalProvidersAsync(),
+                           ReturnUrl = returnUrl
+                       });
+        }
 
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginViewModel model, string button)
+        public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (_signInManager.IsSignedIn(HttpContext.User))
             {
@@ -87,12 +89,7 @@ namespace IdentityServer.Controllers
 
                     if (result.Succeeded)
                     {
-                        if (_interaction.IsValidReturnUrl(model.ReturnUrl))
-                        {
-                            return Redirect(model.ReturnUrl);
-                        }
-
-                        return Redirect("~/");
+                        return Redirect(_interaction.IsValidReturnUrl(model.ReturnUrl) ? model.ReturnUrl : "~/");
                     }
 
                     if (result.RequiresTwoFactor)
@@ -112,7 +109,7 @@ namespace IdentityServer.Controllers
                 }
                 catch (Exception e)
                 {
-                    _logger.LogError($"Exception occured: {e.Message}");
+                    _logger.LogError(e, "Exception during login attempt for {0}", model.Email);
                 }
             }
 
@@ -122,17 +119,15 @@ namespace IdentityServer.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult Register(string returnUrl = null) =>
-            _signInManager.IsSignedIn(HttpContext.User)
-                ? BackToHome()
-                : View(new RegisterViewModel
-                {
-                    ReturnUrl = returnUrl
-                });
-
-        [HttpPost]
-        [AllowAnonymous]
-        public IActionResult BackToLogin(string returnUrl = null) => RedirectToAction("Login", new {returnUrl});
+        public IActionResult Register(string returnUrl = null)
+        {
+            return _signInManager.IsSignedIn(HttpContext.User)
+                       ? BackToHome()
+                       : View(new RegisterViewModel
+                       {
+                           ReturnUrl = returnUrl
+                       });
+        }
 
         [HttpPost]
         [AllowAnonymous]
@@ -140,7 +135,9 @@ namespace IdentityServer.Controllers
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
             if (_signInManager.IsSignedIn(HttpContext.User))
+            {
                 return BackToHome();
+            }
 
             if (!ModelState.IsValid)
             {
@@ -158,7 +155,6 @@ namespace IdentityServer.Controllers
                 });
 
                 await _ctx.SaveChangesAsync();
-                await _signInManager.SignInAsync(user, isPersistent: false);
                 _logger.LogInformation(3, "User created a new account with password.");
 
                 try
@@ -166,7 +162,7 @@ namespace IdentityServer.Controllers
                     var emailCode = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
                     var callbackUrl = Url.Action(nameof(ConfirmEmail), "Account",
-                                                 new {userId = user.Id, code = emailCode},
+                                                 new {userId = user.Id, code = emailCode, returnUrl = model.ReturnUrl},
                                                  protocol: HttpContext.Request.Scheme);
 
                     await _emailService.SendAsync(model.Email, "Email Confirmation",
@@ -177,7 +173,7 @@ namespace IdentityServer.Controllers
                     _logger.LogError(e, "Failed to send email confirmation code");
                 }
 
-                return RedirectToLocal(model.ReturnUrl);
+                return RedirectToAction("EmailVerification", new {email = model.Email});
             }
 
             AddErrors(result);
@@ -272,7 +268,10 @@ namespace IdentityServer.Controllers
                 return View("ExternalLoginFailure");
             }
 
-            var user = new ApplicationUser(model.Email);
+            var user = new ApplicationUser(model.Email)
+            {
+                EmailConfirmed = true
+            };
             var result = await _userManager.CreateAsync(user);
             if (result.Succeeded)
             {
@@ -299,9 +298,42 @@ namespace IdentityServer.Controllers
 
         [HttpGet]
         [AllowAnonymous]
+        public IActionResult EmailVerification(string email)
+        {
+            return View(new EmailVerificationViewModel {Email = email});
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> SendEmailVerification(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+
+            try
+            {
+                var emailCode = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
+                var callbackUrl = Url.Action(nameof(ConfirmEmail), "Account",
+                                             new {userId = user.Id, code = emailCode},
+                                             protocol: HttpContext.Request.Scheme);
+
+                await _emailService.SendAsync(email, "Email Confirmation",
+                                              $"Please confirm your email by clicking here: <a href='{callbackUrl}'>link</a>");
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Failed to send email confirmation code");
+            }
+
+            return RedirectToAction("EmailVerification", new {email});
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> ConfirmEmail(
             string userId,
             string code,
+            string returnUrl,
             [FromServices] IOptions<OAuth> oAuthOptions)
         {
             if (userId == null
@@ -319,7 +351,12 @@ namespace IdentityServer.Controllers
             var result = await _userManager.ConfirmEmailAsync(user, code);
             if (result.Succeeded)
             {
-                return RedirectToAction("Login", new {returnUrl = $"{oAuthOptions.Value.Routing.Client}/battles"});
+                if (string.IsNullOrEmpty(returnUrl))
+                {
+                    returnUrl = $"{oAuthOptions.Value.Routing.Client}/battles/active";
+                }
+
+                return RedirectToAction("Login", new {returnUrl});
             }
 
             _logger.LogWarning("Failed to confirm email for user {0}, supplied code = {1}, with error {2} ",
@@ -332,7 +369,8 @@ namespace IdentityServer.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult ForgotPassword() => View();
+        public IActionResult ForgotPassword(string returnUrl) =>
+            View(new ForgotPasswordViewModel {ReturnUrl = returnUrl});
 
         [HttpPost]
         [AllowAnonymous]

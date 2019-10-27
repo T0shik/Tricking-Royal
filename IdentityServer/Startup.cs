@@ -203,6 +203,8 @@ namespace IdentityServer
                     options.Password.RequireLowercase = false;
                     options.Password.RequireUppercase = true;
                     options.Password.RequireNonAlphanumeric = false;
+                    options.User.RequireUniqueEmail = true;
+                    options.SignIn.RequireConfirmedEmail = true;
                 };
             }
 

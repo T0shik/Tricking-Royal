@@ -1,7 +1,6 @@
 ﻿@model RegisterViewModel
 @{
     ViewData["Title"] = "Register";
-
 }
 
 
@@ -11,9 +10,9 @@
             <div class="column is-4-desktop is-offset-4-desktop  is-6-tablet is-offset-3-tablet">
                 <h3 class="title is-font-rock has-text-weight-bold has-text-primary">Tricking Royal</h3>
                 <div class="box is-faded">
-                    <h3 class="title has-text-white">Register   </h3>
+                    <h3 class="title has-text-white">Register </h3>
                     <form asp-controller="Account" asp-action="Register" method="post">
-                        <input type="hidden" asp-for="@Model.ReturnUrl" value="@Model.ReturnUrl" />
+                        <input type="hidden" asp-for="@Model.ReturnUrl" value="@Model.ReturnUrl"/>
                         <div class="field">
                             <div class="control">
                                 <input class="input" asp-for="DisplayName" placeholder="Enter Username (trix_god)" autofocus="">
@@ -42,11 +41,9 @@
                             <button class="button is-block is-info is-fullwidth">Register</button>
                         </div>
                     </form>
-                    <form asp-controller="Account" asp-action="BackToLogin" asp-route-returnurl="@Model.ReturnUrl" method="post">
-                        <div class="field">
-                            <button type="submit" class="button">Back to Login</button>
-                        </div>
-                    </form>
+                    <div class="field">
+                        <a asp-controller="Account" asp-action="Login" asp-route-returnUrl="@Model.ReturnUrl" class="button">Back to Login</a>
+                    </div>
                 </div>
             </div>
         </div>

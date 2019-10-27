@@ -1,0 +1,22 @@
+﻿@model EmailVerificationViewModel
+
+@{
+    ViewData["Title"] = "Email Verification";
+}
+
+<div class="hero">
+    <div class="hero-body">
+        <div class="has-text-centered">
+            <div class="column is-4-desktop is-offset-4-desktop  is-6-tablet is-offset-3-tablet">
+                <h3 class="title is-font-rock has-text-weight-bold has-text-primary">Tricking Royal</h3>
+                <div class="box has-text-white is-faded">
+                    <h3 class="title has-text-white">Email Verification</h3>
+                    <p>Thank you for registering with Tricking Royal.</p>
+                    <p>An email verification link has been sent to <strong class="has-text-primary">@Model.Email</strong></p>
+                    <p>Please verify your email for account recovery and credability. We will not send you notification or marketing emails without your permission.</p>
+                    <p>Haven't recieved your email? <a asp-controller="Account" asp-action="SendEmailVerification" asp-route-email="@Model.Email">Click Here</a> to resend the verification.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

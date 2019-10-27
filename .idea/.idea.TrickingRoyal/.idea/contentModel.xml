@@ -1197,6 +1197,7 @@
         <e p="IdentityServer.csproj" t="IncludeRecursive" />
         <e p="Models" t="Include">
           <e p="AccountViewModels" t="Include">
+            <e p="EmailVerificationViewModel.cs" t="Include" />
             <e p="ExternalLoginConfirmationViewModel.cs" t="Include" />
             <e p="ForgotPasswordViewModel.cs" t="Include" />
             <e p="LoginViewModel.cs" t="Include" />
@@ -1248,6 +1249,7 @@
           <e p="Account" t="Include">
             <e p="AccessDenied.cshtml" t="Include" />
             <e p="ConfirmEmail.cshtml" t="Include" />
+            <e p="EmailVerification.cshtml" t="Include" />
             <e p="ExternalLoginConfirmation.cshtml" t="Include" />
             <e p="ExternalLoginFailure.cshtml" t="Include" />
             <e p="ForgotPassword.cshtml" t="Include" />

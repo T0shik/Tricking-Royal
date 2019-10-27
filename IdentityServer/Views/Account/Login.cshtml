@@ -42,7 +42,7 @@
                     </div>
                     <form asp-controller="Account" asp-action="Login" method="post">
                         <div asp-validation-summary="All" class="help is-danger"></div>
-                        <input type="hidden" asp-for="ReturnUrl" />
+                        <input type="hidden" asp-for="ReturnUrl"/>
                         <div class="field">
                             <div class="control has-icons-left">
                                 <span class="icon is-medium is-left">
@@ -81,7 +81,7 @@
                         </div>
                     </form>
                     <div class="field">
-                        <a class="has-text-grey-lighter has-text-weight-bold" asp-action="ForgotPassword">Forgot Password?</a>
+                        <a class="has-text-grey-lighter has-text-weight-bold" asp-action="ForgotPassword" asp-route-returnUrl="@Model.ReturnUrl">Forgot Password?</a>
                     </div>
                 </div>
             </div>
