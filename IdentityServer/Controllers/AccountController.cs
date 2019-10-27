@@ -11,8 +11,6 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Battles.Models;
-using IdentityServer.Configuration;
-using Microsoft.Extensions.Options;
 using NETCore.MailKit.Core;
 using TrickingRoyal.Database;
 
@@ -155,6 +153,7 @@ namespace IdentityServer.Controllers
                 });
 
                 await _ctx.SaveChangesAsync();
+                await _signInManager.SignInAsync(user, true);
                 _logger.LogInformation(3, "User created a new account with password.");
 
                 return Redirect(model.ReturnUrl);
