@@ -42,7 +42,7 @@ namespace Battles.Api.Notifications.Dispatchers
     Follow the <a href={navigation}>link</a> to see the update.
 </p>";
 
-            return _emailService.SendAsync(target, message.Message, htmlMessage);
+            return _emailService.SendAsync(target, message.Message, htmlMessage, true);
         }
 
         //This will have a strong link with how the routing works in the client app.

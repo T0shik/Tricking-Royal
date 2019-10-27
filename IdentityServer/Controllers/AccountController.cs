@@ -166,7 +166,8 @@ namespace IdentityServer.Controllers
                                                  protocol: HttpContext.Request.Scheme);
 
                     await _emailService.SendAsync(model.Email, "Email Confirmation",
-                                                  $"Please confirm your email by clicking here: <a href='{callbackUrl}'>link</a>");
+                                                  $"Please confirm your email by clicking here: <a href='{callbackUrl}'>link</a>",
+                                                  true);
                 }
                 catch (Exception e)
                 {
@@ -318,7 +319,8 @@ namespace IdentityServer.Controllers
                                              protocol: HttpContext.Request.Scheme);
 
                 await _emailService.SendAsync(email, "Email Confirmation",
-                                              $"Please confirm your email by clicking here: <a href='{callbackUrl}'>link</a>");
+                                              $"Please confirm your email by clicking here: <a href='{callbackUrl}'>link</a>",
+                                              true);
             }
             catch (Exception e)
             {
@@ -392,7 +394,8 @@ namespace IdentityServer.Controllers
             var callbackUrl = Url.Action(nameof(ResetPassword), "Account", new {userId = user.Id, code},
                                          protocol: HttpContext.Request.Scheme);
             await _emailService.SendAsync(model.Email, "Reset Password",
-                                          $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>");
+                                          $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>",
+                                          true);
             return View("ForgotPasswordConfirmation");
         }
 
@@ -478,7 +481,7 @@ namespace IdentityServer.Controllers
             var message = "Your security code is: " + code;
             if (model.SelectedProvider == "Email")
             {
-                await _emailService.SendAsync(await _userManager.GetEmailAsync(user), "Security Code", message);
+                await _emailService.SendAsync(await _userManager.GetEmailAsync(user), "Security Code", message, true);
             }
 
             return RedirectToAction(nameof(VerifyCode),
