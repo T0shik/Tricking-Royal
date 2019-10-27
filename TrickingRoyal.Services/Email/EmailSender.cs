@@ -1,15 +1,10 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
-using IdentityServer.Configuration;
-using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Logging;
 
-namespace IdentityServer.Services
+namespace TrickingRoyal.Services.Email
 {
     public class EmailSender : IEmailSender
     {
@@ -18,23 +13,23 @@ namespace IdentityServer.Services
         private readonly EmailSettings _emailSettings;
 
         public EmailSender(
-            IOptions<EmailSettings> emailOptions,
+            EmailSettings emailOptions,
             ILogger<EmailSender> logger)
         {
-            _emailSettings = emailOptions.Value;
+            _emailSettings = emailOptions;
             _logger = logger;
-            _client = new SmtpClient(_emailSettings.Server, _emailSettings.Port)
+            _client = new SmtpClient(_emailSettings.Server)
             {
                 UseDefaultCredentials = false,
                 Credentials = new NetworkCredential(_emailSettings.Username, _emailSettings.Password),
             };
         }
 
-        public Task SendEmailAsync(string email, string subject, string message)
+        public Task SendEmailAsync(string to, string subject, string body)
         {
             try
             {
-                var mailMessage = new MailMessage(_emailSettings.Name, email, subject, message)
+                var mailMessage = new MailMessage(_emailSettings.Name, to, subject, body)
                 {
                     IsBodyHtml = true,
                 };

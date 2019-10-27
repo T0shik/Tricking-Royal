@@ -31,8 +31,6 @@ namespace IdentityServer
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<OAuth>(_config.GetSection(nameof(OAuth)));
-            services.Configure<EmailSettings>(_config.GetSection(nameof(EmailSettings)));
-
             var routing = _config.GetSection("OAuth").Get<OAuth>().Routing;
 
             services.Configure<CookiePolicyOptions>(options =>
@@ -78,19 +76,27 @@ namespace IdentityServer
                     });
 
             SetupCors(services, routing.Client);
-
-            services.AddSingleton<IEmailSender, EmailSender>();
+            
+            var emailSettings = _config.GetSection(nameof(EmailSettings)).Get<EmailSettings>();
+            services.AddTrickingRoyalServices(options =>
+            {
+                options.EmailSettings.Name = emailSettings.Name;
+                options.EmailSettings.Server = emailSettings.Server;
+                options.EmailSettings.Username = emailSettings.Username;
+                options.EmailSettings.Password = emailSettings.Password;
+            });
 
             services.AddHealthChecks();
             services.AddMvc();
         }
 
-        public void Configure(IApplicationBuilder app,
-                              ILoggerFactory loggerFactory)
+        public void Configure(
+            IApplicationBuilder app,
+            ILoggerFactory loggerFactory)
         {
             app.UseCors(_env.IsDevelopment() ? "AllowAll" : "AllowClients");
             app.UseHealthChecks("/healthcheck");
-            
+
             if (_env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage()
@@ -107,7 +113,7 @@ namespace IdentityServer
 
                 app.UseExceptionHandler("/Shared/Error");
             }
-            
+
             app.UseCookiePolicy()
                .UseStaticFiles()
                .UseIdentityServer()

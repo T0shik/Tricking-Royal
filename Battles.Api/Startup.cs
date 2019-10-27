@@ -18,6 +18,7 @@ using Battles.Api.Settings;
 using Battles.Application.SubServices;
 using Microsoft.Extensions.Logging;
 using TrickingRoyal.Database;
+using TrickingRoyal.Services.Email;
 
 namespace Battles.Api
 {
@@ -39,10 +40,7 @@ namespace Battles.Api
             services.Configure<OneSignal>(_config.GetSection("OneSignal"));
             services.Configure<AppSettings>(_config.GetSection("AppSettings"));
 
-            var email = _config.GetSection("EmailSettings").Get<EmailSettings>();
-
             services.AddSingleton(_oAuth.Routing);
-            services.AddSingleton(email);
 
             var connectionString = _config.GetConnectionString("DefaultConnection");
             services.AddTrickingRoyalDatabase(connectionString)
@@ -78,6 +76,15 @@ namespace Battles.Api
                                        config.DefaultRequestHeaders.Accept
                                              .Add(new MediaTypeWithQualityHeaderValue("application/json"));
                                    });
+
+            var emailSettings = _config.GetSection(nameof(EmailSettings)).Get<EmailSettings>();
+            services.AddTrickingRoyalServices(options =>
+            {
+                options.EmailSettings.Name = emailSettings.Name;
+                options.EmailSettings.Server = emailSettings.Server;
+                options.EmailSettings.Username = emailSettings.Username;
+                options.EmailSettings.Password = emailSettings.Password;
+            });
 
             services.AddHealthChecks();
             services.AddMvc();

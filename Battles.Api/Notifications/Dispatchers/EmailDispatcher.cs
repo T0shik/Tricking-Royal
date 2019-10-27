@@ -10,28 +10,27 @@ using Battles.Extensions;
 using Battles.Models;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using TrickingRoyal.Services.Email;
 
 namespace Battles.Api.Notifications.Dispatchers
 {
     public class EmailDispatcher : IDispatcher
     {
+        private readonly IEmailSender _emailSender;
         private readonly EmailSettings _emailSettings;
         private readonly Routing _routing;
         private readonly ILogger<EmailDispatcher> _logger;
-        private readonly SmtpClient _smtp;
 
         public EmailDispatcher(
+            IEmailSender emailSender,
             EmailSettings emailSettings,
             Routing routing,
             ILogger<EmailDispatcher> logger)
         {
+            _emailSender = emailSender;
             _emailSettings = emailSettings;
             _routing = routing;
             _logger = logger;
-            _smtp = new SmtpClient(emailSettings.Server, emailSettings.Port)
-            {
-                Credentials = new NetworkCredential(emailSettings.Username, emailSettings.Password),
-            };
         }
 
         public Task SendNotification(
@@ -48,16 +47,7 @@ namespace Battles.Api.Notifications.Dispatchers
     Follow the <a href={navigation}>link</a> to see the update.
 </p>";
 
-            var mailMessage = new MailMessage(
-                _emailSettings.Name,
-                target,
-                message.Message,
-                htmlMessage)
-            {
-                IsBodyHtml = true,
-            };
-
-            return _smtp.SendMailAsync(mailMessage);
+            return _emailSender.SendEmailAsync(target, message.Message, htmlMessage);
         }
 
         //This will have a strong link with how the routing works in the client app.
@@ -107,7 +97,7 @@ namespace Battles.Api.Notifications.Dispatchers
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(message.Type), message.Type,
-                        "This message type doesn't exist.");
+                                                          "This message type doesn't exist.");
             }
 
             return "";

@@ -16,6 +16,7 @@ using Battles.Models;
 using IdentityServer.Configuration;
 using Microsoft.Extensions.Options;
 using TrickingRoyal.Database;
+using TrickingRoyal.Services.Email;
 
 namespace IdentityServer.Controllers
 {
@@ -173,7 +174,7 @@ namespace IdentityServer.Controllers
                 }
                 catch (Exception e)
                 {
-                    _logger.LogError("Failed to send email confirmation code", e);
+                    _logger.LogError(e,"Failed to send email confirmation code");
                 }
 
                 return RedirectToLocal(model.ReturnUrl);

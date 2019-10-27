@@ -16,5 +16,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Battles.Application\Battles.Application.csproj" />
+    <ProjectReference Include="..\TrickingRoyal.Services\TrickingRoyal.Services.csproj" />
   </ItemGroup>
 </Project>
