@@ -157,24 +157,7 @@ namespace IdentityServer.Controllers
                 await _ctx.SaveChangesAsync();
                 _logger.LogInformation(3, "User created a new account with password.");
 
-                try
-                {
-                    var emailCode = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-
-                    var callbackUrl = Url.Action(nameof(ConfirmEmail), "Account",
-                                                 new {userId = user.Id, code = emailCode},
-                                                 protocol: HttpContext.Request.Scheme);
-
-                    await _emailService.SendAsync(model.Email, "Email Confirmation",
-                                                  $"Please confirm your email by clicking here: <a href='{callbackUrl}'>link</a>",
-                                                  true);
-                }
-                catch (Exception e)
-                {
-                    _logger.LogError(e, "Failed to send email confirmation code");
-                }
-
-                return RedirectToAction("EmailVerification", new {email = model.Email});
+                return Redirect(model.ReturnUrl);
             }
 
             AddErrors(result);
@@ -295,75 +278,6 @@ namespace IdentityServer.Controllers
             AddErrors(result);
 
             return View(model);
-        }
-
-        [HttpGet]
-        [AllowAnonymous]
-        public IActionResult EmailVerification(string email, string returnUrl)
-        {
-            return View(new EmailVerificationViewModel {Email = email, ReturnUrl = returnUrl});
-        }
-
-        [HttpGet]
-        [AllowAnonymous]
-        public async Task<IActionResult> SendEmailVerification(string email, string returnUrl)
-        {
-            var user = await _userManager.FindByEmailAsync(email);
-
-            if (!user.EmailConfirmed)
-            {
-                try
-                {
-                    var emailCode = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-
-                    var callbackUrl = Url.Action(nameof(ConfirmEmail), "Account",
-                                                 new {userId = user.Id, code = emailCode},
-                                                 protocol: HttpContext.Request.Scheme);
-
-                    await _emailService.SendAsync(email, "Email Confirmation",
-                                                  $"Please confirm your email by clicking here: <a href='{callbackUrl}'>link</a>",
-                                                  true);
-                }
-                catch (Exception e)
-                {
-                    _logger.LogError(e, "Failed to send email confirmation code");
-                }
-            }
-
-            return RedirectToAction("EmailVerification", new {email, returnUrl});
-        }
-
-        [HttpGet]
-        [AllowAnonymous]
-        public async Task<IActionResult> ConfirmEmail(
-            string userId,
-            string code,
-            [FromServices] IOptions<OAuth> oAuthOptions)
-        {
-            if (userId == null
-                || code == null)
-            {
-                return View("Error");
-            }
-
-            var user = await _userManager.FindByIdAsync(userId);
-            if (user == null)
-            {
-                return View("Error");
-            }
-
-            var result = await _userManager.ConfirmEmailAsync(user, code);
-            if (result.Succeeded)
-            {
-                return Redirect($"{oAuthOptions.Value.Routing.Client}/battles/active");
-            }
-
-            _logger.LogWarning("Failed to confirm email for user {0}, supplied code = {1}, with error {2} ",
-                               user.Email,
-                               code,
-                               result.Errors);
-
-            return Redirect(oAuthOptions.Value.Routing.Client);
         }
 
         [HttpGet]
