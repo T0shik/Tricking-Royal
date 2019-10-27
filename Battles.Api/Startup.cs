@@ -17,8 +17,9 @@ using Battles.Api.Notifications;
 using Battles.Api.Settings;
 using Battles.Application.SubServices;
 using Microsoft.Extensions.Logging;
+using NETCore.MailKit.Extensions;
+using NETCore.MailKit.Infrastructure.Internal;
 using TrickingRoyal.Database;
-using TrickingRoyal.Services.Email;
 
 namespace Battles.Api
 {
@@ -77,14 +78,9 @@ namespace Battles.Api
                                              .Add(new MediaTypeWithQualityHeaderValue("application/json"));
                                    });
 
-            var emailSettings = _config.GetSection(nameof(EmailSettings)).Get<EmailSettings>();
-            services.AddTrickingRoyalServices(options =>
-            {
-                options.EmailSettings.Name = emailSettings.Name;
-                options.EmailSettings.Server = emailSettings.Server;
-                options.EmailSettings.Username = emailSettings.Username;
-                options.EmailSettings.Password = emailSettings.Password;
-            });
+
+            var emailSettings = _config.GetSection(nameof(MailKitOptions)).Get<MailKitOptions>();
+            services.AddMailKit(optionBuilder => { optionBuilder.UseMailKit(emailSettings); });
 
             services.AddHealthChecks();
             services.AddMvc();

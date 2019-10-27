@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net;
-using System.Net.Mail;
 using System.Threading;
 using System.Threading.Tasks;
 using Battles.Configuration;
@@ -10,25 +8,22 @@ using Battles.Extensions;
 using Battles.Models;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
-using TrickingRoyal.Services.Email;
+using NETCore.MailKit.Core;
 
 namespace Battles.Api.Notifications.Dispatchers
 {
     public class EmailDispatcher : IDispatcher
     {
-        private readonly IEmailSender _emailSender;
-        private readonly EmailSettings _emailSettings;
+        private readonly IEmailService _emailService;
         private readonly Routing _routing;
         private readonly ILogger<EmailDispatcher> _logger;
 
         public EmailDispatcher(
-            IEmailSender emailSender,
-            EmailSettings emailSettings,
+            IEmailService emailService,
             Routing routing,
             ILogger<EmailDispatcher> logger)
         {
-            _emailSender = emailSender;
-            _emailSettings = emailSettings;
+            _emailService = emailService;
             _routing = routing;
             _logger = logger;
         }
@@ -40,14 +35,14 @@ namespace Battles.Api.Notifications.Dispatchers
         {
             var navigation = CreateEmailNavigation(message);
             var htmlMessage = $@"
-<h4>Notification from {_emailSettings.Name}</h4>
+<h4>Notification from Tricking Royal</h4>
 <p>{message.Message}</p>
 <hr />
 <p>
     Follow the <a href={navigation}>link</a> to see the update.
 </p>";
 
-            return _emailSender.SendEmailAsync(target, message.Message, htmlMessage);
+            return _emailService.SendAsync(target, message.Message, htmlMessage);
         }
 
         //This will have a strong link with how the routing works in the client app.

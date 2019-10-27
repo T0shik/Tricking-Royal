@@ -134,7 +134,6 @@
           <e p="NotificationQueue.cs" t="Include" />
           <e p="NotificationServices.cs" t="Include" />
           <e p="Settings" t="Include">
-            <e p="EmailSettings.cs" t="Include" />
             <e p="OneSignal.cs" t="Include" />
           </e>
         </e>
@@ -1181,7 +1180,6 @@
         <e p="Config.cs" t="Include" />
         <e p="Configuration" t="Include">
           <e p="AppSecrets.cs" t="Include" />
-          <e p="EmailSettings.cs" t="Include" />
           <e p="Facebook.cs" t="Include" />
           <e p="OAuth.cs" t="Include" />
           <e p="Resource.cs" t="Include" />
@@ -1239,9 +1237,7 @@
           </e>
         </e>
         <e p="Services" t="Include">
-          <e p="EmailSender.cs" t="Include" />
           <e p="IdentityProfileService.cs" t="Include" />
-          <e p="IEmailSender.cs" t="Include" />
         </e>
         <e p="Startup.cs" t="Include" />
         <e p="tempkey.rsa" t="Include" />

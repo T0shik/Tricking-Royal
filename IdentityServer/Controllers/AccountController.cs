@@ -1,12 +1,10 @@
 ﻿using IdentityServer.Extensions;
 using IdentityServer.Models.AccountViewModels;
-using IdentityServer.Services;
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
@@ -15,8 +13,8 @@ using System.Threading.Tasks;
 using Battles.Models;
 using IdentityServer.Configuration;
 using Microsoft.Extensions.Options;
+using NETCore.MailKit.Core;
 using TrickingRoyal.Database;
-using TrickingRoyal.Services.Email;
 
 namespace IdentityServer.Controllers
 {
@@ -27,7 +25,7 @@ namespace IdentityServer.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IIdentityServerInteractionService _interaction;
-        private readonly IEmailSender _emailSender;
+        private readonly IEmailService _emailService;
         private readonly ILogger<AccountController> _logger;
 
         public AccountController(
@@ -35,14 +33,14 @@ namespace IdentityServer.Controllers
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IIdentityServerInteractionService interaction,
-            IEmailSender emailSender,
+            IEmailService emailService,
             ILogger<AccountController> logger)
         {
             _ctx = ctx;
             _userManager = userManager;
             _signInManager = signInManager;
             _interaction = interaction;
-            _emailSender = emailSender;
+            _emailService = emailService;
             _logger = logger;
         }
 
@@ -169,12 +167,12 @@ namespace IdentityServer.Controllers
 
                     var callbackUrl = Url.Action(nameof(ConfirmEmail), "Account", new {userId = user.Id, emailCode},
                                                  protocol: HttpContext.Request.Scheme);
-                    await _emailSender.SendEmailAsync(model.Email, "Email Confirmation",
-                                                      $"Please confirm your email by clicking here: <a href='{callbackUrl}'>link</a>");
+                    await _emailService.SendAsync(model.Email, "Email Confirmation",
+                                                  $"Please confirm your email by clicking here: <a href='{callbackUrl}'>link</a>");
                 }
                 catch (Exception e)
                 {
-                    _logger.LogError(e,"Failed to send email confirmation code");
+                    _logger.LogError(e, "Failed to send email confirmation code");
                 }
 
                 return RedirectToLocal(model.ReturnUrl);
@@ -348,8 +346,8 @@ namespace IdentityServer.Controllers
             var code = await _userManager.GeneratePasswordResetTokenAsync(user);
             var callbackUrl = Url.Action(nameof(ResetPassword), "Account", new {userId = user.Id, code},
                                          protocol: HttpContext.Request.Scheme);
-            await _emailSender.SendEmailAsync(model.Email, "Reset Password",
-                                              $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>");
+            await _emailService.SendAsync(model.Email, "Reset Password",
+                                          $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>");
             return View("ForgotPasswordConfirmation");
         }
 
@@ -435,7 +433,7 @@ namespace IdentityServer.Controllers
             var message = "Your security code is: " + code;
             if (model.SelectedProvider == "Email")
             {
-                await _emailSender.SendEmailAsync(await _userManager.GetEmailAsync(user), "Security Code", message);
+                await _emailService.SendAsync(await _userManager.GetEmailAsync(user), "Security Code", message);
             }
 
             return RedirectToAction(nameof(VerifyCode),

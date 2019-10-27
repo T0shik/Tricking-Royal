@@ -13,6 +13,8 @@ using System;
 using System.IO;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
+using NETCore.MailKit.Extensions;
+using NETCore.MailKit.Infrastructure.Internal;
 using TrickingRoyal.Database;
 
 namespace IdentityServer
@@ -76,16 +78,10 @@ namespace IdentityServer
                     });
 
             SetupCors(services, routing.Client);
-            
-            var emailSettings = _config.GetSection(nameof(EmailSettings)).Get<EmailSettings>();
-            services.AddTrickingRoyalServices(options =>
-            {
-                options.EmailSettings.Name = emailSettings.Name;
-                options.EmailSettings.Server = emailSettings.Server;
-                options.EmailSettings.Username = emailSettings.Username;
-                options.EmailSettings.Password = emailSettings.Password;
-            });
 
+            var emailSettings = _config.GetSection(nameof(MailKitOptions)).Get<MailKitOptions>();
+            services.AddMailKit(optionBuilder => { optionBuilder.UseMailKit(emailSettings); });
+            
             services.AddHealthChecks();
             services.AddMvc();
         }
