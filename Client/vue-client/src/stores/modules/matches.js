@@ -148,6 +148,7 @@ export default {
 
             joinMatch(id).then(({data}) => {
                 dispatch("DISPLAY_POPUP_DEFAULT", data, {root: true});
+                commit('setStale');
                 if (data.success) {
                     router.push({path: '/battles/active'});
                 }

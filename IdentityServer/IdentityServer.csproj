@@ -9,6 +9,7 @@
         <PackageReference Include="Microsoft.AspNetCore.App" />
         <PackageReference Include="IdentityServer4.AspNetIdentity" Version="2.5.2" />
         <PackageReference Include="IdentityServer4.EntityFramework" Version="2.5.2" />
+        <PackageReference Include="NETCore.MailKit" Version="2.0.2" />
         <PackageReference Include="Serilog.Extensions.Logging.File" Version="1.1.0" />
     </ItemGroup>
 

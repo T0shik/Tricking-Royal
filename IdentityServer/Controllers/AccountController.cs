@@ -1,20 +1,17 @@
 ﻿using IdentityServer.Extensions;
 using IdentityServer.Models.AccountViewModels;
-using IdentityServer.Services;
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Battles.Models;
-using IdentityServer.Configuration;
-using Microsoft.Extensions.Options;
+using NETCore.MailKit.Core;
 using TrickingRoyal.Database;
 
 namespace IdentityServer.Controllers
@@ -26,7 +23,7 @@ namespace IdentityServer.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IIdentityServerInteractionService _interaction;
-        private readonly IEmailSender _emailSender;
+        private readonly IEmailService _emailService;
         private readonly ILogger<AccountController> _logger;
 
         public AccountController(
@@ -34,14 +31,14 @@ namespace IdentityServer.Controllers
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IIdentityServerInteractionService interaction,
-            IEmailSender emailSender,
+            IEmailService emailService,
             ILogger<AccountController> logger)
         {
             _ctx = ctx;
             _userManager = userManager;
             _signInManager = signInManager;
             _interaction = interaction;
-            _emailSender = emailSender;
+            _emailService = emailService;
             _logger = logger;
         }
 
@@ -50,19 +47,21 @@ namespace IdentityServer.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(string returnUrl = null) =>
-            _signInManager.IsSignedIn(HttpContext.User)
-                ? BackToHome()
-                : View(new LoginViewModel()
-                {
-                    ExternalAuth = await HttpContext.GetExternalProvidersAsync(),
-                    ReturnUrl = returnUrl
-                });
+        public async Task<IActionResult> Login(string returnUrl = null)
+        {
+            return _signInManager.IsSignedIn(HttpContext.User)
+                       ? BackToHome()
+                       : View(new LoginViewModel()
+                       {
+                           ExternalAuth = await HttpContext.GetExternalProvidersAsync(),
+                           ReturnUrl = returnUrl
+                       });
+        }
 
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginViewModel model, string button)
+        public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (_signInManager.IsSignedIn(HttpContext.User))
             {
@@ -88,12 +87,7 @@ namespace IdentityServer.Controllers
 
                     if (result.Succeeded)
                     {
-                        if (_interaction.IsValidReturnUrl(model.ReturnUrl))
-                        {
-                            return Redirect(model.ReturnUrl);
-                        }
-
-                        return Redirect("~/");
+                        return Redirect(_interaction.IsValidReturnUrl(model.ReturnUrl) ? model.ReturnUrl : "~/");
                     }
 
                     if (result.RequiresTwoFactor)
@@ -113,7 +107,7 @@ namespace IdentityServer.Controllers
                 }
                 catch (Exception e)
                 {
-                    _logger.LogError($"Exception occured: {e.Message}");
+                    _logger.LogError(e, "Exception during login attempt for {0}", model.Email);
                 }
             }
 
@@ -123,17 +117,15 @@ namespace IdentityServer.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult Register(string returnUrl = null) =>
-            _signInManager.IsSignedIn(HttpContext.User)
-                ? BackToHome()
-                : View(new RegisterViewModel
-                {
-                    ReturnUrl = returnUrl
-                });
-
-        [HttpPost]
-        [AllowAnonymous]
-        public IActionResult BackToLogin(string returnUrl = null) => RedirectToAction("Login", new {returnUrl});
+        public IActionResult Register(string returnUrl = null)
+        {
+            return _signInManager.IsSignedIn(HttpContext.User)
+                       ? BackToHome()
+                       : View(new RegisterViewModel
+                       {
+                           ReturnUrl = returnUrl
+                       });
+        }
 
         [HttpPost]
         [AllowAnonymous]
@@ -141,7 +133,9 @@ namespace IdentityServer.Controllers
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
             if (_signInManager.IsSignedIn(HttpContext.User))
+            {
                 return BackToHome();
+            }
 
             if (!ModelState.IsValid)
             {
@@ -155,21 +149,14 @@ namespace IdentityServer.Controllers
                 _ctx.UserInformation.Add(new UserInformation
                 {
                     Id = user.Id,
-                    DisplayName = model.DisplayName,
+                    DisplayName = model.NickName,
                 });
 
                 await _ctx.SaveChangesAsync();
-                await _signInManager.SignInAsync(user, isPersistent: false);
+                await _signInManager.SignInAsync(user, true);
                 _logger.LogInformation(3, "User created a new account with password.");
 
-                var emailCode = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-
-                var callbackUrl = Url.Action(nameof(ConfirmEmail), "Account", new {userId = user.Id, emailCode},
-                                             protocol: HttpContext.Request.Scheme);
-                await _emailSender.SendEmailAsync(model.Email, "Email Confirmation",
-                                                  $"Please confirm your email by clicking here: <a href='{callbackUrl}'>link</a>");
-
-                return RedirectToLocal(model.ReturnUrl);
+                return Redirect(model.ReturnUrl);
             }
 
             AddErrors(result);
@@ -264,7 +251,10 @@ namespace IdentityServer.Controllers
                 return View("ExternalLoginFailure");
             }
 
-            var user = new ApplicationUser(model.Email);
+            var user = new ApplicationUser(model.Email)
+            {
+                EmailConfirmed = true
+            };
             var result = await _userManager.CreateAsync(user);
             if (result.Succeeded)
             {
@@ -291,35 +281,8 @@ namespace IdentityServer.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> ConfirmEmail(
-            string userId,
-            string code,
-            [FromServices] IOptions<OAuth> oAuthOptions)
-        {
-            if (userId == null
-                || code == null)
-            {
-                return View("Error");
-            }
-
-            var user = await _userManager.FindByIdAsync(userId);
-            if (user == null)
-            {
-                return View("Error");
-            }
-
-            var result = await _userManager.ConfirmEmailAsync(user, code);
-            if (result.Succeeded)
-            {
-                return RedirectToAction("Login", new {returnUrl = $"{oAuthOptions.Value.Routing.Client}/battles"});
-            }
-
-            return Redirect(oAuthOptions.Value.Routing.Client);
-        }
-
-        [HttpGet]
-        [AllowAnonymous]
-        public IActionResult ForgotPassword() => View();
+        public IActionResult ForgotPassword(string returnUrl) =>
+            View(new ForgotPasswordViewModel {ReturnUrl = returnUrl});
 
         [HttpPost]
         [AllowAnonymous]
@@ -340,8 +303,9 @@ namespace IdentityServer.Controllers
             var code = await _userManager.GeneratePasswordResetTokenAsync(user);
             var callbackUrl = Url.Action(nameof(ResetPassword), "Account", new {userId = user.Id, code},
                                          protocol: HttpContext.Request.Scheme);
-            await _emailSender.SendEmailAsync(model.Email, "Reset Password",
-                                              $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>");
+            await _emailService.SendAsync(model.Email, "Reset Password",
+                                          $"Please reset your password by clicking here: <a href='{callbackUrl}'>link</a>",
+                                          true);
             return View("ForgotPasswordConfirmation");
         }
 
@@ -427,7 +391,7 @@ namespace IdentityServer.Controllers
             var message = "Your security code is: " + code;
             if (model.SelectedProvider == "Email")
             {
-                await _emailSender.SendEmailAsync(await _userManager.GetEmailAsync(user), "Security Code", message);
+                await _emailService.SendAsync(await _userManager.GetEmailAsync(user), "Security Code", message, true);
             }
 
             return RedirectToAction(nameof(VerifyCode),

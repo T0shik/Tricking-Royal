@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net;
-using System.Net.Mail;
 using System.Threading;
 using System.Threading.Tasks;
 using Battles.Configuration;
@@ -10,28 +8,24 @@ using Battles.Extensions;
 using Battles.Models;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using NETCore.MailKit.Core;
 
 namespace Battles.Api.Notifications.Dispatchers
 {
     public class EmailDispatcher : IDispatcher
     {
-        private readonly EmailSettings _emailSettings;
+        private readonly IEmailService _emailService;
         private readonly Routing _routing;
         private readonly ILogger<EmailDispatcher> _logger;
-        private readonly SmtpClient _smtp;
 
         public EmailDispatcher(
-            EmailSettings emailSettings,
+            IEmailService emailService,
             Routing routing,
             ILogger<EmailDispatcher> logger)
         {
-            _emailSettings = emailSettings;
+            _emailService = emailService;
             _routing = routing;
             _logger = logger;
-            _smtp = new SmtpClient(emailSettings.Server)
-            {
-                Credentials = new NetworkCredential(emailSettings.Username, emailSettings.Password),
-            };
         }
 
         public Task SendNotification(
@@ -41,23 +35,14 @@ namespace Battles.Api.Notifications.Dispatchers
         {
             var navigation = CreateEmailNavigation(message);
             var htmlMessage = $@"
-<h4>Notification from {_emailSettings.Name}</h4>
+<h4>Notification from Tricking Royal</h4>
 <p>{message.Message}</p>
 <hr />
 <p>
     Follow the <a href={navigation}>link</a> to see the update.
 </p>";
 
-            var mailMessage = new MailMessage(
-                _emailSettings.Name,
-                target,
-                message.Message,
-                htmlMessage)
-            {
-                IsBodyHtml = true,
-            };
-
-            return _smtp.SendMailAsync(mailMessage);
+            return _emailService.SendAsync(target, message.Message, htmlMessage, true);
         }
 
         //This will have a strong link with how the routing works in the client app.
@@ -107,7 +92,7 @@ namespace Battles.Api.Notifications.Dispatchers
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(message.Type), message.Type,
-                        "This message type doesn't exist.");
+                                                          "This message type doesn't exist.");
             }
 
             return "";

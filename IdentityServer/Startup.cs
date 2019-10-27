@@ -13,6 +13,8 @@ using System;
 using System.IO;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
+using NETCore.MailKit.Extensions;
+using NETCore.MailKit.Infrastructure.Internal;
 using TrickingRoyal.Database;
 
 namespace IdentityServer
@@ -31,8 +33,6 @@ namespace IdentityServer
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<OAuth>(_config.GetSection(nameof(OAuth)));
-            services.Configure<EmailSettings>(_config.GetSection(nameof(EmailSettings)));
-
             var routing = _config.GetSection("OAuth").Get<OAuth>().Routing;
 
             services.Configure<CookiePolicyOptions>(options =>
@@ -50,7 +50,7 @@ namespace IdentityServer
             {
                 services.AddDataProtection()
                         .SetApplicationName("IdentityServer")
-                        .PersistKeysToFileSystem(new DirectoryInfo(_env.ContentRootPath));
+                        .PersistKeysToFileSystem(new DirectoryInfo(_config["MachineKeys"]));
             }
 
             services.AddIdentity<ApplicationUser, IdentityRole>(IdentitySetupAction())
@@ -79,18 +79,20 @@ namespace IdentityServer
 
             SetupCors(services, routing.Client);
 
-            services.AddTransient<IEmailSender, AuthMessageSender>();
+            var emailSettings = _config.GetSection(nameof(MailKitOptions)).Get<MailKitOptions>();
+            services.AddMailKit(optionBuilder => { optionBuilder.UseMailKit(emailSettings); });
 
             services.AddHealthChecks();
             services.AddMvc();
         }
 
-        public void Configure(IApplicationBuilder app,
-                              ILoggerFactory loggerFactory)
+        public void Configure(
+            IApplicationBuilder app,
+            ILoggerFactory loggerFactory)
         {
             app.UseCors(_env.IsDevelopment() ? "AllowAll" : "AllowClients");
             app.UseHealthChecks("/healthcheck");
-            
+
             if (_env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage()
@@ -107,7 +109,7 @@ namespace IdentityServer
 
                 app.UseExceptionHandler("/Shared/Error");
             }
-            
+
             app.UseCookiePolicy()
                .UseStaticFiles()
                .UseIdentityServer()
@@ -201,6 +203,8 @@ namespace IdentityServer
                     options.Password.RequireLowercase = false;
                     options.Password.RequireUppercase = true;
                     options.Password.RequireNonAlphanumeric = false;
+                    options.User.RequireUniqueEmail = true;
+                    options.SignIn.RequireConfirmedEmail = false;
                 };
             }
 
