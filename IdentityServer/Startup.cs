@@ -50,7 +50,7 @@ namespace IdentityServer
             {
                 services.AddDataProtection()
                         .SetApplicationName("IdentityServer")
-                        .PersistKeysToFileSystem(new DirectoryInfo(_env.ContentRootPath));
+                        .PersistKeysToFileSystem(new DirectoryInfo(_config["MachineKeys"]));
             }
 
             services.AddIdentity<ApplicationUser, IdentityRole>(IdentitySetupAction())
@@ -81,7 +81,7 @@ namespace IdentityServer
 
             var emailSettings = _config.GetSection(nameof(MailKitOptions)).Get<MailKitOptions>();
             services.AddMailKit(optionBuilder => { optionBuilder.UseMailKit(emailSettings); });
-            
+
             services.AddHealthChecks();
             services.AddMvc();
         }
