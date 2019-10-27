@@ -3,7 +3,6 @@
     ViewData["Title"] = "Register";
 }
 
-
 <div class="hero">
     <div class="hero-body">
         <div class="has-text-centered">
@@ -13,12 +12,6 @@
                     <h3 class="title has-text-white">Register </h3>
                     <form asp-controller="Account" asp-action="Register" method="post">
                         <input type="hidden" asp-for="@Model.ReturnUrl" value="@Model.ReturnUrl"/>
-                        <div class="field">
-                            <div class="control">
-                                <input class="input" asp-for="NickName" autocomplete="nickname" placeholder="Username (trix_god)" autofocus="">
-                                <span asp-validation-for="NickName" class="help is-danger"></span>
-                            </div>
-                        </div>
                         <div class="field">
                             <div class="control">
                                 <input class="input" asp-for="Email" autocomplete="email" placeholder="Email (trix_god@gmail.com)">
@@ -35,6 +28,12 @@
                             <div class="control">
                                 <input class="input" asp-for="ConfirmPassword" placeholder="Confirm Password...">
                                 <span asp-validation-for="ConfirmPassword" class="help is-danger"></span>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="control">
+                                <input class="input" asp-for="NickName" autocomplete="nickname" placeholder="Username (trix_god)" autofocus="">
+                                <span asp-validation-for="NickName" class="help is-danger"></span>
                             </div>
                         </div>
                         <div class="field">

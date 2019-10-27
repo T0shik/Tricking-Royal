@@ -14,7 +14,17 @@
                     <p>Thank you for registering with Tricking Royal.</p>
                     <p>An email verification link has been sent to <strong class="has-text-primary">@Model.Email</strong></p>
                     <p>Please verify your email for account recovery and credability. We will not send you notification or marketing emails without your permission.</p>
-                    <p>Haven't recieved your email? <a asp-controller="Account" asp-action="SendEmailVerification" asp-route-email="@Model.Email">Click Here</a> to resend the verification.</p>
+                    <p>
+                        Haven't recieved your email?
+                        <a asp-controller="Account" asp-action="SendEmailVerification"
+                           asp-route-returnUrl="@Model.ReturnUrl" asp-route-email="@Model.Email">
+                            Click Here
+                        </a> to resend the verification.
+                    </p>
+
+                    <div class="field">
+                        <a asp-controller="Account" asp-action="Login" asp-route-returnUrl="@Model.ReturnUrl" class="button">Back to Login</a>
+                    </div>
                 </div>
             </div>
         </div>
