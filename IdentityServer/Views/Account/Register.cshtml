@@ -15,19 +15,19 @@
                         <input type="hidden" asp-for="@Model.ReturnUrl" value="@Model.ReturnUrl"/>
                         <div class="field">
                             <div class="control">
-                                <input class="input" asp-for="DisplayName" placeholder="Enter Username (trix_god)" autofocus="">
-                                <span asp-validation-for="DisplayName" class="help is-danger"></span>
+                                <input class="input" asp-for="NickName" autocomplete="nickname" placeholder="Username (trix_god)" autofocus="">
+                                <span asp-validation-for="NickName" class="help is-danger"></span>
                             </div>
                         </div>
                         <div class="field">
                             <div class="control">
-                                <input class="input" asp-for="Email" placeholder="Enter Email (trix_god@gmail.com)">
+                                <input class="input" asp-for="Email" autocomplete="email" placeholder="Email (trix_god@gmail.com)">
                                 <span asp-validation-for="Email" class="help is-danger"></span>
                             </div>
                         </div>
                         <div class="field">
                             <div class="control">
-                                <input class="input" asp-for="Password" placeholder="Your Password...">
+                                <input class="input" asp-for="Password" autocomplete="password" placeholder="Password...">
                                 <span asp-validation-for="Password" class="help is-danger"></span>
                             </div>
                         </div>

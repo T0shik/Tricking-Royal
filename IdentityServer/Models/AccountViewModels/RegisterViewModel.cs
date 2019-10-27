@@ -5,9 +5,8 @@ namespace IdentityServer.Models.AccountViewModels
     public class RegisterViewModel
     {
         [Required]
-        [Display(Name = "Username")]
         [MaxLength(15, ErrorMessage = "Maximum length of 15 characters")]
-        public string DisplayName { get; set; }
+        public string NickName { get; set; }
 
         [Required]
         [EmailAddress]

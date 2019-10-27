@@ -151,7 +151,7 @@ namespace IdentityServer.Controllers
                 _ctx.UserInformation.Add(new UserInformation
                 {
                     Id = user.Id,
-                    DisplayName = model.DisplayName,
+                    DisplayName = model.NickName,
                 });
 
                 await _ctx.SaveChangesAsync();
