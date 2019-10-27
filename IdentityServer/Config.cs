@@ -66,31 +66,32 @@ namespace IdentityServer
                         settings.Cdn.Name,
                     },
                     AllowOfflineAccess = true,
-                    AccessTokenLifetime = 3600 * 24
+                    IdentityTokenLifetime = 3600,
+                    AccessTokenLifetime = 3600 * 24,
                 },
-                new Client
-                {
-                    ClientId = "ionic-TrickingR-app-H",
-                    ClientName = "Ionic App Client",
-                    AllowedGrantTypes = GrantTypes.Implicit,
-
-                    AllowAccessTokensViaBrowser = true,
-                    RequireConsent = false,
-
-                    RedirectUris = {"http://localhost:8100"},
-                    PostLogoutRedirectUris = {"http://localhost:8100"},
-                    AllowedCorsOrigins = {"http://localhost:8100"},
-
-                    AllowedScopes =
-                    {
-                        IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile,
-                        settings.Api.Name,
-                        settings.Cdn.Name,
-                    },
-
-                    AllowOfflineAccess = true
-                }
+                // new Client
+                // {
+                //     ClientId = "ionic-TrickingR-app-H",
+                //     ClientName = "Ionic App Client",
+                //     AllowedGrantTypes = GrantTypes.Implicit,
+                //
+                //     AllowAccessTokensViaBrowser = true,
+                //     RequireConsent = false,
+                //
+                //     RedirectUris = {"http://localhost:8100"},
+                //     PostLogoutRedirectUris = {"http://localhost:8100"},
+                //     AllowedCorsOrigins = {"http://localhost:8100"},
+                //
+                //     AllowedScopes =
+                //     {
+                //         IdentityServerConstants.StandardScopes.OpenId,
+                //         IdentityServerConstants.StandardScopes.Profile,
+                //         settings.Api.Name,
+                //         settings.Cdn.Name,
+                //     },
+                //
+                //     AllowOfflineAccess = true
+                // }
             };
         }
     }

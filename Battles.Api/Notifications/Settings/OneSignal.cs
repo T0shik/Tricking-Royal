@@ -4,6 +4,7 @@
     {
         public string ApiKey { get; set; }
         public string AppId { get; set; }
+        public string SafariId { get; set; }
         public string GenericTemplate { get; set; }
     }
 }

@@ -121,23 +121,28 @@ export const store = new Vuex.Store({
                     }
                 })
                 .then(async success => {
-                    let appId = '',
-                        activated = false;
+                    let result = {
+                        success,
+                        appId: '',
+                        safariId: '',
+                        activated: false,
+                    };
                     if (success) {
                         const {data: profile} = await axios.get('users/me');
                         commit('UPDATE_PROFILE', profile);
-                        activated = profile.activated;
+                        result.activated = profile.activated;
                         commit('layout/setLayout', activated ? LAYOUT.USER : LAYOUT.VISITOR, {root: true});
                         dispatch('LOAD_TRIBUNAL_COUNT');
                         dispatch('notifications/getNotifications');
-                        const {data: oneSignalId} = await axios.get('platform/one-signal');
-                        appId = oneSignalId;
+                        const {data: {appId, safariId}} = await axios.get('platform/one-signal');
+                        result.appId = appId;
+                        result.safariId = safariId;
                     } else {
                         commit('layout/setLayout', LAYOUT.VISITOR, {root: true});
                     }
 
                     commit('COMPLETE_INIT', success);
-                    return {success, activated, appId};
+                    return result;
                 })
         },
         SIGN_OUT(context) {
