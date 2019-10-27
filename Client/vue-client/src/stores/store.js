@@ -131,7 +131,7 @@ export const store = new Vuex.Store({
                         const {data: profile} = await axios.get('users/me');
                         commit('UPDATE_PROFILE', profile);
                         result.activated = profile.activated;
-                        commit('layout/setLayout', activated ? LAYOUT.USER : LAYOUT.VISITOR, {root: true});
+                        commit('layout/setLayout', result.activated ? LAYOUT.USER : LAYOUT.VISITOR, {root: true});
                         dispatch('LOAD_TRIBUNAL_COUNT');
                         dispatch('notifications/getNotifications');
                         const {data: {appId, safariId}} = await axios.get('platform/one-signal');
