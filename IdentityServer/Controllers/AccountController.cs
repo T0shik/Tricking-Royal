@@ -165,8 +165,10 @@ namespace IdentityServer.Controllers
                 {
                     var emailCode = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
-                    var callbackUrl = Url.Action(nameof(ConfirmEmail), "Account", new {userId = user.Id, emailCode},
+                    var callbackUrl = Url.Action(nameof(ConfirmEmail), "Account",
+                                                 new {userId = user.Id, code = emailCode},
                                                  protocol: HttpContext.Request.Scheme);
+
                     await _emailService.SendAsync(model.Email, "Email Confirmation",
                                                   $"Please confirm your email by clicking here: <a href='{callbackUrl}'>link</a>");
                 }
@@ -319,6 +321,11 @@ namespace IdentityServer.Controllers
             {
                 return RedirectToAction("Login", new {returnUrl = $"{oAuthOptions.Value.Routing.Client}/battles"});
             }
+
+            _logger.LogWarning("Failed to confirm email for user {0}, supplied code = {1}, with error {2} ",
+                               user.Email,
+                               code,
+                               result.Errors);
 
             return Redirect(oAuthOptions.Value.Routing.Client);
         }
