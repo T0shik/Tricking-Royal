@@ -53,7 +53,6 @@
         background-color: $secondary;
         border-radius: 5px;
         font-size: 12px;
-        z-index: 5;
         box-shadow: 0 1px 2px 1px #aaa;
     }
 
@@ -62,7 +61,6 @@
         top: -3px;
         right: -6px;
         font-size: 14px;
-        z-index: 5;
 
         .theme--dark.v-icon {
             color: #ffe200;
