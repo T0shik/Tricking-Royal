@@ -6,7 +6,8 @@
                     <router-link class="white--text" :to="`/user/${host.displayName}`">
                         <profile-img :class="{'playing': host.index === playingIndex}"
                                      :picture="host.picture"
-                                     :level="host.level"></profile-img>
+                                     :level="host.level"
+                                     :winner="host.winner"></profile-img>
                         <span>{{host.displayName}}</span>
                     </router-link>
                 </v-col>
@@ -18,7 +19,8 @@
                         <span>{{opponent.displayName}}</span>
                         <profile-img :class="{'playing': opponent.index === playingIndex}"
                                      :picture="opponent.picture"
-                                     :level="opponent.level"></profile-img>
+                                     :level="opponent.level"
+                                     :winner="opponent.winner"></profile-img>
                     </router-link>
                 </v-col>
             </v-row>
