@@ -1,11 +1,12 @@
 <template>
     <v-card class="mb-5" color="secondary" width="100%">
-        <match-header :users="match.participants"></match-header>
+        <match-header :users="match.participants" :playingIndex="playingIndex"></match-header>
         <component
                 v-bind:is="mode"
                 :match="match"
                 :loading="loading"
                 @lock-in="lockIn(match)"
+                @update-video="setPlayingIndex"
                 @respond="respond({match, isReuplaod: false})"
         ></component>
         <div class="text-center">
@@ -63,7 +64,8 @@
         },
         data() {
             return {
-                openComments: false
+                openComments: false,
+                playingIndex: -1,
             };
         },
         components: {
@@ -90,6 +92,9 @@
                 lockIn: "updateMatch/lockIn",
                 like: "updateMatch/like",
             }),
+            setPlayingIndex({userIndex}) {
+                this.playingIndex = userIndex;
+            }
         },
         computed: {
             ...mapGetters({

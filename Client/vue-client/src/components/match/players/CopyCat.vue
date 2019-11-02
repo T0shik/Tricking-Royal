@@ -92,6 +92,21 @@
                 maxSteps: 4
             };
         },
+        watch: {
+            step: {
+                handler: function () {
+                    this.emitUpdateVideo();
+                },
+                immediate: false,
+            },
+            slides: {
+                handler: function () {
+                    this.emitUpdateVideo();
+                },
+                immediate: false,
+                deep: true,
+            }
+        },
         created() {
             for (let i = 1; i <= this.maxSteps; i++) {
                 let slide = this.createSlide(i);
@@ -126,6 +141,15 @@
                     value: 0,
                     videoPair
                 }
+            },
+            emitUpdateVideo() {
+                let userIndex = -1;
+                if (this.match.videos.length > 0) {
+                    let offSetStep = this.step - 1;
+                    let index = offSetStep * 2 + parseInt(this.slides[offSetStep].value);
+                    userIndex = this.match.videos[index].userIndex;
+                }
+                this.$emit('update-video', {userIndex})
             },
             getUserByIndex(index) {
                 for (let i = 0; i < this.match.participants.length; i++) {

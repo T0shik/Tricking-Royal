@@ -1,7 +1,8 @@
 <template>
     <div>
-        <v-carousel v-model="slide" v-if="match.videos.length > 0" hide-delimiters :show-arrows="match.videos.length > 1">
-            <v-carousel-item v-for="(item, index) in match.videos" :key="item.video">
+        <v-carousel v-model="slide" v-if="match.videos.length > 0" hide-delimiters
+                    :show-arrows="match.videos.length > 1">
+            <v-carousel-item v-for="(item, index) in match.videos" :value="index" :key="item.video">
                 <video-player :video="item.video" :thumb="item.thumb" :isPlaying="index === slide"></video-player>
                 <div class="round-tag">Round {{index + 1}}</div>
             </v-carousel-item>
@@ -35,14 +36,24 @@
         components: {
             VideoPlayer,
         },
-        data() {
-            return {
-                slide: 0,
-            };
-        },
+        data: () => ({
+            slide: 0,
+        }),
         created() {
             this.slide = this.match.videos.length - 1;
-        }
+        },
+        watch: {
+            slide: {
+                handler: function (value) {
+                    let userIndex = -1;
+                    if (this.match.videos.length > 0) {
+                        userIndex = this.match.videos[value].userIndex;
+                    }
+                    this.$emit('update-video', {userIndex})
+                },
+                immediate: true
+            }
+        },
     };
 </script>
 

@@ -5,12 +5,13 @@
             <v-card-title>
                 <span>{{stageInfo.title}}</span>
                 <v-spacer></v-spacer>
-                <v-btn icon @click="$store.commit('SET_DISPLAY_RULES', {display: true})">
+                <v-btn color="info" icon @click="$store.commit('SET_DISPLAY_RULES', {display: true})">
                     <v-icon>{{icons.info}}</v-icon>
-                </v-btn></v-card-title>
+                </v-btn>
+            </v-card-title>
             <v-card-text>{{stageInfo.description}}</v-card-text>
             <v-form ref="form" v-model="valid">
-                <v-window v-model="stage">
+                <v-window v-model="stage" touchless>
                     <v-window-item :value="1">
                         <v-card-actions class="justify-center">
                             <v-btn @click="selectMode('One Up', 0, true)">One Up</v-btn>
@@ -97,12 +98,15 @@
             <div class="d-flex justify-center" v-if="loadingMatches">
                 <v-progress-circular color="primary" indeterminate></v-progress-circular>
             </div>
-            <v-list class="secondary" v-else>
+            <v-list class="secondary">
                 <v-list-item v-for="match in hosted" :key="match.id">
                     <v-list-item-title>{{match.mode}}</v-list-item-title>
                     <v-list-item-subtitle>{{match.surface}} - {{match.turnTime}}</v-list-item-subtitle>
                     <v-spacer></v-spacer>
-                    <v-btn text icon color="error" @click="deleteMatch(match.id)">
+                    <v-btn text icon color="error"
+                           :loading="loadingDelete"
+                           :disabled="loadingDelete"
+                           @click="deleteMatch({type: hostMatchType, matchId: match.id})">
                         <v-icon>{{icons.delete}}</v-icon>
                     </v-btn>
                 </v-list-item>
@@ -206,17 +210,21 @@
         },
         computed: {
             ...mapState('matches', {
-                loadingMatches: state => state.loading,
                 hosted: state => state.hosted.list,
+                loadingDelete: state => state.loadingDelete,
             }),
             ...mapGetters({
                 limitReached: "HOST_LIMIT_REACHED",
+                loadingMatches: 'matches/loading'
             }),
             icons() {
                 return {
                     delete: mdiDelete,
                     info: mdiInformation
                 }
+            },
+            hostMatchType() {
+                return MATCH_TYPES.HOSTED;
             },
             stageInfo() {
                 switch (this.stage) {
@@ -237,7 +245,7 @@
                 return {title: '', description: ""};
             }
         },
-        components:{
+        components: {
             Rules
         }
     };
