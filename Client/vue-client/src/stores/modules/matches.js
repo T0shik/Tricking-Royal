@@ -88,7 +88,7 @@ export default {
                 dispatch('loadMatches', {type});
             }
         },
-        loadMatches({state, commit}, {type}) {
+        loadMatches({commit}, {type}) {
             commit('setMatchLoader', {type, value: true});
 
             getMatches(type, 0)
