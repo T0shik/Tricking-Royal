@@ -87,7 +87,8 @@ export const store = new Vuex.Store({
         appReady: false,
         userMgr: new Oidc.UserManager(config),
         isAuthenticated: false,
-        refreshingToken: false
+        refreshingToken: false,
+        displayRules: false,
     },
     getters: {
         AUTHENTICATED: state => {
@@ -107,6 +108,9 @@ export const store = new Vuex.Store({
         },
         UPDATE_TOKEN_ACTIVITY(state, payload) {
             state.refreshingToken = payload;
+        },
+        SET_DISPLAY_RULES(state, {display}) {
+            state.displayRules = display;
         }
     },
     actions: {

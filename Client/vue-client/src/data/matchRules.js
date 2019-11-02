@@ -2,7 +2,7 @@ const surfaces = [
     "Any", "Spring Floor", "Grass", "Concrete", "Trampoline", "Tumbling"
 ];
 
-const matchTypes = [
+const matchRules = [
     {
         name: "One Up",
         description: "Try to one up your opponent by adding a trick to the end of the combo.",
@@ -43,4 +43,4 @@ const matchTypes = [
     }
 ];
 
-export default matchTypes;
+export default matchRules;

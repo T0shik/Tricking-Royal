@@ -1073,8 +1073,10 @@
                 <e p="modals" t="Include">
                   <e p="Confirmation.vue" t="Include" />
                   <e p="Connecting.vue" t="Include" />
+                  <e p="EditProfile.vue" t="Include" />
                   <e p="MatchMenu.vue" t="Include" />
                   <e p="Popup.vue" t="Include" />
+                  <e p="Rules.vue" t="Include" />
                 </e>
                 <e p="Navbar.vue" t="Include" />
                 <e p="SideMenu.vue" t="Include" />
@@ -1116,14 +1118,11 @@
                   <e p="VotingResults.vue" t="Include" />
                 </e>
               </e>
-              <e p="user" t="Include">
-                <e p="EditProfile.vue" t="Include" />
-              </e>
             </e>
             <e p="data" t="Include">
               <e p="api.js" t="Include" />
               <e p="enum.js" t="Include" />
-              <e p="matches.js" t="Include" />
+              <e p="matchRules.js" t="Include" />
               <e p="perks.js" t="Include" />
               <e p="skills.js" t="Include" />
             </e>

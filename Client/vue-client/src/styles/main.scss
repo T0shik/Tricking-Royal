@@ -53,28 +53,9 @@ a {
   z-index: 5;
 }
 
-// Below this line the importance of the CSS is questionable
-//----------------------------------------------------------
-
-//.v-carousel {
-//  box-shadow: none;
-//
-//  .v-carousel__controls {
-//    background: transparent;
-//  }
-//
-//  .v-btn--active {
-//    color: $primary;
-//  }
-//
-//  .v-icon {
-//    opacity: 1;
-//  }
-//
-//  &:before {
-//    opacity: 0.5;
-//  }
-//}
+.v-overlay--active:before {
+  opacity: 0.69;
+}
 
 #nprogress {
   .bar {
@@ -85,7 +66,6 @@ a {
     display: none !important;
   }
 }
-
 .v-window__container,
 .v-carousel,
 .v-responsive {
@@ -96,11 +76,6 @@ a {
   margin: 0;
 }
 
-.v-overlay--active:before {
-  opacity: 0.69;
-}
-
 .hover:hover {
   cursor: pointer;
 }
-

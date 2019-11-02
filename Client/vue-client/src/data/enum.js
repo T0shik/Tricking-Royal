@@ -35,5 +35,6 @@ export const LAYOUT = {
 };
 
 export const STORAGE_KEYS = {
-    NOTIFICATION_PROMPT: 'tr_notification_prompt_time'  
+    NOTIFICATION_PROMPT: 'tr_notification_prompt_time',
+    RULES_READ: 'tr_rules_read',
 };
