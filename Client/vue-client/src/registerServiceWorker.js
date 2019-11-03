@@ -17,7 +17,6 @@ if (process.env.NODE_ENV === 'production') {
         },
         updated() {
             Logger.log('New content is available; please refresh.');
-            window.location.reload();
         },
         offline() {
             Logger.log('No internet connection found. App is running in offline mode.')

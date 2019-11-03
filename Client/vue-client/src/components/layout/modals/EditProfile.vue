@@ -164,7 +164,8 @@
 
 <script>
     import axios from "axios";
-    import skillList from "../../data/skills";
+    import skillList from "../../../data/skills";
+    import {NOTIFICATION_TYPE} from "../../../data/enum";
     import {mapMutations, mapActions} from "vuex";
     import {
         mdiAccount, mdiBell, mdiBellOff,
@@ -176,7 +177,6 @@
         mdiSettings,
         mdiYoutube
     } from '@mdi/js';
-    import {NOTIFICATION_TYPE} from "../../data/enum";
 
     export default {
         data() {

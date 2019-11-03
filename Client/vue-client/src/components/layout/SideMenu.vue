@@ -118,7 +118,7 @@
 
 
 <script>
-    import EditProfile from "../user/EditProfile";
+    import EditProfile from "./modals/EditProfile";
     import {mapActions, mapGetters} from "vuex";
 
     import {

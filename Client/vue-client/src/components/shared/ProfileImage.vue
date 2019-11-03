@@ -1,13 +1,14 @@
 ﻿<template>
     <v-avatar :size="imgSize" color="secondary">
         <img v-if="picture" :src="picture" alt="alt" :key="picture"/>
-        <v-icon v-else>{{userIcon}}</v-icon>
+        <v-icon v-else>{{icons.user}}</v-icon>
         <span v-if="level" class="level">{{level}}</span>
+        <span class="winner"><v-icon v-if="winner">{{icons.winner}}</v-icon></span>
     </v-avatar>
 </template>
 
 <script>
-    import {mdiAccountCircle} from "@mdi/js";
+    import {mdiAccountCircle, mdiTrophy} from "@mdi/js";
 
     export default {
         name: "profile-img",
@@ -22,10 +23,17 @@
             size: {
                 required: false,
                 type: String
+            },
+            winner: {
+                required: false,
+                type: Boolean
             }
         },
         data: () => ({
-            userIcon: mdiAccountCircle
+            icons: {
+                user: mdiAccountCircle,
+                winner: mdiTrophy
+            }
         }),
         computed: {
             imgSize() {
@@ -46,5 +54,16 @@
         border-radius: 5px;
         font-size: 12px;
         box-shadow: 0 1px 2px 1px #aaa;
+    }
+
+    span.winner {
+        position: absolute !important;
+        top: -3px;
+        right: -6px;
+        font-size: 14px;
+
+        .theme--dark.v-icon {
+            color: #ffe200;
+        }
     }
 </style>

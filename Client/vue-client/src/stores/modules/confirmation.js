@@ -90,6 +90,6 @@ export default {
                         Logger.log("[confirmation.notificationsPrompt] displayPrompt on cooldown.");
                     }
                 });
-        }
+        },
     }
 }

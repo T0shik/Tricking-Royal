@@ -28,12 +28,10 @@ namespace Battles.Api.Controllers
             return Ok(ranking);
         }
 
-
         [HttpGet("one-signal")]
-        public IActionResult OneSignalAppId(
-            [FromServices] IOptionsMonitor<OneSignal> options)
+        public IActionResult OneSignalAppId([FromServices] IOptionsMonitor<OneSignal> options)
         {
-            return Ok(options.CurrentValue.AppId);
+            return Ok(new {options.CurrentValue.AppId, options.CurrentValue.SafariId});
         }
     }
 }

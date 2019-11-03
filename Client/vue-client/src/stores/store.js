@@ -87,7 +87,8 @@ export const store = new Vuex.Store({
         appReady: false,
         userMgr: new Oidc.UserManager(config),
         isAuthenticated: false,
-        refreshingToken: false
+        refreshingToken: false,
+        displayRules: false,
     },
     getters: {
         AUTHENTICATED: state => {
@@ -107,6 +108,9 @@ export const store = new Vuex.Store({
         },
         UPDATE_TOKEN_ACTIVITY(state, payload) {
             state.refreshingToken = payload;
+        },
+        SET_DISPLAY_RULES(state, {display}) {
+            state.displayRules = display;
         }
     },
     actions: {
@@ -121,23 +125,28 @@ export const store = new Vuex.Store({
                     }
                 })
                 .then(async success => {
-                    let appId = '',
-                        activated = false;
+                    let result = {
+                        success,
+                        appId: '',
+                        safariId: '',
+                        activated: false,
+                    };
                     if (success) {
                         const {data: profile} = await axios.get('users/me');
                         commit('UPDATE_PROFILE', profile);
-                        activated = profile.activated;
-                        commit('layout/setLayout', activated ? LAYOUT.USER : LAYOUT.VISITOR, {root: true});
+                        result.activated = profile.activated;
+                        commit('layout/setLayout', result.activated ? LAYOUT.USER : LAYOUT.VISITOR, {root: true});
                         dispatch('LOAD_TRIBUNAL_COUNT');
                         dispatch('notifications/getNotifications');
-                        const {data: oneSignalId} = await axios.get('platform/one-signal');
-                        appId = oneSignalId;
+                        const {data: {appId, safariId}} = await axios.get('platform/one-signal');
+                        result.appId = appId;
+                        result.safariId = safariId;
                     } else {
                         commit('layout/setLayout', LAYOUT.VISITOR, {root: true});
                     }
 
                     commit('COMPLETE_INIT', success);
-                    return {success, activated, appId};
+                    return result;
                 })
         },
         SIGN_OUT(context) {

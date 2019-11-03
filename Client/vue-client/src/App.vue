@@ -15,7 +15,7 @@
         name: "App",
         created() {
             this.$store.dispatch("INIT")
-                .then(({success, activated, appId}) => {
+                .then(({success, activated, appId, safariId}) => {
                     if (!success) return;
 
 // OneSignal instance is loaded in index.html
@@ -40,6 +40,7 @@
                     OneSignal.push(() => {
                         OneSignal.init({
                             appId,
+                            safari_web_id: safariId,
                             notificationClickHandlerMatch: 'origin',
                             notificationClickHandlerAction: 'focus'
                         });

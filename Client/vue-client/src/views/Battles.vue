@@ -84,10 +84,9 @@
         computed: {
             ...mapState('matches', {
                 type: state => state.type,
-                loading: state => state.loading,
                 loadingMore: state => state.loadingMore,
             }),
-            ...mapGetters('matches', ['matches', 'endReached']),
+            ...mapGetters('matches', ['matches', 'endReached', 'loading']),
             icons() {
                 return {
                     history: mdiHistory,

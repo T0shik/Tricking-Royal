@@ -13,6 +13,7 @@ const createMatchContainer = (list) => ({
     endReached: false,
     stale: false,
     timestamp: new Date(),
+    loading: false
 });
 
 const initialState = () => ({
@@ -21,7 +22,7 @@ const initialState = () => ({
     history: createMatchContainer([]),
     active: createMatchContainer([]),
     spectate: createMatchContainer([]),
-    loading: false,
+    loadingDelete: false,
     loadingMore: false,
     loadingJoin: false,
     type: MATCH_TYPES.NONE,
@@ -30,6 +31,7 @@ const initialState = () => ({
 const getters = {
     endReached: state => state.type === MATCH_TYPES.ACTIVE || (state[state.type] && state[state.type].endReached),
     matches: state => state[state.type] && state[state.type].list,
+    loading: state => state[state.type] && state[state.type].loading,
     stale: state => state[state.type] && state[state.type].stale,
     old: state => state[state.type] && (new Date() - state[state.type].timestamp) > 60000,
     typeAndIndex: state => ({
@@ -57,9 +59,12 @@ export default {
                 state[state.type].endReached = true;
             }
         },
-        toggleLoading(state, loader) {
-            Logger.log(`toggling loader ${loader}, current value: ${state[loader]}`);
-            state[loader] = !state[loader];
+        setMatchLoader(state, {type, value}) {
+            state[type].loading = value;
+        },
+        setLoading(state, {loader, value}) {
+            Logger.log(`toggling loader ${loader}, current value: ${state[loader]}, new state: ${value}`);
+            state[loader] = value;
         },
         saveType(state, type) {
             state.type = type;
@@ -83,12 +88,9 @@ export default {
                 dispatch('loadMatches', {type});
             }
         },
-        loadMatches({state, commit}, {type, toggle = true}) {
-            Logger.log(`Loading ${type} matches, loading toggled: ${toggle}`);
-            if (!state.loading && toggle) {
-                commit('toggleLoading', 'loading');
-            }
-            
+        loadMatches({commit}, {type}) {
+            commit('setMatchLoader', {type, value: true});
+
             getMatches(type, 0)
                 .then(({data}) => {
                     commit('setMatches', {
@@ -100,13 +102,11 @@ export default {
                     Logger.error("ERROR GETTING MATCHES", error)
                 })
                 .then(() => {
-                    if (toggle) {
-                        commit('toggleLoading', 'loading');
-                    }
+                    commit('setMatchLoader', {type, value: false});
                 })
         },
         loadMoreMatches({getters, commit}) {
-            commit('toggleLoading', 'loadingMore');
+            commit('setLoading', {loader: 'loadingMore', value: true});
             let {type, index} = getters.typeAndIndex;
 
             getMatches(type, index)
@@ -117,34 +117,32 @@ export default {
                     Logger.error("ERROR GETTING MATCHES", error)
                 })
                 .then(() => {
-                    commit('toggleLoading', 'loadingMore');
+                    commit('setLoading', {loader: 'loadingMore', value: false});
                 })
         },
-        refreshMatches({state, commit, dispatch}, {type, toggle}) {
+        refreshMatches({state, commit, dispatch}, {type}) {
             commit("setStale");
             let payload = {
                 type: type === null || type === undefined ? state.type : type,
-                toggle
             };
 
             dispatch("loadMatches", payload);
         },
-        deleteMatch({dispatch, commit}, matchId) {
-            commit('toggleLoading', 'loading');
+        deleteMatch({dispatch, commit}, {type, matchId}) {
+            commit('setLoading', {loader: 'loadingDelete', value: true});
 
             deleteMatch(matchId).then(({data}) => {
                 dispatch("DISPLAY_POPUP_DEFAULT", data, {root: true});
 
                 if (data.success) {
-                    commit("INCREMENT_HOSTING_COUNT", -1, {root: true});
-                    commit('toggleLoading', 'loading');
-                    dispatch("refreshMatches", {type: MATCH_TYPES.HOSTED, toggle: false});
-                    dispatch("refreshMatches", {type: MATCH_TYPES.OPEN});
+                    dispatch("REFRESH_PROFILE", {}, {root: true});
+                    dispatch("refreshMatches", {type});
+                    commit('setLoading', {loader: 'loadingDelete', value: false});
                 }
             });
         },
         joinMatch({dispatch, commit}, id) {
-            commit('toggleLoading', 'loadingJoin');
+            commit('setLoading', {loader: 'loadingJoin', value: false});
 
             joinMatch(id).then(({data}) => {
                 dispatch("DISPLAY_POPUP_DEFAULT", data, {root: true});
@@ -152,7 +150,7 @@ export default {
                 if (data.success) {
                     router.push({path: '/battles/active'});
                 }
-                commit('toggleLoading', 'loadingJoin');
+                commit('setLoading', {loader: 'loadingJoin', value: false});
             });
         },
     }

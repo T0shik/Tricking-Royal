@@ -78,6 +78,18 @@
                 selectedVideo: 0
             }
         },
+        watch: {
+            selectedVideo: {
+                handler: function (value) {
+                    let userIndex = -1;
+                    if (this.match.videos.length > 0) {
+                        userIndex = this.match.videos[value].userIndex;
+                    }
+                    this.$emit('update-video', {userIndex})
+                },
+                immediate: true
+            }
+        },
         methods: {
             isActive(i) {
                 return this.selectedVideo === i ? "primary" : "";

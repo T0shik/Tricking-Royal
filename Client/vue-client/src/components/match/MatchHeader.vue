@@ -4,7 +4,10 @@
             <v-row dense>
                 <v-col class="d-flex align-center" cols="5">
                     <router-link class="white--text" :to="`/user/${host.displayName}`">
-                        <profile-img :picture="host.picture" :level="host.level"></profile-img>
+                        <profile-img :class="{'playing': host.index === playingIndex}"
+                                     :picture="host.picture"
+                                     :level="host.level"
+                                     :winner="host.winner"></profile-img>
                         <span>{{host.displayName}}</span>
                     </router-link>
                 </v-col>
@@ -14,7 +17,10 @@
                 <v-col class="d-flex align-center justify-end" cols="5">
                     <router-link class="white--text" :to="`/user/${opponent.displayName}`">
                         <span>{{opponent.displayName}}</span>
-                        <profile-img :picture="opponent.picture" :level="opponent.level"></profile-img>
+                        <profile-img :class="{'playing': opponent.index === playingIndex}"
+                                     :picture="opponent.picture"
+                                     :level="opponent.level"
+                                     :winner="opponent.winner"></profile-img>
                     </router-link>
                 </v-col>
             </v-row>
@@ -27,6 +33,10 @@
         props: {
             users: {
                 type: Array,
+                required: true
+            },
+            playingIndex: {
+                type: Number,
                 required: true
             }
         },
@@ -42,6 +52,8 @@
 </script>
 
 <style lang="scss" scoped>
+    @import '../../styles/colors';
+
     .v-card__title {
         padding: 2px 4px;
     }
@@ -49,5 +61,9 @@
     span {
         padding: 0 2px;
         font-size: 12px;
+    }
+
+    .playing {
+        box-shadow: 0 0 2px 2px $intermediate;
     }
 </style>
