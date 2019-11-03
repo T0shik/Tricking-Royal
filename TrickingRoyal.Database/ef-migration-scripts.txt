@@ -9,3 +9,9 @@ dotnet ef migrations add <name> -c AppDbContext -s ../IdentityServer -o Migratio
 
 Update Database
 dotnet ef database update -c AppDbContext -s ../IdentityServer
+
+
+
+--- For Live only
+dotnet ef database update -c ConfigurationDbContext -s ../IdentityServer
+dotnet ef database update -c PersistedGrantDbContext -s ../IdentityServer
