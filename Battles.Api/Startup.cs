@@ -97,10 +97,7 @@ namespace Battles.Api
             }
 
             app.UseHangfireServer();
-
-            RecurringJob.AddOrUpdate<IHangfireJobs>(jobs => jobs.CloseExpiredMatches(), Cron.Hourly);
-
-            RecurringJob.AddOrUpdate<IHangfireJobs>(jobs => jobs.CloseExpiredEvaluations(), Cron.Hourly);
+            SetupHangfireJobs();
 
             app.UseAuthentication()
                .UseMvc();
@@ -130,6 +127,13 @@ namespace Battles.Api
                                             .AllowCredentials());
                 });
             }
+        }
+
+        private static void SetupHangfireJobs()
+        {
+            RecurringJob.AddOrUpdate<IHangfireJobs>(jobs => jobs.CloseExpiredMatches(), Cron.Hourly);
+            RecurringJob.AddOrUpdate<IHangfireJobs>(jobs => jobs.CloseExpiredEvaluations(), Cron.Hourly);
+            RecurringJob.AddOrUpdate<IHangfireJobs>(jobs => jobs.MatchReminder(), Cron.Daily);
         }
     }
 }

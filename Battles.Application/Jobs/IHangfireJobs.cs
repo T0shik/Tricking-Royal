@@ -6,5 +6,6 @@ namespace Battles.Application.Jobs
     {
         Task CloseExpiredMatches();
         Task CloseExpiredEvaluations();
+        void MatchReminder();
     }
 }

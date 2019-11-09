@@ -34,10 +34,15 @@ namespace Battles.Api.Notifications
             _signal = new SemaphoreSlim(0);
         }
 
-        public void QueueNotification(string message, string navigation, NotificationMessageType type,
-            IEnumerable<string> targets)
+        public void QueueNotification(
+            string message,
+            string navigation,
+            NotificationMessageType type,
+            IEnumerable<string> targets,
+            bool force = false,
+            bool save = true)
         {
-            _notificationQueue.Enqueue(ct => SaveAndSendNotifications(MessageFactory, targets, ct));
+            _notificationQueue.Enqueue(ct => SaveAndSendNotifications(MessageFactory, targets, ct, force, save));
             _signal.Release();
 
             NotificationMessage MessageFactory(string target) =>
@@ -47,13 +52,16 @@ namespace Battles.Api.Notifications
                     Message = message,
                     Navigation = navigation,
                     Type = type,
+                    Force = force,
                 };
         }
 
         private async Task SaveAndSendNotifications(
             Func<string, NotificationMessage> messageFactory,
             IEnumerable<string> targets,
-            CancellationToken ct)
+            CancellationToken ct,
+            bool force,
+            bool save)
         {
             using (var scope = _serviceProvider.CreateScope())
             {
@@ -65,21 +73,24 @@ namespace Battles.Api.Notifications
                         _logger.LogInformation("Sending notifications to {0}", target);
 
                         var message = messageFactory(target);
-                        ctx.NotificationMessages.Add(message);
-                        await ctx.SaveChangesAsync(ct);
+                        if (save)
+                        {
+                            ctx.NotificationMessages.Add(message);
+                            await ctx.SaveChangesAsync(ct);
+                        }
 
                         var mediums = await ctx.NotificationConfigurations
-                            .AsNoTracking()
-                            .Where(x => x.UserInformationId == target && x.Active)
-                            .ToListAsync(ct);
+                                               .AsNoTracking()
+                                               .Where(x => x.UserInformationId == target && (x.Active || force))
+                                               .ToListAsync(ct);
 
                         _logger.LogInformation("Found {0} mediums: {1}", mediums.Count, mediums);
                         foreach (var medium in mediums)
                         {
                             var dispatcher = _dispatcherFactory.GetDispatcher(medium.ConfigurationType);
                             _logger.LogInformation("Dispatching to {0}, destination: {1}",
-                                medium.ConfigurationType.ToString(),
-                                medium.NotificationId);
+                                                   medium.ConfigurationType.ToString(),
+                                                   medium.NotificationId);
                             try
                             {
                                 await dispatcher.SendNotification(message, medium.NotificationId, ct);
@@ -87,7 +98,7 @@ namespace Battles.Api.Notifications
                             catch (Exception e)
                             {
                                 _logger.LogError(e, "Failed to dispatch {0} notification.",
-                                    medium.ConfigurationType.ToString());
+                                                 medium.ConfigurationType.ToString());
                             }
                         }
                     }

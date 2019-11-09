@@ -132,7 +132,7 @@
           </e>
           <e p="INotificationSender.cs" t="Include" />
           <e p="NotificationQueue.cs" t="Include" />
-          <e p="NotificationServices.cs" t="Include" />
+          <e p="RegisterNotificationServices.cs" t="Include" />
           <e p="Settings" t="Include">
             <e p="OneSignal.cs" t="Include" />
           </e>
