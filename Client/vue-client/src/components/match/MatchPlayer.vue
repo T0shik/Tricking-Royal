@@ -9,6 +9,11 @@
                 @update-video="setPlayingIndex"
                 @respond="respond({match, isReuplaod: false})"
         ></component>
+        <div class="d-flex flex-row">
+            <v-spacer></v-spacer>
+            <v-chip small>{{match.mode}}</v-chip>
+            <v-chip small>{{match.timeLeft}}</v-chip>
+        </div>
         <div class="text-center">
             <v-btn v-if="match.canVote" @click="startVote(match)" color="info">vote</v-btn>
         </div>
