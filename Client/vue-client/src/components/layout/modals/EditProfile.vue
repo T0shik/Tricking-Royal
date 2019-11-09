@@ -14,11 +14,11 @@
                 <v-toolbar-title class="white--text">Settings</v-toolbar-title>
                 <v-spacer></v-spacer>
                 <v-progress-circular color="primary" v-if="loadingName" indeterminate ></v-progress-circular>
-                <v-btn v-else icon @click="save" :color="valid ? 'green' : 'red'" >
+                <v-btn v-else icon @click="save" :color="valid ? 'green' : 'red'" :disabled="!valid">
                     <v-icon >{{valid ? icons.check : icons.ban }}</v-icon>
                 </v-btn>
             </v-toolbar>
-            <v-form class="px-4" ref="form" v-model="valid">
+            <v-form class="px-4 edit-profile" ref="form" v-model="valid">
                 <v-container>
                     <v-row>
                         <v-col>
@@ -256,8 +256,7 @@
                     function () {
                         axios
                             .get(`/users/${v}/can-use`)
-                            .then(result => {
-                                const {status} = result;
+                            .then(({status}) => {
                                 if (status === 200) {
                                     this.validName = true;
                                 } else if (status === 204) {
@@ -272,8 +271,7 @@
                                 this.loadingName = false;
                             });
                     }.bind(this),
-                    500
-                );
+                    500);
             }
         },
         methods: {
@@ -402,10 +400,13 @@
 </script>
 
 <style lang="scss">
+    .edit-profile {
+        padding-top: 56px;
+    }
     .toolbar {
         position: fixed;
         width: 100%;
         top: 0;
-        z-index: 0;
+        z-index: 5;
     }
 </style>

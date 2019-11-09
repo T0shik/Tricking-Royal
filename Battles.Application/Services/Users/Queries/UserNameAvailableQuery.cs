@@ -24,11 +24,11 @@ namespace Battles.Application.Services.Users.Queries
 
         protected override bool Handle(UserNameAvailableQuery request)
         {
-            var someoneElseHasName = _ctx.UserInformation
+            var nameTaken = _ctx.UserInformation
                     .Any(x => x.DisplayName == request.DisplayName 
                         && x.Id != request.UserId);
 
-            return !someoneElseHasName;
+            return !nameTaken;
         }
     }
 }
