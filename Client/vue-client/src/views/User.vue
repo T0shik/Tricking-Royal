@@ -4,7 +4,7 @@
             <v-card-title primary-title>
                 <profile-img :picture="user.picture"></profile-img>
                 <div>
-                    <h3 class="headline pl-1 mb-0">{{user.displayName}}</h3>
+                    <h3 class="title pl-1 mb-0">{{user.displayName}}</h3>
                 </div>
                 <v-spacer></v-spacer>
                 <h3
@@ -83,12 +83,8 @@
         <v-tabs-items v-model="tab" class="transparent">
             <v-tab-item v-for="t in tabs" :key="t.id">
                 <div v-if="t.data.length > 0">
-                    <div v-if="tab === 2">
-                        <OpenMatch :match="match" v-for="match in t.data" :key="match.id"></OpenMatch>
-                    </div>
-                    <div v-else>
-                        <MatchPlayer :match="match" v-for="match in t.data" :key="match.id"></MatchPlayer>
-                    </div>
+                    <component v-bind:is="t.component" v-for="match in t.data" :key="match.key"
+                               :loading="openLoading" :match="match"></component>
                 </div>
                 <div class="pa-4 mt-2 title text-xs-center secondary white--text" v-else>
                     <span>{{t.empty}}</span>
@@ -99,7 +95,7 @@
 </template>
 
 <script>
-    import {mapGetters, mapActions} from "vuex";
+    import {mapState, mapGetters, mapActions} from "vuex";
     import MatchPlayer from "../components/match/MatchPlayer";
     import OpenMatch from "../components/match/OpenMatch";
     import ProfileImg from "../components/shared/ProfileImage";
@@ -112,7 +108,6 @@
             };
         },
         components: {
-            ProfileImg,
             MatchPlayer,
             OpenMatch
         },
@@ -152,16 +147,19 @@
         },
         methods: {
             ...mapActions({
-                getMatches: "LOAD_USER_MATCHSE",
+                getMatches: "LOAD_USER_MATCHES",
                 setUser: "SET_USER"
             })
         },
         computed: {
+            ...mapState('matches', {
+                openLoading: state => state.open.loading
+            }),
             ...mapGetters({
                 user: "GET_USER",
                 history: "GET_USER_HISTORY",
                 active: "GET_USER_ACTIVE",
-                open: "GET_USER_OPEN"
+                open: "GET_USER_OPEN",
             }),
             tabs() {
                 return [
@@ -171,6 +169,7 @@
                         value: "history",
                         icon: mdiHistory,
                         data: this.history,
+                        component: MatchPlayer,
                         empty: `${this.user.displayName} hasn't finished any battles`
                     },
                     {
@@ -179,6 +178,7 @@
                         value: "active",
                         icon: mdiAccountGroup,
                         data: this.active,
+                        component: MatchPlayer,
                         empty: `${this.user.displayName} isn't battling anyone at the moment`
                     },
                     {
@@ -187,6 +187,7 @@
                         value: "open",
                         icon: mdiAccountSearch,
                         data: this.open,
+                        component: OpenMatch,
                         empty: `${this.user.displayName} doesn't have any open matches`
                     }
                 ];
