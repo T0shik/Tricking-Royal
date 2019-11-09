@@ -27,7 +27,6 @@ namespace Battles.Application.Services.Users.Queries
             var someoneElseHasName = _ctx.UserInformation
                     .Any(x => x.DisplayName == request.DisplayName 
                         && x.Id != request.UserId);
-            
 
             return !someoneElseHasName;
         }

@@ -25,11 +25,11 @@ namespace Battles.Application.Services.Users.Commands
         [StringLength(100)] public string Facebook { get; set; }
         [StringLength(100)] public string Youtube { get; set; }
 
-        public string RealUserId { get; set; }
+        public string UserId { get; set; }
 
         public UpdateUserCommand AttachUserId(string id)
         {
-            RealUserId = id;
+            UserId = id;
             return this;
         }
     }
@@ -46,7 +46,7 @@ namespace Battles.Application.Services.Users.Commands
         public async Task<BaseResponse> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
             var user = _ctx.UserInformation
-                .FirstOrDefault(x => x.Id == request.RealUserId);
+                .FirstOrDefault(x => x.Id == request.UserId);
 
             if (user == null)
                 return new BaseResponse("User not found", false);
@@ -60,7 +60,6 @@ namespace Battles.Application.Services.Users.Commands
             user.Instagram = request.Instagram;
             user.Facebook = request.Facebook;
             user.Youtube = request.Youtube;
-            //Todo: allow more configuration (email notifications etc...).
 
             if (!_ctx.ChangeTracker.HasChanges())
                 return new BaseResponse("Profile saved.", true);
