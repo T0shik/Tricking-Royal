@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Battles.Domain.Models;
-using Battles.Models;
+﻿using Battles.Models;
 
 namespace Battles.Rules.Matches.Extensions
 {

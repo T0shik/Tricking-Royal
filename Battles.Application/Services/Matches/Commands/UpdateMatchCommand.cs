@@ -39,10 +39,10 @@ namespace Battles.Application.Services.Matches.Commands
         public async Task<BaseResponse> Handle(UpdateMatchCommand request, CancellationToken cancellationToken)
         {
             var match = _ctx.Matches
-                .Include(x => x.MatchUsers)
-                .ThenInclude(x => x.User)
-                .Include(x => x.Videos)
-                .FirstOrDefault(x => x.Id == request.MatchId);
+                            .Include(x => x.MatchUsers)
+                            .ThenInclude(x => x.User)
+                            .Include(x => x.Videos)
+                            .FirstOrDefault(x => x.Id == request.MatchId);
 
             if (match == null)
             {
@@ -83,10 +83,10 @@ namespace Battles.Application.Services.Matches.Commands
                 await _ctx.SaveChangesAsync(cancellationToken);
 
                 _notifications.QueueNotification(
-                    "Your match is now in the tribunal for voting.",
-                    new[] {match.Id.ToString()}.DefaultJoin(),
-                    NotificationMessageType.TribunalHistory,
-                    match.GetUserIds());
+                                                 "Your match is now in the tribunal for voting.",
+                                                 new[] {match.Id.ToString()}.DefaultJoin(),
+                                                 NotificationMessageType.TribunalHistory,
+                                                 match.GetUserIds());
             }
             else
             {
@@ -95,10 +95,10 @@ namespace Battles.Application.Services.Matches.Commands
                 var currentUser = match.GetUser(request.UserId);
 
                 _notifications.QueueNotification(
-                    $"{currentUser.User.DisplayName} updated a match you are in.",
-                    new[] {match.Id.ToString()}.DefaultJoin(),
-                    NotificationMessageType.MatchActive,
-                    match.GetOtherUserIds(request.UserId));
+                                                 $"{currentUser.User.DisplayName} updated a match you are in.",
+                                                 new[] {match.Id.ToString()}.DefaultJoin(),
+                                                 NotificationMessageType.MatchActive,
+                                                 match.GetOtherUserIds(request.UserId));
             }
 
             return new BaseResponse("Match updated.", true);

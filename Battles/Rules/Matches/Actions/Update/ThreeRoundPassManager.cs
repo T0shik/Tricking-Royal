@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
-using Battles.Configuration;
 using Battles.Enums;
 using Battles.Helpers;
 using Battles.Models;
 using Battles.Rules.Matches.Extensions;
+using Battles.Shared;
 
 namespace Battles.Rules.Matches.Actions.Update
 {

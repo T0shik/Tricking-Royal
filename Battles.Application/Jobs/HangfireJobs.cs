@@ -1,7 +1,6 @@
 ﻿using TrickingRoyal.Database;
 using Battles.Application.Services.Evaluations.Commands;
 using Battles.Application.Services.Matches.Commands;
-using Battles.Domain.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;

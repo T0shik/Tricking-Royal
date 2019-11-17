@@ -7,12 +7,12 @@ using System;
 using System.Threading.Tasks;
 using Battles.Cdn.FileServices;
 using Battles.Cdn.Infrastructure;
-using Battles.Enums;
 using TrickingRoyal.Database;
 
 namespace Battles.Cdn.Controllers
 {
     [Authorize]
+    [Route("[controller]")]
     public class VideoController : BaseController
     {
         private readonly AppDbContext _ctx;
@@ -29,8 +29,8 @@ namespace Battles.Cdn.Controllers
             _logger = logger;
         }
 
-        [HttpPost("[controller]/init/{matchId}")]
-        public async Task<IActionResult> SaveInitialVideo(int matchId, IFormFile video)
+        [HttpPost("{matchId}")]
+        public async Task<IActionResult> SaveVideo(int matchId, IFormFile video)
         {
             try
             {
@@ -40,8 +40,11 @@ namespace Battles.Cdn.Controllers
                 }
 
                 var (complete, response) = await _videoManager.SaveInitVideoAsync(matchId.ToString(), video);
+
                 if (complete)
+                {
                     return Ok(response);
+                }
             }
             catch (Exception e)
             {
@@ -49,24 +52,6 @@ namespace Battles.Cdn.Controllers
             }
 
             return BadRequest("Failed To Save Initial Video");
-        }
-
-        [HttpPost("[controller]/trim/{id}")]
-        public async Task<IActionResult> TrimInitialVideo(string id, [FromBody] TrimOptions options)
-        {
-            try
-            {
-                var (complete, filePaths) =
-                    await _videoManager.TrimVideoAsync(id, options.Video, options.Start, options.End);
-                if (complete)
-                    return Ok(filePaths);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e.Message);
-            }
-
-            return BadRequest("Failed To Trim Video");
         }
 
         [Authorize]

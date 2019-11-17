@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Battles.Domain.Models;
 using Battles.Enums;
 using Battles.Models;
 

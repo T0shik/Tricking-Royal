@@ -1,7 +1,7 @@
 ﻿using IdentityServer4;
 using IdentityServer4.Models;
 using System.Collections.Generic;
-using IdentityServer.Configuration;
+using Battles.Shared;
 
 namespace IdentityServer
 {
@@ -68,30 +68,7 @@ namespace IdentityServer
                     AllowOfflineAccess = true,
                     IdentityTokenLifetime = 3600,
                     AccessTokenLifetime = 3600 * 24,
-                },
-                // new Client
-                // {
-                //     ClientId = "ionic-TrickingR-app-H",
-                //     ClientName = "Ionic App Client",
-                //     AllowedGrantTypes = GrantTypes.Implicit,
-                //
-                //     AllowAccessTokensViaBrowser = true,
-                //     RequireConsent = false,
-                //
-                //     RedirectUris = {"http://localhost:8100"},
-                //     PostLogoutRedirectUris = {"http://localhost:8100"},
-                //     AllowedCorsOrigins = {"http://localhost:8100"},
-                //
-                //     AllowedScopes =
-                //     {
-                //         IdentityServerConstants.StandardScopes.OpenId,
-                //         IdentityServerConstants.StandardScopes.Profile,
-                //         settings.Api.Name,
-                //         settings.Cdn.Name,
-                //     },
-                //
-                //     AllowOfflineAccess = true
-                // }
+                }
             };
         }
     }

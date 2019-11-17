@@ -1,6 +1,6 @@
 ﻿using System.IO.Compression;
 using Battles.Cdn.FileServices;
-using Battles.Cdn.Settings;
+using Battles.Shared;
 using IdentityModel;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

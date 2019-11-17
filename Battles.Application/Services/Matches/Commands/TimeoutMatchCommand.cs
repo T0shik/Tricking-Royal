@@ -1,5 +1,4 @@
 ﻿using TrickingRoyal.Database;
-using Battles.Domain.Models;
 using Battles.Rules.Matches.Extensions;
 using MediatR;
 using System;
@@ -8,7 +7,6 @@ using System.Threading.Tasks;
 using Battles.Enums;
 using Battles.Models;
 using Battles.Rules.Levels;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Battles.Application.Services.Matches.Commands
 {
@@ -72,7 +70,7 @@ namespace Battles.Application.Services.Matches.Commands
                 {
                     host.SetLoser(-5);
                     opponent.SetWinner(5)
-                        .AwardExp(2 + match.Round);
+                            .AwardExp(2 + match.Round);
                 }
                 else if (match.IsTurn(MatchRole.Host))
                 {

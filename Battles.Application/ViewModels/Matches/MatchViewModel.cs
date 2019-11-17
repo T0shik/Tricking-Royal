@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Battles.Application.Extensions;
-using Battles.Application.ViewModels.Matches;
 using Battles.Extensions;
 using Battles.Models;
 using Newtonsoft.Json;

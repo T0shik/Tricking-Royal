@@ -26,7 +26,7 @@ namespace Battles.Application.Services.Matches.Commands
         public async Task<BaseResponse> Handle(CreateMatchCommand request, CancellationToken cancellationToken)
         {
             request.Host = await _ctx.UserInformation
-                .FirstAsync(x => x.Id == request.UserId, cancellationToken);
+                                     .FirstAsync(x => x.Id == request.UserId, cancellationToken);
 
             try
             {

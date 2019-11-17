@@ -1,8 +1,6 @@
 ﻿using Battles.Application.ViewModels;
-using Battles.Domain.Models;
 using MediatR;
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Battles.Enums;

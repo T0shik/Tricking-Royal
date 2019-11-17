@@ -1,4 +1,4 @@
-﻿using Battles.Configuration;
+﻿using Battles.Shared;
 
 namespace Battles.Tests.Mocks
 {

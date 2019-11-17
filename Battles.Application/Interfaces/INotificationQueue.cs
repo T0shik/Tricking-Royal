@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Battles.Enums;
-using Battles.Models;
 
 namespace Battles.Application.Interfaces
 {

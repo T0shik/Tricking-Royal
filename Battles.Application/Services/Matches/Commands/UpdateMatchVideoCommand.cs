@@ -2,11 +2,11 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Battles.Application.ViewModels;
-using Battles.Configuration;
 using Battles.Enums;
 using Battles.Helpers;
 using Battles.Models;
 using Battles.Rules.Matches.Extensions;
+using Battles.Shared;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using TrickingRoyal.Database;
@@ -38,9 +38,9 @@ namespace Battles.Application.Services.Matches.Commands
         public async Task<BaseResponse> Handle(UpdateMatchVideoCommand request, CancellationToken cancellationToken)
         {
             var match = _ctx.Matches
-                .Include(x => x.MatchUsers)
-                .Include(x => x.Videos)
-                .FirstOrDefault(x => x.Id == request.MatchId);
+                            .Include(x => x.MatchUsers)
+                            .Include(x => x.Videos)
+                            .FirstOrDefault(x => x.Id == request.MatchId);
 
             if (match == null) return new BaseResponse("Match not found.", false);
 
@@ -64,10 +64,10 @@ namespace Battles.Application.Services.Matches.Commands
             if (match.Mode == Mode.ThreeRoundPass && match.TurnType == TurnType.Blitz)
             {
                 return match.Videos
-                    .Where(x => x.UserId == request.UserId)
-                    .OrderBy(x => x.VideoIndex)
-                    .Skip(request.Index)
-                    .First();
+                            .Where(x => x.UserId == request.UserId)
+                            .OrderBy(x => x.VideoIndex)
+                            .Skip(request.Index)
+                            .First();
             }
 
             var latestIndex = match.Videos.Where(x => x.UserId == request.UserId).Max(x => x.VideoIndex);

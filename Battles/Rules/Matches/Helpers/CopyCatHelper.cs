@@ -1,5 +1,4 @@
-﻿using Battles.Domain.Models;
-using Battles.Enums;
+﻿using Battles.Enums;
 using Battles.Models;
 using Battles.Rules.Levels;
 using Battles.Rules.Matches.Extensions;

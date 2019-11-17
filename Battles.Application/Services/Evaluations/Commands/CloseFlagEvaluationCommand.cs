@@ -1,15 +1,10 @@
 ﻿using TrickingRoyal.Database;
-using Battles.Domain.Models;
 using Battles.Rules.Matches.Extensions;
 using MediatR;
-using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Battles.Enums;
 using Battles.Models;
-using Battles.Rules.Evaluations;
-using Battles.Rules.Levels;
 
 namespace Battles.Application.Services.Evaluations.Commands
 {

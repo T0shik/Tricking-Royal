@@ -19,9 +19,7 @@
         </e>
         <e p="Battles.csproj" t="IncludeRecursive" />
         <e p="bin" t="ExcludeRecursive" />
-        <e p="Configuration" t="Include">
-          <e p="Routing.cs" t="Include" />
-        </e>
+        <e p="Configuration" t="Include" />
         <e p="Enums" t="Include">
           <e p="EvaluationType.cs" t="Include" />
           <e p="MatchRole.cs" t="Include" />
@@ -118,25 +116,16 @@
           <e p="UsersController.cs" t="Include" />
         </e>
         <e p="CustomTokenRetriever.cs" t="Include" />
+        <e p="ffmpeg" t="Include">
+          <e p="ffmpeg.exe" t="Include" />
+          <e p="ffplay.exe" t="Include" />
+          <e p="ffprobe.exe" t="Include" />
+        </e>
         <e p="Infrastructure" t="Include">
           <e p="BaseController.cs" t="Include" />
           <e p="ServiceRegistrar.cs" t="Include" />
         </e>
         <e p="NotificationProcessor.cs" t="Include" />
-        <e p="Notifications" t="Include">
-          <e p="Dispatchers" t="Include">
-            <e p="DispatcherFactory.cs" t="Include" />
-            <e p="EmailDispatcher.cs" t="Include" />
-            <e p="IDispatcher.cs" t="Include" />
-            <e p="OneSignalDispatcher.cs" t="Include" />
-          </e>
-          <e p="INotificationSender.cs" t="Include" />
-          <e p="NotificationQueue.cs" t="Include" />
-          <e p="NotificationServices.cs" t="Include" />
-          <e p="Settings" t="Include">
-            <e p="OneSignal.cs" t="Include" />
-          </e>
-        </e>
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
             <e p="netcoreapp2.2" t="Include">
@@ -149,11 +138,24 @@
           <e p="launchSettings.json" t="Include" />
         </e>
         <e p="secrets.json" t="Include" />
-        <e p="Settings" t="Include">
-          <e p="OAuth.cs" t="Include" />
-          <e p="Resource.cs" t="Include" />
-        </e>
         <e p="Startup.cs" t="Include" />
+        <e p="Workers" t="Include">
+          <e p="BackgroundServices.cs" t="Include" />
+          <e p="Notifications" t="Include">
+            <e p="Dispatchers" t="Include">
+              <e p="DispatcherFactory.cs" t="Include" />
+              <e p="EmailDispatcher.cs" t="Include" />
+              <e p="IDispatcher.cs" t="Include" />
+              <e p="OneSignalDispatcher.cs" t="Include" />
+            </e>
+            <e p="INotificationSender.cs" t="Include" />
+            <e p="NotificationQueue.cs" t="Include" />
+            <e p="NotificationServices.cs" t="Include" />
+            <e p="Settings" t="Include">
+              <e p="OneSignal.cs" t="Include" />
+            </e>
+          </e>
+        </e>
       </e>
       <e p="Battles.Application" t="IncludeRecursive">
         <e p="Battles.Application.csproj" t="IncludeRecursive" />
@@ -221,6 +223,7 @@
               <e p="JoinMatchCommand.cs" t="Include" />
               <e p="PassRoundCommand.cs" t="Include" />
               <e p="ReadyMatchCommand.cs" t="Include" />
+              <e p="StartMatchUpdateCommand.cs" t="Include" />
               <e p="TimeoutMatchCommand.cs" t="Include" />
               <e p="UpdateMatchCommand.cs" t="Include" />
               <e p="UpdateMatchVideoCommand.cs" t="Include" />
@@ -229,6 +232,9 @@
               <e p="GetAnonMatchesQuery.cs" t="Include" />
               <e p="GetMatchesQuery.cs" t="Include" />
               <e p="GetMatchQuery.cs" t="Include" />
+            </e>
+            <e p="Queues" t="Include">
+              <e p="UpdateMatchQueue.cs" t="Include" />
             </e>
           </e>
           <e p="Notifications" t="Include">
@@ -265,6 +271,7 @@
         <e p="SubServices" t="Include">
           <e p="OpponentChecker.cs" t="Include" />
           <e p="SubServiceSpec.cs" t="Include" />
+          <e p="VideoConverter.cs" t="Include" />
         </e>
         <e p="ViewModels" t="Include">
           <e p="BaseResponse.cs" t="Include" />
@@ -294,11 +301,6 @@
           <e p="ImageController.cs" t="Include" />
           <e p="VideoController.cs" t="Include" />
         </e>
-        <e p="ffmpeg" t="Include">
-          <e p="ffmpeg.exe" t="Include" />
-          <e p="ffplay.exe" t="Include" />
-          <e p="ffprobe.exe" t="Include" />
-        </e>
         <e p="FileServices" t="Include">
           <e p="BaseFileManager.cs" t="Include" />
           <e p="FileStreams.cs" t="Include" />
@@ -318,12 +320,6 @@
         <e p="Program.cs" t="Include" />
         <e p="Properties" t="Include">
           <e p="launchSettings.json" t="Include" />
-        </e>
-        <e p="Settings" t="Include">
-          <e p="FilePaths.cs" t="Include" />
-          <e p="OAuth.cs" t="Include" />
-          <e p="Resource.cs" t="Include" />
-          <e p="Routing.cs" t="Include" />
         </e>
         <e p="Startup.cs" t="Include" />
         <e p="ViewModels" t="Include">
@@ -941,6 +937,21 @@
           </e>
         </e>
       </e>
+      <e p="Battles.Shared" t="IncludeRecursive">
+        <e p="Battles.Shared.csproj" t="IncludeRecursive" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="FilePaths.cs" t="Include" />
+        <e p="OAuth.cs" t="Include" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netstandard2.0" t="Include">
+              <e p="Battles.Shared.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Resource.cs" t="Include" />
+        <e p="Routing.cs" t="Include" />
+      </e>
       <e p="Battles.Tests" t="IncludeRecursive">
         <e p="Battles.Tests.csproj" t="IncludeRecursive" />
         <e p="bin" t="ExcludeRecursive" />
@@ -996,8 +1007,8 @@
           <e p="babel.config.js" t="Include" />
           <e p="dist" t="Include">
             <e p="css" t="Include">
-              <e p="app.d9c0fd3c.css" t="Include" />
-              <e p="chunk-vendors.55b15f90.css" t="Include" />
+              <e p="app.1ffd3334.css" t="Include" />
+              <e p="chunk-vendors.b406d029.css" t="Include" />
             </e>
             <e p="img" t="Include">
               <e p="icons" t="Include">
@@ -1014,20 +1025,19 @@
             </e>
             <e p="index.html" t="Include" />
             <e p="js" t="Include">
-              <e p="app.0bb0b58c.js" t="Include" />
-              <e p="app.0bb0b58c.js.map" t="Include" />
-              <e p="chunk-vendors.42c7020c.js" t="Include" />
-              <e p="chunk-vendors.42c7020c.js.map" t="Include" />
+              <e p="app.aae5d78b.js" t="Include" />
+              <e p="app.aae5d78b.js.map" t="Include" />
+              <e p="chunk-vendors.ba3293e1.js" t="Include" />
+              <e p="chunk-vendors.ba3293e1.js.map" t="Include" />
             </e>
             <e p="manifest.json" t="Include" />
             <e p="OneSignalSDKUpdaterWorker.js" t="Include" />
             <e p="OneSignalSDKWorker.js" t="Include" />
-            <e p="precache-manifest.87022d8da02c4a9cfd0dfd6e11b17763.js" t="Include" />
+            <e p="precache-manifest.67862498f4f554e2a3a6f9e6e910d906.js" t="Include" />
             <e p="robots.txt" t="Include" />
             <e p="service-worker.js" t="Include" />
             <e p="static" t="Include">
               <e p="callback.html" t="Include" />
-              <e p="oidc-client.min.js" t="Include" />
               <e p="silent.html" t="Include" />
             </e>
           </e>
@@ -1214,9 +1224,6 @@
         <e p="Configuration" t="Include">
           <e p="AppSecrets.cs" t="Include" />
           <e p="Facebook.cs" t="Include" />
-          <e p="OAuth.cs" t="Include" />
-          <e p="Resource.cs" t="Include" />
-          <e p="Routing.cs" t="Include" />
         </e>
         <e p="Controllers" t="Include">
           <e p="AccountController.cs" t="Include" />

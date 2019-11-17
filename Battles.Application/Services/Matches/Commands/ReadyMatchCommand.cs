@@ -1,5 +1,4 @@
 ﻿using TrickingRoyal.Database;
-using Battles.Domain.Models;
 using Battles.Rules.Matches.Extensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -31,8 +30,8 @@ namespace Battles.Application.Services.Matches.Commands
         public async Task<BaseResponse> Handle(ReadyMatchCommand request, CancellationToken cancellationToken)
         {
             var match = _ctx.Matches
-                .Include(x => x.MatchUsers)
-                .FirstOrDefault(x => x.Id == request.MatchId);
+                            .Include(x => x.MatchUsers)
+                            .FirstOrDefault(x => x.Id == request.MatchId);
 
             if (match == null)
             {

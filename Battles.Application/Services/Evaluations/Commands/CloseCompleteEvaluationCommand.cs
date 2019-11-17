@@ -1,10 +1,8 @@
 ﻿using TrickingRoyal.Database;
-using Battles.Domain.Models;
 using Battles.Rules.Matches.Extensions;
 using MediatR;
 using System;
 using System.Linq;
-using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
 using Battles.Application.Extensions;

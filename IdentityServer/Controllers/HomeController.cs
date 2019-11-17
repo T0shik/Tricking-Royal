@@ -1,11 +1,11 @@
-﻿using IdentityServer.Configuration;
-using IdentityServer.Models.HomeViewModels;
+﻿using IdentityServer.Models.HomeViewModels;
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System.IO;
 using System.Threading.Tasks;
+using Battles.Shared;
 
 namespace IdentityServer.Controllers
 {

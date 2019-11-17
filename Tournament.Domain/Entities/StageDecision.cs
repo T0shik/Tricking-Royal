@@ -1,5 +1,4 @@
-﻿using Battles.Domain.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Battles.Models;
 
 namespace Tournament.Domain.Models

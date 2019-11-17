@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Linq;
 using System.Reflection;
-using Battles.Domain.Models;
 using Battles.Models;
 using Xunit;
 

@@ -1,6 +1,4 @@
-﻿using Battles.Domain.Models;
-
-namespace Battles.Models
+﻿namespace Battles.Models
 {
     public class Video
     {

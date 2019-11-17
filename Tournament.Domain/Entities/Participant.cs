@@ -1,5 +1,4 @@
-﻿using Battles.Domain.Models;
-using Battles.Models;
+﻿using Battles.Models;
 using Tournament.Domain.Enums;
 
 namespace Tournament.Domain.Models

@@ -1,5 +1,4 @@
-﻿using Battles.Domain.Models;
-using Battles.Enums;
+﻿using Battles.Enums;
 
 namespace Battles.Models
 {

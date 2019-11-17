@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using Battles.Cdn.Settings;
+using Battles.Shared;
 using Microsoft.AspNetCore.Hosting;
 
 namespace Battles.Cdn.FileServices

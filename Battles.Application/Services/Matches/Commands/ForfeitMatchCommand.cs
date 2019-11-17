@@ -3,7 +3,6 @@ using Battles.Rules.Matches.Extensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Battles.Application.Extensions;
@@ -11,7 +10,6 @@ using Battles.Application.Interfaces;
 using Battles.Application.ViewModels;
 using Battles.Enums;
 using Battles.Extensions;
-using Battles.Models;
 using Battles.Rules.Levels;
 using static System.String;
 
@@ -40,9 +38,9 @@ namespace Battles.Application.Services.Matches.Commands
         public async Task<BaseResponse> Handle(ForfeitMatchCommand request, CancellationToken cancellationToken)
         {
             var match = await _ctx.Matches
-                .Include(x => x.MatchUsers)
-                .ThenInclude(x => x.User)
-                .FirstOrDefaultAsync(x => x.Id == request.MatchId, cancellationToken: cancellationToken);
+                                  .Include(x => x.MatchUsers)
+                                  .ThenInclude(x => x.User)
+                                  .FirstOrDefaultAsync(x => x.Id == request.MatchId, cancellationToken: cancellationToken);
 
             if (!match.CanGo(request.UserId))
             {
@@ -66,14 +64,14 @@ namespace Battles.Application.Services.Matches.Commands
                         .AwardExp(4 + match.Round);
 
                     opponent.SetWinner(match.Round + 5)
-                        .AwardExp(7 + match.Round);
+                            .AwardExp(7 + match.Round);
                 }
                 else if (match.IsTurn(MatchRole.Opponent))
                 {
                     host.SetWinner(match.Round + 5)
                         .AwardExp(7 + match.Round);
                     opponent.SetLoser(match.Round + 5)
-                        .AwardExp(4 + match.Round);
+                            .AwardExp(4 + match.Round);
                 }
 
                 match.Status = Status.Complete;
@@ -87,15 +85,15 @@ namespace Battles.Application.Services.Matches.Commands
             await _ctx.SaveChangesAsync(cancellationToken);
 
             var notificationType = IsNullOrEmpty(notificationExtension)
-                ? NotificationMessageType.MatchHistory
-                : NotificationMessageType.Empty;
+                                       ? NotificationMessageType.MatchHistory
+                                       : NotificationMessageType.Empty;
 
             var user = match.GetUser(request.UserId);
             _notification.QueueNotification(
-                $"{user.User.DisplayName} forfeited the match. {notificationExtension}",
-                new[] {match.Id.ToString()}.DefaultJoin(),
-                notificationType,
-                match.GetOtherUserIds(request.UserId));
+                                            $"{user.User.DisplayName} forfeited the match. {notificationExtension}",
+                                            new[] {match.Id.ToString()}.DefaultJoin(),
+                                            notificationType,
+                                            match.GetOtherUserIds(request.UserId));
 
             return new BaseResponse("Match forfeited.", true);
         }

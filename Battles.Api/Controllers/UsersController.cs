@@ -1,5 +1,4 @@
-﻿using System.Data;
-using Battles.Api.Infrastructure;
+﻿using Battles.Api.Infrastructure;
 using Battles.Application.Services.Users.Commands;
 using Battles.Application.Services.Users.Queries;
 using Microsoft.AspNetCore.Authorization;

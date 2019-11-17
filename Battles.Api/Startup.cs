@@ -13,9 +13,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using Battles.Api.Infrastructure;
-using Battles.Api.Notifications;
-using Battles.Api.Settings;
+using Battles.Api.Workers.Notifications;
+using Battles.Api.Workers.Notifications.Settings;
 using Battles.Application.SubServices;
+using Battles.Shared;
 using Microsoft.Extensions.Logging;
 using NETCore.MailKit.Extensions;
 using NETCore.MailKit.Infrastructure.Internal;
@@ -41,6 +42,7 @@ namespace Battles.Api
             services.Configure<OneSignal>(_config.GetSection("OneSignal"));
             services.Configure<AppSettings>(_config.GetSection("AppSettings"));
 
+            services.AddSingleton(_oAuth);
             services.AddSingleton(_oAuth.Routing);
 
             var connectionString = _config.GetConnectionString("DefaultConnection");

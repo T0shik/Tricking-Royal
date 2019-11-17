@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Battles.Api.Notifications;
+using Battles.Api.Workers.Notifications;
 using Microsoft.Extensions.Hosting;
 
 namespace Battles.Api
