@@ -76,7 +76,7 @@
                             <v-divider></v-divider>
 
                             <v-card-actions class="justify-center">
-                                <v-btn color="info" :disabled="move.length < 3" @click="startMatchUpdate">Finish</v-btn>
+                                <v-btn color="info" :disabled="move.length < 2" @click="startMatchUpdate">Finish</v-btn>
                             </v-card-actions>
                         </v-window-item>
                     </v-window>
