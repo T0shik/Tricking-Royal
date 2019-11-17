@@ -2,7 +2,7 @@
 import ProfileImage from "./ProfileImage";
 
 [
-    ProfileImage,
+    ProfileImage
 ].forEach(c => {
     Vue.component(c.name, c);
 });
