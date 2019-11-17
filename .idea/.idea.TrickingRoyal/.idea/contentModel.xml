@@ -294,11 +294,7 @@
           <e p="ImageController.cs" t="Include" />
           <e p="VideoController.cs" t="Include" />
         </e>
-        <e p="ffmpeg" t="Include">
-          <e p="ffmpeg.exe" t="Include" />
-          <e p="ffplay.exe" t="Include" />
-          <e p="ffprobe.exe" t="Include" />
-        </e>
+        <e p="ffmpeg" t="Include" />
         <e p="FileServices" t="Include">
           <e p="BaseFileManager.cs" t="Include" />
           <e p="FileStreams.cs" t="Include" />
@@ -996,8 +992,8 @@
           <e p="babel.config.js" t="Include" />
           <e p="dist" t="Include">
             <e p="css" t="Include">
-              <e p="app.d9c0fd3c.css" t="Include" />
-              <e p="chunk-vendors.55b15f90.css" t="Include" />
+              <e p="app.1ffd3334.css" t="Include" />
+              <e p="chunk-vendors.b406d029.css" t="Include" />
             </e>
             <e p="img" t="Include">
               <e p="icons" t="Include">
@@ -1014,20 +1010,19 @@
             </e>
             <e p="index.html" t="Include" />
             <e p="js" t="Include">
-              <e p="app.0bb0b58c.js" t="Include" />
-              <e p="app.0bb0b58c.js.map" t="Include" />
-              <e p="chunk-vendors.42c7020c.js" t="Include" />
-              <e p="chunk-vendors.42c7020c.js.map" t="Include" />
+              <e p="app.aae5d78b.js" t="Include" />
+              <e p="app.aae5d78b.js.map" t="Include" />
+              <e p="chunk-vendors.ba3293e1.js" t="Include" />
+              <e p="chunk-vendors.ba3293e1.js.map" t="Include" />
             </e>
             <e p="manifest.json" t="Include" />
             <e p="OneSignalSDKUpdaterWorker.js" t="Include" />
             <e p="OneSignalSDKWorker.js" t="Include" />
-            <e p="precache-manifest.87022d8da02c4a9cfd0dfd6e11b17763.js" t="Include" />
+            <e p="precache-manifest.67862498f4f554e2a3a6f9e6e910d906.js" t="Include" />
             <e p="robots.txt" t="Include" />
             <e p="service-worker.js" t="Include" />
             <e p="static" t="Include">
               <e p="callback.html" t="Include" />
-              <e p="oidc-client.min.js" t="Include" />
               <e p="silent.html" t="Include" />
             </e>
           </e>
