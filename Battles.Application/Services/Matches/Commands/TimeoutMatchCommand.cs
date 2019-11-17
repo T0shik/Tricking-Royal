@@ -61,7 +61,7 @@ namespace Battles.Application.Services.Matches.Commands
                 else
                 {
                     host.SetDraw(-5);
-                    opponent.SetDraw(0).AwardExp(2);
+                    opponent.SetDraw(2).AwardExp(2);
                 }
 
                 _ctx.Matches.Remove(match);
