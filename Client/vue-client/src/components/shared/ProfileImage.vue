@@ -11,9 +11,15 @@
 
 <script>
     import {mdiAccountCircle, mdiTrophy} from "@mdi/js";
+    import VIcon from "vuetify/lib/components/VIcon/VIcon";
+    import VAvatar from "vuetify/lib/components/VAvatar/VAvatar";
 
     export default {
         name: "profile-img",
+        components: {
+            VAvatar,
+            VIcon
+        },
         props: {
             picture: {
                 required: true,
