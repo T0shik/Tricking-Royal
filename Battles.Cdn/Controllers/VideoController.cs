@@ -1,5 +1,4 @@
-﻿using Battles.Cdn.ViewModels;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -29,58 +28,37 @@ namespace Battles.Cdn.Controllers
             _logger = logger;
         }
 
-        [HttpPost("{matchId}")]
-        public async Task<IActionResult> SaveVideo(int matchId, IFormFile video)
+        [HttpPost("{matchId}/{action}")]
+        public async Task<IActionResult> SaveVideo(
+            int matchId,
+            string action,
+            IFormFile video)
         {
             try
             {
-                if (!await _ctx.CanGo(matchId, UserId))
+                if (action != "update"
+                    || action != "upload")
                 {
-                    return BadRequest("Not allowed to go");
+                    return BadRequest("Invalid Action");
                 }
 
-                var (complete, response) = await _videoManager.SaveInitVideoAsync(matchId.ToString(), video);
-
-                if (complete)
-                {
-                    return Ok(response);
+                switch (action) {
+                    case "upload" when !await _ctx.CanGo(matchId, UserId):
+                        return BadRequest("Not allowed to go");
+                    case "update" when !await _ctx.CanUpdate(matchId, UserId):
+                        return BadRequest("Not allowed to update");
+                    default: {
+                        var videoName = await _videoManager.SaveAsync(matchId.ToString(), video);
+                        return Ok(videoName);
+                    }
                 }
             }
             catch (Exception e)
             {
-                _logger.LogError(e.Message);
+                _logger.LogError(e, "Failed to save video");
             }
 
             return BadRequest("Failed To Save Initial Video");
-        }
-
-        [Authorize]
-        [HttpPost("[controller]/update/{matchId}")]
-        public async Task<IActionResult> UploadInitialVideoForReUploadIndex(
-            int matchId,
-            IFormFile video,
-            [FromServices] AppDbContext ctx)
-        {
-            try
-            {
-                var canUpdate = await ctx.CanUpdate(matchId, UserId);
-                if (!canUpdate)
-                {
-                    return BadRequest("Not allowed to update");
-                }
-
-                var (complete, response) = await _videoManager.SaveInitVideoAsync(matchId.ToString(), video);
-                if (complete)
-                {
-                    return Ok(response);
-                }
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e.Message);
-            }
-
-            return BadRequest("Failed To Save Video");
         }
     }
 }

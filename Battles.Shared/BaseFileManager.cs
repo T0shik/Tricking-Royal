@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace Battles.Cdn.FileServices
+namespace Battles.Shared
 {
     public abstract class BaseFileManager
     {

@@ -271,7 +271,10 @@
         <e p="SubServices" t="Include">
           <e p="OpponentChecker.cs" t="Include" />
           <e p="SubServiceSpec.cs" t="Include" />
-          <e p="VideoConverter.cs" t="Include" />
+          <e p="VideoConversion" t="Include">
+            <e p="VideoConversionResult.cs" t="Include" />
+            <e p="VideoConverter.cs" t="Include" />
+          </e>
         </e>
         <e p="ViewModels" t="Include">
           <e p="BaseResponse.cs" t="Include" />
@@ -322,11 +325,6 @@
           <e p="launchSettings.json" t="Include" />
         </e>
         <e p="Startup.cs" t="Include" />
-        <e p="ViewModels" t="Include">
-          <e p="Response.cs" t="Include" />
-          <e p="TrimOptions.cs" t="Include" />
-          <e p="VideoInfo.cs" t="Include" />
-        </e>
         <e p="wwwroot" t="Include">
           <e p="content" t="Include">
             <e p="match" t="Include">

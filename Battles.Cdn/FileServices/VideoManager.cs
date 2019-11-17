@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
-using Battles.Cdn.ViewModels;
 using Battles.Shared;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -13,53 +12,32 @@ namespace Battles.Cdn.FileServices
     public class VideoManager : BaseFileManager
     {
         private readonly string _matchVideos;
-        private readonly ILogger<VideoManager> _logger;
 
         public VideoManager(
             FilePaths filePaths,
-            IHostingEnvironment env,
-            ILogger<VideoManager> logger)
+            IHostingEnvironment env)
         {
             _matchVideos = env.IsProduction() ? filePaths.Videos : Path.Combine(env.WebRootPath, filePaths.Videos);
-
-            _logger = logger;
         }
 
-        public async Task<(bool Complete, Response Response)> SaveInitVideoAsync(string id, IFormFile video)
+        public async Task<string> SaveAsync(string id, IFormFile video)
         {
-            try
+            var savePath = Path.Combine(_matchVideos, id);
+
+            if (!Directory.Exists(savePath))
             {
-                var savePath = Path.Combine(_matchVideos, id);
-
-                if (!Directory.Exists(savePath))
-                {
-                    Directory.CreateDirectory(savePath);
-                }
-
-                var fileName = CreateFileName();
-                var outputName = $"init_{fileName}{GetFileMime(video.FileName)}";
-                var outputFile = Path.Combine(savePath, outputName);
-
-                using (var fileStream = new FileStream(outputFile, FileMode.Create))
-                {
-                    await video.CopyToAsync(fileStream);
-                }
-
-                return (true, new Response(outputName, ""));
+                Directory.CreateDirectory(savePath);
             }
-            catch (Exception e)
+
+            var outputName = $"init_{CreateFileName()}{GetFileMime(video.FileName)}";
+            var outputFile = Path.Combine(savePath, outputName);
+
+            using (var fileStream = new FileStream(outputFile, FileMode.Create))
             {
-                _logger.LogError(e.Message);
-
-                return (false, new Response(e.Message));
+                await video.CopyToAsync(fileStream);
             }
-        }
 
-        
-
-        public bool RemoveFile(string id, string fileName)
-        {
-            return string.IsNullOrEmpty(fileName) && TryRemoveFile(Path.Combine(_matchVideos, id, fileName));
+            return outputName;
         }
 
         private static void OptimizeThumb(string tempThumbPath, string thumbPath)
@@ -72,13 +50,14 @@ namespace Battles.Cdn.FileServices
             File.Delete(tempThumbPath);
         }
 
-        private static ProcessImageSettings ThumbImageSettings => new ProcessImageSettings()
-        {
-            Height = 320,
-            Width = 480,
-            ResizeMode = CropScaleMode.Stretch,
-            SaveFormat = FileFormat.Jpeg,
-            JpegQuality = 90
-        };
+        private static ProcessImageSettings ThumbImageSettings =>
+            new ProcessImageSettings()
+            {
+                Height = 320,
+                Width = 480,
+                ResizeMode = CropScaleMode.Stretch,
+                SaveFormat = FileFormat.Jpeg,
+                JpegQuality = 90
+            };
     }
 }
