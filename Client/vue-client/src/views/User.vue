@@ -98,7 +98,6 @@
     import {mapState, mapGetters, mapActions} from "vuex";
     import MatchPlayer from "../components/match/MatchPlayer";
     import OpenMatch from "../components/match/OpenMatch";
-    import ProfileImg from "../components/shared/ProfileImage";
     import {mdiAccountGroup, mdiAccountSearch, mdiFacebook, mdiHistory, mdiInstagram, mdiYoutube} from "@mdi/js";
 
     export default {
