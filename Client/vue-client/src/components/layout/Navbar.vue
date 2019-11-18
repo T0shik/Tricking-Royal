@@ -27,7 +27,7 @@
             <template v-slot:item="data">
                 <template>
                     <v-list-item-avatar>
-                        <profile-img :picture="data.item.picture"></profile-img>
+                        <ProfileImage :picture="data.item.picture"></ProfileImage>
                     </v-list-item-avatar>
                     <v-list-item-content>
                         <v-list-item-title v-html="data.item.displayName"></v-list-item-title>
@@ -86,9 +86,13 @@
 <script>
     import {mapMutations, mapActions, mapState} from "vuex";
     import {mdiAccount, mdiBell, mdiClose, mdiMenu} from "@mdi/js";
+    import ProfileImage from "../shared/ProfileImage";
 
     export default {
         name: "App",
+        components: {
+            ProfileImage
+        },
         data() {
             return {
                 users: [],

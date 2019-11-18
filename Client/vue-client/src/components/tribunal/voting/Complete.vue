@@ -9,7 +9,7 @@
 
         <v-card-text class="px-0 d-flex justify-space-around align-center">
             <div class="d-flex flex-column" @click="setTarget(0)">
-                <profile-img :class="{'selected': target === 0}"
+                <ProfileImage :class="{'selected': target === 0}"
                              :picture="users[0].picture"
                              :level="users[0].level"
                              size="68px"/>
@@ -19,7 +19,7 @@
                 VS
             </div>
             <div class="d-flex flex-column" @click="setTarget(1)">
-                <profile-img :class="{'selected': target === 1}"
+                <ProfileImage :class="{'selected': target === 1}"
                              :picture="users[1].picture"
                              :level="users[0].level"
                              size="68px"/>

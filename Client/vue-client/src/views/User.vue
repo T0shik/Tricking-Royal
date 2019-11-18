@@ -2,7 +2,7 @@
     <div class="main-card">
         <v-card color="secondary" v-if="user">
             <v-card-title primary-title>
-                <profile-img :picture="user.picture"></profile-img>
+                <ProfileImage :picture="user.picture"></ProfileImage>
                 <div>
                     <h3 class="title pl-1 mb-0">{{user.displayName}}</h3>
                 </div>
@@ -99,6 +99,7 @@
     import MatchPlayer from "../components/match/MatchPlayer";
     import OpenMatch from "../components/match/OpenMatch";
     import {mdiAccountGroup, mdiAccountSearch, mdiFacebook, mdiHistory, mdiInstagram, mdiYoutube} from "@mdi/js";
+    import ProfileImage from "../components/shared/ProfileImage";
 
     export default {
         data() {
@@ -108,7 +109,8 @@
         },
         components: {
             MatchPlayer,
-            OpenMatch
+            OpenMatch,
+            ProfileImage
         },
         watch: {
             tab: {

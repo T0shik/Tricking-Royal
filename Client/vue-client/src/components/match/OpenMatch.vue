@@ -2,7 +2,7 @@
     <v-card class="my-3" max-width="600px" width="100%" dark color="secondary">
         <v-card-title>
             <router-link class="white--text" :to="`/user/${user.displayName}`">
-                <profile-img :picture="user.picture" :level="user.level"></profile-img>
+                <ProfileImage :picture="user.picture" :level="user.level"></ProfileImage>
                 <span class="white--text subheading px-2">{{user.displayName}}</span>
             </router-link>
             <v-spacer></v-spacer>
@@ -45,6 +45,8 @@
 </template>
 
 <script>
+    import ProfileImage from "../shared/ProfileImage";
+
     export default {
         props: {
             match: {
@@ -55,6 +57,9 @@
                 required: true,
                 type: Boolean
             }
+        },
+        components: {
+            ProfileImage
         },
         computed: {
             user() {

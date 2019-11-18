@@ -5,7 +5,6 @@ import router from './router'
 import {store} from './stores/store'
 import Axios from 'axios'
 import Logger from "./logger/logger";
-import "./components/shared/index"
 import "./registerServiceWorker"
 
 import {loadProgressBar} from 'axios-progress-bar'

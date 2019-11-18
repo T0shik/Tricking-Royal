@@ -1135,7 +1135,6 @@
                 </e>
               </e>
               <e p="Shared" t="Include">
-                <e p="index.js" t="Include" />
                 <e p="ProfileImage.vue" t="Include" />
               </e>
               <e p="tribunal" t="Include">
