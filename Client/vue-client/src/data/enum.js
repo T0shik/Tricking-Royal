@@ -3,9 +3,6 @@
     NOT_STARTED: 0,
     INITIAL_STARTED: 1,
     INITIAL_FINISHED: 2,
-    TRIM_STARTED: 3,
-    TRIM_FINISHED: 4,
-    UPDATE_STARTED: 5,
 };
 
 export const MATCH_MODE = {

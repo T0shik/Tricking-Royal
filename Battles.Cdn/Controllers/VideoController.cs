@@ -37,17 +37,19 @@ namespace Battles.Cdn.Controllers
             try
             {
                 if (task != "update"
-                    || task != "upload")
+                    && task != "upload")
                 {
                     return BadRequest("Invalid Action");
                 }
 
-                switch (task) {
+                switch (task)
+                {
                     case "upload" when !await _ctx.CanGo(matchId, UserId):
                         return BadRequest("Not allowed to go");
                     case "update" when !await _ctx.CanUpdate(matchId, UserId):
                         return BadRequest("Not allowed to update");
-                    default: {
+                    default:
+                    {
                         var videoName = await _videoManager.SaveAsync(matchId.ToString(), video);
                         return Ok(videoName);
                     }

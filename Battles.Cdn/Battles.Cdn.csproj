@@ -20,4 +20,8 @@
   <ItemGroup>
     <ProjectReference Include="..\TrickingRoyal.Database\TrickingRoyal.Database.csproj" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="wwwroot\content\match\44" />
+  </ItemGroup>
 </Project>

@@ -56,13 +56,13 @@ export default {
         },
     },
     actions: {
-        uploadInitial({state, commit, dispatch}, formData) {
+        uploadVideo({state, commit, dispatch}, formData) {
             commit("setUploadStatus", UPLOAD_STATUS.INITIAL_STARTED);
-            let ext = state.videoUpdate ? `update` : `init`;
+            let uploadTask = state.videoUpdate ? `update` : `upload`;
 
-            axios.post(`${process.env.VUE_APP_CDN}/video/${ext}/${state.match.id}`,
+            axios.post(`${process.env.VUE_APP_CDN}/video/${state.match.id}/${uploadTask}`,
                 formData, MULTIPART_HEADER_OPTIONS).then(({data}) => {
-                commit('setInitialVideoName', data.video);
+                commit('setInitialVideoName', data);
                 commit("setUploadStatus", UPLOAD_STATUS.INITIAL_FINISHED);
             }).catch(error => {
                 Logger.error("Error Uploading Video", error);
@@ -75,39 +75,17 @@ export default {
                 commit('reset');
             })
         },
-        uploadTrimOptions({state, commit, dispatch}, {start, end}) {
-            commit("setUploadStatus", UPLOAD_STATUS.TRIM_STARTED);
+        startUpdate({state, commit, dispatch}, {start, end, move, index}) {
+            let data = {
+                video: state.initialVideoName,
+                start,
+                end,
+                move,
+                index,
+                videoUpdate: state.videoUpdate
+            };
 
-            axios.post(
-                `${process.env.VUE_APP_CDN}/video/trim/${state.match.id}`,
-                {
-                    video: state.initialVideoName,
-                    start: start,
-                    end: end
-                }).then(({data}) => {
-                let {video, thumb} = data;
-                commit('setTrimmingResult', {
-                    video,
-                    thumb
-                });
-                commit("setUploadStatus", UPLOAD_STATUS.TRIM_FINISHED);
-            }).catch(error => {
-                Logger.error("Error Editing Video", error);
-                dispatch('DISPLAY_POPUP', {
-                    message: "Error editing video.",
-                    type: 'error'
-                }, {root: true});
-
-                commit('reset');
-            })
-        },
-        updateMatch({state, commit, dispatch}, {move, index}) {
-            let {video, thumb} = state.trimResult;
-            let ext = state.videoUpdate ? "video" : "update";
-
-            axios.put(`/matches/${state.match.id}/${ext}`, {
-                video, thumb, move, index
-            }).then(({data}) => {
+            axios.put(`/matches/${state.match.id}/update`, data).then(({data}) => {
                 dispatch('DISPLAY_POPUP_DEFAULT', data, {root: true});
                 dispatch('matches/refreshMatches', {}, {root: true})
             }).catch(error => {
@@ -116,10 +94,11 @@ export default {
                     message: "Error uploading video.",
                     type: 'error'
                 }, {root: true});
-            }).then(() => {
-                commit('reset');
-                dispatch('REFRESH_PROFILE', null, {root: true})
             })
+                .then(() => {
+                    commit('reset');
+                    dispatch('REFRESH_PROFILE', null, {root: true})
+                })
         },
         lockIn({commit, dispatch}, {id}) {
             axios.post(`/matches/${id}/three-round-pass/ready`).then(({data}) => {

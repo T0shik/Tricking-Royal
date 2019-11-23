@@ -9,7 +9,7 @@ namespace Battles.Api.Workers.Notifications
         public static IServiceCollection AddNotificationWorker(this IServiceCollection @this)
         {
             @this.AddSingleton<OneSignalDispatcher>();
-            @this.AddSingleton<EmailDispatcher>();
+            @this.AddScoped<EmailDispatcher>();
             @this.AddSingleton<DispatcherFactory>();
             @this.AddSingleton<INotificationQueue, NotificationQueue>();
             @this.AddSingleton<IWorker, NotificationSender>();

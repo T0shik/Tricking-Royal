@@ -50,8 +50,8 @@ namespace Battles.Application.Services.Matches
                 {
                     MatchId = command.MatchId,
                     UserId = command.UserId,
-                    Thumb = trimResult.Video,
-                    Video = trimResult.Thumb,
+                    Thumb = trimResult.Thumb,
+                    Video = trimResult.Video,
                     Move = command.Move,
                 };
 

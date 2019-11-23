@@ -13,6 +13,8 @@ namespace Battles.Application.Services.Matches.Commands
     {
         public double Start { get; set; }
         public double End { get; set; }
+        
+        public bool VideoUpdate { get; set; }
     }
 
     public class StartMatchUpdateCommandHandler : IRequestHandler<StartMatchUpdateCommand, BaseResponse>

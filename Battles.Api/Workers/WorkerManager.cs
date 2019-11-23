@@ -15,10 +15,10 @@ namespace Battles.Api.Workers
             _backgroundServices = backgroundServices;
         }
         
-        protected override Task ExecuteAsync(CancellationToken cancellationToken)
+        protected override async Task ExecuteAsync(CancellationToken cancellationToken)
         {
             var services = _backgroundServices.Select(service => LoopService(service, cancellationToken));
-            return Task.WhenAll(services);
+            await Task.WhenAll(services);
         }
 
         public static async Task LoopService(IWorker worker, CancellationToken cancellationToken)

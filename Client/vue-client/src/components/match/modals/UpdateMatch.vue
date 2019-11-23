@@ -127,7 +127,7 @@
         },
         methods: {
             ...mapMutations(['reset', 'hide']),
-            ...mapActions(['uploadInitial', 'uploadTrimOptions', 'updateMatch']),
+            ...mapActions(['uploadVideo', 'startUpdate']),
             clear() {
                 this.$refs.file.value = null;
                 this.$refs.video.load();
@@ -158,7 +158,7 @@
                 this.tempFile = URL.createObjectURL(this.file);
                 const formData = new FormData();
                 formData.append("video", this.file);
-                this.uploadInitial(formData);
+                this.uploadVideo(formData);
             },
             focusTrickInput() {
                 if (window.innerWidth < 960) {
@@ -184,14 +184,6 @@
                 }
             },
             completeTrim() {
-                let trimOptions = {
-                    start: this.trim.value[0],
-                    end: this.trim.value[1]
-                };
-
-                this.safeWatch(UPLOAD_STATUS.INITIAL_FINISHED, () =>
-                    this.uploadTrimOptions(trimOptions));
-
                 if (this.needTrick && !this.videoUpdate) {
                     this.stage = 2;
                 } else {
@@ -202,10 +194,12 @@
                 let options = {
                     move: this.move,
                     index: this.index,
+                    start: this.trim.value[0],
+                    end: this.trim.value[1],
                 };
 
-                this.safeWatch(UPLOAD_STATUS.TRIM_FINISHED, () =>
-                    this.updateMatch(options));
+                this.safeWatch(UPLOAD_STATUS.INITIAL_FINISHED, () =>
+                    this.startUpdate(options));
 
                 this.$store.dispatch('DISPLAY_POPUP', {
                     message: "Match update in progress, please do NOT close",

@@ -2,9 +2,11 @@
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Battles.Helpers;
 using Battles.Shared;
 using Microsoft.AspNetCore.Hosting;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing;
 using Xabe.FFmpeg;
 using Xabe.FFmpeg.Enums;
 
@@ -94,9 +96,13 @@ namespace Battles.Application.SubServices.VideoConversion
             TryRemoveFile(tempThumbPath);
         }
 
-        private void OptimizeThumb(string tempThumbPath, string thumbPath)
+        private static void OptimizeThumb(string tempThumbPath, string thumbPath)
         {
-            throw new NotImplementedException();
+            using (var image = Image.Load<Rgba32>(tempThumbPath))
+            {
+                image.Mutate(x => x.Resize(480, 320));
+                image.Save(thumbPath); 
+            }
         }
     }
 }

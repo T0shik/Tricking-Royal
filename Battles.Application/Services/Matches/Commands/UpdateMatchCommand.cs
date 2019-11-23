@@ -16,9 +16,7 @@ using Battles.Models;
 
 namespace Battles.Application.Services.Matches.Commands
 {
-    public class UpdateMatchCommand : UpdateSettings, IRequest<BaseResponse>
-    {
-    }
+    public class UpdateMatchCommand : UpdateSettings, IRequest<BaseResponse> { }
 
     public class UpdateMatchHandler : IRequestHandler<UpdateMatchCommand, BaseResponse>
     {
@@ -64,6 +62,8 @@ namespace Battles.Application.Services.Matches.Commands
             {
                 return new BaseResponse($"Failed to update match: {e.Message}", false);
             }
+
+            match.Updating = false;
 
             if (match.Mode == Mode.ThreeRoundPass
                 && (match.TurnType == TurnType.Classic || match.TurnType == TurnType.Alternating)

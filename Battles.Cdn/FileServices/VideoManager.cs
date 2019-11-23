@@ -37,25 +37,5 @@ namespace Battles.Cdn.FileServices
 
             return outputName;
         }
-
-        private static void OptimizeThumb(string tempThumbPath, string thumbPath)
-        {
-            using (var output = new FileStream(thumbPath, FileMode.Create))
-            {
-                MagicImageProcessor.ProcessImage(tempThumbPath, output, ThumbImageSettings);
-            }
-
-            File.Delete(tempThumbPath);
-        }
-
-        private static ProcessImageSettings ThumbImageSettings =>
-            new ProcessImageSettings()
-            {
-                Height = 320,
-                Width = 480,
-                ResizeMode = CropScaleMode.Stretch,
-                SaveFormat = FileFormat.Jpeg,
-                JpegQuality = 90
-            };
     }
 }
