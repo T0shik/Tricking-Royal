@@ -11,7 +11,7 @@ namespace Battles.Models
         public string Navigation { get; set; }
         public NotificationMessageType Type { get; set; }
         public bool New { get; set; } = true;
-        public DateTime TimeStamp { get; set; } = DateTime.UtcNow;
+        public DateTime TimeStamp { get; set; } = DateTime.Now;
         public bool Force { get; set; }
     }
 }
