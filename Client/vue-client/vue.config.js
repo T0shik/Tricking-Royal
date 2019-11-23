@@ -15,8 +15,9 @@
             msTileImage: 'https://cdn.trickingroyal.com/static/main_144x144.png'
         },
         workboxOptions: {
-            cacheId: 'tr-v1.2',
-            skipWaiting: true
+            cacheId: 'tr-v1.3',
+            skipWaiting: true,
+            globIgnores: ['**/callback.html'],
         },
     }
 };

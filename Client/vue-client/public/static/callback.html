@@ -7,16 +7,21 @@
 </head>
 
 <body>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/oidc-client/1.9.1/oidc-client.min.js"></script>
-    <script>
-        var mgr = new Oidc.UserManager({ userStore: new Oidc.WebStorageStateStore() });
+<script src="https://cdnjs.cloudflare.com/ajax/libs/oidc-client/1.9.1/oidc-client.min.js"></script>
+<script>
+    var mgr = new Oidc.UserManager({userStore: new Oidc.WebStorageStateStore()});
 
-        mgr.signinRedirectCallback().then(function () {
-            window.location.href = '../battles';
-        }).catch(function (err) {
-            console.log(err);
-        });
-    </script>
+    mgr.signinRedirectCallback().then(function () {
+        var returnPath = localStorage.getItem("RETURN_PATH");
+        if (returnPath) {
+            window.location.href = returnPath;
+        } else {
+            window.location.href = '/battles';
+        }
+    }).catch(function (err) {
+        console.log(err);
+    });
+</script>
 </body>
 
 </html>

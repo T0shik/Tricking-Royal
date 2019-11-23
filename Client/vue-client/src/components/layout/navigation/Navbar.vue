@@ -9,32 +9,7 @@
             >Tricking Royal</span>
         </router-link>
         <v-spacer></v-spacer>
-        <v-autocomplete
-                class="px-2"
-                dark
-                :search-input.sync="search"
-                :items="users"
-                :loading="searching"
-                label="Search for other trickers"
-                item-avatar="picture"
-                item-text="displayName"
-                item-value="displayName"
-                hide-details
-                hide-no-data
-                clearable
-                @change="selectUser"
-        >
-            <template v-slot:item="data">
-                <template>
-                    <v-list-item-avatar>
-                        <ProfileImage :picture="data.item.picture"></ProfileImage>
-                    </v-list-item-avatar>
-                    <v-list-item-content>
-                        <v-list-item-title v-html="data.item.displayName"></v-list-item-title>
-                    </v-list-item-content>
-                </template>
-            </template>
-        </v-autocomplete>
+        <UserSearch></UserSearch>
         <v-spacer></v-spacer>
         <v-menu
                 :close-on-content-click="false"
@@ -86,57 +61,15 @@
 <script>
     import {mapMutations, mapActions, mapState} from "vuex";
     import {mdiAccount, mdiBell, mdiClose, mdiMenu} from "@mdi/js";
-    import ProfileImage from "../shared/ProfileImage";
+    import UserSearch from "./UserSearch";
 
     export default {
-        name: "App",
         components: {
-            ProfileImage
-        },
-        data() {
-            return {
-                users: [],
-                search: "",
-                timeout: null,
-                searching: false,
-            };
-        },
-        watch: {
-            search: function (v) {
-                if (v === undefined || v === null || v === "") return;
-                if (this.timeout !== null) clearTimeout(this.timeout);
-
-                this.searching = true;
-                this.timeout = setTimeout(
-                    function () {
-                        this.$axios
-                            .get(`/users?search=${v}`)
-                            .then(({data}) => {
-                                this.users = data;
-                            })
-                            .catch(err => {
-                                this.$logger.error("TODO remove this", err);
-                            })
-                            .then(() => {
-                                this.searching = false;
-                            });
-                    }.bind(this),
-                    500
-                );
-            }
+          UserSearch  
         },
         methods: {
             ...mapMutations('notifications', ['toggleNotifications']),
             ...mapActions('notifications', ['touchNotification', 'getNotifications', 'clearNotifications']),
-            selectUser(displayName) {
-                if (displayName && displayName !== this.$route.params.id) {
-                    this.$store.dispatch("SET_USER", {
-                        router: this.$router,
-                        displayName: displayName,
-                        redirect: true
-                    });
-                }
-            },
             open(notification) {
                 this.toggleNotifications();
                 this.touchNotification(notification);

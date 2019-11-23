@@ -990,42 +990,6 @@
             <e p="settings.json" t="Include" />
           </e>
           <e p="babel.config.js" t="Include" />
-          <e p="dist" t="Include">
-            <e p="css" t="Include">
-              <e p="app.5a599237.css" t="Include" />
-              <e p="chunk-vendors.2e0b6035.css" t="Include" />
-            </e>
-            <e p="img" t="Include">
-              <e p="icons" t="Include">
-                <e p="main_128x128.png" t="Include" />
-                <e p="main_144x144.png" t="Include" />
-                <e p="main_152x152.png" t="Include" />
-                <e p="main_16x16.png" t="Include" />
-                <e p="main_192x192.png" t="Include" />
-                <e p="main_256x256.png" t="Include" />
-                <e p="main_32x32.png" t="Include" />
-                <e p="main_384x384.png" t="Include" />
-                <e p="main_512x512.png" t="Include" />
-              </e>
-            </e>
-            <e p="index.html" t="Include" />
-            <e p="js" t="Include">
-              <e p="app.cad8fc9d.js" t="Include" />
-              <e p="app.cad8fc9d.js.map" t="Include" />
-              <e p="chunk-vendors.6fe1408d.js" t="Include" />
-              <e p="chunk-vendors.6fe1408d.js.map" t="Include" />
-            </e>
-            <e p="manifest.json" t="Include" />
-            <e p="OneSignalSDKUpdaterWorker.js" t="Include" />
-            <e p="OneSignalSDKWorker.js" t="Include" />
-            <e p="precache-manifest.d3b93016eb08e92d94a91945639bcfad.js" t="Include" />
-            <e p="robots.txt" t="Include" />
-            <e p="service-worker.js" t="Include" />
-            <e p="static" t="Include">
-              <e p="callback.html" t="Include" />
-              <e p="silent.html" t="Include" />
-            </e>
-          </e>
           <e p="node_modules\@mdi\js" t="IncludeRecursive" />
           <e p="node_modules\@types" t="IncludeRecursive">
             <e p="events" t="IncludeRecursive" />
@@ -1108,7 +1072,10 @@
                   <e p="Popup.vue" t="Include" />
                   <e p="Rules.vue" t="Include" />
                 </e>
-                <e p="Navbar.vue" t="Include" />
+                <e p="navigation" t="Include">
+                  <e p="Navbar.vue" t="Include" />
+                  <e p="UserSearch.vue" t="Include" />
+                </e>
                 <e p="SideMenu.vue" t="Include" />
                 <e p="UserLayout.vue" t="Include" />
                 <e p="VisitorLayout.vue" t="Include" />

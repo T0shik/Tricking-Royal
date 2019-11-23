@@ -1,0 +1,81 @@
+﻿<template>
+    <v-autocomplete
+            class="px-2"
+            dark
+            :search-input.sync="search"
+            :items="users"
+            :loading="loading"
+            label="Search for other trickers"
+            item-avatar="picture"
+            item-text="displayName"
+            item-value="displayName"
+            hide-details
+            hide-no-data
+            clearable
+            @change="selectUser"
+    >
+        <template v-slot:item="data">
+            <template>
+                <v-list-item-avatar>
+                    <ProfileImage :picture="data.item.picture"></ProfileImage>
+                </v-list-item-avatar>
+                <v-list-item-content>
+                    <v-list-item-title v-html="data.item.displayName"></v-list-item-title>
+                </v-list-item-content>
+            </template>
+        </template>
+    </v-autocomplete>
+</template>
+
+<script>
+    import ProfileImage from "../../shared/ProfileImage";
+
+    export default {
+        data: () => ({
+            users: [],
+            search: "",
+            loading: false,
+            timeout: null
+        }),
+        watch: {
+            search: function (v) {
+                if (v === undefined || v === null || v === "") return;
+                if (this.timeout !== null) clearTimeout(this.timeout);
+
+                this.loading = true;
+                this.timeout = setTimeout(
+                    function () {
+                        this.$axios
+                            .get(`/users?search=${v}`)
+                            .then(({data}) => this.users = data)
+                            .catch(err => {
+                                this.$logger.error("TODO remove this", err);
+                            })
+                            .then(() => {
+                                this.loading = false;
+                            });
+                    }.bind(this),
+                    500
+                );
+            }
+        },
+        methods: {
+            selectUser(displayName) {
+                if (displayName && displayName !== this.$route.params.id) {
+                    this.$store.dispatch("SET_USER", {
+                        router: this.$router,
+                        displayName: displayName,
+                        redirect: true
+                    });
+                }
+            },
+        },
+        components: {
+            ProfileImage
+        }
+    }
+</script>
+
+<style scoped>
+
+</style>
