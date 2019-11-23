@@ -149,7 +149,7 @@ namespace IdentityServer.Controllers
                 _ctx.UserInformation.Add(new UserInformation
                 {
                     Id = user.Id,
-                    DisplayName = model.NickName,
+                    DisplayName = model.NickName.Replace(" ", "_"),
                 });
 
                 await _ctx.SaveChangesAsync();
@@ -264,7 +264,7 @@ namespace IdentityServer.Controllers
                     _ctx.UserInformation.Add(new UserInformation
                     {
                         Id = user.Id,
-                        DisplayName = model.DisplayName,
+                        DisplayName = model.NickName.Replace(" ", "_"),
                     });
                     await _ctx.SaveChangesAsync();
                     await _signInManager.SignInAsync(user, isPersistent: false);

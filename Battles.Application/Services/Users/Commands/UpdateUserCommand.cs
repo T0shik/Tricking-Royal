@@ -60,7 +60,7 @@ namespace Battles.Application.Services.Users.Commands
 
             var nameAvailable = await _mediator.Send(new UserNameAvailableQuery
             {
-                DisplayName = request.DisplayName,
+                DisplayName = request.DisplayName.Replace(" ", "_"),
                 UserId = request.UserId
             }, cancellationToken);
 
