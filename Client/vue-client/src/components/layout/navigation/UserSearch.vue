@@ -17,7 +17,7 @@
             <template>
                 <div class="d-flex align-center justify-center w100">
                     <ProfileImage :picture="data.item.picture" :size="'36px'"></ProfileImage>
-                    <span class="ml-3 body-2">{{data.item.displayName}}</span>
+                    <span class="ml-2 body-2">{{data.item.displayName}}</span>
                     <span class="level body-2">{{data.item.level}}</span>
                 </div>
             </template>
@@ -78,11 +78,11 @@
     .mw300 {
         max-width: 300px;
     }
-    
+
     .w100 {
         width: 100%;
     }
-    
+
     .level {
         background-color: #000;
         padding: 0 4px;
