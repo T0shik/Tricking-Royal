@@ -1,6 +1,4 @@
-﻿using Battles.Domain.Models;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
 using Battles.Application.Extensions;
@@ -12,22 +10,12 @@ using Battles.Models;
 
 namespace Battles.Application.ViewModels
 {
-    public class EvaluationViewModel
+    public class EvaluationViewModel : BaseMatchViewModel
     {
         public int Id { get; set; }
         public int MatchId { get; set; }
-        public IEnumerable<MatchUserViewModel> Participants { get; set; }
-        public IEnumerable<VideoViewModel> Videos { get; set; }
-
-        public string Mode { get; set; }
-        public string Surface { get; set; }
-        public int Target { get; set; }
         public bool Flag { get; set; }
         public string Reason { get; set; }
-        public string[] Chain { get; set; }
-
-        public string Expiry { get; set; }
-
         public bool CanVote { get; set; }
 
 
@@ -48,7 +36,7 @@ namespace Battles.Application.ViewModels
                 Reason = eval.Reason,
 
                 Chain = eval.Match.Chain.DefaultSplit(),
-                Expiry = eval.Expiry.Subtract(DateTime.Now).ConvertTimeSpan("Left"),
+                TimeLeft = eval.Expiry.Subtract(DateTime.Now).ConvertTimeSpan("Left"),
 
                 Videos = eval.Match.Videos.AsQueryable().Select(VideoViewModel.Projection),
             };

@@ -3,16 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Battles.Application.Extensions;
-using Battles.Application.ViewModels.Matches;
 using Battles.Extensions;
 using Battles.Models;
 using Newtonsoft.Json;
-
 // ReSharper disable MemberCanBePrivate.Global
 
 namespace Battles.Application.ViewModels.Matches
 {
-    public class MatchViewModel
+    public class MatchViewModel : BaseMatchViewModel
     {
         [JsonIgnore]
         public static readonly Expression<Func<Match, MatchViewModel>> ProjectionForAnon =
@@ -45,20 +43,10 @@ namespace Battles.Application.ViewModels.Matches
         }
 
         public int Id { get; set; }
-        public string Key { get; set; }
-
-        public IEnumerable<MatchUserViewModel> Participants { get; set; }
-        public IEnumerable<VideoViewModel> Videos { get; set; }
-
-        public string Mode { get; set; }
-        public string Surface { get; set; }
         public int Round { get; set; }
         public string Status { get; set; }
-        public string[] Chain { get; set; }
-        public int Likes { get; set; }
         public int TurnType { get; set; }
         public string Turn { get; set; }
-        public string TimeLeft { get; set; }
         public string Finished { get; set; }
         public IEnumerable<MatchCommentsViewModel> Comments { get; set; }
 

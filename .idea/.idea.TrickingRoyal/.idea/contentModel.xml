@@ -273,6 +273,7 @@
           <e p="DescisionResultsViewModel.cs" t="Include" />
           <e p="EvaluationViewModel.cs" t="Include" />
           <e p="Matches" t="Include">
+            <e p="BaseMatchViewModel.cs" t="Include" />
             <e p="MatchCommentsViewModel.cs" t="Include" />
             <e p="MatchUserViewModel.cs" t="Include" />
             <e p="MatchViewModel.cs" t="Include" />
