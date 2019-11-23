@@ -25,7 +25,7 @@ namespace Battles.Application.ViewModels
         public string Reason { get; set; }
         public string[] Chain { get; set; }
 
-        public string Expiry { get; set; }
+        public string TimeLeft { get; set; }
 
         public bool CanVote { get; set; }
 
@@ -47,7 +47,7 @@ namespace Battles.Application.ViewModels
                 Reason = eval.Reason,
 
                 Chain = eval.Match.Chain.DefaultSplit(),
-                Expiry = eval.Expiry.Subtract(DateTime.Now).ConvertTimeSpan("Left"),
+                TimeLeft = eval.Expiry.Subtract(DateTime.Now).ConvertTimeSpan("Left"),
 
                 Videos = eval.Match.Videos.AsQueryable().Select(VideoViewModel.Projection),
             };

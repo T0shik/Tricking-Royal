@@ -7,8 +7,8 @@ namespace Battles.Api.Workers.MatchUpdater
     {
         public static IServiceCollection AddMatchUpdaterWorker(this IServiceCollection @this)
         {
-            @this.AddSingleton<UpdateMatchQueue>();
-            @this.AddSingleton<IWorker, MatchUpdater>();
+            @this.AddTransient<UpdateMatchQueue>();
+            @this.AddTransient<IWorker, MatchUpdater>();
             
             return @this;
         }

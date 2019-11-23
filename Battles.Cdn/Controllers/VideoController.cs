@@ -28,21 +28,21 @@ namespace Battles.Cdn.Controllers
             _logger = logger;
         }
 
-        [HttpPost("{matchId}/{action}")]
+        [HttpPost("{matchId}/{task}")]
         public async Task<IActionResult> SaveVideo(
             int matchId,
-            string action,
+            string task,
             IFormFile video)
         {
             try
             {
-                if (action != "update"
-                    || action != "upload")
+                if (task != "update"
+                    || task != "upload")
                 {
                     return BadRequest("Invalid Action");
                 }
 
-                switch (action) {
+                switch (task) {
                     case "upload" when !await _ctx.CanGo(matchId, UserId):
                         return BadRequest("Not allowed to go");
                     case "update" when !await _ctx.CanUpdate(matchId, UserId):

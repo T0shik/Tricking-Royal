@@ -3,9 +3,6 @@ using Battles.Application.Jobs;
 using Battles.Application.Services.Users.Queries;
 using Battles.Configuration;
 using Hangfire;
-using IdentityModel.AspNetCore.OAuth2Introspection;
-using IdentityServer4.AccessTokenValidation;
-using IdentityServer4.Models;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -14,7 +11,6 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using Battles.Api.Infrastructure;
 using Battles.Api.Workers;
-using Battles.Api.Workers.Notifications;
 using Battles.Api.Workers.Notifications.Settings;
 using Battles.Application.SubServices;
 using Battles.Shared;
@@ -42,30 +38,22 @@ namespace Battles.Api
         {
             services.Configure<OneSignal>(_config.GetSection("OneSignal"));
             services.Configure<AppSettings>(_config.GetSection("AppSettings"));
-
+            
             services.AddSingleton(_oAuth);
             services.AddSingleton(_oAuth.Routing);
+            services.AddSingleton(_config.GetSection("FilePaths").Get<FilePaths>());
 
             var connectionString = _config.GetConnectionString("DefaultConnection");
             services.AddTrickingRoyalDatabase(connectionString)
                     .AddHangfireServices()
                     .AddHangfire(options => options.UseSqlServerStorage(connectionString));
 
-            services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
-                    .AddIdentityServerAuthentication(options =>
+            services.AddAuthentication("Bearer")
+                    .AddJwtBearer("Bearer", config =>
                     {
-                        options.Authority = _oAuth.Routing.Server;
-                        options.RequireHttpsMetadata = _env.IsProduction();
-
-                        options.ApiName = _oAuth.Api.Name;
-                        options.ApiSecret = _oAuth.Api.ResourceSecret.Sha256();
-
-                        options.TokenRetriever = httpRequest =>
-                        {
-                            var fromHeader = TokenRetrieval.FromAuthorizationHeader();
-                            var fromQuery = TokenRetrieval.FromQueryString();
-                            return fromHeader(httpRequest) ?? fromQuery(httpRequest);
-                        };
+                        config.Authority = _oAuth.Routing.Server;
+                        config.RequireHttpsMetadata = _env.IsProduction();
+                        config.Audience = _oAuth.Api.Name;
                     });
 
             SetupCors(services);

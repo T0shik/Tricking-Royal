@@ -52,6 +52,8 @@ namespace Battles.Application.Services.Matches.Commands
             }
 
             _matchQueue.QueueUpdate(command);
+            match.Updating = true;
+            await _ctx.SaveChangesAsync(cancellationToken);
 
             return new BaseResponse("Match Update started", true);
         }

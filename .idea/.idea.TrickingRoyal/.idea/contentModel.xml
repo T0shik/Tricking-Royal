@@ -115,7 +115,6 @@
           <e p="PlatformController.cs" t="Include" />
           <e p="UsersController.cs" t="Include" />
         </e>
-        <e p="CustomTokenRetriever.cs" t="Include" />
         <e p="ffmpeg" t="Include">
           <e p="ffmpeg.exe" t="Include" />
           <e p="ffplay.exe" t="Include" />
@@ -125,7 +124,6 @@
           <e p="BaseController.cs" t="Include" />
           <e p="ServiceRegistrar.cs" t="Include" />
         </e>
-        <e p="NotificationProcessor.cs" t="Include" />
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
             <e p="netcoreapp2.2" t="Include">
@@ -140,7 +138,11 @@
         <e p="secrets.json" t="Include" />
         <e p="Startup.cs" t="Include" />
         <e p="Workers" t="Include">
-          <e p="BackgroundServices.cs" t="Include" />
+          <e p="IWorker.cs" t="Include" />
+          <e p="MatchUpdater" t="Include">
+            <e p="MatchUpdater.cs" t="Include" />
+            <e p="MatchUpdaterServices.cs" t="Include" />
+          </e>
           <e p="Notifications" t="Include">
             <e p="Dispatchers" t="Include">
               <e p="DispatcherFactory.cs" t="Include" />
@@ -148,13 +150,15 @@
               <e p="IDispatcher.cs" t="Include" />
               <e p="OneSignalDispatcher.cs" t="Include" />
             </e>
-            <e p="INotificationSender.cs" t="Include" />
             <e p="NotificationQueue.cs" t="Include" />
+            <e p="NotificationSender.cs" t="Include" />
             <e p="NotificationServices.cs" t="Include" />
             <e p="Settings" t="Include">
               <e p="OneSignal.cs" t="Include" />
             </e>
           </e>
+          <e p="RegisterWorkers.cs" t="Include" />
+          <e p="WorkerManager.cs" t="Include" />
         </e>
       </e>
       <e p="Battles.Application" t="IncludeRecursive">
@@ -170,9 +174,6 @@
           <e p="MatchExtensions.cs" t="Include" />
           <e p="QueryExtensions.cs" t="Include" />
           <e p="TimeSpanExtensions.cs" t="Include" />
-        </e>
-        <e p="Interfaces" t="Include">
-          <e p="INotificationQueue.cs" t="Include" />
         </e>
         <e p="Jobs" t="Include">
           <e p="HangfireJobs.cs" t="Include" />
@@ -233,15 +234,14 @@
               <e p="GetMatchesQuery.cs" t="Include" />
               <e p="GetMatchQuery.cs" t="Include" />
             </e>
-            <e p="Queues" t="Include">
-              <e p="UpdateMatchQueue.cs" t="Include" />
-            </e>
+            <e p="UpdateMatchQueue.cs" t="Include" />
           </e>
           <e p="Notifications" t="Include">
             <e p="Commands" t="Include">
               <e p="ClearNotificationsCommand.cs" t="Include" />
               <e p="TouchNotificationCommand.cs" t="Include" />
             </e>
+            <e p="INotificationQueue.cs" t="Include" />
             <e p="Queries" t="Include">
               <e p="GetNotificationsQuery.cs" t="Include" />
             </e>
@@ -1400,6 +1400,8 @@
             <e p="20191005092339_notificationUserIdFix.Designer.cs" t="Include" />
             <e p="20191005132350_notificationMessageUserIdFix.cs" t="Include" />
             <e p="20191005132350_notificationMessageUserIdFix.Designer.cs" t="Include" />
+            <e p="20191123191711_matchUpdatingStatus.cs" t="Include" />
+            <e p="20191123191711_matchUpdatingStatus.Designer.cs" t="Include" />
             <e p="AppDbContextModelSnapshot.cs" t="Include" />
           </e>
           <e p="IdentityServer" t="Include">

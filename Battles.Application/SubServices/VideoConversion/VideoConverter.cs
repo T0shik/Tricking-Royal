@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Battles.Helpers;
 using Battles.Shared;
 using Microsoft.AspNetCore.Hosting;
 using Xabe.FFmpeg;
@@ -17,12 +18,20 @@ namespace Battles.Application.SubServices.VideoConversion
             IHostingEnvironment env,
             FilePaths filePaths)
         {
-            _matchVideos = env.IsProduction() ? filePaths.Videos : Path.Combine(env.WebRootPath, filePaths.Videos);
-            var ffmpegPath = env.IsProduction()
-                                 ? filePaths.VideoEditingExecutables
-                                 : Path.Combine(env.ContentRootPath, filePaths.VideoEditingExecutables);
+            if (env.IsProduction())
+            {
+                _matchVideos = filePaths.Videos;
+                FFmpeg.ExecutablesPath = filePaths.VideoEditingExecutables;
+            }
+            else
+            {
+                FFmpeg.ExecutablesPath = Path.Combine(env.ContentRootPath, filePaths.VideoEditingExecutables);
 
-            FFmpeg.ExecutablesPath = ffmpegPath;
+                //todo something about this magic
+                var solutionRoot = env.ContentRootPath.Substring(0, env.ContentRootPath.LastIndexOf('\\'));
+                var cdnWebPath = Path.Combine(solutionRoot, "Battles.Cdn", "wwwroot");
+                _matchVideos = Path.Combine(cdnWebPath, filePaths.Videos);
+            }
         }
 
         public async Task<VideoConversionResult> TrimVideoAsync(
@@ -42,7 +51,7 @@ namespace Battles.Application.SubServices.VideoConversion
             await ConvertWithXabe(savePath, inputFile, outputFile, thumbName, start, end);
 
             TryRemoveFile(inputFile);
-            
+
             return new VideoConversionResult(outputName, thumbName);
         }
 
