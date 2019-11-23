@@ -1,7 +1,6 @@
 ﻿<template>
     <v-autocomplete
-            class="px-2"
-            dark
+            class="px-2 mw300"
             :search-input.sync="search"
             :items="users"
             :loading="loading"
@@ -16,12 +15,11 @@
     >
         <template v-slot:item="data">
             <template>
-                <v-list-item-avatar>
-                    <ProfileImage :picture="data.item.picture"></ProfileImage>
-                </v-list-item-avatar>
-                <v-list-item-content>
-                    <v-list-item-title v-html="data.item.displayName"></v-list-item-title>
-                </v-list-item-content>
+                <div class="d-flex align-center justify-center w100">
+                    <ProfileImage :picture="data.item.picture" :size="'36px'"></ProfileImage>
+                    <span class="ml-3 body-2">{{data.item.displayName}}</span>
+                    <span class="level body-2">{{data.item.level}}</span>
+                </div>
             </template>
         </template>
     </v-autocomplete>
@@ -76,6 +74,20 @@
     }
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+    .mw300 {
+        max-width: 300px;
+    }
+    
+    .w100 {
+        width: 100%;
+    }
+    
+    .level {
+        background-color: #000;
+        padding: 0 4px;
+        margin-left: auto;
+        border-radius: 5px;
+        box-shadow: 0 1px 2px 1px #777;
+    }
 </style>
