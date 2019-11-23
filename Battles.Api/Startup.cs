@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using Battles.Api.Infrastructure;
+using Battles.Api.Workers;
 using Battles.Api.Workers.Notifications;
 using Battles.Api.Workers.Notifications.Settings;
 using Battles.Application.SubServices;
@@ -70,8 +71,8 @@ namespace Battles.Api
             SetupCors(services);
 
             services.AddBattlesServices()
-                    .AddNotificationServices()
                     .AddSubServices()
+                    .AddWorkers()
                     .AddMediatR(typeof(GetUserQuery).GetTypeInfo().Assembly)
                     .AddHttpClient("default",
                                    config =>
@@ -99,10 +100,7 @@ namespace Battles.Api
             }
 
             app.UseHangfireServer();
-
-            RecurringJob.AddOrUpdate<IHangfireJobs>(jobs => jobs.CloseExpiredMatches(), Cron.Hourly);
-
-            RecurringJob.AddOrUpdate<IHangfireJobs>(jobs => jobs.CloseExpiredEvaluations(), Cron.Hourly);
+            SetupHangfireJobs();
 
             app.UseAuthentication()
                .UseMvc();
@@ -132,6 +130,13 @@ namespace Battles.Api
                                             .AllowCredentials());
                 });
             }
+        }
+
+        private static void SetupHangfireJobs()
+        {
+            RecurringJob.AddOrUpdate<IHangfireJobs>(jobs => jobs.CloseExpiredMatches(), Cron.Hourly);
+            RecurringJob.AddOrUpdate<IHangfireJobs>(jobs => jobs.CloseExpiredEvaluations(), Cron.Hourly);
+            RecurringJob.AddOrUpdate<IHangfireJobs>(jobs => jobs.MatchReminder(), Cron.Daily);
         }
     }
 }

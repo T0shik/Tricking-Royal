@@ -40,13 +40,18 @@ namespace Battles.Api.Controllers
         [HttpGet("{displayName}/can-use")]
         public async Task<IActionResult> CanUseDisplayName(string displayName)
         {
-            var result = await Mediator.Send(new UserNameAvailableQuery
+            var available = await Mediator.Send(new UserNameAvailableQuery
             {
                 DisplayName = displayName,
                 UserId = UserId
             });
 
-            return Ok(result);
+            if (available)
+            {
+                return Ok();
+            }
+
+            return NoContent();
         }
 
         [HttpPost("")]

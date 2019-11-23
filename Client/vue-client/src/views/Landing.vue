@@ -99,8 +99,8 @@
                     </div>
                     <p class="title mb-0">Contribute</p>
                     <p class="body-2 text-center">
-                        TrickingRoyal is an open source project. Contact via Instagram or Facebook to find out how you
-                        can contribute!
+                        TrickingRoyal is an open source project. Visit the <a href="https://github.com/T0shik/Tricking-Royal">github project</a>
+                        page to find out more!
                     </p>
                 </div>
             </v-col>

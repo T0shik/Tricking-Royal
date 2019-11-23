@@ -149,10 +149,13 @@ export const store = new Vuex.Store({
                     return result;
                 })
         },
-        SIGN_OUT(context) {
-            this.state.userMgr.signoutRedirect();
-            context.commit("SIGN_OUT");
-            context.commit('layout/setLayout', LAYOUT.LOADING, {root: true});
+        SIGN_OUT({state, commit}) {
+            state.userMgr.signoutRedirect();
+            commit("SIGN_OUT");
+            commit('layout/setLayout', LAYOUT.LOADING, {root: true});
+        },
+        SIGN_IN({state}) {
+            state.userMgr.signinRedirect();
         }
     },
     modules: {

@@ -98,7 +98,8 @@ router.beforeEach((to, from, next) => {
             return next();
         }
         if (!store.getters.AUTHENTICATED && to.meta.auth) {
-            return next('/')
+            localStorage.setItem("RETURN_PATH", to.path);
+            store.dispatch("SIGN_IN");
         } else if (store.getters.AUTHENTICATED && !to.meta.auth) {
             return to.name === 'watch'
                 ? next()

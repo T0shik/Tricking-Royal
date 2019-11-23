@@ -20,7 +20,7 @@
     import Confirmation from "./modals/Confirmation";
     import MatchMenu from "./modals/MatchMenu";
     import UpdateMatch from "../match/modals/UpdateMatch";
-    import Navbar from "./Navbar";
+    import Navbar from "./navigation/Navbar";
 
     export default {
         data() {

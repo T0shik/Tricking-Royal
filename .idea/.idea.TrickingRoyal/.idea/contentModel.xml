@@ -283,6 +283,7 @@
           <e p="DescisionResultsViewModel.cs" t="Include" />
           <e p="EvaluationViewModel.cs" t="Include" />
           <e p="Matches" t="Include">
+            <e p="BaseMatchViewModel.cs" t="Include" />
             <e p="MatchCommentsViewModel.cs" t="Include" />
             <e p="MatchUserViewModel.cs" t="Include" />
             <e p="MatchViewModel.cs" t="Include" />
@@ -305,7 +306,6 @@
           <e p="VideoController.cs" t="Include" />
         </e>
         <e p="FileServices" t="Include">
-          <e p="BaseFileManager.cs" t="Include" />
           <e p="FileStreams.cs" t="Include" />
           <e p="ImageManager.cs" t="Include" />
           <e p="VideoManager.cs" t="Include" />
@@ -936,6 +936,7 @@
         </e>
       </e>
       <e p="Battles.Shared" t="IncludeRecursive">
+        <e p="BaseFileManager.cs" t="Include" />
         <e p="Battles.Shared.csproj" t="IncludeRecursive" />
         <e p="bin" t="ExcludeRecursive" />
         <e p="FilePaths.cs" t="Include" />
@@ -1005,8 +1006,8 @@
           <e p="babel.config.js" t="Include" />
           <e p="dist" t="Include">
             <e p="css" t="Include">
-              <e p="app.1ffd3334.css" t="Include" />
-              <e p="chunk-vendors.b406d029.css" t="Include" />
+              <e p="app.2cee750a.css" t="Include" />
+              <e p="chunk-vendors.68cddc59.css" t="Include" />
             </e>
             <e p="img" t="Include">
               <e p="icons" t="Include">
@@ -1023,15 +1024,15 @@
             </e>
             <e p="index.html" t="Include" />
             <e p="js" t="Include">
-              <e p="app.aae5d78b.js" t="Include" />
-              <e p="app.aae5d78b.js.map" t="Include" />
-              <e p="chunk-vendors.ba3293e1.js" t="Include" />
-              <e p="chunk-vendors.ba3293e1.js.map" t="Include" />
+              <e p="app.198ea3a0.js" t="Include" />
+              <e p="app.198ea3a0.js.map" t="Include" />
+              <e p="chunk-vendors.fb97d145.js" t="Include" />
+              <e p="chunk-vendors.fb97d145.js.map" t="Include" />
             </e>
             <e p="manifest.json" t="Include" />
             <e p="OneSignalSDKUpdaterWorker.js" t="Include" />
             <e p="OneSignalSDKWorker.js" t="Include" />
-            <e p="precache-manifest.67862498f4f554e2a3a6f9e6e910d906.js" t="Include" />
+            <e p="precache-manifest.33e47a42263ce049c64823ff203255a2.js" t="Include" />
             <e p="robots.txt" t="Include" />
             <e p="service-worker.js" t="Include" />
             <e p="static" t="Include">
@@ -1121,7 +1122,10 @@
                   <e p="Popup.vue" t="Include" />
                   <e p="Rules.vue" t="Include" />
                 </e>
-                <e p="Navbar.vue" t="Include" />
+                <e p="navigation" t="Include">
+                  <e p="Navbar.vue" t="Include" />
+                  <e p="UserSearch.vue" t="Include" />
+                </e>
                 <e p="SideMenu.vue" t="Include" />
                 <e p="UserLayout.vue" t="Include" />
                 <e p="VisitorLayout.vue" t="Include" />
@@ -1148,7 +1152,6 @@
                 </e>
               </e>
               <e p="Shared" t="Include">
-                <e p="index.js" t="Include" />
                 <e p="ProfileImage.vue" t="Include" />
               </e>
               <e p="tribunal" t="Include">

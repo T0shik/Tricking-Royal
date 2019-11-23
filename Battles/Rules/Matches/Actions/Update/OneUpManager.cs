@@ -34,7 +34,6 @@ namespace Battles.Rules.Matches.Actions.Update
             {
                 host.SetGoFlagUpdatePassLock(true, true, false);
                 opponent.SetGoFlagUpdatePassLock(false, false, true);
-                _match.Round++;
             }
 
             var user = _match.GetUser(command.UserId);
@@ -50,6 +49,7 @@ namespace Battles.Rules.Matches.Actions.Update
             _match.Chain += $" {command.Move.Trim()} ->";
             _match.Turn = _match.GetTurnName();
             _match.LastUpdate = DateTime.Now;
+            _match.Round++;
         }
     }
 }

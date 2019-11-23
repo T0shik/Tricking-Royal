@@ -9,9 +9,9 @@
 
         <v-card-text class="d-flex flex-column align-center">
             <div class="d-flex flex-row align-center mb-2">
-                <profile-img :picture="users[evaluation.target].picture"
+                <ProfileImage :picture="users[evaluation.target].picture"
                              :level="users[evaluation.target].level"
-                             size="68px"></profile-img>
+                             size="68px"></ProfileImage>
                 <span class="pl-2 title">{{users[evaluation.target].displayName}}</span>
             </div>
             <h1 class="title text--white">Reason</h1>

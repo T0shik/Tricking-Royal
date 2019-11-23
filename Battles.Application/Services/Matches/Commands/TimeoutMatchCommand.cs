@@ -17,7 +17,7 @@ namespace Battles.Application.Services.Matches.Commands
             Match = match;
         }
 
-        public Match Match { get; set; }
+        public Match Match { get; }
     }
 
     public class TimeoutMatchCommandHandler : IRequestHandler<TimeoutMatchCommand, Unit>
@@ -59,7 +59,7 @@ namespace Battles.Application.Services.Matches.Commands
                 else
                 {
                     host.SetDraw(-5);
-                    opponent.SetDraw(0).AwardExp(1);
+                    opponent.SetDraw(2).AwardExp(2);
                 }
 
                 _ctx.Matches.Remove(match);

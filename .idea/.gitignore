@@ -1,3 +1,6 @@
 ﻿
 # Default ignored files
 /.idea.TrickingRoyal/.idea/workspace.xml
+# Datasource local storage ignored files
+/.idea.TrickingRoyal/.idea/dataSources/
+/.idea.TrickingRoyal/.idea/dataSources.local.xml

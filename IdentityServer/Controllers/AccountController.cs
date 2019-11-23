@@ -149,7 +149,7 @@ namespace IdentityServer.Controllers
                 _ctx.UserInformation.Add(new UserInformation
                 {
                     Id = user.Id,
-                    DisplayName = model.NickName,
+                    DisplayName = model.NickName.Replace(" ", "_"),
                 });
 
                 await _ctx.SaveChangesAsync();
@@ -209,7 +209,7 @@ namespace IdentityServer.Controllers
             // Sign in the user with this external login provider if the user already has a login.
             var result =
                 await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey,
-                                                              isPersistent: false);
+                                                              isPersistent: true);
             if (result.Succeeded)
             {
                 _logger.LogInformation(5, "User logged in with {Name} provider.", info.LoginProvider);
@@ -264,7 +264,7 @@ namespace IdentityServer.Controllers
                     _ctx.UserInformation.Add(new UserInformation
                     {
                         Id = user.Id,
-                        DisplayName = model.DisplayName,
+                        DisplayName = model.NickName.Replace(" ", "_"),
                     });
                     await _ctx.SaveChangesAsync();
                     await _signInManager.SignInAsync(user, isPersistent: false);
