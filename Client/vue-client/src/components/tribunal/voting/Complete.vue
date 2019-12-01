@@ -7,22 +7,22 @@
             </v-btn>
         </v-card-title>
 
-        <v-card-text class="px-0 d-flex justify-space-around align-center">
-            <div class="d-flex flex-column" @click="setTarget(0)">
+        <v-card-text class="px-0 d-flex justify-space-between align-center">
+            <div class="d-flex flex-column align-center flex-1" @click="setTarget(0)">
                 <ProfileImage :class="{'selected': target === 0}"
                              :picture="users[0].picture"
                              :level="users[0].level"
-                             size="68px"/>
+                             size="68px"></ProfileImage>
                 <span class="pt-3 title">{{users[0].displayName}}</span>
             </div>
             <div class="title font-rock text-center font-weight-black primary--text">
                 VS
             </div>
-            <div class="d-flex flex-column" @click="setTarget(1)">
+            <div class="d-flex flex-column align-center flex-1" @click="setTarget(1)">
                 <ProfileImage :class="{'selected': target === 1}"
                              :picture="users[1].picture"
                              :level="users[0].level"
-                             size="68px"/>
+                             size="68px"></ProfileImage>
                 <span class="pt-3 title">{{users[1].displayName}}</span>
             </div>
         </v-card-text>
@@ -52,6 +52,7 @@
     import {mapMutations, mapActions, mapState} from "vuex";
     import {mdiClose} from "@mdi/js";
     import VotingResults from "./VotingResults";
+    import ProfileImage from "../../shared/ProfileImage";
 
     export default {
         props: {
@@ -62,6 +63,7 @@
         },
         components: {
             VotingResults,
+            ProfileImage
         },
         methods: {
             ...mapMutations('voting', ['setTarget']),
@@ -92,5 +94,9 @@
     .selected {
         box-shadow: 0 0 10px 4px yellow;
         transition: 250ms ease-in;
+    }
+    
+    .flex-1 {
+        flex: 1;
     }
 </style>

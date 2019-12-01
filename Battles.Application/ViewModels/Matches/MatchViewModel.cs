@@ -8,7 +8,6 @@ using Battles.Models;
 using Newtonsoft.Json;
 
 // ReSharper disable MemberCanBePrivate.Global
-
 namespace Battles.Application.ViewModels.Matches
 {
     public class MatchViewModel : BaseMatchViewModel
@@ -49,7 +48,6 @@ namespace Battles.Application.ViewModels.Matches
         public string Turn { get; set; }
         public string Finished { get; set; }
         public IEnumerable<MatchCommentsViewModel> Comments { get; set; }
-
         public bool Updating { get; set; }
 
         public static MatchViewModel GetMatch(Match match, string userId)
@@ -77,11 +75,11 @@ namespace Battles.Application.ViewModels.Matches
 
                 Videos = match.Videos.Select(VideoViewModel.ProjectionFunction),
 
-                CanGo = match.MatchUsers.FirstOrDefault(x => x.UserId == userId)?.CanGo ?? false,
-                CanFlag = match.MatchUsers.FirstOrDefault(x => x.UserId == userId)?.CanFlag ?? false,
-                CanUpdate = match.MatchUsers.FirstOrDefault(x => x.UserId == userId)?.CanUpdate ?? false,
-                CanPass = match.MatchUsers.FirstOrDefault(x => x.UserId == userId)?.CanPass ?? false,
-                CanLockIn = match.MatchUsers.FirstOrDefault(x => x.UserId == userId)?.CanLockIn ?? false,
+                CanGo = !match.Updating && (match.MatchUsers.FirstOrDefault(x => x.UserId == userId)?.CanGo ?? false),
+                CanFlag = !match.Updating && (match.MatchUsers.FirstOrDefault(x => x.UserId == userId)?.CanFlag ?? false),
+                CanUpdate = !match.Updating && (match.MatchUsers.FirstOrDefault(x => x.UserId == userId)?.CanUpdate ?? false),
+                CanPass = !match.Updating && (match.MatchUsers.FirstOrDefault(x => x.UserId == userId)?.CanPass ?? false),
+                CanLockIn = !match.Updating && (match.MatchUsers.FirstOrDefault(x => x.UserId == userId)?.CanLockIn ?? false),
 
                 Likes = match.Likes.Count(),
                 CanLike = match.Likes.All(x => x.UserId != userId),
@@ -135,11 +133,11 @@ namespace Battles.Application.ViewModels.Matches
 
                 Videos = match.Videos.Select(VideoViewModel.ProjectionFunction),
 
-                CanGo = match.MatchUsers.FirstOrDefault(x => x.UserId == userId)?.CanGo ?? false,
-                CanFlag = match.MatchUsers.FirstOrDefault(x => x.UserId == userId)?.CanFlag ?? false,
-                CanUpdate = match.MatchUsers.FirstOrDefault(x => x.UserId == userId)?.CanUpdate ?? false,
-                CanPass = match.MatchUsers.FirstOrDefault(x => x.UserId == userId)?.CanPass ?? false,
-                CanLockIn = match.MatchUsers.FirstOrDefault(x => x.UserId == userId)?.CanLockIn ?? false,
+                CanGo = !match.Updating && (match.MatchUsers.FirstOrDefault(x => x.UserId == userId)?.CanGo ?? false),
+                CanFlag = !match.Updating && (match.MatchUsers.FirstOrDefault(x => x.UserId == userId)?.CanFlag ?? false),
+                CanUpdate = !match.Updating && (match.MatchUsers.FirstOrDefault(x => x.UserId == userId)?.CanUpdate ?? false),
+                CanPass = !match.Updating && (match.MatchUsers.FirstOrDefault(x => x.UserId == userId)?.CanPass ?? false),
+                CanLockIn = !match.Updating && (match.MatchUsers.FirstOrDefault(x => x.UserId == userId)?.CanLockIn ?? false),
 
                 Likes = match.Likes.Count(),
                 CanLike = match.Likes.All(x => x.UserId != userId),

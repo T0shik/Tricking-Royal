@@ -18,7 +18,7 @@
         text-align: center;
         top: 0;
         left: 0;
-        z-index: 10;
+        z-index: 1;
         background-color: #0a0a0a;
         width: 100%;
 

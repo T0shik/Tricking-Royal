@@ -36,6 +36,7 @@
     import {mapActions, mapState} from "vuex";
     import {mdiThumbDown, mdiThumbUp, mdiClose} from "@mdi/js";
     import VotingResults from "./VotingResults";
+    import ProfileImage from "../../shared/ProfileImage";
 
     export default {
         props: {
@@ -51,6 +52,7 @@
         },
         components: {
             VotingResults,
+            ProfileImage
         },
         computed: {
             ...mapState('voting', {
