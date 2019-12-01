@@ -60,6 +60,5 @@ namespace Battles.Application.Services.Matches.Commands
 
             return new BaseResponse("Match Update started", true);
         }
-
     }
 }

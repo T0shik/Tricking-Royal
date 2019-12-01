@@ -1,5 +1,6 @@
 ﻿import {register} from 'register-service-worker'
 import Logger from "./logger/logger";
+import {store} from "./stores/store";
 
 if (process.env.NODE_ENV === 'production') {
     register(`${process.env.BASE_URL}OneSignalSDKWorker.js`, {
@@ -17,6 +18,7 @@ if (process.env.NODE_ENV === 'production') {
         },
         updated() {
             Logger.log('New content is available; please refresh.');
+            store.dispatch('confirmation/pwaRefresh');
         },
         offline() {
             Logger.log('No internet connection found. App is running in offline mode.')

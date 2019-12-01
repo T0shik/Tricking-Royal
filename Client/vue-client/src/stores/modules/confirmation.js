@@ -47,6 +47,16 @@ export default {
                 commit('dismiss');
             });
         },
+        pwaRefresh({commit, dispatch}) {
+            commit('set', initialState({
+                title: 'Update',
+                description: 'New version of the app is available, refresh to update.',
+                buttonText: "Refresh",
+                action: () => {
+                    window.location.reload();
+                }
+            }))
+        },
         copyCatPass({commit, dispatch}, {id}) {
             commit('set', initialState({
                 title: 'Pass?',
