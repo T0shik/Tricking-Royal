@@ -6,14 +6,14 @@ using Battles.Application.Extensions;
 using Battles.Extensions;
 using Battles.Models;
 using Newtonsoft.Json;
+
 // ReSharper disable MemberCanBePrivate.Global
 
 namespace Battles.Application.ViewModels.Matches
 {
     public class MatchViewModel : BaseMatchViewModel
     {
-        [JsonIgnore]
-        public static readonly Expression<Func<Match, MatchViewModel>> ProjectionForAnon =
+        [JsonIgnore] public static readonly Expression<Func<Match, MatchViewModel>> ProjectionForAnon =
             match => new MatchViewModel
             {
                 Id = match.Id,
@@ -24,9 +24,9 @@ namespace Battles.Application.ViewModels.Matches
                 Finished = match.Finished,
                 TurnTime = $"{match.TurnDays} Days",
                 TimeLeft = match.LastUpdate.Add(new TimeSpan(match.TurnDays, 0, 0, 0))
-                    .Subtract(DateTime.Now).ConvertTimeSpan("Left"),
-                    
-                Turn =  match.Turn,
+                                .Subtract(DateTime.Now).ConvertTimeSpan("Left"),
+
+                Turn = match.Turn,
                 Round = match.Round,
                 Status = match.Status.GetString(),
                 Mode = match.Mode.GetString(),
@@ -50,6 +50,8 @@ namespace Battles.Application.ViewModels.Matches
         public string Finished { get; set; }
         public IEnumerable<MatchCommentsViewModel> Comments { get; set; }
 
+        public bool Updating { get; set; }
+
         public static MatchViewModel GetMatch(Match match, string userId)
         {
             return new MatchViewModel
@@ -57,20 +59,21 @@ namespace Battles.Application.ViewModels.Matches
                 Id = match.Id,
                 Key = $"{match.Id}-{match.LastUpdate.GetKeyTime()}",
                 Participants = match.MatchUsers.AsQueryable()
-                    .Select(MatchUserViewModel.Projection),
+                                    .Select(MatchUserViewModel.Projection),
 
                 Finished = match.Finished,
                 TurnTime = $"{match.TurnDays} Days",
                 TimeLeft = match.LastUpdate.Add(new TimeSpan(match.TurnDays, 0, 0, 0))
-                    .Subtract(DateTime.Now).ConvertTimeSpan("Left"),
+                                .Subtract(DateTime.Now).ConvertTimeSpan("Left"),
 
-                Turn =  match.Turn,
+                Turn = match.Turn,
                 Round = match.Round,
                 Status = match.Status.GetString(),
                 Mode = match.Mode.GetString(),
                 Surface = match.Surface.GetString(),
                 TurnType = (int) match.TurnType,
                 Chain = match.Chain.DefaultSplit(),
+                Updating = match.Updating,
 
                 Videos = match.Videos.Select(VideoViewModel.ProjectionFunction),
 
@@ -81,7 +84,7 @@ namespace Battles.Application.ViewModels.Matches
                 CanLockIn = match.MatchUsers.FirstOrDefault(x => x.UserId == userId)?.CanLockIn ?? false,
 
                 Likes = match.Likes.Count(),
-                CanLike = match.Likes.All(x => x.UserId != userId)
+                CanLike = match.Likes.All(x => x.UserId != userId),
             };
         }
 
@@ -96,7 +99,7 @@ namespace Battles.Application.ViewModels.Matches
                 Finished = match.Finished,
                 TurnTime = $"{match.TurnDays} Days",
                 TimeLeft = match.LastUpdate.Add(new TimeSpan(match.TurnDays, 0, 0, 0))
-                    .Subtract(DateTime.Now).ConvertTimeSpan("Left"),
+                                .Subtract(DateTime.Now).ConvertTimeSpan("Left"),
 
                 Status = match.Status.GetString(),
                 Mode = match.Mode.GetString(),
@@ -119,15 +122,16 @@ namespace Battles.Application.ViewModels.Matches
                 Finished = match.Finished,
                 TurnTime = $"{match.TurnDays} Days",
                 TimeLeft = match.LastUpdate.Add(new TimeSpan(match.TurnDays, 0, 0, 0))
-                    .Subtract(DateTime.Now).ConvertTimeSpan("Left"),
+                                .Subtract(DateTime.Now).ConvertTimeSpan("Left"),
 
-                Turn =  match.Turn,
+                Turn = match.Turn,
                 Round = match.Round,
                 Status = match.Status.GetString(),
                 Mode = match.Mode.GetString(),
                 Surface = match.Surface.GetString(),
                 TurnType = (int) match.TurnType,
                 Chain = match.Chain.DefaultSplit(),
+                Updating = match.Updating,
 
                 Videos = match.Videos.Select(VideoViewModel.ProjectionFunction),
 
@@ -143,12 +147,12 @@ namespace Battles.Application.ViewModels.Matches
                 {
                     MainComment = CommentViewModel.CommentProjection.Compile().Invoke(x),
                     SubComments = x.SubComments
-                        .Select(y => CommentViewModel.SubCommentProjection.Compile().Invoke(y))
+                                   .Select(y => CommentViewModel.SubCommentProjection.Compile().Invoke(y))
                 })
             };
         }
 
-        #region User Perspective Properties
+#region User Perspective Properties
 
         public bool CanGo { get; set; }
         public bool CanFlag { get; set; }
@@ -159,13 +163,13 @@ namespace Battles.Application.ViewModels.Matches
         public bool CanJoin { get; set; }
         public bool CanClose { get; set; }
 
-        #endregion
+#endregion
 
-        #region Open Match Configuration
+#region Open Match Configuration
 
         public string TurnTime { get; set; }
         public string Invitation { get; set; }
 
-        #endregion
+#endregion
     }
 }

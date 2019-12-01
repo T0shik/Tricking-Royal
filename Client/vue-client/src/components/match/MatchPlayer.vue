@@ -4,7 +4,7 @@
         <component
                 v-bind:is="mode"
                 :match="match"
-                :loading="loading"
+                :loading="loading || match.updating"
                 @lock-in="lockIn(match)"
                 @update-video="setPlayingIndex"
                 @respond="respond({match, isReuplaod: false})"

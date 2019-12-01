@@ -16,6 +16,7 @@ import popup from "./modules/popup";
 import confirmation from "./modules/confirmation";
 import comment from "./modules/comment";
 import voting from "./modules/voting";
+import signalr from "./modules/signalr";
 import {LAYOUT} from "../data/enum";
 import Logger from "../logger/logger";
 
@@ -96,6 +97,11 @@ export const store = new Vuex.Store({
         },
         REFRESHING_TOKEN: state => {
             return state.refreshingToken;
+        },
+        GET_ACCESS_TOKEN: async (state) => {
+            let user = await state.userMgr.getUser();
+            Logger.log("[store.js] GET_ACCESS_TOKEN", user);
+            return user.access_token;
         }
     },
     mutations: {
@@ -141,6 +147,8 @@ export const store = new Vuex.Store({
                         const {data: {appId, safariId}} = await axios.get('platform/one-signal');
                         result.appId = appId;
                         result.safariId = safariId;
+
+                        dispatch("signalr/initConnection", null, {root: true});
                     } else {
                         commit('layout/setLayout', LAYOUT.VISITOR, {root: true});
                     }
@@ -166,6 +174,7 @@ export const store = new Vuex.Store({
         matches,
         updateMatch,
         layout,
+        signalr,
 
         //todo namespace these
         profile,

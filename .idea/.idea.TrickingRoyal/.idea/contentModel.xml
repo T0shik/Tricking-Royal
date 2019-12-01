@@ -113,6 +113,7 @@
           <e p="MatchesController.cs" t="Include" />
           <e p="NotificationsController.cs" t="Include" />
           <e p="PlatformController.cs" t="Include" />
+          <e p="TestController.cs" t="Include" />
           <e p="UsersController.cs" t="Include" />
         </e>
         <e p="ffmpeg" t="Include">
@@ -123,6 +124,7 @@
         <e p="Infrastructure" t="Include">
           <e p="BaseController.cs" t="Include" />
           <e p="ServiceRegistrar.cs" t="Include" />
+          <e p="UserIdProvider.cs" t="Include" />
         </e>
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
@@ -141,6 +143,8 @@
           <e p="IWorker.cs" t="Include" />
           <e p="MatchUpdater" t="Include">
             <e p="MatchUpdater.cs" t="Include" />
+            <e p="MatchUpdaterHub.cs" t="Include" />
+            <e p="MatchUpdaterNotifications.cs" t="Include" />
             <e p="MatchUpdaterServices.cs" t="Include" />
           </e>
           <e p="Notifications" t="Include">
@@ -229,6 +233,7 @@
               <e p="UpdateMatchCommand.cs" t="Include" />
               <e p="UpdateMatchVideoCommand.cs" t="Include" />
             </e>
+            <e p="IMatchUpdaterNotifications.cs" t="Include" />
             <e p="Queries" t="Include">
               <e p="GetAnonMatchesQuery.cs" t="Include" />
               <e p="GetMatchesQuery.cs" t="Include" />
@@ -845,10 +850,18 @@
                 <e p="thumb_02-11-2019-13-45-37.jpg" t="Include" />
               </e>
               <e p="44" t="Include">
+                <e p="c_01-12-2019-12-43-30.mp4" t="Include" />
+                <e p="c_01-12-2019-12-45-35.mp4" t="Include" />
+                <e p="c_01-12-2019-12-46-15.mp4" t="Include" />
+                <e p="c_01-12-2019-12-51-36.mp4" t="Include" />
                 <e p="c_23-11-2019-20-58-56.mp4" t="Include" />
                 <e p="c_23-11-2019-21-31-17.mp4" t="Include" />
                 <e p="c_23-11-2019-21-32-23.mp4" t="Include" />
                 <e p="c_23-11-2019-21-34-10.mp4" t="Include" />
+                <e p="thumb_01-12-2019-12-43-30.jpg" t="Include" />
+                <e p="thumb_01-12-2019-12-45-35.jpg" t="Include" />
+                <e p="thumb_01-12-2019-12-46-15.jpg" t="Include" />
+                <e p="thumb_01-12-2019-12-51-36.jpg" t="Include" />
                 <e p="thumb_23-11-2019-20-58-56.jpg" t="Include" />
                 <e p="thumb_23-11-2019-21-31-17.jpg" t="Include" />
                 <e p="thumb_23-11-2019-21-32-23.jpg" t="Include" />
@@ -1050,6 +1063,7 @@
               <e p="silent.html" t="Include" />
             </e>
           </e>
+          <e p="node_modules\@aspnet\signalr" t="IncludeRecursive" />
           <e p="node_modules\@mdi\js" t="IncludeRecursive" />
           <e p="node_modules\@types" t="IncludeRecursive">
             <e p="events" t="IncludeRecursive" />
@@ -1201,6 +1215,7 @@
                 <e p="notifications.js" t="Include" />
                 <e p="popup.js" t="Include" />
                 <e p="profile.js" t="Include" />
+                <e p="signalr.js" t="Include" />
                 <e p="tribunal.js" t="Include" />
                 <e p="updateMatch.js" t="Include" />
                 <e p="user.js" t="Include" />

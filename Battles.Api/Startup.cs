@@ -9,11 +9,15 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using System.Threading.Tasks;
 using Battles.Api.Infrastructure;
 using Battles.Api.Workers;
+using Battles.Api.Workers.MatchUpdater;
 using Battles.Api.Workers.Notifications.Settings;
 using Battles.Application.SubServices;
 using Battles.Shared;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 using NETCore.MailKit.Extensions;
 using NETCore.MailKit.Infrastructure.Internal;
@@ -38,7 +42,7 @@ namespace Battles.Api
         {
             services.Configure<OneSignal>(_config.GetSection("OneSignal"));
             services.Configure<AppSettings>(_config.GetSection("AppSettings"));
-            
+
             services.AddSingleton(_oAuth);
             services.AddSingleton(_oAuth.Routing);
             services.AddSingleton(_config.GetSection("FilePaths").Get<FilePaths>());
@@ -54,6 +58,22 @@ namespace Battles.Api
                         config.Authority = _oAuth.Routing.Server;
                         config.RequireHttpsMetadata = _env.IsProduction();
                         config.Audience = _oAuth.Api.Name;
+                        config.Events = new JwtBearerEvents
+                        {
+                            OnMessageReceived = context =>
+                            {
+                                var accessToken = context.Request.Query["access_token"];
+
+                                var path = context.HttpContext.Request.Path;
+                                if (!string.IsNullOrEmpty(accessToken)
+                                    && path.StartsWithSegments("/hub"))
+                                {
+                                    context.Token = accessToken;
+                                }
+
+                                return Task.CompletedTask;
+                            }
+                        };
                     });
 
             SetupCors(services);
@@ -69,17 +89,19 @@ namespace Battles.Api
                                              .Add(new MediaTypeWithQualityHeaderValue("application/json"));
                                    });
 
-
             var emailSettings = _config.GetSection(nameof(MailKitOptions)).Get<MailKitOptions>();
             services.AddMailKit(optionBuilder => { optionBuilder.UseMailKit(emailSettings); });
 
             services.AddHealthChecks();
             services.AddMvc();
+
+            services.AddSingleton<IUserIdProvider, UserIdProvider>();
+            services.AddSignalR();
         }
 
         public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
         {
-            app.UseCors(_env.IsDevelopment() ? "AllowAll" : "AllowClients");
+            app.UseCors("AllowClients");
             app.UseHealthChecks("/healthcheck");
 
             if (_env.IsProduction())
@@ -91,33 +113,20 @@ namespace Battles.Api
             SetupHangfireJobs();
 
             app.UseAuthentication()
-               .UseMvc();
+               .UseMvc()
+               .UseSignalR(routes => { routes.MapHub<MatchUpdaterHub>("/hub/match-updater"); });
         }
 
         private void SetupCors(IServiceCollection services)
         {
-            if (_env.IsDevelopment())
+            services.AddCors(options =>
             {
-                services.AddCors(options =>
-                {
-                    options.AddPolicy("AllowAll",
-                                      p => p.AllowAnyOrigin()
-                                            .AllowAnyHeader()
-                                            .AllowAnyMethod()
-                                            .AllowCredentials());
-                });
-            }
-            else
-            {
-                services.AddCors(options =>
-                {
-                    options.AddPolicy("AllowClients",
-                                      p => p.WithOrigins(_oAuth.Routing.Client, _config["HealthChecker"])
-                                            .AllowAnyHeader()
-                                            .AllowAnyMethod()
-                                            .AllowCredentials());
-                });
-            }
+                options.AddPolicy("AllowClients",
+                                  p => p.WithOrigins(_oAuth.Routing.Client, _config["HealthChecker"])
+                                        .AllowAnyHeader()
+                                        .AllowAnyMethod()
+                                        .AllowCredentials());
+            });
         }
 
         private static void SetupHangfireJobs()
