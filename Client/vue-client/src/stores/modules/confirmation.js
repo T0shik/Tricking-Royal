@@ -47,7 +47,7 @@ export default {
                 commit('dismiss');
             });
         },
-        pwaRefresh({commit, dispatch}) {
+        pwaRefresh({commit}) {
             commit('set', initialState({
                 title: 'Update',
                 description: 'New version of the app is available, refresh to update.',
