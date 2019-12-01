@@ -21,11 +21,14 @@
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
     <Content Remove="$(SpaRoot)**" />
     <Content Include="vue-client\public\service-worker.js" />
+    <Content Include="vue-client\src\components\layout\modals\EditProfile.vue" />
     <Content Include="vue-client\src\components\layout\modals\Rules.vue" />
+    <Content Include="vue-client\src\components\layout\navigation\UserSearch.vue" />
     <Content Include="vue-client\src\components\tribunal\voting\VotingResults.vue" />
     <None Remove="$(SpaRoot)**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
     <None Include="vue-client\src\components\layout\modals\EditProfile.vue" />
+    <None Include="vue-client\src\components\layout\navigation\Navbar.vue" />
   </ItemGroup>
 
   <ItemGroup>

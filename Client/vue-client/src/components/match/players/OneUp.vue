@@ -40,11 +40,16 @@
             slide: 0,
         }),
         created() {
-            this.slide = this.match.videos.length - 1;
+            if (this.match.videos) {
+                this.slide = this.match.videos.length - 1;
+            }
         },
         watch: {
             slide: {
                 handler: function (value) {
+                    if (!this.match.videos) {
+                        return
+                    }
                     let userIndex = -1;
                     if (this.match.videos.length > 0) {
                         userIndex = this.match.videos[value].userIndex;

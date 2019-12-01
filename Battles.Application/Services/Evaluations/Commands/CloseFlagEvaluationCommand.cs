@@ -38,7 +38,7 @@ namespace Battles.Application.Services.Evaluations.Commands
 
             if (evaluation.Decisions.Count <= 0)
             {
-                evaluation.Expiry = evaluation.Expiry.AddDays(1);
+                evaluation.Expiry = DateTime.Now.AddDays(1);
                 await _ctx.SaveChangesAsync(cancellationToken);
 
                 return new Unit();

@@ -8,7 +8,10 @@
             Success = success;
         }
 
-        public string Message { get; set; }
-        public bool Success { get; set; }
+        public string Message { get;  }
+        public bool Success { get; }
+
+        public static BaseResponse Create(string message) => new BaseResponse(message, true);
+        public static BaseResponse Fail(string message) => new BaseResponse(message, false);
     }
 }

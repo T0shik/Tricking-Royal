@@ -132,7 +132,7 @@
           </e>
           <e p="INotificationSender.cs" t="Include" />
           <e p="NotificationQueue.cs" t="Include" />
-          <e p="NotificationServices.cs" t="Include" />
+          <e p="RegisterNotificationServices.cs" t="Include" />
           <e p="Settings" t="Include">
             <e p="OneSignal.cs" t="Include" />
           </e>
@@ -273,6 +273,7 @@
           <e p="DescisionResultsViewModel.cs" t="Include" />
           <e p="EvaluationViewModel.cs" t="Include" />
           <e p="Matches" t="Include">
+            <e p="BaseMatchViewModel.cs" t="Include" />
             <e p="MatchCommentsViewModel.cs" t="Include" />
             <e p="MatchUserViewModel.cs" t="Include" />
             <e p="MatchViewModel.cs" t="Include" />
@@ -294,11 +295,7 @@
           <e p="ImageController.cs" t="Include" />
           <e p="VideoController.cs" t="Include" />
         </e>
-        <e p="ffmpeg" t="Include">
-          <e p="ffmpeg.exe" t="Include" />
-          <e p="ffplay.exe" t="Include" />
-          <e p="ffprobe.exe" t="Include" />
-        </e>
+        <e p="ffmpeg" t="Include" />
         <e p="FileServices" t="Include">
           <e p="BaseFileManager.cs" t="Include" />
           <e p="FileStreams.cs" t="Include" />
@@ -994,43 +991,6 @@
             <e p="settings.json" t="Include" />
           </e>
           <e p="babel.config.js" t="Include" />
-          <e p="dist" t="Include">
-            <e p="css" t="Include">
-              <e p="app.d9c0fd3c.css" t="Include" />
-              <e p="chunk-vendors.55b15f90.css" t="Include" />
-            </e>
-            <e p="img" t="Include">
-              <e p="icons" t="Include">
-                <e p="main_128x128.png" t="Include" />
-                <e p="main_144x144.png" t="Include" />
-                <e p="main_152x152.png" t="Include" />
-                <e p="main_16x16.png" t="Include" />
-                <e p="main_192x192.png" t="Include" />
-                <e p="main_256x256.png" t="Include" />
-                <e p="main_32x32.png" t="Include" />
-                <e p="main_384x384.png" t="Include" />
-                <e p="main_512x512.png" t="Include" />
-              </e>
-            </e>
-            <e p="index.html" t="Include" />
-            <e p="js" t="Include">
-              <e p="app.0bb0b58c.js" t="Include" />
-              <e p="app.0bb0b58c.js.map" t="Include" />
-              <e p="chunk-vendors.42c7020c.js" t="Include" />
-              <e p="chunk-vendors.42c7020c.js.map" t="Include" />
-            </e>
-            <e p="manifest.json" t="Include" />
-            <e p="OneSignalSDKUpdaterWorker.js" t="Include" />
-            <e p="OneSignalSDKWorker.js" t="Include" />
-            <e p="precache-manifest.87022d8da02c4a9cfd0dfd6e11b17763.js" t="Include" />
-            <e p="robots.txt" t="Include" />
-            <e p="service-worker.js" t="Include" />
-            <e p="static" t="Include">
-              <e p="callback.html" t="Include" />
-              <e p="oidc-client.min.js" t="Include" />
-              <e p="silent.html" t="Include" />
-            </e>
-          </e>
           <e p="node_modules\@mdi\js" t="IncludeRecursive" />
           <e p="node_modules\@types" t="IncludeRecursive">
             <e p="events" t="IncludeRecursive" />
@@ -1113,7 +1073,10 @@
                   <e p="Popup.vue" t="Include" />
                   <e p="Rules.vue" t="Include" />
                 </e>
-                <e p="Navbar.vue" t="Include" />
+                <e p="navigation" t="Include">
+                  <e p="Navbar.vue" t="Include" />
+                  <e p="UserSearch.vue" t="Include" />
+                </e>
                 <e p="SideMenu.vue" t="Include" />
                 <e p="UserLayout.vue" t="Include" />
                 <e p="VisitorLayout.vue" t="Include" />
@@ -1140,7 +1103,6 @@
                 </e>
               </e>
               <e p="Shared" t="Include">
-                <e p="index.js" t="Include" />
                 <e p="ProfileImage.vue" t="Include" />
               </e>
               <e p="tribunal" t="Include">

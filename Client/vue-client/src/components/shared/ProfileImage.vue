@@ -3,7 +3,9 @@
         <img v-if="picture" :src="picture" alt="alt" :key="picture"/>
         <v-icon v-else>{{icons.user}}</v-icon>
         <span v-if="level" class="level">{{level}}</span>
-        <span class="winner"><v-icon v-if="winner">{{icons.winner}}</v-icon></span>
+        <span class="winner" v-if="winner">
+            <v-icon>{{icons.winner}}</v-icon>
+        </span>
     </v-avatar>
 </template>
 
@@ -11,10 +13,10 @@
     import {mdiAccountCircle, mdiTrophy} from "@mdi/js";
 
     export default {
-        name: "profile-img",
         props: {
             picture: {
                 required: true,
+                default: ""
             },
             level: {
                 required: false,

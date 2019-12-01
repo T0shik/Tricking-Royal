@@ -73,7 +73,7 @@ export default {
                     Logger.log("TODO: Handle getting user error", err)
                 })
         },
-        LOAD_USER_MATCHSE({commit, getters}, payload) {
+        LOAD_USER_MATCHES({commit, getters}, payload) {
             let {type} = payload;
             let {displayName} = getters.GET_USER;
             axios.get(`/matches?filter=${type}&displayName=${displayName}`)

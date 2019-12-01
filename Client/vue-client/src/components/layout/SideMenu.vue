@@ -13,8 +13,8 @@
                 <v-btn class="black--text" color="yellow accent-3" @click="levelUp = true">Level Up</v-btn>
             </v-row>
             <v-row class="align-center">
-                <profile-img :class="{'level-up': profile.levelUpPoints}" :picture="profile.picture"
-                             :level="profile.level"></profile-img>
+                <ProfileImage :class="{'level-up': profile.levelUpPoints}" :picture="profile.picture"
+                              :level="profile.level"></ProfileImage>
                 <v-col class="px-1">
                     <span class="white--text subheading">{{profile.displayName}}</span>
                     <div>
@@ -130,6 +130,7 @@
         mdiAccountSearch
     } from "@mdi/js";
     import perks from "../../data/perks";
+    import ProfileImage from "../shared/ProfileImage";
 
     const initialState = () => ({
         levelUp: false,
@@ -147,7 +148,8 @@
             }
         },
         components: {
-            EditProfile
+            EditProfile,
+            ProfileImage
         },
         data: initialState,
         methods: {

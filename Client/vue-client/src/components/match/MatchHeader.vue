@@ -4,10 +4,10 @@
             <v-row dense>
                 <v-col class="d-flex align-center" cols="5">
                     <router-link class="white--text" :to="`/user/${host.displayName}`">
-                        <profile-img :class="{'playing': host.index === playingIndex}"
+                        <ProfileImage v-if="host" :class="{'playing': host.index === playingIndex}"
                                      :picture="host.picture"
                                      :level="host.level"
-                                     :winner="host.winner"></profile-img>
+                                     :winner="host.winner"></ProfileImage>
                         <span>{{host.displayName}}</span>
                     </router-link>
                 </v-col>
@@ -17,10 +17,10 @@
                 <v-col class="d-flex align-center justify-end" cols="5">
                     <router-link class="white--text" :to="`/user/${opponent.displayName}`">
                         <span>{{opponent.displayName}}</span>
-                        <profile-img :class="{'playing': opponent.index === playingIndex}"
+                        <ProfileImage v-if="opponent" :class="{'playing': opponent.index === playingIndex}"
                                      :picture="opponent.picture"
                                      :level="opponent.level"
-                                     :winner="opponent.winner"></profile-img>
+                                     :winner="opponent.winner"></ProfileImage>
                     </router-link>
                 </v-col>
             </v-row>
@@ -29,6 +29,8 @@
 </template>
 
 <script>
+    import ProfileImage from "../shared/ProfileImage";
+
     export default {
         props: {
             users: {
@@ -39,6 +41,9 @@
                 type: Number,
                 required: true
             }
+        },
+        components: {
+            ProfileImage
         },
         computed: {
             host() {

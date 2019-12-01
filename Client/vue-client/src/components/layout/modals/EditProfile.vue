@@ -6,18 +6,19 @@
             </v-btn>
         </template>
         <v-card>
-            <v-toolbar color="secondary">
+            <v-toolbar class="toolbar" color="secondary">
                 <v-btn icon @click="dialog = false">
                     <v-icon>{{icons.close}}</v-icon>
                 </v-btn>
                 <v-spacer></v-spacer>
                 <v-toolbar-title class="white--text">Settings</v-toolbar-title>
                 <v-spacer></v-spacer>
-                <v-btn icon @click="save" color="info" :disabled="!valid || loadingName">
-                    <v-icon>{{icons.check}}</v-icon>
+                <v-progress-circular color="primary" v-if="loadingName" indeterminate ></v-progress-circular>
+                <v-btn v-else icon @click="save" :color="valid ? 'green' : 'red'" :disabled="!valid">
+                    <v-icon >{{valid ? icons.check : icons.ban }}</v-icon>
                 </v-btn>
             </v-toolbar>
-            <v-form class="px-4" ref="form" v-model="valid">
+            <v-form class="px-4 edit-profile" ref="form" v-model="valid">
                 <v-container>
                     <v-row>
                         <v-col>
@@ -44,7 +45,7 @@
                             </div>
                             <v-text-field
                                     v-model="profile.displayName"
-                                    :rules="displayNameRules"
+                                    :rules="validation.displayNameRules"
                                     label="Username"
                                     placeholder="Super_trix_69"
                                     :loading="loadingName"
@@ -71,18 +72,21 @@
                             <v-subheader class="px-0">Social Media</v-subheader>
                             <v-text-field
                                     :prepend-icon="icons.instagram"
+                                    :rules="validation.socialLinks"
                                     v-model="profile.instagram"
                                     label="Instagram"
                                     placeholder="anton_toshik"
                             ></v-text-field>
                             <v-text-field
                                     :prepend-icon="icons.facebook"
+                                    :rules="validation.socialLinks"
                                     v-model="profile.facebook"
                                     label="Facebook"
                                     placeholder="anton.wieslander"
                             ></v-text-field>
                             <v-text-field
                                     :prepend-icon="icons.youtube"
+                                    :rules="validation.socialLinks"
                                     v-model="profile.youtube"
                                     label="Youtube"
                                     placeholder="UCP_jWxjn__YXmo4iU7Low0g"
@@ -170,7 +174,7 @@
     import {
         mdiAccount, mdiBell, mdiBellOff,
         mdiCheck,
-        mdiClose, mdiEmail, mdiEmailCheck, mdiEmailMinus,
+        mdiClose, mdiDoNotDisturb, mdiEmail, mdiEmailCheck, mdiEmailMinus,
         mdiFacebook,
         mdiInstagram,
         mdiLogout,
@@ -195,11 +199,16 @@
 
                 validName: true,
                 pushEnabled: false,
-                displayNameRules: [
-                    v => !!v || "Username is required",
-                    () => this.validName || "Username already taken.",
-                    v => !/\s/.test(v) || "No whitespace allowed."
-                ],
+                validation: {
+                    displayNameRules: [
+                        v => !!v || "Username is required",
+                        () => this.validName || "Username already taken.",
+                        v => !/\s/.test(v) || "No whitespace allowed.",
+                    ],
+                    socialLinks: [
+                        v => !/^[@]|\/|:|\?|&/.test(v) || "Input the Username or Id of page.",
+                    ]
+                },
 
                 profile: {
                     displayName: "",
@@ -247,8 +256,7 @@
                     function () {
                         axios
                             .get(`/users/${v}/can-use`)
-                            .then(result => {
-                                const {status} = result;
+                            .then(({status}) => {
                                 if (status === 200) {
                                     this.validName = true;
                                 } else if (status === 204) {
@@ -263,8 +271,7 @@
                                 this.loadingName = false;
                             });
                     }.bind(this),
-                    500
-                );
+                    500);
             }
         },
         methods: {
@@ -375,6 +382,7 @@
                     settings: mdiSettings,
                     close: mdiClose,
                     check: mdiCheck,
+                    ban: mdiDoNotDisturb,
                     email: mdiEmail,
                     emailOn: mdiEmailCheck,
                     emailOff: mdiEmailMinus,
@@ -390,3 +398,15 @@
         }
     };
 </script>
+
+<style lang="scss">
+    .edit-profile {
+        padding-top: 56px;
+    }
+    .toolbar {
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 5;
+    }
+</style>

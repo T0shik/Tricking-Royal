@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Battles.Api.Notifications
 {
-    public static class NotificationServices
+    public static class RegisterNotificationServices
     {
         public static IServiceCollection AddNotificationServices(this IServiceCollection @this)
         {
