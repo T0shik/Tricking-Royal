@@ -47,7 +47,6 @@ namespace Battles.Application.Services.Matches
                                                                       command.Start,
                                                                       command.End);
 
-                await Task.Delay(10000);
                 var updateCommand = new UpdateMatchCommand
                 {
                     MatchId = command.MatchId,
