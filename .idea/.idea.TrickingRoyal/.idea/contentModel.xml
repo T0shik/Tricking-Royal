@@ -854,6 +854,10 @@
                 <e p="c_01-12-2019-12-45-35.mp4" t="Include" />
                 <e p="c_01-12-2019-12-46-15.mp4" t="Include" />
                 <e p="c_01-12-2019-12-51-36.mp4" t="Include" />
+                <e p="c_01-12-2019-14-02-34.mp4" t="Include" />
+                <e p="c_01-12-2019-14-03-35.mp4" t="Include" />
+                <e p="c_01-12-2019-14-05-11.mp4" t="Include" />
+                <e p="c_01-12-2019-14-06-44.mp4" t="Include" />
                 <e p="c_23-11-2019-20-58-56.mp4" t="Include" />
                 <e p="c_23-11-2019-21-31-17.mp4" t="Include" />
                 <e p="c_23-11-2019-21-32-23.mp4" t="Include" />
@@ -862,6 +866,10 @@
                 <e p="thumb_01-12-2019-12-45-35.jpg" t="Include" />
                 <e p="thumb_01-12-2019-12-46-15.jpg" t="Include" />
                 <e p="thumb_01-12-2019-12-51-36.jpg" t="Include" />
+                <e p="thumb_01-12-2019-14-02-34.jpg" t="Include" />
+                <e p="thumb_01-12-2019-14-03-35.jpg" t="Include" />
+                <e p="thumb_01-12-2019-14-05-11.jpg" t="Include" />
+                <e p="thumb_01-12-2019-14-06-44.jpg" t="Include" />
                 <e p="thumb_23-11-2019-20-58-56.jpg" t="Include" />
                 <e p="thumb_23-11-2019-21-31-17.jpg" t="Include" />
                 <e p="thumb_23-11-2019-21-32-23.jpg" t="Include" />
@@ -1148,6 +1156,7 @@
                 </e>
                 <e p="navigation" t="Include">
                   <e p="Navbar.vue" t="Include" />
+                  <e p="StatusBar.vue" t="Include" />
                   <e p="UserSearch.vue" t="Include" />
                 </e>
                 <e p="SideMenu.vue" t="Include" />
@@ -1216,6 +1225,7 @@
                 <e p="popup.js" t="Include" />
                 <e p="profile.js" t="Include" />
                 <e p="signalr.js" t="Include" />
+                <e p="statusBar.js" t="Include" />
                 <e p="tribunal.js" t="Include" />
                 <e p="updateMatch.js" t="Include" />
                 <e p="user.js" t="Include" />

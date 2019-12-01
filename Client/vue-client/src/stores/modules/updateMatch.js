@@ -59,10 +59,12 @@ export default {
         uploadVideo({state, commit, dispatch}, formData) {
             commit("setUploadStatus", UPLOAD_STATUS.INITIAL_STARTED);
             let uploadTask = state.videoUpdate ? `update` : `upload`;
+            commit("statusBar/setStatus", {message: "Video uploading in the background."}, {root: true});
 
             axios.post(`${process.env.VUE_APP_CDN}/video/${state.match.id}/${uploadTask}`,
                 formData, MULTIPART_HEADER_OPTIONS).then(({data}) => {
                 commit('setInitialVideoName', data);
+                commit("statusBar/reset", {}, {root: true});
                 commit("setUploadStatus", UPLOAD_STATUS.INITIAL_FINISHED);
             }).catch(error => {
                 Logger.error("Error Uploading Video", error);
@@ -121,6 +123,10 @@ export default {
                     }
                 });
             }
+        },
+        reset({commit}) {
+            commit("statusBar/reset", {}, {root: true});
+            commit('reset');
         }
     }
 }

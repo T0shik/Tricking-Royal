@@ -126,8 +126,8 @@
             }
         },
         methods: {
-            ...mapMutations(['reset', 'hide']),
-            ...mapActions(['uploadVideo', 'startUpdate']),
+            ...mapMutations(['hide']),
+            ...mapActions(['reset', 'uploadVideo', 'startUpdate']),
             clear() {
                 this.$refs.file.value = null;
                 this.$refs.video.load();
@@ -198,15 +198,7 @@
                     end: this.trim.value[1],
                 };
 
-                this.safeWatch(UPLOAD_STATUS.INITIAL_FINISHED, () =>
-                    this.startUpdate(options));
-
-                this.$store.dispatch('DISPLAY_POPUP', {
-                    message: "Match update in progress, please do NOT close",
-                    type: "success",
-                    progress: true,
-                });
-
+                this.safeWatch(UPLOAD_STATUS.INITIAL_FINISHED, () => this.startUpdate(options));
                 this.hide();
             }
         },

@@ -17,6 +17,7 @@ import confirmation from "./modules/confirmation";
 import comment from "./modules/comment";
 import voting from "./modules/voting";
 import signalr from "./modules/signalr";
+import statusBar from "./modules/statusBar";
 import {LAYOUT} from "../data/enum";
 import Logger from "../logger/logger";
 
@@ -175,6 +176,7 @@ export const store = new Vuex.Store({
         updateMatch,
         layout,
         signalr,
+        statusBar,
 
         //todo namespace these
         profile,

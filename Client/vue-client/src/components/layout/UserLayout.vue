@@ -8,6 +8,7 @@
         <SideMenu :show="sideMenu" @input="toggleMenu"></SideMenu>
         <v-content>
             <v-container fill-height fluid class="px-0 justify-center align-start overflow-x-hidden" id="container">
+                <StatusBar></StatusBar>
                 <router-view></router-view>
             </v-container>
         </v-content>
@@ -21,6 +22,7 @@
     import MatchMenu from "./modals/MatchMenu";
     import UpdateMatch from "../match/modals/UpdateMatch";
     import Navbar from "./navigation/Navbar";
+    import StatusBar from "./navigation/StatusBar";
 
     export default {
         data() {
@@ -34,7 +36,8 @@
             Navbar,
             UpdateMatch,
             MatchMenu,
-            Confirmation
+            Confirmation,
+            StatusBar
         },
         methods: {
             toggleMenu(e) {
