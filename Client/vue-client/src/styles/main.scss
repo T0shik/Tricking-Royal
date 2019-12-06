@@ -23,7 +23,7 @@ a {
 
 .v-bottom-navigation {
   z-index: 3;
-  
+
   position: absolute;
   @media screen and (max-width: 960px) {
     position: fixed;
@@ -48,6 +48,7 @@ a {
 .p-relative {
   position: relative;
 }
+
 .refresh-button.v-btn.v-btn--fab.v-btn--fixed {
   bottom: 72px;
   z-index: 5;
@@ -66,6 +67,7 @@ a {
     display: none !important;
   }
 }
+
 .v-window__container,
 .v-carousel,
 .v-responsive {
@@ -78,4 +80,12 @@ a {
 
 .hover:hover {
   cursor: pointer;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.fullwidth {
+  width: 100%;
 }

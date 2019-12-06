@@ -95,8 +95,4 @@
         box-shadow: 0 0 10px 4px yellow;
         transition: 250ms ease-in;
     }
-    
-    .flex-1 {
-        flex: 1;
-    }
 </style>
