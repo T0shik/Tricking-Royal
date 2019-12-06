@@ -8,7 +8,7 @@
             mobile-break-point="960"
             v-if="profile"
     >
-        <v-container class="px-5">
+        <v-container class="px-4">
             <v-row class="justify-center" v-if="profile.levelUpPoints > 0">
                 <v-btn class="black--text" color="yellow accent-3" @click="levelUp = true">Level Up</v-btn>
             </v-row>
@@ -16,7 +16,7 @@
                 <ProfileImage :class="{'level-up': profile.levelUpPoints}" :picture="profile.picture"
                               :level="profile.level"></ProfileImage>
                 <v-col class="px-1">
-                    <span class="white--text subheading">{{profile.displayName}}</span>
+                    <span class="white--text subtitle-2">{{profile.displayName}}</span>
                     <div>
                         <v-progress-linear height="14" rounded :value="expBar">
                             <span class="body-2">EXP {{this.profile.experience}} / {{this.profile.experienceNeed}}</span>

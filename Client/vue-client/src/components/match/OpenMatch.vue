@@ -16,6 +16,7 @@
                 <div>
                     <h1 class="body-1 mb-0">Mode</h1>
                     <h1 class="body-2">{{match.mode}}</h1>
+                    <h1 class="body-2" v-if="mode">{{mode}}</h1>
                 </div>
                 <v-spacer></v-spacer>
                 <div class="text-xs-right mr-3">
@@ -24,7 +25,7 @@
                 </div>
                 <div class="text-xs-right">
                     <h1 class="body-1 mb-0">Turn Time</h1>
-                    <h1 class="body-2">{{match.turnTime}}</h1>
+                    <h1 class="body-2 text-right">{{match.turnTime}}</h1>
                 </div>
             </div>
         </v-card-text>
@@ -46,6 +47,7 @@
 
 <script>
     import ProfileImage from "../shared/ProfileImage";
+    import {TURN_TYPE} from "../../data/enum";
 
     export default {
         props: {
@@ -64,6 +66,11 @@
         computed: {
             user() {
                 return this.match.participants[0];
+            },
+            mode() {
+                return this.match.turnType >= 0
+                    ? TURN_TYPE.THREE_ROUND_PASS[this.match.turnType]
+                    : "";
             }
         }
     };
@@ -73,5 +80,5 @@
     h1.body-1 {
         border-bottom: 1px solid #9a48ab;
     }
-    
+
 </style>

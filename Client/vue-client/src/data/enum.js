@@ -11,6 +11,12 @@ export const MATCH_MODE = {
     COPY_CAT: 'Copy Cat',
 };
 
+export const TURN_TYPE = {
+    ONE_UP: {},
+    THREE_ROUND_PASS: ['Blitz', 'Classic', 'Alternate'],
+    COPY_CAT: {},
+};
+
 export const MATCH_TYPES = {
     HOSTED: 'hosted',
     OPEN: 'open',
