@@ -1,17 +1,17 @@
 <template>
     <v-card class="my-3" max-width="600px" width="100%" dark color="secondary">
-        <v-card-title>
+        <v-card-title class="pa-2">
             <router-link class="white--text" :to="`/user/${user.displayName}`">
                 <ProfileImage :picture="user.picture" :level="user.level"></ProfileImage>
-                <span class="white--text subheading px-2">{{user.displayName}}</span>
+                <span class="white--text body-2 px-1">{{user.displayName}}</span>
             </router-link>
             <v-spacer></v-spacer>
             <span
-                    class="font-rock font-weight-black"
+                    class="font-rock skill-text"
                     :class="`${user.skill.toLowerCase()}--text`"
             >{{user.skill}}</span>
         </v-card-title>
-        <v-card-text>
+        <v-card-text class="px-3">
             <div class="d-flex white--text">
                 <div>
                     <h1 class="body-1 mb-0">Mode</h1>
@@ -73,4 +73,5 @@
     h1.body-1 {
         border-bottom: 1px solid #9a48ab;
     }
+    
 </style>

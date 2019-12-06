@@ -1,14 +1,14 @@
 <template>
     <div class="main-card">
         <v-card color="secondary" v-if="user">
-            <v-card-title primary-title>
+            <v-card-title class="px-2">
                 <ProfileImage :picture="user.picture"></ProfileImage>
                 <div>
-                    <h3 class="title pl-1 mb-0">{{user.displayName}}</h3>
+                    <h3 class="subtitle-1 pl-1 mb-0">{{user.displayName}}</h3>
                 </div>
                 <v-spacer></v-spacer>
                 <h3
-                        class="font-rock title font-weight-black"
+                        class="font-rock skill-text"
                         :class="`${user.skill.toLowerCase()}--text`"
                 >{{user.skill}}</h3>
             </v-card-title>
