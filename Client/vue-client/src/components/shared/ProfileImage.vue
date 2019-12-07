@@ -24,7 +24,7 @@
             },
             size: {
                 required: false,
-                type: String
+                type: Number
             },
             winner: {
                 required: false,
