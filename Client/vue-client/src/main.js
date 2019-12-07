@@ -1,11 +1,14 @@
 import Vue from 'vue'
 import App from './App.vue'
-import vuetify from './plugins/vuetify';
 import router from './router'
 import {store} from './stores/store'
+import vuetify from './plugins/vuetify';
+import {i18n} from "./plugins/i18n";
+import FlagIcon from 'vue-flag-icon';
 import Axios from 'axios'
 import Logger from "./logger/logger";
 import "./registerServiceWorker"
+
 
 import {loadProgressBar} from 'axios-progress-bar'
 import 'axios-progress-bar/dist/nprogress.css'
@@ -24,6 +27,7 @@ const loggerPlugin = {
     }
 };
 
+Vue.use(FlagIcon);
 Vue.use(axiosPlugin);
 Vue.use(loggerPlugin);
 
@@ -33,5 +37,6 @@ new Vue({
     router,
     store,
     vuetify,
+    i18n,
     render: h => h(App)
 }).$mount('#app');

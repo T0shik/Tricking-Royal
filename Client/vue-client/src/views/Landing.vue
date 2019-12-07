@@ -6,11 +6,17 @@
                 px-0
         >
             <v-layout align-center column justify-center>
+                <div>
+                    <button v-for="entry in languages" :key="entry.name" @click="setLang(entry.locale)">
+                        <flag :iso="entry.icon" v-bind:squared="false"/>
+                        {{entry.name}}
+                    </button>
+                </div>
                 <v-spacer></v-spacer>
                 <h1 class="font-weight-bold primary--text mb-3 font-rock"
                     :class="windowSize.x < 600 ? 'display-1' : 'display-3'">Tricking Royal</h1>
-                <h4 class="title">Online Tricking Battles</h4>
-                <v-btn color="info" @click="login">Sign In</v-btn>
+                <h4 class="title">{{$t('landing.description')}}</h4>
+                <v-btn color="info" @click="login">{{$t('misc.signIn')}}</v-btn>
                 <!--                <a-->
                 <!--                        class="google-link"-->
                 <!--                        href="https://play.google.com/store/apps/details?id=aw.trickingroyal&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"-->
@@ -21,7 +27,7 @@
                 <!--                    />-->
                 <!--                </a>-->
                 <div class="pt-4">
-                    <h4 class="text-center subtitle-1">Partners</h4>
+                    <h4 class="text-center subtitle-1">{{$t('landing.partners')}}</h4>
                     <a class="kojos-tricklab" href="https://www.kojostricklab.com/?wpam_id=93" target="_blank_">
                         <img :src="logos.kojo"/>
                     </a>
@@ -35,76 +41,17 @@
         </v-parallax>
 
         <v-row class="mx-2" ref="info">
-            <v-col cols="6" sm="6" md="4">
+            <v-col cols="6" sm="6" md="4" v-for="(v, n) in blocks">
                 <div class="d-flex flex-column align-center">
                     <div>
-                        <v-icon size="50">{{icons.battles}}</v-icon>
+                        <v-icon size="50">{{v}}</v-icon>
                     </div>
-                    <p class="title mb-0">Battles</p>
-                    <p class="body-2 text-center">
-                        Battle trickers from accross the world in 3 different battle modes: One Up, Three Round Pass,
-                        Copy Cat.
-                    </p>
-                </div>
-            </v-col>
-            <v-col cols="6" sm="6" md="4">
-                <div class="d-flex flex-column align-center">
-                    <div>
-                        <v-icon size="50">{{icons.community}}</v-icon>
-                    </div>
-                    <p class="title mb-0">Community</p>
-                    <p class="body-2 text-center">
-                        Meet new trickers, advance your skills and help the tricking comunity grow stronger.
-                    </p>
-                </div>
-            </v-col>
-            <v-col cols="6" sm="6" md="4">
-                <div class="d-flex flex-column align-center">
-                    <div>
-                        <v-icon size="50">{{icons.tribunal}}</v-icon>
-                    </div>
-                    <p class="title mb-0">Tribunal</p>
-                    <p class="body-2 text-center">
-                        Be the judge! The comunity votes on who wins battles and who is breaking the rules.
-                    </p>
-                </div>
-            </v-col>
-            <v-col cols="6" sm="6" md="4">
-                <div class="d-flex flex-column align-center">
-                    <div>
-                        <v-icon size="50">{{icons.social}}</v-icon>
-                    </div>
-                    <p class="title mb-0">Social</p>
-                    <p class="body-2 text-center">
-                        Share your social media channels, so people can follow you.
-                    </p>
-                </div>
-            </v-col>
-            <v-col cols="6" sm="6" md="4">
-                <div class="d-flex flex-column align-center">
-                    <div>
-                        <v-icon size="50">{{icons.stats}}</v-icon>
-                    </div>
-                    <p class="title mb-0">Statistics</p>
-                    <p class="body-2 text-center">
-                        Track your win-loss history, gain repuatation and gradually build up your level to unlock new
-                        perks.
-                    </p>
-                </div>
-            </v-col>
-            <v-col cols="6" sm="6" md="4">
-                <div class="d-flex flex-column align-center">
-                    <div>
-                        <v-icon size="50">{{icons.open}}</v-icon>
-                    </div>
-                    <p class="title mb-0">Contribute</p>
-                    <p class="body-2 text-center">
-                        TrickingRoyal is an open source project. Visit the <a href="https://github.com/T0shik/Tricking-Royal">github project</a>
-                        page to find out more!
-                    </p>
+                    <p class="title mb-0">{{$t(`landing.block.${n}.title`)}}</p>
+                    <p class="body-2 text-center">{{$t(`landing.block.${n}.text`)}}</p>
                 </div>
             </v-col>
         </v-row>
+        <a href="" target="_blank">Project page</a>
 
         <v-layout mb-5 column align-center justify-center ref="battles">
             <div>
@@ -153,19 +100,22 @@
         mdiScaleBalance,
         mdiChartBar,
         mdiEarth,
-        mdiPackageVariant
+        mdiPackageVariant, mdiGithubBox
     } from "@mdi/js";
     import axios from "axios";
+    import {languages} from '@/lang/languages.json'
+    import {loadLanguageAsync} from "../plugins/i18n";
 
     export default {
         data: () => ({
-            icons: {
+            languages: languages,
+            blocks: {
                 battles: mdiSwordCross,
                 community: mdiAccountGroup,
                 tribunal: mdiScaleBalance,
-                stats: mdiChartBar,
+                statistics: mdiChartBar,
                 social: mdiEarth,
-                open: mdiPackageVariant
+                contribute: mdiPackageVariant
             },
             logos: {
                 kojo: `${process.env.VUE_APP_CDN}/static/kojos-tricklab.png`
@@ -186,18 +136,20 @@
                     description: "Love the project? Check out our social media!",
                     links: [
                         {href: "https://www.facebook.com/trickingroyal", icon: mdiFacebook},
-                        {href: "https://www.instagram.com/tricking_royal", icon: mdiInstagram}
+                        {href: "https://www.instagram.com/tricking_royal", icon: mdiInstagram},
                     ]
                 },
                 {
                     name: "Support",
                     description: "Help support this project!",
                     links: [
-                        {href: "paypallink", icon: mdiPaypal},
+                        {href: "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WRNCKRU9VZH24&source=url", icon: mdiPaypal},
                         {
                             href: "https://www.patreon.com/raw_coding",
                             icon: mdiPatreon
-                        }]
+                        },
+                        {href: 'https://github.com/T0shik/Tricking-Royal', icon: mdiGithubBox}
+                    ]
                 }
             ]
         }),
@@ -206,6 +158,9 @@
             this.loadMatches();
         },
         methods: {
+            setLang(code) {
+                loadLanguageAsync(code);
+            },
             loadMatches() {
                 axios.get(`/anon/matches?index=${this.index}`).then(res => {
                     if (res.data && res.data.length === 0) this.endReached = true;
