@@ -12,7 +12,7 @@
                 <ProfileImage :class="{'selected': target === 0}"
                              :picture="users[0].picture"
                              :level="users[0].level"
-                             size="68px"></ProfileImage>
+                             :size="68"></ProfileImage>
                 <span class="pt-3 title">{{users[0].displayName}}</span>
             </div>
             <div class="title font-rock text-center font-weight-black primary--text">
@@ -22,7 +22,7 @@
                 <ProfileImage :class="{'selected': target === 1}"
                              :picture="users[1].picture"
                              :level="users[0].level"
-                             size="68px"></ProfileImage>
+                             :size="68"></ProfileImage>
                 <span class="pt-3 title">{{users[1].displayName}}</span>
             </div>
         </v-card-text>
