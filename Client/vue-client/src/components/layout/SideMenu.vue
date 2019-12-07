@@ -27,23 +27,23 @@
             </v-row>
             <v-row class="score-board" dense>
                 <v-col cols="4">
-                    <span class="subheading">Wins</span>
+                    <span class="subheading">{{$t('layout.win')}}</span>
                     <div class="title">{{profile.win}}</div>
                 </v-col>
                 <v-col cols="4">
-                    <span class="subheading">Loss</span>
+                    <span class="subheading">{{$t('layout.loss')}}</span>
                     <div class="title">{{profile.loss}}</div>
                 </v-col>
                 <v-col cols="4">
-                    <span class="subheading">Draw</span>
+                    <span class="subheading">{{$t('layout.draw')}}</span>
                     <div class="title">{{profile.draw}}</div>
                 </v-col>
                 <v-col cols="6">
-                    <span class="subheading">Reputation</span>
+                    <span class="subheading">{{$t('layout.reputation')}}</span>
                     <div class="title">{{profile.reputation}}</div>
                 </v-col>
                 <v-col cols="6">
-                    <span class="subheading">Style</span>
+                    <span class="subheading">{{$t('layout.style')}}</span>
                     <div class="title">{{profile.style}}</div>
                 </v-col>
             </v-row>
@@ -56,7 +56,7 @@
                         <v-icon>{{icons.battle}}</v-icon>
                     </v-list-item-icon>
                     <v-list-item-content>
-                        <v-list-item-title>Battles</v-list-item-title>
+                        <v-list-item-title>{{$t('layout.sideNav.battles')}}</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
                 <v-list-item to="/create-battle">
@@ -64,7 +64,7 @@
                         <v-icon>{{icons.add}}</v-icon>
                     </v-list-item-icon>
                     <v-list-item-content>
-                        <v-list-item-title>Create Battle</v-list-item-title>
+                        <v-list-item-title>{{$t('layout.sideNav.create')}}</v-list-item-title>
                     </v-list-item-content>
                     <span>{{profile.hosting}}/{{profile.hostingLimit}}</span>
                 </v-list-item>
@@ -73,7 +73,7 @@
                         <v-icon>{{icons.search}}</v-icon>
                     </v-list-item-icon>
                     <v-list-item-content>
-                        <v-list-item-title>Find Battle</v-list-item-title>
+                        <v-list-item-title>{{$t('layout.sideNav.find')}}</v-list-item-title>
                     </v-list-item-content>
                     <span>{{profile.joined}}/{{profile.joinedLimit}}</span>
                 </v-list-item>
@@ -82,7 +82,7 @@
                         <v-icon>{{icons.gavel}}</v-icon>
                     </v-list-item-icon>
                     <v-list-item-content>
-                        <v-list-item-title>Tribunal</v-list-item-title>
+                        <v-list-item-title>{{$t('layout.sideNav.tribunal')}}</v-list-item-title>
                     </v-list-item-content>
                     <span>
                     <v-progress-circular v-if="loadingCount" :size="20" :width="2" indeterminate></v-progress-circular>
@@ -94,11 +94,11 @@
         <v-dialog v-model="levelUp" :persistent="loading" max-width="500px">
             <v-card color="secondary">
                 <v-card-title>
-                    Level Up
+                    {{$t('layout.levelUp')}}
                 </v-card-title>
                 <v-card-text>
                     <span v-if="selectedPerk">{{selectedPerk.description}}</span>
-                    <span v-else>Select your perk.</span>
+                    <span v-else>{{$t('layout.selectPerk')}}</span>
                 </v-card-text>
                 <v-card-text class="d-flex flex-wrap justify-center">
                     <v-btn class="ma-1 grey" :class="{'primary': p.selected}" @click="selectPerk(p)" v-for="p in perks"
@@ -120,24 +120,21 @@
 <script>
     import EditProfile from "./modals/EditProfile";
     import {mapActions, mapGetters} from "vuex";
-
     import {
         mdiClose,
         mdiAccount,
         mdiSwordCross,
         mdiPlus,
         mdiGavel,
-        mdiAccountSearch
+        mdiAccountSearch,
+        mdiViewGridPlus,
+        mdiDoorOpen,
+        mdiScale
     } from "@mdi/js";
-    import perks from "../../data/perks";
     import ProfileImage from "../shared/ProfileImage";
 
     const initialState = () => ({
         levelUp: false,
-        perks: perks.map(x => ({
-            ...x,
-            selected: false
-        })),
         loading: false
     });
 
@@ -200,6 +197,34 @@
             },
             expBar() {
                 return (parseInt(this.profile.experience) * 100 / parseInt(this.profile.experienceNeed)).toFixed(0)
+            },
+            perks() {
+                return [
+                    {
+                        id: 0,
+                        name: this.$t('layout.levelPerks.host.title'),
+                        icon: mdiViewGridPlus,
+                        description: this.$t('layout.levelPerks.host.description'),
+                        selected: false,
+                        current: (profile) => `${this.$t('layout.levelPerks.host.current')}: ${profile.hostingLimit}`
+                    },
+                    {
+                        id: 1,
+                        name: this.$t('layout.levelPerks.guest.title'),
+                        icon: mdiDoorOpen,
+                        description: this.$t('layout.levelPerks.guest.description'),
+                        selected: false,
+                        current: (profile) => `${this.$t('layout.levelPerks.guest.current')}: ${profile.joinedLimit}`
+                    },
+                    {
+                        id: 2,
+                        name: this.$t('layout.levelPerks.voting.title'),
+                        icon: mdiScale,
+                        description: this.$t('layout.levelPerks.voting.description'),
+                        selected: false,
+                        current: (profile) => `${this.$t('layout.levelPerks.voting.current')}: ${profile.votingPower}`
+                    }
+                ]
             }
         }
     };

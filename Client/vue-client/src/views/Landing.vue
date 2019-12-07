@@ -5,7 +5,7 @@
                 :height="windowSize.y"
                 px-0
         >
-            <v-layout align-center column justify-center>
+            <div class="d-flex flex-column align-center">
                 <div>
                     <button v-for="entry in languages" :key="entry.name" @click="setLang(entry.locale)">
                         <flag :iso="entry.icon" v-bind:squared="false"/>
@@ -36,8 +36,7 @@
                 <v-btn large floating icon color="white" @click="$vuetify.goTo($refs.info, options)">
                     <v-icon size="46px">{{iconChevronDown}}</v-icon>
                 </v-btn>
-                <v-spacer></v-spacer>
-            </v-layout>
+            </div>
         </v-parallax>
 
         <v-row class="mx-2" ref="info">
@@ -51,20 +50,18 @@
                 </div>
             </v-col>
         </v-row>
-        <a href="" target="_blank">Project page</a>
-
-        <v-layout mb-5 column align-center justify-center ref="battles">
+        <div class="d-flex flex-column align-center" ref="battles">
             <div>
-                <h1>New Way to Battle</h1>
+                <h1>{{$t(`landing.battlesTitle`)}}</h1>
             </div>
-            <div class="main-card" v-if="matches && matches.length > 0">
+            <div class="main-card mb-5" v-if="matches && matches.length > 0">
                 <MatchPlayer v-for="match in matches" :key="match.key" :disabled="true" :match="match"></MatchPlayer>
                 <div class="text-center">
-                    <v-btn color="primary" v-if="!endReached" @click="loadMatches">load more</v-btn>
+                    <v-btn color="primary" v-if="!endReached" @click="loadMatches">{{$t(`misc.loadMore`)}}</v-btn>
                 </div>
             </div>
-            <div v-else>No Matches to show</div>
-        </v-layout>
+            <div v-else>{{$t(`landing.battlesEmpty`)}}</div>
+        </div>
 
         <v-footer class="py-4 white--text flex-column" color="secondary">
             <div v-for="p in plugs" :key="p.name" class="text-center">
@@ -130,28 +127,6 @@
             loading: true,
             index: 0,
             endReached: false,
-            plugs: [
-                {
-                    name: "Social",
-                    description: "Love the project? Check out our social media!",
-                    links: [
-                        {href: "https://www.facebook.com/trickingroyal", icon: mdiFacebook},
-                        {href: "https://www.instagram.com/tricking_royal", icon: mdiInstagram},
-                    ]
-                },
-                {
-                    name: "Support",
-                    description: "Help support this project!",
-                    links: [
-                        {href: "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WRNCKRU9VZH24&source=url", icon: mdiPaypal},
-                        {
-                            href: "https://www.patreon.com/raw_coding",
-                            icon: mdiPatreon
-                        },
-                        {href: 'https://github.com/T0shik/Tricking-Royal', icon: mdiGithubBox}
-                    ]
-                }
-            ]
         }),
         created() {
             this.onResize();
@@ -192,6 +167,33 @@
             },
             iconChevronDown() {
                 return mdiChevronDown;
+            },
+            plugs() {
+                return [
+                    {
+                        name: this.$t(`landing.plugs.social.title`),
+                        description: this.$t(`landing.plugs.social.text`),
+                        links: [
+                            {href: "https://www.facebook.com/trickingroyal", icon: mdiFacebook},
+                            {href: "https://www.instagram.com/tricking_royal", icon: mdiInstagram},
+                        ]
+                    },
+                    {
+                        name: this.$t(`landing.plugs.support.title`),
+                        description: this.$t(`landing.plugs.support.text`),
+                        links: [
+                            {
+                                href: "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=WRNCKRU9VZH24&source=url",
+                                icon: mdiPaypal
+                            },
+                            {
+                                href: "https://www.patreon.com/raw_coding",
+                                icon: mdiPatreon
+                            },
+                            {href: 'https://github.com/T0shik/Tricking-Royal', icon: mdiGithubBox}
+                        ]
+                    }
+                ]
             }
         },
         components: {

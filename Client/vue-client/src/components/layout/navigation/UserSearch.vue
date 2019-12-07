@@ -4,7 +4,7 @@
             :search-input.sync="search"
             :items="users"
             :loading="loading"
-            label="Search for other trickers"
+            :label="$t('layout.search.label')"
             item-avatar="picture"
             item-text="displayName"
             item-value="displayName"
@@ -45,13 +45,10 @@
                     function () {
                         this.$axios
                             .get(`/users?search=${v}`)
-                            .then(({data}) => this.users = data)
-                            .catch(err => {
-                                this.$logger.error("TODO remove this", err);
-                            })
-                            .then(() => {
+                            .then(({data}) => {
+                                this.users = data;
                                 this.loading = false;
-                            });
+                            })
                     }.bind(this),
                     500
                 );

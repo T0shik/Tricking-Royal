@@ -26,5 +26,17 @@
             title: "Contribute",
             text: "TrickingRoyal is an open source project. Visit the github project page to find out more!"
         },
+    },
+    battlesTitle: "New way to Battle",
+    battlesEmpty: "No matches to show.",
+    plugs: {
+        social: {
+            title: "Social",
+            text: "Love the project? Check out our social media!",
+        },
+        support: {
+            title: "Support",
+            text: "Help support this project!",
+        }
     }
 }

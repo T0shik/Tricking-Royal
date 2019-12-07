@@ -1,24 +1,23 @@
 <template>
     <div class="main-card" ref="root" v-scroll:#container="onScroll">
         <div class="ma-5 d-flex flex-column align-center" v-if="loading">
-            Loading Matches
+            {{$t('battles.loading')}}
             <v-progress-circular color="primary" indeterminate></v-progress-circular>
         </div>
         <v-card v-else-if="matches.length === 0" color="secondary" width="100%">
             <v-card-title class="justify-center">
-                <span class="title" v-if="type === 'active'">No Active Matches</span>
-                <span class="title" v-else-if="type === 'history'">No History</span>
-                <span class="title" v-else-if="type === 'spectate'">No Matches</span>
+                <span class="title" v-if="type === 'active'">{{$t('battles.empty.active.title')}}</span>
+                <span class="title" v-else-if="type === 'history'">{{$t('battles.empty.history.title')}}</span>
+                <span class="title" v-else-if="type === 'spectate'">{{$t('battles.empty.spectate.title')}}</span>
             </v-card-title>
             <v-card-text class="text-xs-center">
-                <span v-if="type === 'active'">Looks like you aren't in any battles, go find a battle!</span>
-                <span v-else-if="type === 'history'">Looks like you ain't got a history, go make it!</span>
-                <span v-else-if="type === 'spectate'">Looks there are no matches yet, be the 1st one!</span>
-                <span></span>
+                <span v-if="type === 'active'">{{$t('battles.empty.active.text')}}</span>
+                <span v-else-if="type === 'history'">{{$t('battles.empty.history.text')}}</span>
+                <span v-else-if="type === 'spectate'">{{$t('battles.empty.spectate.text')}}</span>
             </v-card-text>
             <v-card-actions class="justify-center">
-                <v-btn color="primary" to="/find-battle">find battle</v-btn>
-                <v-btn color="primary" v-if="type !== 'active'" to="/create-battle">create battle</v-btn>
+                <v-btn color="primary" to="/find-battle">{{$t('battles.find')}}</v-btn>
+                <v-btn color="primary" v-if="type !== 'active'" to="/create-battle">{{$t('battles.create')}}</v-btn>
             </v-card-actions>
         </v-card>
         <div v-else>
@@ -30,17 +29,17 @@
 
         <v-bottom-navigation class="secondary" mandatory v-model="type" ref="nav" grow>
             <v-btn class="pa-0" color="primary" text :to="'/battles/history'" value="history">
-                <span>History</span>
+                <span>{{$t('battles.history')}}</span>
                 <v-icon>{{icons.history}}</v-icon>
             </v-btn>
 
             <v-btn class="pa-0" color="primary" text :to="'/battles/active'" value="active">
-                <span>Active</span>
+                <span>{{$t('battles.active')}}</span>
                 <v-icon>{{icons.group}}</v-icon>
             </v-btn>
 
             <v-btn class="pa-0" color="primary" text :to="'/battles/spectate'" value="spectate">
-                <span>Spectate</span>
+                <span>{{$t('battles.spectate')}}</span>
                 <v-icon>{{icons.globe}}</v-icon>
             </v-btn>
         </v-bottom-navigation>

@@ -1179,18 +1179,22 @@
               <e p="api.js" t="Include" />
               <e p="enum.js" t="Include" />
               <e p="matchRules.js" t="Include" />
-              <e p="perks.js" t="Include" />
               <e p="skills.js" t="Include" />
             </e>
             <e p="lang" t="Include">
               <e p="en" t="Include">
                 <e p="_index.js" t="Include" />
+                <e p="battles.js" t="Include" />
                 <e p="landing.js" t="Include" />
+                <e p="layout.js" t="Include" />
+                <e p="misc.js" t="Include" />
+                <e p="skills.js" t="Include" />
               </e>
-              <e p="languages.js" t="Include" />
+              <e p="languages.json" t="Include" />
               <e p="ru" t="Include">
                 <e p="_index.js" t="Include" />
                 <e p="landing.js" t="Include" />
+                <e p="misc.js" t="Include" />
               </e>
             </e>
             <e p="logger" t="Include">

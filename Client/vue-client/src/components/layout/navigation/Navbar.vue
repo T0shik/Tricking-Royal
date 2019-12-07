@@ -29,8 +29,8 @@
             </template>
 
             <v-card color="secondary">
-                <v-card-title>
-                    <v-btn text small @click="clearNotifications">clear all</v-btn>
+                <v-card-title class="pa-2">
+                    <v-btn text small @click="clearNotifications">{{$t('misc.clearAll')}}</v-btn>
                     <v-spacer></v-spacer>
                     <v-btn text icon small @click="toggleNotifications">
                         <v-icon>{{icons.close}}</v-icon>
@@ -48,7 +48,7 @@
                 </v-list>
                 <v-divider></v-divider>
                 <v-card-actions class="justify-center">
-                    <v-btn small text @click="getNotifications" v-if="!empty">Load More</v-btn>
+                    <v-btn small text @click="getNotifications" v-if="!empty">{{$t('misc.loadMore')}}</v-btn>
                 </v-card-actions>
             </v-card>
         </v-menu>
