@@ -1,33 +1,31 @@
 <template>
     <div class="main-card">
-        <Rules />
+        <Rules/>
         <v-btn @click="refreshMatches({})" color="primary" fixed bottom small left fab>
             <v-icon>{{icons.refresh}}</v-icon>
         </v-btn>
         <div class="ma-5 d-flex flex-column align-center" v-if="loading">
             {{$t('misc.loadingMatches')}}
-            <v-progress-circular color="primary" indeterminate />
+            <v-progress-circular color="primary" indeterminate/>
         </div>
         <div v-else-if="matches.length > 0">
             <OpenMatch v-for="match in matches" :key="match.key"
                        :match="match"
                        :loading="loadingAction"
                        @join="joinMatch(match.id)"
-                       @delete="deleteMatch({ type: openMatchType,matchId: match.id})" />
+                       @delete="deleteMatch({ type: openMatchType,matchId: match.id})"/>
         </div>
-        <v-layout v-else column align-center justify-start>
-            <v-card color="secondary" width="100%">
-                <v-card-title class="justify-center">
-                    <h1 class="title">{{$t('battles.empty.open.title')}}</h1>
-                </v-card-title>
-                <v-card-text class="text-xs-center">
-                    <span>{{$t('battles.empty.open.text')}}</span>
-                </v-card-text>
-                <v-card-actions class="justify-center">
-                    <v-btn color="primary" to="/create-battle">{{$t('battles.create')}}</v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-layout>
+        <v-card v-else color="secondary" width="100%">
+            <v-card-title class="justify-center">
+                <h1 class="title">{{$t('battles.empty.open.title')}}</h1>
+            </v-card-title>
+            <v-card-text class="text-xs-center">
+                <span>{{$t('battles.empty.open.text')}}</span>
+            </v-card-text>
+            <v-card-actions class="justify-center">
+                <v-btn color="primary" to="/create-battle">{{$t('battles.create')}}</v-btn>
+            </v-card-actions>
+        </v-card>
     </div>
 </template>
 
