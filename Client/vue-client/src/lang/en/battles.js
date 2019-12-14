@@ -23,5 +23,6 @@
             title: "No Open Matches",
             text: "Looks like there are no open matches, go make one!"
         }
-    }
+    },
+    cantJoinOpen: "Can't join this match"
 }

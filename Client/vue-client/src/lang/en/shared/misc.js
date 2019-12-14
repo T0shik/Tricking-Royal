@@ -4,6 +4,8 @@
     loadingMatches: 'Loading Matches',
     back: 'Back',
     next: 'Next',
+    remove: 'Remove',
+    join: 'Join',
     choose: 'Choose',
     clearAll: "Clear All",
     pick: "Pick",

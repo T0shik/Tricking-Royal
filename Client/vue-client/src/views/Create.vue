@@ -4,7 +4,7 @@
         <v-card>
             <v-card-title>
                 <span>{{stageInfo.title}}</span>
-                <v-spacer></v-spacer>
+                <v-spacer />
                 <v-btn color="info" icon @click="$store.commit('SET_DISPLAY_RULES', {display: true})">
                     <v-icon>{{icons.info}}</v-icon>
                 </v-btn>
@@ -44,7 +44,7 @@
                                     mask="##"
                                     v-model="form.turnTime"
                                     suffix="Days"
-                            ></v-text-field>
+                            />
                             <v-btn color="primary" @click="stage++" :disabled="!valid">{{$t('misc.pick')}}</v-btn>
                         </v-card-actions>
                     </v-window-item>

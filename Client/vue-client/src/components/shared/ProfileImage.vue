@@ -16,7 +16,7 @@
         props: {
             picture: {
                 required: true,
-                default: ""
+                type: String,
             },
             level: {
                 required: false,

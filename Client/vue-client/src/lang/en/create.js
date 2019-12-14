@@ -21,6 +21,7 @@
         },
         time: {
             title: 'Time per turn',
+            short: 'Turn Time',
             description: "How long do you need per turn?"
         },
         confirm: {
