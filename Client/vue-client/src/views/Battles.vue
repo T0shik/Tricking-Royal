@@ -53,17 +53,17 @@
     import {MATCH_TYPES} from "../data/enum";
 
     export default {
-        created() {
-            let type = this.$route.params.type
-                ? this.$route.params.type
-                : MATCH_TYPES.ACTIVE;
-
-            this.setType({type});
-        },
         watch: {
-            '$route.params': function ({type}, {type: oldType}) {
-                this.setType({type, force: type === oldType});
-            },
+            '$route.params': {
+                handler: function({type}, {type: oldType}) {
+                    if(!type){
+                        type = MATCH_TYPES.ACTIVE;
+                    }
+                    
+                    this.setType({type, force: type === oldType});
+                },
+                immediate: true
+            }
         },
         methods: {
             ...mapActions('matches', [

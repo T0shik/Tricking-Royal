@@ -168,7 +168,6 @@
 
 <script>
     import axios from "axios";
-    import skillList from "../../../data/skills";
     import {NOTIFICATION_TYPE} from "../../../data/enum";
     import {mapMutations, mapActions} from "vuex";
     import {
@@ -375,7 +374,8 @@
         },
         computed: {
             skillList() {
-                return skillList;
+                //todo finish this up
+                return [];
             },
             icons() {
                 return {
