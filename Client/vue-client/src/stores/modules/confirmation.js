@@ -48,14 +48,19 @@ export default {
             });
         },
         pwaRefresh({commit}) {
-            commit('set', initialState({
-                title: 'Update',
-                description: 'New version of the app is available, refresh to update.',
-                buttonText: "Refresh",
-                action: () => {
-                    window.location.reload();
-                }
-            }))
+            let lastPrompt = localStorage.getItem(STORAGE_KEYS.UPDATE_PROMPT);
+            let now = new Date();
+            //6 days cooldown
+            if (now - lastPrompt > 518400000) {
+                commit('set', initialState({
+                    title: 'Update',
+                    description: 'New version of the app is available, refresh to update.',
+                    buttonText: "Refresh",
+                    action: () => {
+                        window.location.reload();
+                    }
+                }))
+            }
         },
         copyCatPass({commit, dispatch}, {id}) {
             commit('set', initialState({

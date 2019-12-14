@@ -7,11 +7,11 @@
     <e p="C:\Users\Toshik\.nuget\packages\xunit.runner.visualstudio\2.4.0\build\netcoreapp1.0\xunit.runner.reporters.netcoreapp10.dll" t="Include" />
     <e p="C:\Users\Toshik\.nuget\packages\xunit.runner.visualstudio\2.4.0\build\netcoreapp1.0\xunit.runner.utility.netcoreapp10.dll" t="Include" />
     <e p="C:\Users\Toshik\.nuget\packages\xunit.runner.visualstudio\2.4.0\build\netcoreapp1.0\xunit.runner.visualstudio.dotnetcore.testadapter.dll" t="Include" />
-    <e p="C:\Users\Toshik\.Rider2019.2\config\consoles\db" t="IncludeRecursive" />
-    <e p="C:\Users\Toshik\.Rider2019.2\config\Extensions" t="IncludeRecursive" />
-    <e p="C:\Users\Toshik\.Rider2019.2\config\scratches" t="IncludeRecursive" />
-    <e p="C:\Users\Toshik\.Rider2019.2\system\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\Toshik\.Rider2019.2\system\resharper-host\local\Transient\ReSharperHost\v192\SolutionCaches\_TrickingRoyal.-167241190.00" t="ExcludeRecursive" />
+    <e p="C:\Users\Toshik\.Rider2019.3\config\consoles\db" t="IncludeRecursive" />
+    <e p="C:\Users\Toshik\.Rider2019.3\config\Extensions" t="IncludeRecursive" />
+    <e p="C:\Users\Toshik\.Rider2019.3\config\scratches" t="IncludeRecursive" />
+    <e p="C:\Users\Toshik\.Rider2019.3\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\Toshik\.Rider2019.3\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_TrickingRoyal.-167241190.00" t="ExcludeRecursive" />
     <e p="D:\WS\Visual Studio 2017\TrickingRoyal" t="IncludeFlat">
       <e p="Battles" t="IncludeRecursive">
         <e p="attributes" t="Include">
@@ -130,6 +130,7 @@
           <e p="Debug" t="Include">
             <e p="netcoreapp2.2" t="Include">
               <e p="Battles.Api.AssemblyInfo.cs" t="Include" />
+              <e p="Battles.Api.RazorAssemblyInfo.cs" t="Include" />
             </e>
           </e>
         </e>
@@ -322,6 +323,7 @@
           <e p="Debug" t="Include">
             <e p="netcoreapp2.2" t="Include">
               <e p="Battles.Cdn.AssemblyInfo.cs" t="Include" />
+              <e p="Battles.Cdn.RazorAssemblyInfo.cs" t="Include" />
             </e>
           </e>
         </e>
@@ -1031,6 +1033,7 @@
           <e p="Debug" t="Include">
             <e p="netcoreapp2.2" t="Include">
               <e p="Battles.Client.AssemblyInfo.cs" t="Include" />
+              <e p="Battles.Client.RazorAssemblyInfo.cs" t="Include" />
             </e>
           </e>
         </e>
@@ -1275,6 +1278,7 @@
           <e p="Debug" t="Include">
             <e p="netcoreapp2.2" t="Include">
               <e p="IdentityServer.AssemblyInfo.cs" t="Include" />
+              <e p="IdentityServer.RazorAssemblyInfo.cs" t="Include" />
             </e>
           </e>
         </e>
