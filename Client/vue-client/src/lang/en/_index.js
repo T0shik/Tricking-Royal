@@ -6,6 +6,7 @@ import layout from "./layout";
 import battles from "./battles";
 import create from "./create"
 import tribunal from "./tribunal";
+import user from "./user";
 
 export default {
     landing,
@@ -15,5 +16,6 @@ export default {
     battles,
     create,
     match,
-    tribunal
+    tribunal,
+    user
 }

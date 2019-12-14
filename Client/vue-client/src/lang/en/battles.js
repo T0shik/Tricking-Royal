@@ -1,4 +1,5 @@
 ﻿export default {
+    open: "Open",
     history: "History",
     active: "Active",
     spectate: "Spectate",

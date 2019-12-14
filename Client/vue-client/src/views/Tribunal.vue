@@ -1,12 +1,11 @@
 <template>
     <div class="main-card">
-        <TribunalVoting />
+        <TribunalVoting/>
         <div class="ma-5 d-flex flex-column align-center" v-if="loading">
             {{$t('misc.loadingMatches')}}
-            <v-progress-circular color="primary" indeterminate />
+            <v-progress-circular color="primary" indeterminate/>
         </div>
-        <v-card v-else-if="evaluations.length === 0" class="mb-4" dark color="secondary" max-width="500" min-width="320"
-                width="100%">
+        <v-card v-else-if="evaluations.length === 0" class="mb-4" color="secondary" width="100%">
             <v-card-title class="justify-center">
                 <h1 class="title">{{$t('tribunal.empty.title')}}</h1>
             </v-card-title>
@@ -16,13 +15,15 @@
                 <p>{{$t('tribunal.empty.description3')}}</p>
             </v-card-text>
             <v-card-actions class="justify-center">
-                <v-btn color="primary" v-if="type !== 'history'" :to="'/tribunal/history'">{{$t('tribunal.history')}}</v-btn>
+                <v-btn color="primary" v-if="type !== 'history'" :to="'/tribunal/history'">{{$t('tribunal.history')}}
+                </v-btn>
                 <v-btn color="primary" v-if="type !== 'flag'" :to="'/tribunal/flag'">{{$t('tribunal.flag')}}</v-btn>
-                <v-btn color="primary" v-if="type !== 'complete'" :to="'/tribunal/complete'">{{$t('tribunal.vote')}}</v-btn>
+                <v-btn color="primary" v-if="type !== 'complete'" :to="'/tribunal/complete'">{{$t('tribunal.vote')}}
+                </v-btn>
             </v-card-actions>
         </v-card>
         <div v-else>
-            <MatchPlayer v-for="e in evaluations" :match="e" :key="e.key" />
+            <MatchPlayer v-for="e in evaluations" :match="e" :key="e.key"/>
         </div>
 
         <v-bottom-navigation class="secondary" mandatory absolute v-model="type" ref="nav" grow>
@@ -45,10 +46,10 @@
 </template>
 
 <script>
-    import TribunalVoting from "../components/tribunal/modals/TribunalVoting";
     import {mapGetters, mapActions} from "vuex";
     import {mdiFlag, mdiHistory, mdiStar} from "@mdi/js";
-    import MatchPlayer from "../components/match/MatchPlayer";
+    import MatchPlayer from "@/components/match/MatchPlayer";
+    import TribunalVoting from "@/components/tribunal/modals/TribunalVoting";
 
     export default {
         data() {
@@ -57,8 +58,9 @@
             };
         },
         created() {
-            if (this.$route.params.type)
+            if (this.$route.params.type) {
                 this.type = this.$route.params.type;
+            }
         },
         watch: {
             type: {
