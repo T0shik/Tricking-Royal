@@ -1,6 +1,7 @@
 ﻿export default {
     signIn: 'Sign In',
     loadMore: 'Load More',
+    loadingMatches: 'Loading Matches',
     back: 'Back',
     next: 'Next',
     choose: 'Choose',
