@@ -7,6 +7,7 @@ import battles from "./battles";
 import create from "./create"
 import tribunal from "./tribunal";
 import user from "./user";
+import watch from "./watch";
 
 export default {
     landing,
@@ -17,5 +18,6 @@ export default {
     create,
     match,
     tribunal,
-    user
+    user,
+    watch
 }

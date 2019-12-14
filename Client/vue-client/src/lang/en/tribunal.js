@@ -8,4 +8,9 @@
     history: "History",
     vote: "Vote",
     flag: "Flag",
+    reason: "Reason",
+    punish: "Punish",
+    forgive: "Forgive",
+    selectWinner: "Select Winner",
+    loadingResults: "Loading Results",
 }

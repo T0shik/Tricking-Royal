@@ -36,6 +36,7 @@
     <Content Include="vue-client\src\lang\en\skills.js" />
     <Content Include="vue-client\src\lang\en\tribunal.js" />
     <Content Include="vue-client\src\lang\en\user.js" />
+    <Content Include="vue-client\src\lang\en\watch.js" />
     <Content Include="vue-client\src\lang\en\_index.js" />
     <Content Include="vue-client\src\lang\languages.json" />
     <Content Include="vue-client\src\lang\ru\landing.js" />

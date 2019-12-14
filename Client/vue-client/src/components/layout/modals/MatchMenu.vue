@@ -1,10 +1,11 @@
 <template>
     <v-dialog :value="open" @input="dismiss" max-width="320">
         <v-card color="secondary">
+            <input type="text" ref="clipboard" style="position: fixed; left: -9999px"/>
             <v-card-title>
                 <span v-if="title">{{title}}</span>
                 <span v-else>Menu</span>
-                <v-spacer></v-spacer>
+                <v-spacer />
                 <v-btn icon text @click="dismiss">
                     <v-icon>{{icons.close}}</v-icon>
                 </v-btn>
@@ -26,7 +27,7 @@
                             <p class="title">{{menu.title}}</p>
                             <p class="subtitle">{{menu.description}}</p>
                             <v-text-field v-if="menu.comment" :counter="50" v-model="comment"
-                                          label="Comment"></v-text-field>
+                                          label="Comment"/>
                         </div>
                     </v-window-item>
                     <v-window-item :value="2">
@@ -122,14 +123,10 @@
                     ? this.match.id
                     : this.match.matchId;
 
-                el.value = process.env.VUE_APP_URL + "/watch/" + id;
-                el.setAttribute("readonly", "");
-                el.style.position = "absolute";
-                el.style.left = "-9999px";
-                document.body.appendChild(el);
-                el.select();
-                document.execCommand("copy");
-                document.body.removeChild(el);
+                this.$refs.clipboard.value = process.env.VUE_APP_URL + "/watch/" + id;
+                this.$refs.clipboard.select();
+                let copyResult = document.execCommand("copy");
+                this.$logger.log("[MatchMenu.vue].share copy to clipboard value", el.value, copyResult);
 
                 this.popup({
                     message: "Link copied to clipboard",

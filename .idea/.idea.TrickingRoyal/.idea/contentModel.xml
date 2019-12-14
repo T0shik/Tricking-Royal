@@ -1197,6 +1197,7 @@
                 <e p="skills.js" t="Include" />
                 <e p="tribunal.js" t="Include" />
                 <e p="user.js" t="Include" />
+                <e p="watch.js" t="Include" />
               </e>
               <e p="languages.json" t="Include" />
               <e p="ru" t="Include">

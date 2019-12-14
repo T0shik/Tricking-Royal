@@ -16,7 +16,7 @@
             >
                 <v-row class="px-4">
                     <span class="title">{{results.hostVotes}}</span>
-                    <v-spacer></v-spacer>
+                    <v-spacer/>
                     <span class="title">{{results.opponentVotes}}</span>
                 </v-row>
             </v-progress-linear>
