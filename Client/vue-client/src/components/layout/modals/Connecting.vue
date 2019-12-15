@@ -1,8 +1,8 @@
 <template>
   <v-dialog v-model="connecting" persistent width="300">
     <div class="secondary pa-3">
-      <span class="title white--text">Connecting</span>
-      <v-progress-linear indeterminate color="primary" class="mb-0"></v-progress-linear>
+      <span class="title white--text">{{$t('misc.connecting')}}</span>
+      <v-progress-linear indeterminate color="primary" class="mb-0"/>
     </div>
   </v-dialog>
 </template>

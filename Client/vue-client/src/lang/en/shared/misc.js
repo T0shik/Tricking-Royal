@@ -1,7 +1,10 @@
 ﻿export default {
     signIn: 'Sign In',
+    signOut: 'Sign Out',
     loadMore: 'Load More',
     loadingMatches: 'Loading Matches',
+    disable: 'Disable',
+    enable: 'Enable',
     back: 'Back',
     next: 'Next',
     remove: 'Remove',
@@ -10,7 +13,10 @@
     clearAll: "Clear All",
     pick: "Pick",
     create: "Create",
+    close: "Close",
+    connecting: "Connecting",
     rules: "Rules",
     rulesRead: "I have read the rules",
-    days: "Days"
+    days: "Days",
+    notifications: "Notifications"
 }

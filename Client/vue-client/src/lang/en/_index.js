@@ -8,6 +8,7 @@ import create from "./create"
 import tribunal from "./tribunal";
 import user from "./user";
 import watch from "./watch";
+import editProfile from "./editProfile";
 
 export default {
     landing,
@@ -19,5 +20,6 @@ export default {
     match,
     tribunal,
     user,
-    watch
+    watch,
+    editProfile
 }

@@ -29,6 +29,7 @@
     <Content Include="vue-client\src\data\shared.js" />
     <Content Include="vue-client\src\lang\en\battles.js" />
     <Content Include="vue-client\src\lang\en\create.js" />
+    <Content Include="vue-client\src\lang\en\editProfile.js" />
     <Content Include="vue-client\src\lang\en\landing.js" />
     <Content Include="vue-client\src\lang\en\layout.js" />
     <Content Include="vue-client\src\lang\en\shared\match.js" />

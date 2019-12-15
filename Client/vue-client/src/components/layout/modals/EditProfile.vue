@@ -10,19 +10,19 @@
                 <v-btn icon @click="dialog = false">
                     <v-icon>{{icons.close}}</v-icon>
                 </v-btn>
-                <v-spacer></v-spacer>
-                <v-toolbar-title class="white--text">Settings</v-toolbar-title>
-                <v-spacer></v-spacer>
-                <v-progress-circular color="primary" v-if="loadingName" indeterminate ></v-progress-circular>
+                <v-spacer/>
+                <v-toolbar-title class="white--text">{{$t('editProfile.settings')}}</v-toolbar-title>
+                <v-spacer/>
+                <v-progress-circular color="primary" v-if="loadingName" indeterminate/>
                 <v-btn v-else icon @click="save" :color="valid ? 'green' : 'red'" :disabled="!valid">
-                    <v-icon >{{valid ? icons.check : icons.ban }}</v-icon>
+                    <v-icon>{{valid ? icons.check : icons.ban }}</v-icon>
                 </v-btn>
             </v-toolbar>
             <v-form class="px-4 edit-profile" ref="form" v-model="valid">
                 <v-container>
                     <v-row>
                         <v-col>
-                            <h1 class="title">Personal Information</h1>
+                            <h1 class="title">{{$t('editProfile.personal.title')}}</h1>
                             <div class="d-flex align-center my-2">
                                 <v-avatar size="48px" color="secondary">
                                     <img v-if="tempImage" :src="tempImage" alt="alt" style="object-fit:cover"/>
@@ -30,9 +30,11 @@
                                     <v-icon v-else class="grey--text">{{icons.account}}</v-icon>
                                 </v-avatar>
                                 <div class="ml-2">
-                                    <v-btn outlined color="info" @click="$refs.image.click()">Change profile picture
+                                    <v-btn outlined color="info" @click="$refs.image.click()">
+                                        {{$t('editProfile.personal.changeImg')}}
                                     </v-btn>
-                                    <v-btn class="ma-0" text color="error" v-if="tempImage" @click="clearImage">Remove
+                                    <v-btn class="ma-0" text color="error" v-if="tempImage" @click="clearImage">
+                                        {{$t('misc.remove')}}
                                     </v-btn>
                                     <input
                                             hidden
@@ -46,67 +48,69 @@
                             <v-text-field
                                     v-model="profile.displayName"
                                     :rules="validation.displayNameRules"
-                                    label="Username"
+                                    :label="$t('editProfile.personal.username')"
                                     placeholder="Super_trix_69"
                                     :loading="loadingName"
                                     validate
                                     :counter="15"
                                     maxlength="15"
-                            ></v-text-field>
+                            />
                             <v-select
                                     :items="skillList"
                                     item-text="name"
                                     item-value="value"
                                     v-model="profile.skill"
-                                    label="Skill"
-                            ></v-select>
+                                    :label="$t('editProfile.personal.skill')"
+                            />
                             <v-textarea
                                     counter="255"
                                     v-model="profile.information"
-                                    label="Bio"
+                                    :label="$t('editProfile.personal.bio')"
                                     validate
                                     maxlength="255"
-                                    placeholder="Walked through hell and fire to land this cork."
-                                    hint="Say something about yourself!"
-                            ></v-textarea>
-                            <v-subheader class="px-0">Social Media</v-subheader>
+                                    :placeholder="$t('editProfile.personal.bioPlace')"
+                                    :hint="$t('editProfile.personal.bioHint')"
+                            />
+                            <v-subheader class="px-0">{{$t('editProfile.social')}}</v-subheader>
                             <v-text-field
                                     :prepend-icon="icons.instagram"
                                     :rules="validation.socialLinks"
                                     v-model="profile.instagram"
                                     label="Instagram"
                                     placeholder="anton_toshik"
-                            ></v-text-field>
+                            />
                             <v-text-field
                                     :prepend-icon="icons.facebook"
                                     :rules="validation.socialLinks"
                                     v-model="profile.facebook"
                                     label="Facebook"
                                     placeholder="anton.wieslander"
-                            ></v-text-field>
+                            />
                             <v-text-field
                                     :prepend-icon="icons.youtube"
                                     :rules="validation.socialLinks"
                                     v-model="profile.youtube"
                                     label="Youtube"
                                     placeholder="UCP_jWxjn__YXmo4iU7Low0g"
-                            ></v-text-field>
+                            />
                         </v-col>
                         <v-col>
                             <v-list two-line flat subheader>
-                                <v-subheader>Notifications</v-subheader>
+                                <v-subheader>{{$t('editProfile.notifications')}}</v-subheader>
                                 <v-list-item>
                                     <v-list-item-action>
                                         <v-icon color="green" v-if="pushEnabled">{{icons.bell}}</v-icon>
                                         <v-icon color="red" v-else>{{icons.bellOff}}</v-icon>
                                     </v-list-item-action>
                                     <v-list-item-content>
-                                        <v-list-item-title>Push</v-list-item-title>
+                                        <v-list-item-title>{{$t('editProfile.push')}}</v-list-item-title>
                                         <v-list-item-subtitle v-if="pushEnabled">
-                                            Push notifications are enabled.
+                                            {{$t('editProfile.pushEnabled')}}
                                         </v-list-item-subtitle>
                                         <v-list-item-subtitle v-else>
-                                            <v-btn small color="info" @click="enablePushNotifications">Turn On</v-btn>
+                                            <v-btn small color="info" @click="enablePushNotifications">
+                                                {{$t('editProfile.turnOn')}}
+                                            </v-btn>
                                         </v-list-item-subtitle>
                                     </v-list-item-content>
                                 </v-list-item>
@@ -123,7 +127,8 @@
                                     </v-list-item-action>
                                     <v-list-item-content>
                                         <v-list-item-title>
-                                            Email (click icon to {{emailConfig.enabled ? 'disable' : 'enable'}})
+                                            {{$t('editProfile.email')}} ({{$t('editProfile.clickIconTo')}}
+                                            {{emailConfig.enabled ? $t('misc.disable') : $t('misc.enable')}})
                                         </v-list-item-title>
                                         <v-list-item-subtitle>
                                             {{emailConfig.notificationId}}
@@ -135,28 +140,28 @@
                                         <v-icon>{{icons.email}}</v-icon>
                                     </v-list-item-action>
                                     <v-list-item-content>
-                                        <v-list-item-title>Email</v-list-item-title>
+                                        <v-list-item-title>{{$t('editProfile.email')}}</v-list-item-title>
                                         <v-list-item-subtitle v-if="emailConfigLoading">
-                                            <v-progress-linear color="primary" indeterminate></v-progress-linear>
+                                            <v-progress-linear color="primary" indeterminate/>
                                         </v-list-item-subtitle>
                                         <v-list-item-subtitle v-if="!emailConfig">
                                             <v-btn small color="info"
                                                    @click="updateEmailConfig(true)">
-                                                Turn On
+                                                {{$t('editProfile.turnOn')}}
                                             </v-btn>
                                         </v-list-item-subtitle>
                                     </v-list-item-content>
                                 </v-list-item>
-                                <v-divider></v-divider>
+                                <v-divider/>
                             </v-list>
-                            <v-subheader>Account</v-subheader>
+                            <v-subheader>{{$t('editProfile.account')}}</v-subheader>
                             <div class="d-flex">
                                 <v-btn color="warning" @click="signOut">
-                                    Sign Out
+                                    {{$t('misc.signOut')}}
                                     <v-icon right>{{icons.logout}}</v-icon>
                                 </v-btn>
-                                <v-spacer></v-spacer>
-                                <v-btn color="error" disabled>Delete Account</v-btn>
+                                <v-spacer/>
+                                <v-btn color="error" disabled>{{$t('editProfile.deleteAccount')}}</v-btn>
                             </div>
                         </v-col>
                     </v-row>
@@ -198,16 +203,6 @@
 
                 validName: true,
                 pushEnabled: false,
-                validation: {
-                    displayNameRules: [
-                        v => !!v || "Username is required",
-                        () => this.validName || "Username already taken.",
-                        v => !/\s/.test(v) || "No whitespace allowed.",
-                    ],
-                    socialLinks: [
-                        v => !/^[@]|\/|:|\?|&/.test(v) || "Input the Username or Id of page.",
-                    ]
-                },
 
                 profile: {
                     displayName: "",
@@ -394,6 +389,18 @@
                     youtube: mdiYoutube,
                     logout: mdiLogout
                 }
+            },
+            validation() {
+                return {
+                    displayNameRules: [
+                        v => !!v || this.$t('editProfile.validation.usernameRequired'),
+                        () => this.validName || this.$t('editProfile.validation.usernameTaken'),
+                        v => !/\s/.test(v) || this.$t('editProfile.validation.noWhiteSpace'),
+                    ],
+                    socialLinks: [
+                        v => !/^[@]|\/|:|\?|&/.test(v) || this.$t('editProfile.validation.socialLinks'),
+                    ]
+                }
             }
         }
     };
@@ -403,6 +410,7 @@
     .edit-profile {
         padding-top: 56px;
     }
+
     .toolbar {
         position: fixed;
         width: 100%;

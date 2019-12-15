@@ -18,7 +18,7 @@
                 <v-btn :disabled="section === 1" text @click="section--">
                     {{$t("misc.back")}}
                 </v-btn>
-                <v-spacer></v-spacer>
+                <v-spacer/>
                 <v-btn :disabled="section === matches.length" color="info" depressed @click="section++">
                     {{$t("misc.next")}}
                 </v-btn>
@@ -69,9 +69,7 @@
         computed: {
             ...mapState(['displayRules']),
             title() {
-                let index = this.section - 1;
-                console.log(index)
-                let key = this.matches[index].key;
+                let key = this.matches[this.section - 1].key;
                 return this.$t(`match.${key}.name`);
             }
         }

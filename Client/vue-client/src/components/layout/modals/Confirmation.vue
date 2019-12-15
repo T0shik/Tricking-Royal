@@ -3,7 +3,7 @@
         <v-card dark color="secondary">
             <v-card-title class="title">
                 <span>{{title}}</span>
-                <v-spacer></v-spacer>
+                <v-spacer />
                 <v-btn text icon @click="dismiss">
                     <v-icon>{{icons.close}}</v-icon>
                 </v-btn>
@@ -18,7 +18,7 @@
                 <v-btn color="primary" @click="confirm" :loading="loading" :disabled="loading">
                     {{buttonText}}
                 </v-btn>
-                <v-btn text @click="dismiss">Close</v-btn>
+                <v-btn text @click="dismiss">{{$t('misc.close')}}</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
