@@ -7,6 +7,7 @@
     draw: "Draw",
     reputation: "Reputation",
     style: "Style",
+    menu: "Menu",
     sideNav: {
         battles: "Battles",
         create: "Create Battle",

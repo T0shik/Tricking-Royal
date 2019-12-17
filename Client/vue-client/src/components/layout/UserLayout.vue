@@ -1,15 +1,15 @@
 <template>
     <v-app>
-        <Popup></Popup>
-        <UpdateMatch></UpdateMatch>
-        <MatchMenu></MatchMenu>
-        <Confirmation></Confirmation>
-        <Navbar @toggle="sideMenu = !sideMenu"></Navbar>
-        <SideMenu :show="sideMenu" @input="toggleMenu"></SideMenu>
+        <Popup />
+        <UpdateMatch/>
+        <MatchMenu/>
+        <Confirmation/>
+        <Navbar @toggle="sideMenu = !sideMenu"/>
+        <SideMenu :show="sideMenu" @input="toggleMenu"/>
         <v-content>
             <v-container fill-height fluid class="px-0 justify-center align-start overflow-x-hidden" id="container">
-                <StatusBar></StatusBar>
-                <router-view></router-view>
+                <StatusBar/>
+                <router-view/>
             </v-container>
         </v-content>
     </v-app>

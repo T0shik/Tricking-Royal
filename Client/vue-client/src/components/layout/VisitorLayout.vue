@@ -1,7 +1,7 @@
 <template>
   <v-app>
-    <MatchMenu></MatchMenu>
-    <router-view></router-view>
+    <MatchMenu/>
+    <router-view/>
   </v-app>
 </template>
 <script>

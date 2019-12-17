@@ -16,7 +16,7 @@
         <template v-slot:item="data">
             <template>
                 <div class="d-flex align-center justify-center w100">
-                    <ProfileImage :picture="data.item.picture" :size="'36px'"></ProfileImage>
+                    <ProfileImage :picture="data.item.picture" :size="'36px'" />
                     <span class="ml-2 body-2">{{data.item.displayName}}</span>
                     <span class="level body-2">{{data.item.level}}</span>
                 </div>

@@ -10,11 +10,12 @@
     >
         <v-container class="px-4">
             <v-row class="justify-center" v-if="profile.levelUpPoints > 0">
-                <v-btn class="black--text" color="yellow accent-3" @click="levelUp = true">Level Up</v-btn>
+                <v-btn class="black--text" color="yellow accent-3" @click="levelUp = true">{{$t('misc.levelUp')}}
+                </v-btn>
             </v-row>
             <v-row class="align-center">
                 <ProfileImage :class="{'level-up': profile.levelUpPoints}" :picture="profile.picture"
-                              :level="profile.level"></ProfileImage>
+                              :level="profile.level"/>
                 <v-col class="px-1">
                     <span class="white--text subtitle-2">{{profile.displayName}}</span>
                     <div>
@@ -23,7 +24,7 @@
                         </v-progress-linear>
                     </div>
                 </v-col>
-                <EditProfile></EditProfile>
+                <EditProfile/>
             </v-row>
             <v-row class="score-board" dense>
                 <v-col cols="4">
@@ -48,7 +49,7 @@
                 </v-col>
             </v-row>
         </v-container>
-        <p class="title ml-2 white--text">Menu</p>
+        <p class="title ml-2 white--text">{{$t('layout.menu')}}</p>
         <v-list dense class="pt-0">
             <v-list-item-group color="primary">
                 <v-list-item to="/battles">
@@ -108,7 +109,8 @@
                     </v-btn>
                 </v-card-text>
                 <v-card-actions v-if="selectedPerk" class="justify-center">
-                    <v-btn color="primary" @click="submitLevelUp" :loading="loading" :disabled="loading">select
+                    <v-btn color="primary" @click="submitLevelUp" :loading="loading" :disabled="loading">
+                        {{$t('misc.select')}}
                     </v-btn>
                 </v-card-actions>
             </v-card>
