@@ -28,6 +28,7 @@
     <Content Include="vue-client\src\components\tribunal\voting\VotingResults.vue" />
     <Content Include="vue-client\src\data\shared.js" />
     <Content Include="vue-client\src\lang\en\battles.js" />
+    <Content Include="vue-client\src\lang\en\comments.js" />
     <Content Include="vue-client\src\lang\en\create.js" />
     <Content Include="vue-client\src\lang\en\editProfile.js" />
     <Content Include="vue-client\src\lang\en\landing.js" />
@@ -36,6 +37,7 @@
     <Content Include="vue-client\src\lang\en\shared\misc.js" />
     <Content Include="vue-client\src\lang\en\skills.js" />
     <Content Include="vue-client\src\lang\en\tribunal.js" />
+    <Content Include="vue-client\src\lang\en\updateMatch.js" />
     <Content Include="vue-client\src\lang\en\user.js" />
     <Content Include="vue-client\src\lang\en\watch.js" />
     <Content Include="vue-client\src\lang\en\_index.js" />

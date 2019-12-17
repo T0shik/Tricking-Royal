@@ -9,6 +9,8 @@ import tribunal from "./tribunal";
 import user from "./user";
 import watch from "./watch";
 import editProfile from "./editProfile";
+import comments from './comments'
+import updateMatch from "./updateMatch";
 
 export default {
     landing,
@@ -21,5 +23,7 @@ export default {
     tribunal,
     user,
     watch,
-    editProfile
+    editProfile,
+    comments,
+    updateMatch
 }

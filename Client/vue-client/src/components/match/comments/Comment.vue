@@ -1,7 +1,7 @@
 <template>
     <div>
         <router-link :to="`/user/${comment.displayName}`">
-            <ProfileImage size="36px" :picture="comment.picture"></ProfileImage>
+            <ProfileImage size="36px" :picture="comment.picture"/>
             <span class="subtitle px-2 primary--text">{{comment.displayName}}</span>
         </router-link>
         <span class="caption">
@@ -15,6 +15,8 @@
 </template>
 
 <script>
+    import ProfileImage from "@/components/shared/ProfileImage";
+    
     export default {
         name: "comment",
         props: {
@@ -22,6 +24,9 @@
                 required: true,
                 type: Object
             }
+        },
+        components: {
+            ProfileImage
         }
     };
 </script>

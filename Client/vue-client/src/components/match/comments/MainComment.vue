@@ -2,12 +2,12 @@
   <div class="py-2">
     <comment :comment="comment" :id="`main-${comment.id}`" />
     <footer class="px-5">
-      <a class="white--text mx-1" @click="startComment(comment.displayName)">Reply</a>
+      <a class="white--text mx-1" @click="startComment(comment.displayName)">{{$t('comments.reply')}}</a>
       <a
         v-if="comment.hasReplies && !hasSubComments && !loading"
         class="mx-3"
         @click="loadReplies"
-      >View Replies</a>
+      >{{$t('comments.viewReplies')}}</a>
     </footer>
     <div class="ml-3" v-if="hasSubComments">
       <sub-comment
@@ -18,7 +18,7 @@
       />
     </div>
     <div class="text-xs-center">
-      <v-progress-circular v-if="loading" color="primary" indeterminate></v-progress-circular>
+      <v-progress-circular v-if="loading" color="primary" indeterminate/>
       <v-btn
         text
         icon

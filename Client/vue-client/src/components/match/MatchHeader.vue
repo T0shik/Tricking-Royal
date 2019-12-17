@@ -7,7 +7,7 @@
                                   :picture="host.picture"
                                   :level="host.level"
                                   :size="38"
-                                  :winner="host.winner"></ProfileImage>
+                                  :winner="host.winner"/>
                     <span class="pl-1">{{host.displayName}}</span>
                 </router-link>
             </div>
@@ -20,7 +20,7 @@
                     <ProfileImage v-if="opponent" :class="{'playing': opponent.index === playingIndex}"
                                   :picture="opponent.picture"
                                   :level="opponent.level"
-                                  :winner="opponent.winner"></ProfileImage>
+                                  :winner="opponent.winner"/>
                 </router-link>
             </div>
         </div>

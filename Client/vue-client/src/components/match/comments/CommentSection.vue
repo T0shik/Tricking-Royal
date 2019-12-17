@@ -7,7 +7,7 @@
                 @load-sub="loadSubComments"
         />
         <div class="text-center">
-            <v-progress-circular v-if="loading" color="primary" indeterminate></v-progress-circular>
+            <v-progress-circular v-if="loading" color="primary" indeterminate/>
             <v-btn text icon color="primary" v-else-if="!empty" @click="loadComments">
                 <v-icon>{{icons.expand}}</v-icon>
             </v-btn>
