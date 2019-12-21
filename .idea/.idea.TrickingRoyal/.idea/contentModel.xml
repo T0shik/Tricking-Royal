@@ -1205,11 +1205,17 @@
               <e p="languages.json" t="Include" />
               <e p="ru" t="Include">
                 <e p="_index.js" t="Include" />
+                <e p="battles.js" t="Include" />
+                <e p="comments.js" t="Include" />
+                <e p="create.js" t="Include" />
+                <e p="editProfile.js" t="Include" />
                 <e p="landing.js" t="Include" />
+                <e p="layout.js" t="Include" />
                 <e p="Shared" t="Include">
                   <e p="match.js" t="Include" />
                   <e p="misc.js" t="Include" />
                 </e>
+                <e p="skills.js" t="Include" />
                 <e p="tribunal.js" t="Include" />
                 <e p="updateMatch.js" t="Include" />
                 <e p="user.js" t="Include" />

@@ -5,7 +5,7 @@
     spectate: "Spectate",
     create: "Create Match",
     find: "Find Match",
-    loading: "Loading Mathces",
+    loading: "Loading Matches",
     empty: {
         history: {
             title: "No History",

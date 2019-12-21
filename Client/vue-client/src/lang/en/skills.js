@@ -4,7 +4,7 @@
     beginner: {
         title: "Beginner",
         value: 0,
-        text: "You have less than 1 year experience, can do 1 or 3 different flips mostly know kicks, can do a combo or two. You are a true beginner and you have a long journey ahead of you which you embrace."
+        text: "You have less than 1 year experience, can do 1 or 3 different flips mostly know kicks, can do a combo or two. You are a true beginner, and you have a long journey ahead of you which you embrace."
     },
     intermediate: {
         title: "Intermediate",

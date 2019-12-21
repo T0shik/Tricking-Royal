@@ -20,7 +20,7 @@
         username: "Username",
         skill: "Skill",
         bio: "Bio",
-        //bioPlace is an example of biography
+        //example of biography
         bioPlace: "Walked through hell and fire to land this cork.",
         bioHint: "Say something about yourself!",
     }

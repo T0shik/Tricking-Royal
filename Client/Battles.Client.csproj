@@ -42,9 +42,15 @@
     <Content Include="vue-client\src\lang\en\watch.js" />
     <Content Include="vue-client\src\lang\en\_index.js" />
     <Content Include="vue-client\src\lang\languages.json" />
+    <Content Include="vue-client\src\lang\ru\battles.js" />
+    <Content Include="vue-client\src\lang\ru\comments.js" />
+    <Content Include="vue-client\src\lang\ru\create.js" />
+    <Content Include="vue-client\src\lang\ru\editProfile.js" />
     <Content Include="vue-client\src\lang\ru\landing.js" />
+    <Content Include="vue-client\src\lang\ru\layout.js" />
     <Content Include="vue-client\src\lang\ru\shared\match.js" />
     <Content Include="vue-client\src\lang\ru\shared\misc.js" />
+    <Content Include="vue-client\src\lang\ru\skills.js" />
     <Content Include="vue-client\src\lang\ru\tribunal.js" />
     <Content Include="vue-client\src\lang\ru\updateMatch.js" />
     <Content Include="vue-client\src\lang\ru\user.js" />
