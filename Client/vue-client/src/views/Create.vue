@@ -45,7 +45,7 @@
                                     v-model="form.turnTime"
                                     suffix="Days"
                             />
-                            <v-btn color="primary" @click="stage++" :disabled="!valid">{{$t('misc.pick')}}</v-btn>
+                            <v-btn color="primary" @click="stage++" :disabled="!valid">{{$t('misc.select')}}</v-btn>
                         </v-card-actions>
                     </v-window-item>
                     <v-window-item :value="5">

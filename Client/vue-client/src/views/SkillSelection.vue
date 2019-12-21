@@ -22,7 +22,7 @@
                 <v-btn v-show="skill !== skills.length - 1" depressed @click="skill++">{{$t("misc.next")}}</v-btn>
             </v-card-actions>
         </v-card>
-        <v-btn class="mt-4" color="info" @click="choose" :loading="loading" :disabled="loading">{{$t("misc.choose")}}</v-btn>
+        <v-btn class="mt-4" color="info" @click="choose" :loading="loading" :disabled="loading">{{$t("misc.select")}}</v-btn>
     </v-layout>
 </template>
 

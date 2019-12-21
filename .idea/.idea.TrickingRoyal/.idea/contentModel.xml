@@ -1198,6 +1198,7 @@
                 </e>
                 <e p="skills.js" t="Include" />
                 <e p="tribunal.js" t="Include" />
+                <e p="updateMatch.js" t="Include" />
                 <e p="user.js" t="Include" />
                 <e p="watch.js" t="Include" />
               </e>
@@ -1205,7 +1206,10 @@
               <e p="ru" t="Include">
                 <e p="_index.js" t="Include" />
                 <e p="landing.js" t="Include" />
-                <e p="misc.js" t="Include" />
+                <e p="Shared" t="Include">
+                  <e p="match.js" t="Include" />
+                  <e p="misc.js" t="Include" />
+                </e>
               </e>
             </e>
             <e p="logger" t="Include">

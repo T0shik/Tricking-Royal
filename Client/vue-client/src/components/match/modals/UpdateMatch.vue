@@ -62,7 +62,7 @@
                                 <v-btn color="info" @click="completeTrim" :disabled="needIndex">
                                     <span v-if="needTrick">{{$t('misc.next')}}</span>
                                     <span v-else-if="needIndex">{{$t('updateMatch.selectPass')}}</span>
-                                    <span v-else>{{$t('misc.complete')}}</span>
+                                    <span v-else>{{$t('misc.finish')}}</span>
                                 </v-btn>
                             </v-card-actions>
                         </v-window-item>
