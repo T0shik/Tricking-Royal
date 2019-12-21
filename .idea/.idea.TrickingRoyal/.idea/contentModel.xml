@@ -1210,6 +1210,10 @@
                   <e p="match.js" t="Include" />
                   <e p="misc.js" t="Include" />
                 </e>
+                <e p="tribunal.js" t="Include" />
+                <e p="updateMatch.js" t="Include" />
+                <e p="user.js" t="Include" />
+                <e p="watch.js" t="Include" />
               </e>
             </e>
             <e p="logger" t="Include">

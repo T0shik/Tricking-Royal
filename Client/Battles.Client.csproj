@@ -45,6 +45,10 @@
     <Content Include="vue-client\src\lang\ru\landing.js" />
     <Content Include="vue-client\src\lang\ru\shared\match.js" />
     <Content Include="vue-client\src\lang\ru\shared\misc.js" />
+    <Content Include="vue-client\src\lang\ru\tribunal.js" />
+    <Content Include="vue-client\src\lang\ru\updateMatch.js" />
+    <Content Include="vue-client\src\lang\ru\user.js" />
+    <Content Include="vue-client\src\lang\ru\watch.js" />
     <Content Include="vue-client\src\lang\ru\_index.js" />
     <Content Include="vue-client\src\plugins\i18n.js" />
     <Content Include="vue-client\src\stores\modules\signalr.js" />
