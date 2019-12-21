@@ -17,11 +17,11 @@
     },
     copyCat: {
         name: "Copy Cat",
-        description: "Take turns to copy each others combos, gain a point for each combo. Tricker with the most points wins.",
-        rule1: "You have to repeat the combo as is.",
-        rule2: "If you can't repeat the combo you have to pass the round.",
-        rule3: "When you pass you don't gain a point.",
-        rule4: "Maximum of 4 rounds, user with the most points wins."
+        description: "По очереди повторяйте связки, получай по очку за связку. Трикер с самым большим количеством очков выигрывает.",
+        rule1: "Повторяй связку таким какое оно есть.",
+        rule2: "Если ты не можешь повторить связку, то пропускаешь ход.",
+        rule3: "Когда пропускаешь ход не получаешь очко.",
+        rule4: "Максимум 4 раунда, чтобы победить набери больше очков."
     },
     turnTypes: {
         blitz: "Скоростной",

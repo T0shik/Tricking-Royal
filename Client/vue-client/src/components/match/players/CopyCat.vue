@@ -26,7 +26,7 @@
                                         :video="video.video"
                                         :thumb="video.thumb"
                                         :is-playing="(step - 1) * 2 + slide.value === video.videoIndex"
-                                ></video-player>
+                                />
                             </v-carousel-item>
                         </v-carousel>
                         <div v-if="match.chain[sIndex]" class="py-1 px-2">
@@ -43,7 +43,7 @@
                             class="py-1"
                             :editable="s.enabled"
                             :step="s.value"
-                    ></v-stepper-step>
+                    />
                 </template>
             </v-stepper-header>
         </v-stepper>
