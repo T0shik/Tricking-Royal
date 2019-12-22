@@ -210,7 +210,7 @@
             },
             trickLabel() {
                 return this.match
-                    ? this.$t(`updateMatch.${this.match.mode === MATCH_MODE.ONE_UP ? 'trick' : 'combo'}`)
+                    ? this.$t(`battles.${this.match.mode === MATCH_MODE.ONE_UP ? 'trick' : 'combo'}`)
                     : "";
             },
             needTrick() {

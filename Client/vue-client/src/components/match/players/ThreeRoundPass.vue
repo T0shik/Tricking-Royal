@@ -6,11 +6,13 @@
                         :video="item.video"
                         :thumb="item.thumb"
                         :isPlaying="selectedVideo === item.videoIndex"
-                ></video-player>
+                />
             </v-window-item>
         </v-window>
-        <div v-else-if="match.turnType > 0" class="pa-3 title text-center">{{match.turn}}'s turn to upload</div>
-        <div v-else-if="match.turnType === 0" class="pa-3 title text-center">Waiting for someone to upload.</div>
+        <div v-else-if="match.turnType > 0" class="pa-3 title text-center">{{match.turn}}
+            {{$t('battles.turnToUpload')}}
+        </div>
+        <div v-else-if="match.turnType === 0" class="pa-3 title text-center">{{$t('battles.waitingForUpload')}}</div>
         <div class="text-center">
             <v-btn
                     color="info"
@@ -19,7 +21,7 @@
                     :loading="loading"
                     :disabled="loading"
                     @click="$emit('lock-in')"
-            >lock in
+            >{{$t('battles.lockIn')}}
             </v-btn>
             <v-btn
                     color="info"
@@ -28,7 +30,7 @@
                     :loading="loading"
                     :disabled="loading"
                     @click="$emit('respond')"
-            >respond
+            >{{$t('battles.respond')}}
             </v-btn>
         </div>
         <v-row v-if="match.videos.length > 0">
@@ -40,7 +42,7 @@
                        :class="isActive(item.videoIndex)"
                        @click="selectedVideo = item.videoIndex"
                        v-text="index + 1"
-                ></v-btn>
+                />
             </v-col>
             <v-col class="text-center" cols="6">
                 <v-btn v-for="(item, index) in opponentVideos"
@@ -50,7 +52,7 @@
                        :class="isActive(item.videoIndex)"
                        @click="selectedVideo = item.videoIndex"
                        v-text="index + 1"
-                ></v-btn>
+                />
             </v-col>
         </v-row>
     </div>
@@ -73,11 +75,9 @@
         components: {
             VideoPlayer
         },
-        data() {
-            return {
-                selectedVideo: 0
-            }
-        },
+        data: () => ({
+            selectedVideo: 0
+        }),
         watch: {
             selectedVideo: {
                 handler: function (value) {

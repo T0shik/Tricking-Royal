@@ -33,7 +33,6 @@
 </template>
 
 <script>
-import Axios from "axios";
 import Comment from "./Comment";
 import SubComment from "./SubComment";
 import {mdiExpandAll} from "@mdi/js";
@@ -68,7 +67,7 @@ export default {
       this.loading = true;
       let { id, index } = this.comment;
       let url = `/comments/sub?commentId=${id}&index=${index}`;
-      Axios.get(url).then(res => {
+      this.$axios.get(url).then(res => {
         this.$emit("load-sub", { id, subComments: res.data });
         this.empty = res.data.length < 5;
         this.loading = false;

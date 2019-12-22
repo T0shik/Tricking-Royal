@@ -24,5 +24,14 @@
             text: "Looks like there are no open matches, go make one!"
         }
     },
-    cantJoinOpen: "Can't join this match"
+    cantJoinOpen: "Can't join this match",
+    respond: "Respond",
+    lockIn: "Lock In",
+    round: "Round",
+    pass: "Pass",
+    passedRound: "passed this round",
+    turnToUpload: "turn to upload",
+    waitingForUpload: "Waiting for someone to upload",
+    combo: "Combo",
+    trick: "Trick",
 }

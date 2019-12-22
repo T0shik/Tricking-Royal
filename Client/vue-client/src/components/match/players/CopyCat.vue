@@ -19,7 +19,7 @@
                             <v-carousel-item v-for="(video, pIndex) in slide.videoPair"
                                              :key="`ccc-${match.id}-${sIndex}-${pIndex}`">
                                 <div v-if="video.empty" class="text-center title pa-5 mt-4">
-                                    {{match.participants[video.userIndex].displayName}} passed this round.
+                                    {{match.participants[video.userIndex].displayName}} {{$t('battles.passedRound')}}
                                 </div>
                                 <video-player
                                         v-else
@@ -30,10 +30,10 @@
                             </v-carousel-item>
                         </v-carousel>
                         <div v-if="match.chain[sIndex]" class="py-1 px-2">
-                            Combo: {{match.chain[sIndex]}}
+                            {{$t('battles.combo')}}: {{match.chain[sIndex]}}
                         </div>
                     </div>
-                    <div v-else class="pa-3 title text-center">{{match.turn}}'s turn to upload</div>
+                    <div v-else class="pa-3 title text-center">{{match.turn}} {{$t('battles.turnToUpload')}}</div>
                 </v-stepper-content>
             </v-stepper-items>
             <v-stepper-header class="height-40">
@@ -53,14 +53,14 @@
                    @click="$emit('respond')"
                    :loading="loading"
                    :disabled="loading">
-                Respond
+                {{$t('battles.respond')}}
             </v-btn>
             <v-btn class="mt-2 warning"
                    v-if="match.canPass"
                    @click="copyCatPass({id: match.id})"
                    :loading="loading"
                    :disabled="loading">
-                Pass
+                {{$t('battles.pass')}}
             </v-btn>
         </div>
     </div>

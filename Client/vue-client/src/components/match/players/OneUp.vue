@@ -3,17 +3,17 @@
         <v-carousel v-model="slide" v-if="match.videos.length > 0" hide-delimiters
                     :show-arrows="match.videos.length > 1">
             <v-carousel-item v-for="(item, index) in match.videos" :value="index" :key="item.video">
-                <video-player :video="item.video" :thumb="item.thumb" :isPlaying="index === slide"></video-player>
-                <div class="round-tag">Round {{index + 1}}</div>
+                <video-player :video="item.video" :thumb="item.thumb" :isPlaying="index === slide"/>
+                <div class="round-tag">{{$t('battles.round')}} {{index + 1}}</div>
             </v-carousel-item>
         </v-carousel>
-        <div v-else class="pa-3 title text-center">{{match.turn}}'s turn to upload</div>
+        <div v-else class="pa-3 title text-center">{{match.turn}} {{$t('battles.turnToUpload')}}</div>
         <div v-if="match.chain[0]" class="pa-1">{{match.chain[0]}}</div>
         <div v-if="match.canGo" class="text-center">
             <v-btn color="info"
                    @click="$emit('respond')"
                    :loading="loading"
-                   :disabled="loading">Respond
+                   :disabled="loading">{{$t('battles.respond')}}
             </v-btn>
         </div>
     </div>
