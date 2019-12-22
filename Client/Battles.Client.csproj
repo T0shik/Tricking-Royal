@@ -49,6 +49,7 @@
     <Content Include="vue-client\src\lang\ru\editProfile.js" />
     <Content Include="vue-client\src\lang\ru\landing.js" />
     <Content Include="vue-client\src\lang\ru\layout.js" />
+    <Content Include="vue-client\src\lang\ru\menu.js" />
     <Content Include="vue-client\src\lang\ru\shared\match.js" />
     <Content Include="vue-client\src\lang\ru\shared\misc.js" />
     <Content Include="vue-client\src\lang\ru\skills.js" />

@@ -1212,6 +1212,7 @@
                 <e p="editProfile.js" t="Include" />
                 <e p="landing.js" t="Include" />
                 <e p="layout.js" t="Include" />
+                <e p="menu.js" t="Include" />
                 <e p="Shared" t="Include">
                   <e p="match.js" t="Include" />
                   <e p="misc.js" t="Include" />

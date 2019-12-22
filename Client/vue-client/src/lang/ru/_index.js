@@ -11,6 +11,7 @@ import watch from "./watch";
 import editProfile from "./editProfile";
 import comments from './comments'
 import updateMatch from "./updateMatch";
+import menu from "./menu";
 
 export default {
     landing,
@@ -25,5 +26,6 @@ export default {
     watch,
     editProfile,
     comments,
-    updateMatch
+    updateMatch,
+    menu,
 }
