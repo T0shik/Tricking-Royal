@@ -3,9 +3,6 @@
         turnTimeRequired: "Turn time needs to be higher than 0",
         turnTimeMaxMonth: "No longer than a month"
     },
-    labels: {
-        timeSelect: "Time per turn"
-    },
     stage: {
         mode: {
             title: "Mode",

@@ -22,5 +22,7 @@
     rules: "Правила",
     rulesRead: "Я прочитал правила",
     days: "Дней",
-    notifications: "Уведомления"
+    notifications: "Уведомления",
+    likes: "Лайки",
+    confirm: "Подтвердить",
 }

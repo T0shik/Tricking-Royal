@@ -38,7 +38,7 @@
                         <v-card-actions class="flex-column">
                             <v-text-field
                                     class="align-self-stretch"
-                                    :label="$t('create.labels.timeSelect')"
+                                    :label="$t('create.stage.time.title')"
                                     :rules="turnTimeRules"
                                     required
                                     mask="##"

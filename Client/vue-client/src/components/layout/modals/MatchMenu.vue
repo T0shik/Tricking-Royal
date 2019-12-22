@@ -4,8 +4,8 @@
             <input type="text" ref="clipboard" style="position: fixed; left: -9999px"/>
             <v-card-title>
                 <span v-if="title">{{title}}</span>
-                <span v-else>Menu</span>
-                <v-spacer />
+                <span v-else>{{$t('menu.title')}}</span>
+                <v-spacer/>
                 <v-btn icon text @click="dismiss">
                     <v-icon>{{icons.close}}</v-icon>
                 </v-btn>
@@ -34,43 +34,43 @@
                         <v-list class="pa-0" v-if="match" color="secondary">
                             <v-list-item two-line>
                                 <v-list-item-content>
-                                    <v-list-item-subtitle>Mode</v-list-item-subtitle>
+                                    <v-list-item-subtitle>{{$t('create.stage.mode.title')}}</v-list-item-subtitle>
                                     <v-list-item-title>{{match.mode}}</v-list-item-title>
                                 </v-list-item-content>
                             </v-list-item>
                             <v-list-item two-line>
                                 <v-list-item-content>
-                                    <v-list-item-subtitle>Surface</v-list-item-subtitle>
+                                    <v-list-item-subtitle>{{$t('create.stage.surface.title')}}</v-list-item-subtitle>
                                     <v-list-item-title>{{match.surface}}</v-list-item-title>
                                 </v-list-item-content>
                             </v-list-item>
                             <v-list-item two-line>
                                 <v-list-item-content>
-                                    <v-list-item-subtitle>Time per turn</v-list-item-subtitle>
+                                    <v-list-item-subtitle>{{$t('create.stage.time.title')}}</v-list-item-subtitle>
                                     <v-list-item-title>{{match.turnTime}}</v-list-item-title>
                                 </v-list-item-content>
                             </v-list-item>
                             <v-list-item two-line>
                                 <v-list-item-content>
-                                    <v-list-item-subtitle>Time left</v-list-item-subtitle>
+                                    <v-list-item-subtitle>{{$t('menu.timeLeft')}}</v-list-item-subtitle>
                                     <v-list-item-title>{{match.timeLeft}}</v-list-item-title>
                                 </v-list-item-content>
                             </v-list-item>
                             <v-list-item two-line v-if="match.turn">
                                 <v-list-item-content>
-                                    <v-list-item-subtitle>Turn</v-list-item-subtitle>
+                                    <v-list-item-subtitle>{{$t('menu.turn')}}</v-list-item-subtitle>
                                     <v-list-item-title>{{match.turn}}</v-list-item-title>
                                 </v-list-item-content>
                             </v-list-item>
                             <v-list-item two-line>
                                 <v-list-item-content>
-                                    <v-list-item-subtitle>Round</v-list-item-subtitle>
+                                    <v-list-item-subtitle>{{$t('battles.round')}}</v-list-item-subtitle>
                                     <v-list-item-title>{{match.round}}</v-list-item-title>
                                 </v-list-item-content>
                             </v-list-item>
                             <v-list-item two-line>
                                 <v-list-item-content>
-                                    <v-list-item-subtitle>Likes</v-list-item-subtitle>
+                                    <v-list-item-subtitle>{{$t('misc.likes')}}</v-list-item-subtitle>
                                     <v-list-item-title>{{match.likes}}</v-list-item-title>
                                 </v-list-item-content>
                             </v-list-item>
@@ -85,7 +85,7 @@
                        @click="menu.action.fn"
                 >{{menu.action.name}}
                 </v-btn>
-                <v-btn @click="back" text>back</v-btn>
+                <v-btn @click="back" text>{{$t('misc.back')}}</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
@@ -101,7 +101,10 @@
         menu: null,
         title: "",
         comment: "",
-        loading: false
+        loading: false,
+        icons: {
+            close: mdiClose
+        }
     });
 
     export default {
@@ -129,7 +132,7 @@
                 this.$logger.log("[MatchMenu.vue].share copy to clipboard value", el.value, copyResult);
 
                 this.popup({
-                    message: "Link copied to clipboard",
+                    message: this.$t('menu.copiedToClipboard'),
                     success: true,
                 });
 
@@ -196,72 +199,68 @@
             },
             back() {
                 Object.assign(this.$data, initialState());
-            }
+            },
         },
         computed: {
             ...mapState('menu', {
                 match: state => state.match,
             }),
             ...mapGetters('menu', ['open']),
-            icons() {
-                return {
-                    close: mdiClose
-                }
-            },
             allowedButtons() {
                 if (this.match === null) {
                     return [];
                 }
 
+                let rep = (this.match.round | 0) + 5;
+                let exp = (this.match.round | 0) + 7;
+
                 return [
                     {id: 1, name: "Share", action: this.share, show: true},
                     {
                         id: 2,
-                        name: "Match Information",
-                        title: "Match Information",
-                        action: () => {
-                            this.setStep(2)
-                        },
+                        name: this.$t('menu.matchInformation'),
+                        title: this.$t('menu.matchInformation'),
+                        action: () => this.setStep(2),
                         show: true
                     },
                     {
                         id: 3,
-                        name: "Forfeit",
-                        title: "Forfeit Match?",
+                        name: this.$t('menu.forfeit.name'),
+                        title: this.$t('menu.forfeit.title'),
                         menu: {
-                            description: "Forfeit the match and earn so and so points.",
+                            description: this.$t('menu.forfeit.description', [rep, exp]),
                             comment: false,
                             action: {
                                 fn: this.forfeit,
-                                name: "Confirm"
+                                name: this.$t('misc.confirm')
                             }
                         },
                         show: this.match.canGo
                     },
                     {
                         id: 4,
-                        name: "Flag",
-                        title: "Flag Match?",
+                        name: this.$t('menu.flag.name'),
+                        title: this.$t('menu.flag.title'),
                         menu: {
-                            description: "Flag your opponent for breaking the rules.",
+                            description: this.$t('menu.flag.description'),
                             comment: true,
                             action: {
                                 fn: this.flag,
-                                name: "Flag"
+                                name: this.$t('misc.confirm')
                             }
                         },
                         show: this.match.canFlag
                     },
                     {
                         id: 5,
-                        name: "Re-Upload",
-                        title: "Re-Upload?",
+                        name: this.$t('menu.reUpload.name'),
+                        title: this.$t('menu.reUpload.title'),
                         menu: {
-                            description: "Re-upload your last video.",
+                            description: this.$t('menu.reUpload.description'),
                             comment: false,
                             action: {
                                 fn: this.upload,
-                                name: "Re-Upload"
+                                name: this.$t('misc.confirm')
                             }
                         },
                         show: this.match.canUpdate

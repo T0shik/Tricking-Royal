@@ -33,6 +33,7 @@
     <Content Include="vue-client\src\lang\en\editProfile.js" />
     <Content Include="vue-client\src\lang\en\landing.js" />
     <Content Include="vue-client\src\lang\en\layout.js" />
+    <Content Include="vue-client\src\lang\en\menu.js" />
     <Content Include="vue-client\src\lang\en\shared\match.js" />
     <Content Include="vue-client\src\lang\en\shared\misc.js" />
     <Content Include="vue-client\src\lang\en\skills.js" />

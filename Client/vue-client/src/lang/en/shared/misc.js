@@ -22,5 +22,7 @@
     rules: "Rules",
     rulesRead: "I have read the rules",
     days: "Days",
-    notifications: "Notifications"
+    notifications: "Notifications",
+    likes: "Likes",
+    confirm: "Confirm",
 }

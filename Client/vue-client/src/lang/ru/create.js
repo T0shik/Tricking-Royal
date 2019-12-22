@@ -3,9 +3,6 @@
         turnTimeRequired: "Хотя бы 1 день",
         turnTimeMaxMonth: "Не дольше месяца"
     },
-    labels: {
-        timeSelect: "Время на ход"
-    },
     stage: {
         mode: {
             title: "Виды",
