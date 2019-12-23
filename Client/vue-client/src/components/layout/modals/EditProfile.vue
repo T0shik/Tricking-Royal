@@ -56,8 +56,8 @@
                                     maxlength="15"
                             />
                             <v-select
-                                    :items="skillList"
-                                    item-text="name"
+                                    :items="skills"
+                                    :item-text="(o) => $t(`skills.${o.name}.title`)"
                                     item-value="value"
                                     v-model="profile.skill"
                                     :label="$t('editProfile.personal.skill')"
@@ -183,7 +183,7 @@
 
 <script>
     import axios from "axios";
-    import {NOTIFICATION_TYPE, STORAGE_KEYS} from "../../../data/enum";
+    import {NOTIFICATION_TYPE, STORAGE_KEYS} from "@/data/enum";
     import {mapMutations, mapActions} from "vuex";
     import {
         mdiAccount, mdiBell, mdiBellOff,
@@ -197,6 +197,7 @@
     } from '@mdi/js';
     import {languages} from '@/lang/languages.json'
     import {loadLanguageAsync} from "@/plugins/i18n";
+    import {skills} from "@/data/shared";
 
     export default {
         data: () => ({
@@ -229,6 +230,7 @@
             },
             emailConfig: null,
             emailConfigLoading: false,
+            skills,
             languages,
             lang: localStorage.getItem(STORAGE_KEYS.LANGUAGE),
         }),
@@ -320,7 +322,7 @@
                     });
             },
             getSkillLevel(name) {
-                return this.skillList.filter(x => x.name === name)[0].value
+                return this.skills.filter(x => x.name === name.toLowerCase())[0].value
             },
             clearImage() {
                 this.tempImage = "";
@@ -383,10 +385,6 @@
         computed: {
             languageFlag(){
                 return this.languages.filter(x => x.locale === this.lang)[0].icon
-            },
-            skillList() {
-                //todo finish this up
-                return [];
             },
             icons() {
                 return {
