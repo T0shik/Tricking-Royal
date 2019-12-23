@@ -25,4 +25,5 @@
     notifications: "Уведомления",
     likes: "Лайки",
     confirm: "Подтвердить",
+    language: "Язык",
 }

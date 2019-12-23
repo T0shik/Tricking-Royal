@@ -1,6 +1,6 @@
 <template>
     <div>
-        <component v-bind:is="layout"></component>
+        <component v-bind:is="layout"/>
     </div>
 </template>
 
@@ -9,7 +9,8 @@
     import UserLayout from "./components/layout/UserLayout";
     import LoadingLayout from "./components/layout/LoadingLayout";
     import {mapState} from "vuex";
-    import {NOTIFICATION_TYPE} from "./data/enum";
+    import {NOTIFICATION_TYPE, STORAGE_KEYS} from "./data/enum";
+    import {loadLanguageAsync} from "./plugins/i18n";
 
     export default {
         name: "App",
@@ -67,6 +68,13 @@
                     });
                     this.$logger.log("[(App.vue).created] finished OneSignal init.");
                 });
+
+            let lang = localStorage.getItem(STORAGE_KEYS.LANGUAGE);
+            if (lang === null) {
+                localStorage.setItem(STORAGE_KEYS.LANGUAGE, 'en');
+            } else {
+                loadLanguageAsync(lang);
+            }
         },
         methods: {
             open(navigation, type) {

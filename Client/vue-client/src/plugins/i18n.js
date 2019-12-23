@@ -2,6 +2,7 @@
 import VueI18n from 'vue-i18n';
 import axios from "axios";
 import english from "@/lang/en/_index"
+import {STORAGE_KEYS} from "../data/enum";
 
 Vue.use(VueI18n);
 
@@ -23,6 +24,7 @@ function setI18nLanguage (lang) {
 }
 
 export function loadLanguageAsync(lang) {
+    localStorage.setItem(STORAGE_KEYS.LANGUAGE, lang);
     if (i18n.locale === lang) {
         return Promise.resolve(setI18nLanguage(lang))
     }

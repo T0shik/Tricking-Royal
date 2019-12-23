@@ -12,7 +12,7 @@
                         {{entry.name}}
                     </button>
                 </div>
-                <v-spacer></v-spacer>
+                <v-spacer/>
                 <h1 class="font-weight-bold primary--text mb-3 font-rock"
                     :class="windowSize.x < 600 ? 'display-1' : 'display-3'">Tricking Royal</h1>
                 <h4 class="title">{{$t('landing.description')}}</h4>
@@ -29,10 +29,10 @@
                 <div class="pt-4">
                     <h4 class="text-center subtitle-1">{{$t('landing.partners')}}</h4>
                     <a class="kojos-tricklab" href="https://www.kojostricklab.com/?wpam_id=93" target="_blank_">
-                        <img :src="logos.kojo"/>
+                        <img :src="`${process.env.VUE_APP_CDN}/static/kojos-tricklab.png`"/>
                     </a>
                 </div>
-                <v-spacer></v-spacer>
+                <v-spacer/>
                 <v-btn large floating icon color="white" @click="$vuetify.goTo($refs.info, options)">
                     <v-icon size="46px">{{iconChevronDown}}</v-icon>
                 </v-btn>
@@ -78,7 +78,7 @@
                 <strong>Tricking Royal</strong>
             </div>
         </v-footer>
-        <Connecting :connecting="connecting"></Connecting>
+        <Connecting :connecting="connecting"/>
     </div>
 </template>
 
@@ -101,11 +101,11 @@
     } from "@mdi/js";
     import axios from "axios";
     import {languages} from '@/lang/languages.json'
-    import {loadLanguageAsync} from "../plugins/i18n";
+    import {loadLanguageAsync} from "@/plugins/i18n";
+    import {STORAGE_KEYS} from "../data/enum";
 
     export default {
         data: () => ({
-            languages: languages,
             blocks: {
                 battles: mdiSwordCross,
                 community: mdiAccountGroup,
@@ -113,9 +113,6 @@
                 statistics: mdiChartBar,
                 social: mdiEarth,
                 contribute: mdiPackageVariant
-            },
-            logos: {
-                kojo: `${process.env.VUE_APP_CDN}/static/kojos-tricklab.png`
             },
             connecting: false,
             heightSet: false,
@@ -127,6 +124,7 @@
             loading: true,
             index: 0,
             endReached: false,
+            languages,
         }),
         created() {
             this.onResize();

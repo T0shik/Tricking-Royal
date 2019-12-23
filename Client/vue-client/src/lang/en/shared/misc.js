@@ -25,4 +25,5 @@
     notifications: "Notifications",
     likes: "Likes",
     confirm: "Confirm",
+    language: "Language",
 }

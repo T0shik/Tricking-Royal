@@ -62,6 +62,16 @@
                                     v-model="profile.skill"
                                     :label="$t('editProfile.personal.skill')"
                             />
+                            <v-select
+                                    :items="languages"
+                                    item-text="name"
+                                    item-value="locale"
+                                    v-model="lang"
+                                    @change="loadLanguageAsync"
+                                    :label="$t('misc.language')"
+                            >
+                                <flag slot="prepend" :iso="languageFlag" :squared="false"/>
+                            </v-select>
                             <v-textarea
                                     counter="255"
                                     v-model="profile.information"
@@ -96,7 +106,7 @@
                         </v-col>
                         <v-col>
                             <v-list two-line flat subheader>
-                                <v-subheader>{{$t('editProfile.notifications')}}</v-subheader>
+                                <v-subheader>{{$t('misc.notifications')}}</v-subheader>
                                 <v-list-item>
                                     <v-list-item-action>
                                         <v-icon color="green" v-if="pushEnabled">{{icons.bell}}</v-icon>
@@ -173,7 +183,7 @@
 
 <script>
     import axios from "axios";
-    import {NOTIFICATION_TYPE} from "../../../data/enum";
+    import {NOTIFICATION_TYPE, STORAGE_KEYS} from "../../../data/enum";
     import {mapMutations, mapActions} from "vuex";
     import {
         mdiAccount, mdiBell, mdiBellOff,
@@ -185,41 +195,43 @@
         mdiSettings,
         mdiYoutube
     } from '@mdi/js';
+    import {languages} from '@/lang/languages.json'
+    import {loadLanguageAsync} from "@/plugins/i18n";
 
     export default {
-        data() {
-            return {
-                dialog: false,
-                browser: false,
-                email: true,
+        data: () => ({
+            dialog: false,
+            browser: false,
+            email: true,
 
-                tempImage: "",
-                tempImageFile: null,
+            tempImage: "",
+            tempImageFile: null,
 
-                valid: true,
+            valid: true,
 
-                loadingName: false,
-                timeout: null,
+            loadingName: false,
+            timeout: null,
 
-                validName: true,
-                pushEnabled: false,
+            validName: true,
+            pushEnabled: false,
 
-                profile: {
-                    displayName: "",
-                    picture: "",
-                    skill: 0,
-                    information: "",
-                    gym: "",
-                    city: "",
-                    country: "",
-                    instagram: "",
-                    facebook: "",
-                    youtube: "",
-                },
-                emailConfig: null,
-                emailConfigLoading: false
-            };
-        },
+            profile: {
+                displayName: "",
+                picture: "",
+                skill: 0,
+                information: "",
+                gym: "",
+                city: "",
+                country: "",
+                instagram: "",
+                facebook: "",
+                youtube: "",
+            },
+            emailConfig: null,
+            emailConfigLoading: false,
+            languages,
+            lang: localStorage.getItem(STORAGE_KEYS.LANGUAGE),
+        }),
         watch: {
             dialog: async function (v) {
                 if (v) {
@@ -266,9 +278,10 @@
                             });
                     }.bind(this),
                     500);
-            }
+            },
         },
         methods: {
+            loadLanguageAsync,
             ...mapMutations({
                 updateProfileImage: "UPDATE_PROFILE_IMAGE",
             }),
@@ -368,6 +381,9 @@
             }
         },
         computed: {
+            languageFlag(){
+                return this.languages.filter(x => x.locale === this.lang)[0].icon
+            },
             skillList() {
                 //todo finish this up
                 return [];
