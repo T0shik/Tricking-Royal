@@ -12,7 +12,6 @@ export const skills =
         {name: 'goat', value: 5}
     ];
 
-
 export const matches = [
     {
         key: "oneUp",

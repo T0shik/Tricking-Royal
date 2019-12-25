@@ -86,7 +86,7 @@
                         <v-list-item-title>{{$t('layout.sideNav.tribunal')}}</v-list-item-title>
                     </v-list-item-content>
                     <span>
-                    <v-progress-circular v-if="loadingCount" :size="20" :width="2" indeterminate></v-progress-circular>
+                    <v-progress-circular v-if="loadingCount" :size="20" :width="2" indeterminate/>
                     <span v-else>{{tribunalCount}}</span>
                 </span>
                 </v-list-item>
@@ -98,15 +98,18 @@
                     {{$t('layout.levelUp')}}
                 </v-card-title>
                 <v-card-text>
-                    <span v-if="selectedPerk">{{selectedPerk.description}}</span>
+                    <span v-if="selectedPerk">{{$t(`layout.levelPerks.${selectedPerk.name}.description`)}}</span>
                     <span v-else>{{$t('layout.selectPerk')}}</span>
                 </v-card-text>
                 <v-card-text class="d-flex flex-wrap justify-center">
                     <v-btn class="ma-1 grey" :class="{'primary': p.selected}" @click="selectPerk(p)" v-for="p in perks"
                            :key="`perk-${p.id}`">
-                        {{p.name}}
+                        {{$t(`layout.levelPerks.${p.name}.title`)}}
                         <v-icon right>{{p.icon}}</v-icon>
                     </v-btn>
+                    <p v-if="selectedPerk">
+                        {{$t(`layout.levelPerks.${selectedPerk.name}.current`, [profile])}}
+                    </p>
                 </v-card-text>
                 <v-card-actions v-if="selectedPerk" class="justify-center">
                     <v-btn color="primary" @click="submitLevelUp" :loading="loading" :disabled="loading">
@@ -135,12 +138,39 @@
     } from "@mdi/js";
     import ProfileImage from "../shared/ProfileImage";
 
-    const initialState = () => ({
-        levelUp: false,
-        loading: false
-    });
+    const initialState = function () {
+        return {
+            levelUp: false,
+            loading: false,
+            selectedPerk: null,
+            perks: [
+                {
+                    id: 0,
+                    name: 'host',
+                    icon: mdiViewGridPlus,
+                    selected: false,
+                    current: this.$t('layout.levelPerks.host.current', [this.profile.hostingLimit])
+                },
+                {
+                    id: 1,
+                    name: 'guest',
+                    icon: mdiDoorOpen,
+                    selected: false,
+                    current: this.$t('layout.levelPerks.guest.current', [this.profile.joinedLimit])
+                },
+                {
+                    id: 2,
+                    name: 'voting',
+                    icon: mdiScale,
+                    selected: false,
+                    current: this.$t('layout.levelPerks.voting.current', [this.profile.votingPower])
+                }
+            ]
+        }
+    };
 
     export default {
+        data: () => initialState(),
         props: {
             show: {
                 required: true
@@ -150,16 +180,14 @@
             EditProfile,
             ProfileImage
         },
-        data: initialState,
         methods: {
             ...mapActions({
                 popup: "DISPLAY_POPUP_DEFAULT",
                 refreshProfile: "REFRESH_PROFILE"
             }),
-            selectPerk(newPerk) {
-                for (let i = 0; i < this.perks.length; i++) {
-                    this.perks[i].selected = newPerk.id === this.perks[i].id;
-                }
+            selectPerk(perk) {
+                perk.selected = true;
+                this.selectedPerk = perk;
             },
             submitLevelUp() {
                 this.loading = true;
@@ -174,7 +202,7 @@
                     })
                     .then(() => {
                         this.refreshProfile();
-                        Object.assign(this.$data, initialState());
+                        Object.assign(this.$data, initialState().bind(this));
                     })
             }
         },
@@ -194,39 +222,8 @@
                     gavel: mdiGavel,
                 };
             },
-            selectedPerk() {
-                return this.perks.filter(x => x.selected)[0];
-            },
             expBar() {
                 return (parseInt(this.profile.experience) * 100 / parseInt(this.profile.experienceNeed)).toFixed(0)
-            },
-            perks() {
-                return [
-                    {
-                        id: 0,
-                        name: this.$t('layout.levelPerks.host.title'),
-                        icon: mdiViewGridPlus,
-                        description: this.$t('layout.levelPerks.host.description'),
-                        selected: false,
-                        current: (profile) => `${this.$t('layout.levelPerks.host.current')}: ${profile.hostingLimit}`
-                    },
-                    {
-                        id: 1,
-                        name: this.$t('layout.levelPerks.guest.title'),
-                        icon: mdiDoorOpen,
-                        description: this.$t('layout.levelPerks.guest.description'),
-                        selected: false,
-                        current: (profile) => `${this.$t('layout.levelPerks.guest.current')}: ${profile.joinedLimit}`
-                    },
-                    {
-                        id: 2,
-                        name: this.$t('layout.levelPerks.voting.title'),
-                        icon: mdiScale,
-                        description: this.$t('layout.levelPerks.voting.description'),
-                        selected: false,
-                        current: (profile) => `${this.$t('layout.levelPerks.voting.current')}: ${profile.votingPower}`
-                    }
-                ]
             }
         }
     };

@@ -4,6 +4,7 @@
     turn: "Turn",
     copiedToClipboard: "Link copied to clipboard",
     matchInformation: "Match Information",
+    share: "Share",
     forfeit: {
         name: "Forfeit",
         title: "Forfeit Match?",

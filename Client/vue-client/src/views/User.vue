@@ -103,11 +103,9 @@
     import {MATCH_TYPES} from "../data/enum";
 
     export default {
-        data() {
-            return {
-                tab: 1
-            };
-        },
+        data: () => ({
+            tab: 1
+        }),
         components: {
             MatchPlayer,
             OpenMatch,
@@ -174,7 +172,7 @@
                             icon: mdiHistory,
                             data: this.history,
                             component: MatchPlayer,
-                            empty: `${this.user.displayName} ${this.$t('user.historyEmpty')}`
+                            empty: this.$t('user.historyEmpty')
                         },
                         {
                             id: 1,
@@ -183,7 +181,7 @@
                             icon: mdiAccountGroup,
                             data: this.active,
                             component: MatchPlayer,
-                            empty: `${this.user.displayName} ${this.$t('user.activeEmpty')}`
+                            empty: this.$t('user.activeEmpty')
                         },
                         {
                             id: 2,
@@ -192,7 +190,7 @@
                             icon: mdiAccountSearch,
                             data: this.open,
                             component: OpenMatch,
-                            empty: `${this.user.displayName} ${this.$t('user.openEmpty')}`
+                            empty: this.$t('user.openEmpty')
                         }
                     ];
             },

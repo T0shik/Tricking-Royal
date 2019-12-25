@@ -4,6 +4,7 @@
     turn: "Ход",
     copiedToClipboard: "Ссылка скопирована",
     matchInformation: "Информация Матча",
+    share: "Поделится",
     forfeit: {
         name: "Сдаться",
         title: "Завершить Матч?",

@@ -2,7 +2,7 @@
     <div class="main-card" ref="root" v-scroll:#container="onScroll">
         <div class="ma-5 d-flex flex-column align-center" v-if="loading">
             {{$t('battles.loading')}}
-            <v-progress-circular color="primary" indeterminate></v-progress-circular>
+            <v-progress-circular color="primary" indeterminate/>
         </div>
         <v-card v-else-if="matches.length === 0" color="secondary" width="100%">
             <v-card-title class="justify-center">
@@ -21,7 +21,7 @@
             </v-card-actions>
         </v-card>
         <div v-else>
-            <MatchPlayer v-for="match in matches" :match="match" :key="match.key"></MatchPlayer>
+            <MatchPlayer v-for="match in matches" :match="match" :key="match.key"/>
             <v-btn class="refresh-button" @click="refreshMatches({})" color="primary" fixed bottom small left fab>
                 <v-icon>{{icons.refresh}}</v-icon>
             </v-btn>
@@ -55,12 +55,13 @@
     export default {
         watch: {
             '$route.params': {
-                handler: function({type}, {type: oldType}) {
+                handler: function({type}, oldValue) {
                     if(!type){
                         type = MATCH_TYPES.ACTIVE;
                     }
+                    let force = oldValue && oldValue.type === type; 
                     
-                    this.setType({type, force: type === oldType});
+                    this.setType({type, force});
                 },
                 immediate: true
             }
