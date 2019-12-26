@@ -14,15 +14,18 @@ export const skills =
 
 export const matches = [
     {
-        key: "oneUp",
-        rules: 6
+        value: 0,
+        rules: [0, 1, 2, 3, 4, 5],
+        turnTypes: null
     },
     {
-        key: "threeRoundPass",
-        rules: 2
+        value: 1,
+        rules: [0, 1],
+        turnTypes: [0, 1, 2]
     },
     {
-        key: "copyCat",
-        rules: 4
+        value: 2,
+        rules: [0, 1, 2, 3],
+        turnTypes: null
     }
 ];

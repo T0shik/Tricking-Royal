@@ -20,7 +20,7 @@
     close: "Закрыть",
     connecting: "Присоединение",
     rules: "Правила",
-    rulesRead: "Я прочитал правила",
+    rulesRead: "Я принимаю правила",
     days: "Дней",
     notifications: "Уведомления",
     likes: "Лайки",

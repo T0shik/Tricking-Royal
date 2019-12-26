@@ -41,7 +41,7 @@
                             <v-list-item two-line>
                                 <v-list-item-content>
                                     <v-list-item-subtitle>{{$t('create.stage.surface.title')}}</v-list-item-subtitle>
-                                    <v-list-item-title>{{$t(`match.surface[${match.surface}]`)}}</v-list-item-title>
+                                    <v-list-item-title>{{$t(`match.surfaces[${match.surface}]`)}}</v-list-item-title>
                                 </v-list-item-content>
                             </v-list-item>
                             <v-list-item two-line>

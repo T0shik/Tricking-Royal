@@ -1,25 +1,25 @@
 ﻿<template>
     <v-dialog :value="displayRules" persistent max-width="400">
         <v-card dark color="secondary">
-            <v-card-title class="title">{{$t("misc.rules")}} - {{title}}</v-card-title>
+            <v-card-title class="title">{{$t("misc.rules")}} - {{$t(`match.modes[${section}].name`)}}</v-card-title>
             <v-window v-model="section">
-                <v-window-item v-for="(m, index) in matches" :value="index + 1" :key="`rules-${m.key}`">
+                <v-window-item v-for="m in matches" :value="m.value" :key="`rules-${m.value}`">
                     <v-card-subtitle>
-                        {{$t(`match.${m.key}.description`)}}
+                        {{$t(`match.modes[${m.value}].description`)}}
                     </v-card-subtitle>
                     <v-card-text>
-                        <p v-for="r in m.rules" :key="`rules-${m.key}-${r}`">
-                            {{$t(`match.${m.key}.rule${r}`)}}
+                        <p v-for="r in m.rules" :key="`rules-${m.value}-${r}`">
+                            {{$t(`match.modes[${m.value}].rules[${r}]`)}}
                         </p>
                     </v-card-text>
                 </v-window-item>
             </v-window>
             <v-card-actions class="justify-center">
-                <v-btn :disabled="section === 1" text @click="section--">
+                <v-btn :disabled="section === 0" text @click="section--">
                     {{$t("misc.back")}}
                 </v-btn>
                 <v-spacer/>
-                <v-btn :disabled="section === matches.length" color="info" depressed @click="section++">
+                <v-btn :disabled="section === matches.length - 1" color="info" depressed @click="section++">
                     {{$t("misc.next")}}
                 </v-btn>
             </v-card-actions>
@@ -39,7 +39,7 @@
 
     export default {
         data: () => ({
-            section: 1,
+            section: 0,
             endReached: false,
             matches
         }),
@@ -66,13 +66,7 @@
                 this.$store.commit('SET_DISPLAY_RULES', {display: false});
             }
         },
-        computed: {
-            ...mapState(['displayRules']),
-            title() {
-                let key = this.matches[this.section - 1].key;
-                return this.$t(`match.${key}.name`);
-            }
-        }
+        computed: mapState(['displayRules'])
     }
 </script>
 

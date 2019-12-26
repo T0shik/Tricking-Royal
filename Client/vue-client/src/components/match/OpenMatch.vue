@@ -21,7 +21,7 @@
                 <v-spacer/>
                 <div class="text-xs-right mr-3">
                     <h1 class="body-1 mb-0">{{$t('create.stage.surface.title')}}</h1>
-                    <h1 class="body-2">{{match.surface}}</h1>
+                    <h1 class="body-2">{{$t(`match.surfaces[${match.surface}]`)}}</h1>
                 </div>
                 <div class="text-xs-right">
                     <h1 class="body-1 mb-0">{{$t('create.stage.time.short')}}</h1>
@@ -69,7 +69,7 @@
             },
             mode() {
                 return this.match.turnType >= 0
-                    ? TURN_TYPE.THREE_ROUND_PASS[this.match.turnType]
+                    ? this.$t(`match.turnTypes[${this.match.turnType}]`)
                     : "";
             }
         }

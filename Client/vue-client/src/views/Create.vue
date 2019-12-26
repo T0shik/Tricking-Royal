@@ -4,7 +4,7 @@
         <v-card>
             <v-card-title>
                 <span>{{stageInfo.title}}</span>
-                <v-spacer />
+                <v-spacer/>
                 <v-btn color="info" icon @click="$store.commit('SET_DISPLAY_RULES', {display: true})">
                     <v-icon>{{icons.info}}</v-icon>
                 </v-btn>
@@ -14,23 +14,23 @@
                 <v-window v-model="stage" touchless>
                     <v-window-item :value="1">
                         <v-card-actions class="justify-center">
-                            <v-btn v-for="m in matches" :key="`mm-${m.value}`"
-                                   @click="selectOption('mode', m.name, m.value, m.turnTypes)">
-                                {{m.name}}
+                            <v-btn v-for="(m, index) in matches" :key="`mm-${m.value}`"
+                                   @click="selectOption('mode', index, m.turnTypes)">
+                                {{$t(`match.modes[${index}].name`)}}
                             </v-btn>
                         </v-card-actions>
                     </v-window-item>
                     <v-window-item :value="2">
                         <v-card-actions class="justify-center flex-wrap">
-                            <v-btn v-for="t in turnTypes" :key="`mtt-${t.value}`"
-                                   @click="selectOption('turnType', t.name, t.value, {})">{{t.name}}
+                            <v-btn v-for="t in turnTypes" :key="`mtt-${t}`" @click="selectOption('turnType', t, {})">
+                                {{$t(`match.turnTypes[${t}]`)}}
                             </v-btn>
                         </v-card-actions>
                     </v-window-item>
                     <v-window-item :value="3">
                         <v-card-actions class="justify-center flex-wrap">
-                            <v-btn v-for="s in surfaces" :key="`ms-${s.value}`"
-                                   @click="selectOption('surface', s.name, s.value, {})">{{s.name}}
+                            <v-btn v-for="s in surfaces" :key="`ms-${s}`" @click="selectOption('surface', s, {})">
+                                {{$t(`match.surfaces[${s}]`)}}
                             </v-btn>
                         </v-card-actions>
                     </v-window-item>
@@ -53,21 +53,21 @@
                             <v-list-item @click="edit(1)">
                                 <v-list-item-title>
                                     <strong class="primary--text">{{$t('create.stage.mode.title')}}:</strong>
-                                    {{form.mode.name}}
+                                    {{$t(`match.modes[${form.mode.value}].name`)}}
                                 </v-list-item-title>
                             </v-list-item>
 
                             <v-list-item @click="edit(2)" v-if="form.turnType.value >= 0">
                                 <v-list-item-title>
                                     <strong class="primary--text">{{$t('create.stage.turnType.title')}}:</strong>
-                                    {{form.turnType.name}}
+                                    {{$t(`match.turnTypes[${form.turnType.value}]`)}}
                                 </v-list-item-title>
                             </v-list-item>
 
                             <v-list-item @click="edit(3)">
                                 <v-list-item-title>
                                     <strong class="primary--text">{{$t('create.stage.surface.title')}}:</strong>
-                                    {{form.surface.name}}
+                                    {{$t(`match.surfaces[${form.surface.value}]`)}}
                                 </v-list-item-title>
                             </v-list-item>
 
@@ -98,7 +98,8 @@
             <v-list class="secondary">
                 <v-list-item v-for="match in hosted" :key="match.id">
                     <v-list-item-title>{{match.mode}}</v-list-item-title>
-                    <v-list-item-subtitle>{{$t(`match.surface[${match.surface}]`)}} - {{match.turnTime}}</v-list-item-subtitle>
+                    <v-list-item-subtitle>{{$t(`match.surfaces[${match.surface}]`)}} - {{match.turnTime}}
+                    </v-list-item-subtitle>
                     <v-spacer/>
                     <v-btn text icon color="error"
                            :loading="loadingDelete"
@@ -117,13 +118,13 @@
     import {mdiDelete, mdiInformation} from "@mdi/js";
     import {createMatch} from "../data/api";
     import {MATCH_TYPES} from "../data/enum";
-    import {surfaces} from "../data/shared";
+    import {matches, surfaces} from "../data/shared";
     import Rules from "../components/layout/modals/Rules";
 
     const initialForm = () => ({
-        mode: {name: "", value: -1},
-        turnType: {name: "", value: -1},
-        surface: {name: "", value: -1},
+        mode: {value: -1},
+        turnType: {value: -1},
+        surface: {value: -1},
         turnTime: 10
     });
 
@@ -168,8 +169,7 @@
                         this.loading = false;
                     });
             },
-            selectOption(key, name, value, args) {
-                this.form[key].name = name;
+            selectOption(key, value, args) {
                 this.form[key].value = value;
                 if (args && key === 'mode') {
                     this.turnTypes = args;
@@ -213,6 +213,9 @@
             hostMatchType() {
                 return MATCH_TYPES.HOSTED;
             },
+            surfaces() {
+                return [0, 1, 2, 3, 4, 5]
+            },
             stageInfo() {
                 switch (this.stage) {
                     case 1:
@@ -244,42 +247,7 @@
                 return {title: '', description: ""};
             },
             matches() {
-                return [
-                    {
-                        value: 0,
-                        name: this.$t('match.oneUp.name'),
-                        turnTypes: null
-                    },
-                    {
-                        value: 1,
-                        name: this.$t('match.threeRoundPass.name'),
-                        turnTypes: [
-                            {
-                                value: 0,
-                                name: this.$t('match.turnTypes.blitz')
-                            },
-                            {
-                                value: 1,
-                                name: this.$t('match.turnTypes.classic')
-                            },
-                            {
-                                value: 2,
-                                name: this.$t('match.turnTypes.alternating')
-                            }
-                        ]
-                    },
-                    {
-                        value: 2,
-                        name: this.$t('match.copyCat.name'),
-                        turnTypes: null
-                    }
-                ]
-            },
-            surfaces() {
-                return surfaces.map((x, index) => ({
-                    value: index,
-                    name: this.$t(`match.surface.${x}`)
-                }))
+                return matches;
             },
             turnTimeRules() {
                 return [
