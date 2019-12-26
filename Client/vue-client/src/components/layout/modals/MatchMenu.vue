@@ -41,7 +41,7 @@
                             <v-list-item two-line>
                                 <v-list-item-content>
                                     <v-list-item-subtitle>{{$t('create.stage.surface.title')}}</v-list-item-subtitle>
-                                    <v-list-item-title>{{match.surface}}</v-list-item-title>
+                                    <v-list-item-title>{{$t(`match.surface[${match.surface}]`)}}</v-list-item-title>
                                 </v-list-item-content>
                             </v-list-item>
                             <v-list-item two-line>
@@ -215,7 +215,7 @@
                 let exp = (this.match.round | 0) + 7;
 
                 return [
-                    {id: 1, name: "Share", action: this.share, show: true},
+                    {id: 1, name: this.$t('menu.share'), action: this.share, show: true},
                     {
                         id: 2,
                         name: this.$t('menu.matchInformation'),

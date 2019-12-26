@@ -98,7 +98,7 @@
             <v-list class="secondary">
                 <v-list-item v-for="match in hosted" :key="match.id">
                     <v-list-item-title>{{match.mode}}</v-list-item-title>
-                    <v-list-item-subtitle>{{match.surface}} - {{match.turnTime}}</v-list-item-subtitle>
+                    <v-list-item-subtitle>{{$t(`match.surface[${match.surface}]`)}} - {{match.turnTime}}</v-list-item-subtitle>
                     <v-spacer/>
                     <v-btn text icon color="error"
                            :loading="loadingDelete"

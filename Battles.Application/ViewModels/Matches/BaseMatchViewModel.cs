@@ -6,7 +6,7 @@ namespace Battles.Application.ViewModels.Matches
     {
         public string Key { get; set; }
         public string Mode { get; set; }
-        public string Surface { get; set; }
+        public int Surface { get; set; }
         
         public string[] Chain { get; set; }
         public string TimeLeft { get; set; }

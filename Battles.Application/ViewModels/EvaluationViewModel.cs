@@ -7,41 +7,34 @@ using Battles.Application.ViewModels.Matches;
 using Battles.Enums;
 using Battles.Extensions;
 using Battles.Models;
+
 // ReSharper disable MemberCanBePrivate.Global
 
 namespace Battles.Application.ViewModels
 {
-    public class EvaluationViewModel
+    public class EvaluationViewModel : BaseMatchViewModel
     {
         public int Id { get; set; }
         public int MatchId { get; set; }
-        public IEnumerable<MatchUserViewModel> Participants { get; set; }
-        public IEnumerable<VideoViewModel> Videos { get; set; }
-
-        public string Mode { get; set; }
-        public string Surface { get; set; }
-        public int Target { get; set; }
         public bool Flag { get; set; }
         public string Reason { get; set; }
-        public string[] Chain { get; set; }
-
-        public string TimeLeft { get; set; }
 
         public bool CanVote { get; set; }
-
 
         public static Expression<Func<Evaluation, EvaluationViewModel>> Projection =>
             eval => new EvaluationViewModel
             {
                 Id = eval.Id,
                 MatchId = eval.MatchId,
+                Key = $"{eval.Id}-{eval.Created.GetKeyTime()}",
+
                 Participants = eval.Match.MatchUsers
-                    .AsQueryable()
-                    .OrderBy(x => x.Role)
-                    .Select(MatchUserViewModel.Projection),
+                                   .AsQueryable()
+                                   .OrderBy(x => x.Role)
+                                   .Select(MatchUserViewModel.Projection),
 
                 Mode = eval.Match.Mode.GetString(),
-                Surface = eval.Match.Surface.GetString(),
+                Surface = (int) eval.Match.Surface,
 
                 Flag = eval.EvaluationType == EvaluationT.Flag,
                 Reason = eval.Reason,

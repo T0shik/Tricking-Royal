@@ -11,15 +11,6 @@ namespace Battles.Extensions
             : @this == Mode.Trick ? "Trick"
             : "";
 
-        public static string GetString(this Surface @this) =>
-            @this == Surface.Any ? "Any"
-            : @this == Surface.SprungFloor ? "Sprung Floor"
-            : @this == Surface.Grass ? "Grass"
-            : @this == Surface.Concrete ? "Concrete"
-            : @this == Surface.Trampoline ? "Trampoline"
-            : @this == Surface.Tumbling ? "Tumbling Track"
-            : "";
-
         public static string GetString(this Status @this) =>
             @this == Status.Open ? "Open"
             : @this == Status.Active ? "Active"

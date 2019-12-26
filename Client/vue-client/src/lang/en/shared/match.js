@@ -28,12 +28,5 @@
         classic: "Classic",
         alternating: "Alternating",
     },
-    surface: {
-        any: "Any",
-        sprungFloor: "Spring Floor",
-        grass: "Grass",
-        concrete: "Concrete",
-        trampoline: "Trampoline",
-        tumbling: "Tumbling"
-    }
+    surface: ["Any", "Spring Floor", "Grass", "Concrete", "Trampoline", "Tumbling"]
 }

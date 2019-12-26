@@ -29,7 +29,7 @@ namespace Battles.Application.ViewModels.Matches
                 Round = match.Round,
                 Status = match.Status.GetString(),
                 Mode = match.Mode.GetString(),
-                Surface = match.Surface.GetString(),
+                Surface = (int) match.Surface,
                 TurnType = (int) match.TurnType,
                 Chain = match.Chain.DefaultSplit(),
 
@@ -68,7 +68,7 @@ namespace Battles.Application.ViewModels.Matches
                 Round = match.Round,
                 Status = match.Status.GetString(),
                 Mode = match.Mode.GetString(),
-                Surface = match.Surface.GetString(),
+                Surface = (int) match.Surface,
                 TurnType = (int) match.TurnType,
                 Chain = match.Chain.DefaultSplit(),
                 Updating = match.Updating,
@@ -101,7 +101,7 @@ namespace Battles.Application.ViewModels.Matches
 
                 Status = match.Status.GetString(),
                 Mode = match.Mode.GetString(),
-                Surface = match.Surface.GetString(),
+                Surface = (int) match.Surface,
                 TurnType = (int) match.TurnType,
                 Chain = match.Chain.DefaultSplit(),
 
@@ -126,7 +126,7 @@ namespace Battles.Application.ViewModels.Matches
                 Round = match.Round,
                 Status = match.Status.GetString(),
                 Mode = match.Mode.GetString(),
-                Surface = match.Surface.GetString(),
+                Surface = (int) match.Surface,
                 TurnType = (int) match.TurnType,
                 Chain = match.Chain.DefaultSplit(),
                 Updating = match.Updating,

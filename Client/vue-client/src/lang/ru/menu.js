@@ -1,6 +1,6 @@
 ﻿export default {
     title: "Меню",
-    timeLeft: "Осталось",
+    timeLeft: "Осталось на ход",
     turn: "Ход",
     copiedToClipboard: "Ссылка скопирована",
     matchInformation: "Информация Матча",
