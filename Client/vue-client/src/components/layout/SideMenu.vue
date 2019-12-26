@@ -107,8 +107,8 @@
                         {{$t(`layout.levelPerks.${p.name}.title`)}}
                         <v-icon right>{{p.icon}}</v-icon>
                     </v-btn>
-                    <p v-if="selectedPerk">
-                        {{$t(`layout.levelPerks.${selectedPerk.name}.current`, [profile])}}
+                    <p class="ma-0" v-if="selectedPerk">
+                        {{$t(`layout.levelPerks.${selectedPerk.name}.current`, [profile[selectedPerk.prop]])}}
                     </p>
                 </v-card-text>
                 <v-card-actions v-if="selectedPerk" class="justify-center">
@@ -149,21 +149,21 @@
                     name: 'host',
                     icon: mdiViewGridPlus,
                     selected: false,
-                    current: this.$t('layout.levelPerks.host.current', [this.profile.hostingLimit])
+                    prop: 'hostingLimit'
                 },
                 {
                     id: 1,
                     name: 'guest',
                     icon: mdiDoorOpen,
                     selected: false,
-                    current: this.$t('layout.levelPerks.guest.current', [this.profile.joinedLimit])
+                    prop: 'joinedLimit' 
                 },
                 {
                     id: 2,
                     name: 'voting',
                     icon: mdiScale,
                     selected: false,
-                    current: this.$t('layout.levelPerks.voting.current', [this.profile.votingPower])
+                    prop: 'votingPower' 
                 }
             ]
         }
@@ -186,6 +186,9 @@
                 refreshProfile: "REFRESH_PROFILE"
             }),
             selectPerk(perk) {
+                if(this.selectedPerk) {
+                    this.selectedPerk.selected = false;
+                }
                 perk.selected = true;
                 this.selectedPerk = perk;
             },

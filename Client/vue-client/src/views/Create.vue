@@ -1,6 +1,6 @@
 <template>
     <div class="main-card">
-        <Rules></Rules>
+        <Rules/>
         <v-card>
             <v-card-title>
                 <span>{{stageInfo.title}}</span>
@@ -21,7 +21,7 @@
                         </v-card-actions>
                     </v-window-item>
                     <v-window-item :value="2">
-                        <v-card-actions class="justify-center">
+                        <v-card-actions class="justify-center flex-wrap">
                             <v-btn v-for="t in turnTypes" :key="`mtt-${t.value}`"
                                    @click="selectOption('turnType', t.name, t.value, {})">{{t.name}}
                             </v-btn>
@@ -93,13 +93,13 @@
                 <span>{{$t('create.hostedMatches')}}</span>
             </v-card-title>
             <div class="d-flex justify-center" v-if="loadingMatches">
-                <v-progress-circular color="primary" indeterminate></v-progress-circular>
+                <v-progress-circular color="primary" indeterminate/>
             </div>
             <v-list class="secondary">
                 <v-list-item v-for="match in hosted" :key="match.id">
                     <v-list-item-title>{{match.mode}}</v-list-item-title>
                     <v-list-item-subtitle>{{match.surface}} - {{match.turnTime}}</v-list-item-subtitle>
-                    <v-spacer></v-spacer>
+                    <v-spacer/>
                     <v-btn text icon color="error"
                            :loading="loadingDelete"
                            :disabled="loadingDelete"
