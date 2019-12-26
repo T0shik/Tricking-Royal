@@ -10,7 +10,7 @@
                 <h3
                         class="font-rock skill-text"
                         :class="`${user.skill.toLowerCase()}--text`"
-                >{{user.skill}}</h3>
+                >{{$t(`skills.${user.skill}.title`)}}</h3>
             </v-card-title>
             <v-card-text class="white--text py-0">
                 <v-row class="justify-space-around my-1">

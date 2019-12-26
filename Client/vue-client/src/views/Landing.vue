@@ -29,7 +29,7 @@
                 <div class="pt-4">
                     <h4 class="text-center subtitle-1">{{$t('landing.partners')}}</h4>
                     <a class="kojos-tricklab" href="https://www.kojostricklab.com/?wpam_id=93" target="_blank_">
-                        <img :src="`${process.env.VUE_APP_CDN}/static/kojos-tricklab.png`"/>
+                        <img :src="kojoLink"/>
                     </a>
                 </div>
                 <v-spacer/>
@@ -55,7 +55,7 @@
                 <h1>{{$t(`landing.battlesTitle`)}}</h1>
             </div>
             <div class="main-card mb-5" v-if="matches && matches.length > 0">
-                <MatchPlayer v-for="match in matches" :key="match.key" :disabled="true" :match="match"></MatchPlayer>
+                <MatchPlayer v-for="match in matches" :key="match.key" :disabled="true" :match="match"/>
                 <div class="text-center">
                     <v-btn color="primary" v-if="!endReached" @click="loadMatches">{{$t(`misc.loadMore`)}}</v-btn>
                 </div>
@@ -102,7 +102,6 @@
     import axios from "axios";
     import {languages} from '@/lang/languages.json'
     import {loadLanguageAsync} from "@/plugins/i18n";
-    import {STORAGE_KEYS} from "../data/enum";
 
     export default {
         data: () => ({
@@ -116,6 +115,7 @@
             },
             connecting: false,
             heightSet: false,
+            kojoLink: `${process.env.VUE_APP_CDN}/static/kojos-tricklab.png`,
             windowSize: {
                 x: 0,
                 y: 0

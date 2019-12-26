@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
+using Battles.Enums;
 using Battles.Models;
 
 // ReSharper disable MemberCanBePrivate.Global
@@ -10,7 +11,6 @@ namespace Battles.Application.ViewModels
     {
         public string DisplayName { get; set; }
         public string Skill { get; set; }
-        public int SkillNorm { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
         public string Gym { get; set; }
@@ -41,8 +41,7 @@ namespace Battles.Application.ViewModels
             user => new UserViewModel()
             {
                 DisplayName = user.DisplayName,
-                Skill = user.Skill.ToString(),
-                SkillNorm = (int) user.Skill,
+                Skill = user.Skill.ToString().ToLower(),
                 City = user.City,
                 Country = user.Country,
                 Gym = user.Gym,

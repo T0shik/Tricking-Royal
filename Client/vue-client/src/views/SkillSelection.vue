@@ -6,11 +6,11 @@
         >{{$t("skills.description")}}</h1>
         <v-card color="secondary" class="mx-auto" max-width="500" min-width="300" width="100%">
             <v-window v-model="skill" touchless>
-                <v-window-item v-for="s in skills" :key="s" :value="s.value">
+                <v-window-item v-for="s in skills" :key="`sss-${s.value}`" :value="s.value">
                     <v-card-title class="display-1 font-rock font-weight-bold justify-space-between">
-                        <span :class="`${s}--text`">{{$t(`skills.${s}.title`)}}</span>
+                        <span :class="`${s.name}--text`">{{$t(`skills.${s.name}.title`)}}</span>
                     </v-card-title>
-                    <v-card-text class="subheading white--text">{{$t(`skills.${s}.text`)}}</v-card-text>
+                    <v-card-text class="subheading white--text">{{$t(`skills.${s.name}.text`)}}</v-card-text>
                 </v-window-item>
             </v-window>
 
