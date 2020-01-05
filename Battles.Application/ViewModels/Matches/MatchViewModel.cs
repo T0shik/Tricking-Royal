@@ -75,13 +75,13 @@ namespace Battles.Application.ViewModels.Matches
 
                 Videos = match.Videos.Select(VideoViewModel.ProjectionFunction),
 
-                CanGo = !match.Updating && (match.MatchUsers.FirstOrDefault(x => x.UserId == userId)?.CanGo ?? false),
-                CanFlag = !match.Updating && (match.MatchUsers.FirstOrDefault(x => x.UserId == userId)?.CanFlag ?? false),
-                CanUpdate = !match.Updating && (match.MatchUsers.FirstOrDefault(x => x.UserId == userId)?.CanUpdate ?? false),
-                CanPass = !match.Updating && (match.MatchUsers.FirstOrDefault(x => x.UserId == userId)?.CanPass ?? false),
-                CanLockIn = !match.Updating && (match.MatchUsers.FirstOrDefault(x => x.UserId == userId)?.CanLockIn ?? false),
+                CanGo = !match.Updating && (match.MatchUsers.FirstOrDefault(x => x.UserId == userId && !x.Freeze)?.CanGo ?? false),
+                CanFlag = !match.Updating && (match.MatchUsers.FirstOrDefault(x => x.UserId == userId && !x.Freeze)?.CanFlag ?? false),
+                CanUpdate = !match.Updating && (match.MatchUsers.FirstOrDefault(x => x.UserId == userId && !x.Freeze)?.CanUpdate ?? false),
+                CanPass = !match.Updating && (match.MatchUsers.FirstOrDefault(x => x.UserId == userId && !x.Freeze)?.CanPass ?? false),
+                CanLockIn = !match.Updating && (match.MatchUsers.FirstOrDefault(x => x.UserId == userId && !x.Freeze)?.CanLockIn ?? false),
 
-                Likes = match.Likes.Count(),
+                Likes = match.Likes.Count,
                 CanLike = match.Likes.All(x => x.UserId != userId),
             };
         }
@@ -133,13 +133,13 @@ namespace Battles.Application.ViewModels.Matches
 
                 Videos = match.Videos.Select(VideoViewModel.ProjectionFunction),
 
-                CanGo = !match.Updating && (match.MatchUsers.FirstOrDefault(x => x.UserId == userId)?.CanGo ?? false),
-                CanFlag = !match.Updating && (match.MatchUsers.FirstOrDefault(x => x.UserId == userId)?.CanFlag ?? false),
-                CanUpdate = !match.Updating && (match.MatchUsers.FirstOrDefault(x => x.UserId == userId)?.CanUpdate ?? false),
-                CanPass = !match.Updating && (match.MatchUsers.FirstOrDefault(x => x.UserId == userId)?.CanPass ?? false),
-                CanLockIn = !match.Updating && (match.MatchUsers.FirstOrDefault(x => x.UserId == userId)?.CanLockIn ?? false),
+                CanGo = !match.Updating && (match.MatchUsers.FirstOrDefault(x => x.UserId == userId && !x.Freeze)?.CanGo ?? false),
+                CanFlag = !match.Updating && (match.MatchUsers.FirstOrDefault(x => x.UserId == userId && !x.Freeze)?.CanFlag ?? false),
+                CanUpdate = !match.Updating && (match.MatchUsers.FirstOrDefault(x => x.UserId == userId && !x.Freeze)?.CanUpdate ?? false),
+                CanPass = !match.Updating && (match.MatchUsers.FirstOrDefault(x => x.UserId == userId && !x.Freeze)?.CanPass ?? false),
+                CanLockIn = !match.Updating && (match.MatchUsers.FirstOrDefault(x => x.UserId == userId && !x.Freeze)?.CanLockIn ?? false),
 
-                Likes = match.Likes.Count(),
+                Likes = match.Likes.Count,
                 CanLike = match.Likes.All(x => x.UserId != userId),
                 Comments = match.Comments.Select(x => new MatchCommentsViewModel
                 {

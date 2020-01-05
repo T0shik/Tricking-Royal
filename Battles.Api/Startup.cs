@@ -9,11 +9,13 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using Battles.Api.Infrastructure;
 using Battles.Api.Workers;
 using Battles.Api.Workers.MatchUpdater;
 using Battles.Api.Workers.Notifications.Settings;
+using Battles.Application.Services.Evaluations.Commands;
 using Battles.Application.SubServices;
 using Battles.Shared;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -132,7 +134,7 @@ namespace Battles.Api
         private static void SetupHangfireJobs()
         {
             RecurringJob.AddOrUpdate<IHangfireJobs>(jobs => jobs.CloseExpiredMatches(), Cron.Hourly);
-            RecurringJob.AddOrUpdate<IHangfireJobs>(jobs => jobs.CloseExpiredEvaluations(), Cron.Hourly);
+            RecurringJob.AddOrUpdate<CloseEvaluationsCommandHandler>(handler => handler.Handle(new CloseEvaluationsCommand(), CancellationToken.None), Cron.Minutely);
             RecurringJob.AddOrUpdate<IHangfireJobs>(jobs => jobs.MatchReminder(), Cron.Daily);
         }
     }

@@ -46,17 +46,18 @@ namespace Battles.Application.Services.Matches.Commands
             }
 
             match.Status = Status.Pending;
+            foreach (var user in match.MatchUsers)
+            {
+                user.SetFreeze(true);
+            }
 
-            var e = new Evaluation()
+            _ctx.Evaluations.Add(new Evaluation
             {
                 Match = match,
                 EvaluationType = EvaluationT.Flag,
                 Reason = request.Reason,
-                Expiry = DateTime.Now.AddDays(1)
-            };
-
-            _ctx.Matches.Update(match);
-            _ctx.Evaluations.Add(e);
+                Expiry = DateTime.Now.AddDays(1),
+            });
 
             await _ctx.SaveChangesAsync(cancellationToken);
 

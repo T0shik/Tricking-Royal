@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Battles.Application.Extensions
+namespace Battles.Extensions
 {
     public static class DateTimeExtensions
     {

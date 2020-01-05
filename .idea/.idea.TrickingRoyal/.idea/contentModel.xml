@@ -19,7 +19,6 @@
         </e>
         <e p="Battles.csproj" t="IncludeRecursive" />
         <e p="bin" t="ExcludeRecursive" />
-        <e p="Configuration" t="Include" />
         <e p="Enums" t="Include">
           <e p="EvaluationType.cs" t="Include" />
           <e p="MatchRole.cs" t="Include" />
@@ -33,6 +32,7 @@
           <e p="Winner.cs" t="Include" />
         </e>
         <e p="Extensions" t="Include">
+          <e p="DateTimeExtensions.cs" t="Include" />
           <e p="EnumExtensions.cs" t="Include" />
           <e p="StringExtensions.cs" t="Include" />
         </e>
@@ -64,6 +64,14 @@
         </e>
         <e p="Rules" t="Include">
           <e p="Evaluations" t="Include">
+            <e p="Actions" t="Include">
+              <e p="Close" t="Include">
+                <e p="CloseComplete.cs" t="Include" />
+                <e p="CloseFlag.cs" t="Include" />
+                <e p="ICloseEvaluation.cs" t="Include" />
+              </e>
+            </e>
+            <e p="EvaluationActionFactory.cs" t="Include" />
             <e p="ResultsCalculator.cs" t="Include" />
           </e>
           <e p="Levels" t="Include">
@@ -174,7 +182,6 @@
           <e p="ReputationAwards.cs" t="Include" />
         </e>
         <e p="Extensions" t="Include">
-          <e p="DateTimeExtensions.cs" t="Include" />
           <e p="DbSetExtensions.cs" t="Include" />
           <e p="MatchExtensions.cs" t="Include" />
           <e p="QueryExtensions.cs" t="Include" />
@@ -205,8 +212,7 @@
           </e>
           <e p="Evaluations" t="Include">
             <e p="Commands" t="Include">
-              <e p="CloseCompleteEvaluationCommand.cs" t="Include" />
-              <e p="CloseFlagEvaluationCommand.cs" t="Include" />
+              <e p="CloseEvaluationsCommand.cs" t="Include" />
               <e p="VoteCommand.cs" t="Include" />
             </e>
             <e p="Queries" t="Include">
@@ -890,6 +896,10 @@
                 <e p="thumb_23-11-2019-21-31-17.jpg" t="Include" />
                 <e p="thumb_23-11-2019-21-32-23.jpg" t="Include" />
                 <e p="thumb_23-11-2019-21-34-10.jpg" t="Include" />
+              </e>
+              <e p="48" t="Include">
+                <e p="c_05-01-2020-19-18-16.mp4" t="Include" />
+                <e p="thumb_05-01-2020-19-18-16.jpg" t="Include" />
               </e>
               <e p="5" t="Include">
                 <e p="c_06-10-2019-14-00-31.mp4" t="Include" />

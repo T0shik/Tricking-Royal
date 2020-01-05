@@ -50,7 +50,7 @@
                 }
             },
             section: function (section) {
-                if (section === this.matches.length) {
+                if (section === this.matches.length - 1) {
                     this.endReached = true
                 }
             }

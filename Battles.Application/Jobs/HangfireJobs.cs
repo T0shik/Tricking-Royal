@@ -21,27 +21,15 @@ namespace Battles.Application.Jobs
         private readonly AppDbContext _ctx;
         private readonly IMediator _mediator;
         private readonly INotificationQueue _notificationQueue;
-        private readonly ILogger<HangfireJobs> _logger;
 
         public HangfireJobs(
             AppDbContext ctx, 
             IMediator mediator, 
-            INotificationQueue notificationQueue,
-            ILogger<HangfireJobs> logger)
+            INotificationQueue notificationQueue)
         {
             _ctx = ctx;
             _mediator = mediator;
             _notificationQueue = notificationQueue;
-            _logger = logger;
-        }
-
-        public async Task CloseExpiredEvaluations()
-        {
-            foreach (var evaluation in GetExpiredEvaluations())
-                if (evaluation.EvaluationType == EvaluationT.Complete)
-                    await _mediator.Send(new CloseCompleteEvaluationCommand(evaluation));
-                else
-                    await _mediator.Send(new CloseFlagEvaluationCommand(evaluation));
         }
 
         public void MatchReminder()
@@ -88,15 +76,5 @@ namespace Battles.Application.Jobs
                 .Where(x => EF.Functions.DateDiffHour(x.LastUpdate, DateTime.Now) >= x.TurnDays * 24)
                 .ToList();
 
-        private IEnumerable<Evaluation> GetExpiredEvaluations() =>
-            _ctx.Evaluations
-                .Include(x => x.Match)
-                .ThenInclude(x => x.MatchUsers)
-                .ThenInclude(x => x.User)
-                .Include(x => x.Decisions)
-                .ThenInclude(x => x.User)
-                .Where(x => !x.Complete)
-                .Where(x => EF.Functions.DateDiffHour(DateTime.Now, x.Expiry) < 0)
-                .ToList();
     }
 }

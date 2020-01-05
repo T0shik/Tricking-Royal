@@ -138,36 +138,34 @@
     } from "@mdi/js";
     import ProfileImage from "../shared/ProfileImage";
 
-    const initialState = function () {
-        return {
-            levelUp: false,
-            loading: false,
-            selectedPerk: null,
-            perks: [
-                {
-                    id: 0,
-                    name: 'host',
-                    icon: mdiViewGridPlus,
-                    selected: false,
-                    prop: 'hostingLimit'
-                },
-                {
-                    id: 1,
-                    name: 'guest',
-                    icon: mdiDoorOpen,
-                    selected: false,
-                    prop: 'joinedLimit' 
-                },
-                {
-                    id: 2,
-                    name: 'voting',
-                    icon: mdiScale,
-                    selected: false,
-                    prop: 'votingPower' 
-                }
-            ]
-        }
-    };
+    const initialState = () => ({
+        levelUp: false,
+        loading: false,
+        selectedPerk: null,
+        perks: [
+            {
+                id: 0,
+                name: 'host',
+                icon: mdiViewGridPlus,
+                selected: false,
+                prop: 'hostingLimit'
+            },
+            {
+                id: 1,
+                name: 'guest',
+                icon: mdiDoorOpen,
+                selected: false,
+                prop: 'joinedLimit'
+            },
+            {
+                id: 2,
+                name: 'voting',
+                icon: mdiScale,
+                selected: false,
+                prop: 'votingPower'
+            }
+        ]
+    });
 
     export default {
         data: () => initialState(),
@@ -186,7 +184,7 @@
                 refreshProfile: "REFRESH_PROFILE"
             }),
             selectPerk(perk) {
-                if(this.selectedPerk) {
+                if (this.selectedPerk) {
                     this.selectedPerk.selected = false;
                 }
                 perk.selected = true;
@@ -205,7 +203,7 @@
                     })
                     .then(() => {
                         this.refreshProfile();
-                        Object.assign(this.$data, initialState().bind(this));
+                        Object.assign(this.$data, initialState());
                     })
             }
         },
