@@ -57,9 +57,10 @@ export default {
                     description: 'New version of the app is available, refresh to update.',
                     buttonText: "Refresh",
                     action: () => {
-                        window.location.reload();
+                        window.location.reload(true);
                     }
-                }))
+                }));
+                localStorage.setItem(STORAGE_KEYS.UPDATE_PROMPT, now);
             }
         },
         copyCatPass({commit, dispatch}, {id}) {
