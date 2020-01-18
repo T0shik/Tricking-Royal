@@ -332,6 +332,7 @@
           <e p="launchSettings.json" t="Include" />
         </e>
         <e p="Startup.cs" t="Include" />
+        <e p="Web.config" t="Include" />
         <e p="wwwroot" t="Include">
           <e p="content" t="Include">
             <e p="match" t="Include">
@@ -890,6 +891,14 @@
                 <e p="thumb_23-11-2019-21-31-17.jpg" t="Include" />
                 <e p="thumb_23-11-2019-21-32-23.jpg" t="Include" />
                 <e p="thumb_23-11-2019-21-34-10.jpg" t="Include" />
+              </e>
+              <e p="48" t="Include">
+                <e p="c_05-01-2020-19-18-16.mp4" t="Include" />
+                <e p="thumb_05-01-2020-19-18-16.jpg" t="Include" />
+              </e>
+              <e p="49" t="Include">
+                <e p="c_18-01-2020-11-46-49.mp4" t="Include" />
+                <e p="thumb_18-01-2020-11-46-49.jpg" t="Include" />
               </e>
               <e p="5" t="Include">
                 <e p="c_06-10-2019-14-00-31.mp4" t="Include" />

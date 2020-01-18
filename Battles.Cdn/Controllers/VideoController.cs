@@ -29,6 +29,7 @@ namespace Battles.Cdn.Controllers
         }
 
         [HttpPost("{matchId}/{task}")]
+        [RequestSizeLimit(40_000_000)]
         public async Task<IActionResult> SaveVideo(
             int matchId,
             string task,
@@ -36,8 +37,7 @@ namespace Battles.Cdn.Controllers
         {
             try
             {
-                if (task != "update"
-                    && task != "upload")
+                if (task != "update" && task != "upload")
                 {
                     return BadRequest("Invalid Action");
                 }

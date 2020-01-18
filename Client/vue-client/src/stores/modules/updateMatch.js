@@ -18,7 +18,6 @@ const getDefaultState = () => {
         match: null,
         uploadStatus: UPLOAD_STATUS.NOT_STARTED,
         initialVideoName: '',
-        trimResult: null,
         videoUpdate: false,
     }
 };
@@ -42,11 +41,6 @@ export default {
         },
         setInitialVideoName(state, name) {
             state.initialVideoName = name
-        },
-        setTrimmingResult(state, {video, thumb}) {
-            state.trimResult = {
-                video, thumb
-            };
         },
         hide(state) {
             state.display = false;
