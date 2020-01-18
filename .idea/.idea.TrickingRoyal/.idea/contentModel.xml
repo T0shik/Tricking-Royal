@@ -293,6 +293,8 @@
             <e p="MatchCommentsViewModel.cs" t="Include" />
             <e p="MatchUserViewModel.cs" t="Include" />
             <e p="MatchViewModel.cs" t="Include" />
+            <e p="OpenMatchUserViewModel.cs" t="Include" />
+            <e p="OpenMatchViewModel.cs" t="Include" />
             <e p="VideoViewModel.cs" t="Include" />
           </e>
           <e p="NotificationConfigViewModel.cs" t="Include" />

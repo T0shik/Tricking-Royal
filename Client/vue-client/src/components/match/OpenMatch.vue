@@ -2,23 +2,44 @@
     <v-card class="my-3" max-width="600px" width="100%" dark color="secondary">
         <v-card-title class="pa-2">
             <router-link class="white--text" :to="`/user/${user.displayName}`">
-                <ProfileImage :picture="user.picture" :level="user.level"></ProfileImage>
+                <ProfileImage :picture="user.picture" :level="user.level"/>
                 <span class="white--text body-2 px-1">{{user.displayName}}</span>
             </router-link>
-            <v-spacer></v-spacer>
+            <v-spacer/>
             <span
                     class="font-rock skill-text"
                     :class="`${user.skill.toLowerCase()}--text`"
             >{{user.skill}}</span>
         </v-card-title>
-        <v-card-text class="px-3">
+        <v-card-text class="px-3 pt-1 pb-2">
+            <div class="d-flex white--text">
+                <div class="text-center mr-2">
+                    <h1 class="body-1 mb-0">Reputation</h1>
+                    <h1 class="body-2">{{user.reputation}}</h1>
+                </div>
+                <v-spacer/>
+                <div class="text-center mx-2">
+                    <h1 class="body-1 mb-0">Wins</h1>
+                    <h1 class="body-2">{{user.win}}</h1>
+                </div>
+                <div class="text-center mx-2">
+                    <h1 class="body-1 mb-0">Loss</h1>
+                    <h1 class="body-2">{{user.loss}}</h1>
+                </div>
+                <div class="text-center ml-2">
+                    <h1 class="body-1 mb-0">Draw</h1>
+                    <h1 class="body-2">{{user.draw}}</h1>
+                </div>
+            </div>
+        </v-card-text>
+        <v-card-text class="px-3 pt-1 pb-2">
             <div class="d-flex white--text">
                 <div>
                     <h1 class="body-1 mb-0">Mode</h1>
                     <h1 class="body-2">{{match.mode}}</h1>
                     <h1 class="body-2" v-if="mode">{{mode}}</h1>
                 </div>
-                <v-spacer></v-spacer>
+                <v-spacer/>
                 <div class="text-xs-right mr-3">
                     <h1 class="body-1 mb-0">Surface</h1>
                     <h1 class="body-2">{{match.surface}}</h1>

@@ -13,7 +13,7 @@ namespace Battles.Rules.Matches.Extensions
             return @this;
         }
 
-        public static MatchUser SetWinner(this MatchUser @this, int reputation)
+        public static MatchUser SetWinnerAndLock(this MatchUser @this, int reputation)
         {
             @this.SetLockUser();
             @this.Winner = true;
@@ -22,7 +22,7 @@ namespace Battles.Rules.Matches.Extensions
             return @this;
         }
 
-        public static MatchUser SetLoser(this MatchUser @this, int reputation)
+        public static MatchUser SetLoserAndLock(this MatchUser @this, int reputation)
         {
             @this.SetLockUser();
             @this.Winner = false;

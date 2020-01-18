@@ -23,14 +23,14 @@ namespace Battles.Rules.Matches.Helpers
 
             if (host.Points > opponent.Points)
             {
-                host.SetWinner(12).AwardExp(12);
-                opponent.SetLoser(6).AwardExp(6);
+                host.SetWinnerAndLock(12).AwardExp(12);
+                opponent.SetLoserAndLock(6).AwardExp(6);
 ;
             }
             else if (host.Points < opponent.Points)
             {
-                opponent.SetWinner(12).AwardExp(12);
-                host.SetLoser(6).AwardExp(6);
+                opponent.SetWinnerAndLock(12).AwardExp(12);
+                host.SetLoserAndLock(6).AwardExp(6);
             }
             else
             {
