@@ -334,7 +334,6 @@
           <e p="launchSettings.json" t="Include" />
         </e>
         <e p="Startup.cs" t="Include" />
-        <e p="Web.config" t="Include" />
         <e p="wwwroot" t="Include">
           <e p="content" t="Include">
             <e p="match" t="Include">

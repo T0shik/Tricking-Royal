@@ -29,7 +29,6 @@ namespace Battles.Cdn.Controllers
         }
 
         [HttpPost("{matchId}/{task}")]
-        [RequestSizeLimit(40_000_000)]
         public async Task<IActionResult> SaveVideo(
             int matchId,
             string task,
