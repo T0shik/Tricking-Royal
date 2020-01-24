@@ -13,54 +13,57 @@ using Battles.Enums;
 using Battles.Extensions;
 using Battles.Models;
 using Battles.Rules.Matches.Extensions;
+using Transmogrify;
 using static System.String;
 
 namespace Battles.Application.Services.Comments.Commands
 {
-    public class CreateCommentCommand : IRequest<CommentViewModel>
+    public class CreateCommentCommand : IRequest<BaseResponse<CommentViewModel>>
     {
         public int MatchId { get; set; }
         public string UserId { get; set; }
         [Required] public string Message { get; set; }
     }
 
-    public class CreateCommentCommandHandler : IRequestHandler<CreateCommentCommand, CommentViewModel>
+    public class CreateCommentCommandHandler : IRequestHandler<CreateCommentCommand, BaseResponse<CommentViewModel>>
     {
         private readonly AppDbContext _ctx;
         private readonly INotificationQueue _notification;
+        private readonly ITranslator _translator;
 
         public CreateCommentCommandHandler(
             AppDbContext ctx,
-            INotificationQueue notification)
+            INotificationQueue notification,
+            ITranslator translator)
         {
             _ctx = ctx;
             _notification = notification;
+            _translator = translator;
         }
 
-        public async Task<CommentViewModel> Handle(CreateCommentCommand request, CancellationToken cancellationToken)
+        public async Task<BaseResponse<CommentViewModel>> Handle(
+            CreateCommentCommand request,
+            CancellationToken cancellationToken)
         {
             if (IsNullOrEmpty(request.Message))
             {
-                throw new Exception("Comment Needs a Message");
+                return BaseResponse.Fail<CommentViewModel>(await _translator.GetTranslation("Comment.NeedMessage"));
             }
 
-            var match = await _ctx.Matches
-                .AsNoTracking()
-                .Include(x => x.MatchUsers)
-                .FirstAsync(x => x.Id == request.MatchId, cancellationToken: cancellationToken);
+            var match = await _ctx.Matches.AsNoTracking()
+                                  .Include(x => x.MatchUsers)
+                                  .FirstAsync(x => x.Id == request.MatchId, cancellationToken);
 
             if (match == null)
             {
-                throw new MatchException("Match not found.");
+                return BaseResponse.Fail<CommentViewModel>(await _translator.GetTranslation("Match.404"));
             }
 
-            var user = _ctx.UserInformation
-                .AsNoTracking()
-                .FirstOrDefault(x => x.Id == request.UserId);
+            var user = _ctx.UserInformation.AsNoTracking().FirstOrDefault(x => x.Id == request.UserId);
 
             if (user == null)
             {
-                throw new UserNotFoundException();
+                return BaseResponse.Fail<CommentViewModel>(await _translator.GetTranslation("User.404"));
             }
 
             var comment = new Comment
@@ -74,14 +77,13 @@ namespace Battles.Application.Services.Comments.Commands
             _ctx.Comments.Add(comment);
             await _ctx.SaveChangesAsync(cancellationToken);
 
-            _notification.QueueNotification(
-                $"{user.DisplayName} commented on your battle.",
-                new[] {match.Id.ToString(), comment.Id.ToString()}.DefaultJoin(),
-                NotificationMessageType.Comment,
-                match.GetOtherUserIds(user.Id)
-            );
+            _notification.QueueNotification($"{user.DisplayName} commented on your battle.",
+                                            new[] {match.Id.ToString(), comment.Id.ToString()}.DefaultJoin(),
+                                            NotificationMessageType.Comment,
+                                            match.GetOtherUserIds(user.Id));
 
-            return CommentViewModel.CommentProjection.Compile().Invoke(comment);
+            return BaseResponse.Ok(await _translator.GetTranslation("Comment.Created"),
+                                   CommentViewModel.CommentProjection.Compile().Invoke(comment));
         }
     }
 }

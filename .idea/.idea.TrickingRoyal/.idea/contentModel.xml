@@ -134,6 +134,13 @@
           <e p="ServiceRegistrar.cs" t="Include" />
           <e p="UserIdProvider.cs" t="Include" />
         </e>
+        <e p="Languages" t="Include">
+          <e p="English" t="Include">
+            <e p="comment.json" t="Include" />
+            <e p="match.json" t="Include" />
+            <e p="user.json" t="Include" />
+          </e>
+        </e>
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
             <e p="netcoreapp2.2" t="Include">
@@ -290,6 +297,7 @@
         </e>
         <e p="ViewModels" t="Include">
           <e p="BaseResponse.cs" t="Include" />
+          <e p="BaseResponse{T}.cs" t="Include" />
           <e p="CanUpdateViewModel.cs" t="Include" />
           <e p="CommentViewModel.cs" t="Include" />
           <e p="DescisionResultsViewModel.cs" t="Include" />
@@ -900,6 +908,10 @@
               <e p="48" t="Include">
                 <e p="c_05-01-2020-19-18-16.mp4" t="Include" />
                 <e p="thumb_05-01-2020-19-18-16.jpg" t="Include" />
+              </e>
+              <e p="49" t="Include">
+                <e p="c_18-01-2020-11-46-49.mp4" t="Include" />
+                <e p="thumb_18-01-2020-11-46-49.jpg" t="Include" />
               </e>
               <e p="5" t="Include">
                 <e p="c_06-10-2019-14-00-31.mp4" t="Include" />
