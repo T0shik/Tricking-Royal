@@ -1,4 +1,5 @@
-﻿using System.Net.Http.Headers;
+﻿using System.IO;
+using System.Net.Http.Headers;
 using Battles.Application.Jobs;
 using Battles.Application.Services.Users.Queries;
 using Battles.Configuration;
@@ -79,6 +80,13 @@ namespace Battles.Api
                     });
 
             SetupCors(services);
+
+            services.AddNewtonsoftTransmogrify(config =>
+            {
+                config.DefaultLanguage = "en";
+                config.LanguagePath = Path.Combine(_env.ContentRootPath, "Languages");
+                config.AddResolver(typeof(DefaultLanguageResolver));
+            });
 
             services.AddBattlesServices()
                     .AddSubServices()

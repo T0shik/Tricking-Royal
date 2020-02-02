@@ -47,7 +47,7 @@ namespace Battles.Application.Services.Comments.Commands
         {
             if (IsNullOrEmpty(request.Message))
             {
-                return BaseResponse.Fail<CommentViewModel>(await _translator.GetTranslation("Comment.NeedMessage"));
+                return BaseResponse.Fail<CommentViewModel>(await _translator.GetTranslation("Comment","NeedMessage"));
             }
 
             var match = await _ctx.Matches.AsNoTracking()
@@ -56,14 +56,14 @@ namespace Battles.Application.Services.Comments.Commands
 
             if (match == null)
             {
-                return BaseResponse.Fail<CommentViewModel>(await _translator.GetTranslation("Match.404"));
+                return BaseResponse.Fail<CommentViewModel>(await _translator.GetTranslation("Match","404"));
             }
 
             var user = _ctx.UserInformation.AsNoTracking().FirstOrDefault(x => x.Id == request.UserId);
 
             if (user == null)
             {
-                return BaseResponse.Fail<CommentViewModel>(await _translator.GetTranslation("User.404"));
+                return BaseResponse.Fail<CommentViewModel>(await _translator.GetTranslation("User","404"));
             }
 
             var comment = new Comment
@@ -82,7 +82,7 @@ namespace Battles.Application.Services.Comments.Commands
                                             NotificationMessageType.Comment,
                                             match.GetOtherUserIds(user.Id));
 
-            return BaseResponse.Ok(await _translator.GetTranslation("Comment.Created"),
+            return BaseResponse.Ok(await _translator.GetTranslation("Comment","Created"),
                                    CommentViewModel.CommentProjection.Compile().Invoke(comment));
         }
     }

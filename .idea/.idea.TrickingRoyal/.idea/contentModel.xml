@@ -131,11 +131,17 @@
         </e>
         <e p="Infrastructure" t="Include">
           <e p="BaseController.cs" t="Include" />
+          <e p="DefaultLanguageResolver.cs" t="Include" />
           <e p="ServiceRegistrar.cs" t="Include" />
           <e p="UserIdProvider.cs" t="Include" />
         </e>
         <e p="Languages" t="Include">
-          <e p="English" t="Include">
+          <e p="en" t="Include">
+            <e p="comment.json" t="Include" />
+            <e p="match.json" t="Include" />
+            <e p="user.json" t="Include" />
+          </e>
+          <e p="ru" t="Include">
             <e p="comment.json" t="Include" />
             <e p="match.json" t="Include" />
             <e p="user.json" t="Include" />
@@ -1480,6 +1486,8 @@
             <e p="20191005132350_notificationMessageUserIdFix.Designer.cs" t="Include" />
             <e p="20191123191711_matchUpdatingStatus.cs" t="Include" />
             <e p="20191123191711_matchUpdatingStatus.Designer.cs" t="Include" />
+            <e p="20200202181433_MatchUserFreeze.cs" t="Include" />
+            <e p="20200202181433_MatchUserFreeze.Designer.cs" t="Include" />
             <e p="AppDbContextModelSnapshot.cs" t="Include" />
           </e>
           <e p="IdentityServer" t="Include">

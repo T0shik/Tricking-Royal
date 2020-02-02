@@ -30,6 +30,6 @@ namespace Battles.Application.Services.Comments.Queries
                 .Where(x => x.MatchId == request.MatchId)
                 .GrabSegment(request.Index)
                 .Select(CommentViewModel.CommentProjection)
-                .ToListAsync();
+                .ToListAsync(cancellationToken: cancellationToken);
     }
 }
