@@ -42,16 +42,6 @@ namespace Battles.Application.Services.Matches.Commands
                             .Include(x => x.Videos)
                             .FirstOrDefault(x => x.Id == request.MatchId);
 
-            if (match == null)
-            {
-                return new BaseResponse("Match not found.", false);
-            }
-
-            if (!match.CanGo(request.UserId))
-            {
-                return new BaseResponse("Not allowed to go.", false);
-            }
-
             try
             {
                 _managerFactory

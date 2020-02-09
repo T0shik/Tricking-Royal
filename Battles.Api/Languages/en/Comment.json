@@ -1,5 +1,5 @@
 ﻿{
-  "Main404": "Main comment not found.",
+  "NotFound": "Comment not found.",
   "NeedMessage": "Comment needs a message.",
   "Created": "Comment created."
 }

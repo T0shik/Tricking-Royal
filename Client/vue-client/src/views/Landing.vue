@@ -40,7 +40,7 @@
         </v-parallax>
 
         <v-row class="mx-2" ref="info">
-            <v-col cols="6" sm="6" md="4" v-for="(v, n) in blocks">
+            <v-col cols="6" sm="6" md="4" v-for="(v, n) in blocks" :key="`l-b-${n}`">
                 <div class="d-flex flex-column align-center">
                     <div>
                         <v-icon size="50">{{v}}</v-icon>

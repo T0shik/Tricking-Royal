@@ -138,7 +138,9 @@
         <e p="Languages" t="Include">
           <e p="en" t="Include">
             <e p="comment.json" t="Include" />
+            <e p="Evaluation.json" t="Include" />
             <e p="match.json" t="Include" />
+            <e p="Notification.json" t="Include" />
             <e p="user.json" t="Include" />
           </e>
           <e p="ru" t="Include">

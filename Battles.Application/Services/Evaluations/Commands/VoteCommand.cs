@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Battles.Application.Extensions;
 using Battles.Models;
+using Transmogrify;
 
 namespace Battles.Application.Services.Evaluations.Commands
 {
@@ -19,27 +20,30 @@ namespace Battles.Application.Services.Evaluations.Commands
     public class VoteCommandHandler : IRequestHandler<VoteCommand, BaseResponse>
     {
         private readonly AppDbContext _ctx;
+        private readonly ITranslator _translator;
 
-        public VoteCommandHandler(AppDbContext ctx)
+        public VoteCommandHandler(
+            AppDbContext ctx, 
+            ITranslator translator)
         {
             _ctx = ctx;
+            _translator = translator;
         }
 
         public async Task<BaseResponse> Handle(VoteCommand request, CancellationToken cancellationToken)
         {
             var evaluation = _ctx.Evaluations.CanVote(request.EvaluationId, request.UserId);
 
-            //todo stick this in evaluation exceptions
             if (evaluation == null)
             {
-                return new BaseResponse("Not allowed to vote.", false);
+                return BaseResponse.Fail(await _translator.GetTranslation("Evaluation", "NotAllowed"));
             }
 
             var user = _ctx.UserInformation.FirstOrDefault(x => x.Id == request.UserId);
 
             if (user == null)
             {
-                return new BaseResponse("User not found.", false);
+                return BaseResponse.Fail(await _translator.GetTranslation("User", "NotFound"));
             }
 
             evaluation.Decisions.Add(new Decision
@@ -52,7 +56,7 @@ namespace Battles.Application.Services.Evaluations.Commands
 
             await _ctx.SaveChangesAsync(cancellationToken);
 
-            return new BaseResponse("Vote submitted.", true);
+            return BaseResponse.Ok(await _translator.GetTranslation("Evaluation", "VoteCreated"));
         }
     }
 }

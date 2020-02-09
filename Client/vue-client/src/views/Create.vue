@@ -118,7 +118,7 @@
     import {mdiDelete, mdiInformation} from "@mdi/js";
     import {createMatch} from "../data/api";
     import {MATCH_TYPES} from "../data/enum";
-    import {matches, surfaces} from "../data/shared";
+    import {matches} from "../data/shared";
     import Rules from "../components/layout/modals/Rules";
 
     const initialForm = () => ({

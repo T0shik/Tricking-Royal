@@ -55,7 +55,7 @@ namespace Battles.Application.Services.Comments.Commands
 
             if (comment == null)
             {
-                return BaseResponse.Fail<CommentViewModel>(await _translator.GetTranslation("Comment", "Main404"));
+                return BaseResponse.Fail<CommentViewModel>(await _translator.GetTranslation("Comment", "NotFound"));
             }
 
             var user = await _ctx.UserInformation
@@ -63,7 +63,7 @@ namespace Battles.Application.Services.Comments.Commands
 
             if (user == null)
             {
-                return BaseResponse.Fail<CommentViewModel>(await _translator.GetTranslation("User", "404"));
+                return BaseResponse.Fail<CommentViewModel>(await _translator.GetTranslation("User", "NotFound"));
             }
 
             var subComment = new SubComment
@@ -83,14 +83,14 @@ namespace Battles.Application.Services.Comments.Commands
                     await _ctx.UserInformation.FirstAsync(x => x.DisplayName == command.TaggedUser, cancellationToken);
 
                 _notification.QueueNotification(
-                    $"{user.DisplayName} replied to your comment.",
+                    await _translator.GetTranslation("Notification","CommentReply", user.DisplayName),
                     new[] {comment.MatchId.ToString(), comment.Id.ToString(), subComment.Id.ToString()}.DefaultJoin(),
                     NotificationMessageType.SubComment,
                     new[] {taggedUser.Id});
             }
 
             _notification.QueueNotification(
-                $"{user.DisplayName} commented on your battle.",
+                await _translator.GetTranslation("Notification","CommentCreated", user.DisplayName),
                 new[] {comment.MatchId.ToString(), comment.Id.ToString(), subComment.Id.ToString()}.DefaultJoin(),
                 NotificationMessageType.SubComment,
                 comment.Match.GetOtherUserIds(user.Id));

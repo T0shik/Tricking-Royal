@@ -24,6 +24,7 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 using NETCore.MailKit.Extensions;
 using NETCore.MailKit.Infrastructure.Internal;
+using Transmogrify.DependencyInjection.Newtonsoft;
 using TrickingRoyal.Database;
 
 namespace Battles.Api
@@ -81,6 +82,7 @@ namespace Battles.Api
 
             SetupCors(services);
 
+            services.AddHttpContextAccessor();
             services.AddNewtonsoftTransmogrify(config =>
             {
                 config.DefaultLanguage = "en";

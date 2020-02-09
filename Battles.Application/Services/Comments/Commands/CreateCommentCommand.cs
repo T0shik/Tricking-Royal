@@ -56,14 +56,14 @@ namespace Battles.Application.Services.Comments.Commands
 
             if (match == null)
             {
-                return BaseResponse.Fail<CommentViewModel>(await _translator.GetTranslation("Match","404"));
+                return BaseResponse.Fail<CommentViewModel>(await _translator.GetTranslation("Match","NotFound"));
             }
 
             var user = _ctx.UserInformation.AsNoTracking().FirstOrDefault(x => x.Id == request.UserId);
 
             if (user == null)
             {
-                return BaseResponse.Fail<CommentViewModel>(await _translator.GetTranslation("User","404"));
+                return BaseResponse.Fail<CommentViewModel>(await _translator.GetTranslation("User","NotFound"));
             }
 
             var comment = new Comment
@@ -77,7 +77,9 @@ namespace Battles.Application.Services.Comments.Commands
             _ctx.Comments.Add(comment);
             await _ctx.SaveChangesAsync(cancellationToken);
 
-            _notification.QueueNotification($"{user.DisplayName} commented on your battle.",
+            var message = await _translator.GetTranslation("Notification", "CommentCreated", user.DisplayName);
+            
+            _notification.QueueNotification(message,
                                             new[] {match.Id.ToString(), comment.Id.ToString()}.DefaultJoin(),
                                             NotificationMessageType.Comment,
                                             match.GetOtherUserIds(user.Id));

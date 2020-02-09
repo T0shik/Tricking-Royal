@@ -63,12 +63,9 @@ export default {
             if (payload.taggedUser) url += '/sub';
 
             return axios.post(url, payload).then(({data}) => {
-                dispatch('DISPLAY_POPUP', {
-                    message: 'Comment created.',
-                    type: 'success',
-                });
+                dispatch('DISPLAY_POPUP_DEFAULT', data);
 
-                return data;
+                return data.value;
             });
         }
     }

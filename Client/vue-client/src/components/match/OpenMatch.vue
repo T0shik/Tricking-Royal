@@ -47,7 +47,6 @@
 
 <script>
     import ProfileImage from "../shared/ProfileImage";
-    import {TURN_TYPE} from "../../data/enum";
 
     export default {
         props: {
