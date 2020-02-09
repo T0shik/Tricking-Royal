@@ -1,4 +1,5 @@
 ﻿{
-  "CommentCreated": "{0} commented on your battle.",
-  "CommentReply": "{0} replied to your comment."
+  "CommentCreated": "{0} commented on your battle",
+  "CommentReply": "{0} replied to your comment",
+  "Forfeited": "{0} forfeited the match{1}" 
 }

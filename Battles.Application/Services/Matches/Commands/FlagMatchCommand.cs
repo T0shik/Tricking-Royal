@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Battles.Application.ViewModels;
 using Battles.Enums;
 using Battles.Models;
+using Transmogrify;
 
 namespace Battles.Application.Services.Matches.Commands
 {
@@ -23,10 +24,14 @@ namespace Battles.Application.Services.Matches.Commands
     public class FlagMatchCommandHandler : IRequestHandler<FlagMatchCommand, BaseResponse>
     {
         private readonly AppDbContext _ctx;
+        private readonly ITranslator _translator;
 
-        public FlagMatchCommandHandler(AppDbContext ctx)
+        public FlagMatchCommandHandler(
+            AppDbContext ctx,
+            ITranslator translator)
         {
             _ctx = ctx;
+            _translator = translator;
         }
 
         public async Task<BaseResponse> Handle(FlagMatchCommand request, CancellationToken cancellationToken)
@@ -37,12 +42,12 @@ namespace Battles.Application.Services.Matches.Commands
 
             if (match == null)
             {
-                return new BaseResponse("Match not found.", false);
+                return BaseResponse.Fail(await _translator.GetTranslation("Match", "NotFound"));
             }
 
             if (!match.CanFlag(request.UserId))
             {
-                return new BaseResponse("Not allowed to flag match.", false);
+                return BaseResponse.Fail(await _translator.GetTranslation("Match", "CantFlag"));
             }
 
             match.Status = Status.Pending;
@@ -61,7 +66,7 @@ namespace Battles.Application.Services.Matches.Commands
 
             await _ctx.SaveChangesAsync(cancellationToken);
 
-            return new BaseResponse("Match flagged.", true);
+            return BaseResponse.Ok(await _translator.GetTranslation("Match", "Flagged"));
         }
     }
 }

@@ -1,3 +1,10 @@
 ﻿{
-  "NotFound": "Match not found"
+  "NotFound": "Match not found",
+  "Created": "Match created",
+  "Deleted": "Match deleted",
+  "CantDelete": "Can't delete match",
+  "CantFlag": "Can't flag match",
+  "Flagged": "Match flagged",
+  "CantForfeit": "Can't forfeit match",
+  "Forfeited": "Match forfeited"
 }
