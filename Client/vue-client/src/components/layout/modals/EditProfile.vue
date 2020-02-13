@@ -1,5 +1,5 @@
 <template>
-    <v-dialog dark v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
+    <v-dialog dark v-model="dialog" fullscreen persistent hide-overlay transition="dialog-bottom-transition">
         <template v-slot:activator="{ on }">
             <v-btn text icon color="white" v-on="on">
                 <v-icon>{{icons.settings}}</v-icon>
@@ -33,15 +33,12 @@
                                     <v-btn outlined color="info" @click="$refs.image.click()">
                                         {{$t('editProfile.personal.changeImg')}}
                                     </v-btn>
-                                    <v-btn class="ma-0" text color="error" v-if="tempImage" @click="clearImage">
-                                        {{$t('misc.remove')}}
-                                    </v-btn>
                                     <input
                                             hidden
                                             type="file"
                                             ref="image"
                                             accept="image/*"
-                                            @change="storeImage"
+                                            @change="uploadImage"
                                     />
                                 </div>
                             </div>
@@ -206,7 +203,6 @@
             email: true,
 
             tempImage: "",
-            tempImageFile: null,
 
             valid: true,
 
@@ -291,7 +287,7 @@
                 enablePushNotifications: "notifications/showPrompt",
                 getPushState: "notifications/getPushState",
                 refreshProfile: "REFRESH_PROFILE",
-                popup: "DISPLAY_POPUP",
+                popup: "DISPLAY_POPUP_DEFAULT",
                 signOut: "SIGN_OUT",
             }),
             updateEmailConfig(enable) {
@@ -324,28 +320,16 @@
             getSkillLevel(name) {
                 return this.skills.filter(x => x.name === name.toLowerCase())[0].value
             },
-            clearImage() {
-                this.tempImage = "";
-                this.tempImageFile = null;
-            },
-            storeImage(e) {
-                let file = e.target.files[0];
-                this.tempImageFile = file;
-                this.tempImage = URL.createObjectURL(file);
-            },
             save() {
                 this.$axios
                     .put("users", this.profile)
-                    .then(({data: {message, success}}) => {
-                        if (success)
+                    .then(({data}) => {
+                        this.popup(data);
+
+                        if (data.success) {
                             this.refreshProfile();
-
-                        this.popup({
-                            message,
-                            type: success ? "success" : "error"
-                        });
-
-                        this.dialog = false;
+                            this.dialog = false;
+                        }
                     })
                     .catch(() => {
                         this.popup({
@@ -354,13 +338,12 @@
                         });
                     });
 
-                if (this.tempImage && this.tempImageFile) {
-                    this.uploadImage();
-                }
             },
-            uploadImage() {
+            uploadImage(e) {
+                let file = e.target.files[0];
+                this.tempImage = URL.createObjectURL(file);
                 const formData = new FormData();
-                formData.append("image", this.tempImageFile);
+                formData.append("image", file);
                 let headers = {
                     headers: {
                         "Content-Type": "multipart/form-data"
@@ -372,10 +355,12 @@
                         formData,
                         headers
                     )
-                    .then(res => {
-                        axios.put("/users/picture", {picture: res.data}).then(res => {
-                            this.updateProfileImage(res.data.message);
-                        });
+                    .then(({data}) => {
+                        return axios.put("/users/picture", {picture: data});
+                    })
+                    .then(({data}) => {
+                        this.popup(data);
+                        this.updateProfileImage(data.value);
                     })
                     .catch(error => {
                         this.$logger.error("ERROR UPLOADING IMAGE TODO HANDLE", error);
@@ -383,7 +368,7 @@
             }
         },
         computed: {
-            languageFlag(){
+            languageFlag() {
                 return this.languages.filter(x => x.locale === this.lang)[0].icon
             },
             icons() {
