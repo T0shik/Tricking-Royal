@@ -6,5 +6,14 @@
   "CantFlag": "Can't flag match",
   "Flagged": "Match flagged",
   "CantForfeit": "Can't forfeit match",
-  "Forfeited": "Match forfeited"
+  "Forfeited": "Match forfeited",
+  "Joined": "Match joined",
+  "CantPass": "Can't pass round",
+  "Passed": "Round passed",
+  "CantLockIn": "Can't lock in",
+  "LockedIn": "Match locked in",
+  "CantGo": "It's not your turn",
+  "UpdateStarted": "Match Update started",
+  "CantUpdate": "Can't update video",
+  "Updated": "Video updated"
 }

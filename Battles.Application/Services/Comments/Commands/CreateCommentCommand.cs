@@ -13,6 +13,7 @@ using Battles.Enums;
 using Battles.Extensions;
 using Battles.Models;
 using Battles.Rules.Matches.Extensions;
+using Newtonsoft.Json;
 using Transmogrify;
 using static System.String;
 

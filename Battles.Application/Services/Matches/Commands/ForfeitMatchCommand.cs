@@ -47,6 +47,11 @@ namespace Battles.Application.Services.Matches.Commands
                                   .FirstOrDefaultAsync(x => x.Id == request.MatchId,
                                                        cancellationToken: cancellationToken);
 
+            if (match == null)
+            {
+                return BaseResponse.Fail(await _translator.GetTranslation("Match", "NotFound"));
+            }
+
             if (!match.CanGo(request.UserId))
             {
                 return BaseResponse.Fail(await _translator.GetTranslation("Match", "CantForfeit"));
@@ -59,7 +64,7 @@ namespace Battles.Application.Services.Matches.Commands
             if (match.Round == 1 || (match.Mode == Mode.ThreeRoundPass && match.TurnType == TurnType.Blitz))
             {
                 _ctx.Matches.Remove(match);
-                notificationExtension = ", match deleted.";
+                notificationExtension = $". {await _translator.GetTranslation("Match", "Deleted")}";
             }
             else
             {

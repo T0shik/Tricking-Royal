@@ -13,28 +13,32 @@ using Battles.Application.ViewModels;
 using Battles.Enums;
 using Battles.Extensions;
 using Battles.Models;
+using Transmogrify;
 
 namespace Battles.Application.Services.Matches.Commands
 {
-    public class UpdateMatchCommand : UpdateSettings, IRequest<BaseResponse> { }
+    public class UpdateMatchCommand : UpdateSettings, IRequest<Unit> { }
 
-    public class UpdateMatchHandler : IRequestHandler<UpdateMatchCommand, BaseResponse>
+    public class UpdateMatchHandler : IRequestHandler<UpdateMatchCommand, Unit>
     {
         private readonly AppDbContext _ctx;
         private readonly MatchActionFactory _managerFactory;
         private readonly INotificationQueue _notifications;
+        private readonly ITranslator _translator;
 
         public UpdateMatchHandler(
             AppDbContext ctx,
             MatchActionFactory managerFactory,
-            INotificationQueue notifications)
+            INotificationQueue notifications,
+            ITranslator translator)
         {
             _ctx = ctx;
             _managerFactory = managerFactory;
             _notifications = notifications;
+            _translator = translator;
         }
 
-        public async Task<BaseResponse> Handle(UpdateMatchCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(UpdateMatchCommand request, CancellationToken cancellationToken)
         {
             var match = _ctx.Matches
                             .Include(x => x.MatchUsers)
@@ -42,16 +46,9 @@ namespace Battles.Application.Services.Matches.Commands
                             .Include(x => x.Videos)
                             .FirstOrDefault(x => x.Id == request.MatchId);
 
-            try
-            {
-                _managerFactory
-                    .CreateMatchManager(match)
-                    .UpdateMatch(request);
-            }
-            catch (Exception e)
-            {
-                return new BaseResponse($"Failed to update match: {e.Message}", false);
-            }
+            _managerFactory
+                .CreateMatchManager(match)
+                .UpdateMatch(request);
 
             match.Updating = false;
 
@@ -72,8 +69,9 @@ namespace Battles.Application.Services.Matches.Commands
 
                 await _ctx.SaveChangesAsync(cancellationToken);
 
-                _notifications.QueueNotification(
-                                                 "Your match is now in the tribunal for voting.",
+                var notificationMessage = await _translator.GetTranslation("Notification", "MatchInTribunal");
+                
+                _notifications.QueueNotification(notificationMessage,
                                                  new[] {match.Id.ToString()}.DefaultJoin(),
                                                  NotificationMessageType.TribunalHistory,
                                                  match.GetUserIds());
@@ -83,15 +81,16 @@ namespace Battles.Application.Services.Matches.Commands
                 await _ctx.SaveChangesAsync(cancellationToken);
 
                 var currentUser = match.GetUser(request.UserId);
-
-                _notifications.QueueNotification(
-                                                 $"{currentUser.User.DisplayName} updated a match you are in.",
+                
+                var notificationMessage = await _translator.GetTranslation("Notification", "MatchUpdated", currentUser.User.DisplayName);
+                
+                _notifications.QueueNotification(notificationMessage,
                                                  new[] {match.Id.ToString()}.DefaultJoin(),
                                                  NotificationMessageType.MatchActive,
                                                  match.GetOtherUserIds(request.UserId));
             }
 
-            return new BaseResponse("Match updated.", true);
+            return new Unit();
         }
     }
 }

@@ -11,6 +11,8 @@ using Battles.Application.Services.Notifications;
 using Battles.Application.ViewModels;
 using Battles.Enums;
 using Battles.Extensions;
+using Battles.Models;
+using Transmogrify;
 
 namespace Battles.Application.Services.Matches.Commands
 {
@@ -25,15 +27,18 @@ namespace Battles.Application.Services.Matches.Commands
         private readonly AppDbContext _ctx;
         private readonly MatchDoorman _matchDoorman;
         private readonly INotificationQueue _notification;
+        private readonly ITranslator _translator;
 
         public JoinMatchCommandHandler(
             AppDbContext ctx,
             MatchDoorman matchDoorman,
-            INotificationQueue notification)
+            INotificationQueue notification,
+            ITranslator translator)
         {
             _ctx = ctx;
             _matchDoorman = matchDoorman;
             _notification = notification;
+            _translator = translator;
         }
 
         public async Task<BaseResponse> Handle(JoinMatchCommand request, CancellationToken cancellationToken)
@@ -44,15 +49,12 @@ namespace Battles.Application.Services.Matches.Commands
                             .FirstOrDefault(x => x.Id == request.MatchId);
 
             if (match == null)
-                return new BaseResponse("Match not found.", false);
+                return BaseResponse.Fail(await _translator.GetTranslation("Match", "NotFound"));
 
-            var currentUser = _ctx.UserInformation
-                                  .FirstOrDefault(x => x.Id == request.UserId);
+            var currentUser = _ctx.UserInformation.FirstOrDefault(x => x.Id == request.UserId);
 
             if (currentUser == null)
-            {
-                return new BaseResponse("User record not found", false);
-            }
+                return BaseResponse.Fail(await _translator.GetTranslation("User", "NotFound"));
 
             try
             {
@@ -60,18 +62,20 @@ namespace Battles.Application.Services.Matches.Commands
             }
             catch (Exception e)
             {
-                return new BaseResponse(e.Message, false);
+                return BaseResponse.Fail(e.Message);
             }
 
             await _ctx.SaveChangesAsync(cancellationToken);
 
-            _notification.QueueNotification(
-                                            $"{currentUser.DisplayName} joined your match.",
+            var notificationMessage =
+                await _translator.GetTranslation("Notification", "JoinedMatch", currentUser.DisplayName);
+
+            _notification.QueueNotification(notificationMessage,
                                             new[] {match.Id.ToString()}.DefaultJoin(),
                                             NotificationMessageType.MatchActive,
                                             new[] {match.GetHost().UserId});
 
-            return new BaseResponse("Match joined", true);
+            return BaseResponse.Ok(await _translator.GetTranslation("Match", "Joined"));
         }
     }
 }

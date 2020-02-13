@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Battles.Application.ViewModels;
 using Battles.Enums;
 using Battles.Models;
+using Transmogrify;
 
 namespace Battles.Application.Services.Matches.Commands
 {
@@ -21,10 +22,12 @@ namespace Battles.Application.Services.Matches.Commands
     public class ReadyMatchCommandHandler : IRequestHandler<ReadyMatchCommand, BaseResponse>
     {
         private readonly AppDbContext _ctx;
+        private readonly ITranslator _translator;
 
-        public ReadyMatchCommandHandler(AppDbContext ctx)
+        public ReadyMatchCommandHandler(AppDbContext ctx, ITranslator translator)
         {
             _ctx = ctx;
+            _translator = translator;
         }
 
         public async Task<BaseResponse> Handle(ReadyMatchCommand request, CancellationToken cancellationToken)
@@ -34,16 +37,12 @@ namespace Battles.Application.Services.Matches.Commands
                             .FirstOrDefault(x => x.Id == request.MatchId);
 
             if (match == null)
-            {
-                return new BaseResponse("Match not found.", false);
-            }
+                return BaseResponse.Fail(await _translator.GetTranslation("Match", "NotFound"));
 
             var user = match.GetUser(request.UserId);
 
             if (!user.CanLockIn)
-            {
-                return new BaseResponse("Not allowed to lock in", false);
-            }
+                return BaseResponse.Fail(await _translator.GetTranslation("Match", "CantLockIn"));
 
             user.SetGoFlagUpdatePassLock(false, false, false, ready: true);
 
@@ -61,7 +60,7 @@ namespace Battles.Application.Services.Matches.Commands
 
             await _ctx.SaveChangesAsync(cancellationToken);
 
-            return new BaseResponse("Match locked in.", true);
+            return BaseResponse.Ok(await _translator.GetTranslation("Match", "LockedIn"));
         }
     }
 }
