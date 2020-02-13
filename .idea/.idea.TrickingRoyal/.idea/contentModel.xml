@@ -228,6 +228,7 @@
           </e>
           <e p="Evaluations" t="Include">
             <e p="Commands" t="Include">
+              <e p="CloseCompleteEvaluationCommand.cs" t="Include" />
               <e p="CloseEvaluationsCommand.cs" t="Include" />
               <e p="VoteCommand.cs" t="Include" />
             </e>
@@ -316,6 +317,8 @@
             <e p="MatchCommentsViewModel.cs" t="Include" />
             <e p="MatchUserViewModel.cs" t="Include" />
             <e p="MatchViewModel.cs" t="Include" />
+            <e p="OpenMatchUserViewModel.cs" t="Include" />
+            <e p="OpenMatchViewModel.cs" t="Include" />
             <e p="VideoViewModel.cs" t="Include" />
           </e>
           <e p="NotificationConfigViewModel.cs" t="Include" />

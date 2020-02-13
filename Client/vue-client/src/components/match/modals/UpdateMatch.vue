@@ -9,9 +9,9 @@
                     <v-btn text icon @click="reset">
                         <v-icon>{{icons.close}}</v-icon>
                     </v-btn>
+                    <p class="error--text" v-if="error">{{error}}</p>
                 </v-card-title>
                 <v-card-text class="pa-0">
-                    <div class="error--text" v-if="error">{{error}}</div>
                     <div class="custom-container">
                         <video
                                 v-show="tempFile"
@@ -101,12 +101,14 @@
         move: "",
         trim: {
             value: [0, 0],
-            duration: 0
+            duration: 0,
         },
         index: -1,
-        error: ""
+        error: "",
     });
 
+    const maximumFileSize = 40;
+    
     export default {
         data: initialState,
         watch: {
@@ -114,7 +116,7 @@
                 if (v) {
                     this.$refs.file.click();
                 } else {
-                    this.clear();
+                    this.clearVideo();
                 }
             },
             "trim.value": function (prev, next) {
@@ -128,14 +130,14 @@
         methods: {
             ...mapMutations(['hide']),
             ...mapActions(['reset', 'uploadVideo', 'startUpdate']),
-            clear() {
+            clearVideo() {
                 this.$refs.file.value = null;
                 this.$refs.video.load();
                 Object.assign(this.$data, initialState());
             },
             videoError() {
                 if (this.$refs.video.error) {
-                    this.clear();
+                    this.clearVideo();
                     this.error = `${this.$t('updateMatch.videoUploadError')}. Error: ${this.$refs.video.error.message}`;
                 }
             },
@@ -155,6 +157,14 @@
             selectFile() {
                 this.stage = 1;
                 this.file = this.$refs.file.files[0];
+                let fileSize = this.file.size / 1024 / 1024;               
+                if(fileSize > maximumFileSize) {
+                    this.$logger.log("[UpdateMatch.vue] file size:", fileSize);
+                    this.clearVideo();
+                    this.error = `Video is too big, maximum upload size is ${maximumFileSize}MB your file is ${fileSize | 0}MB`;
+                    return;
+                }
+                
                 this.tempFile = URL.createObjectURL(this.file);
                 const formData = new FormData();
                 formData.append("video", this.file);

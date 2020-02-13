@@ -70,17 +70,17 @@ namespace Battles.Application.Services.Matches.Commands
             {
                 if (match.IsTurn(MatchRole.Host))
                 {
-                    host.SetLoser(match.Round + 5)
+                    host.SetLoserAndLock(match.Round + 5)
                         .AwardExp(4 + match.Round);
 
-                    opponent.SetWinner(match.Round + 5)
+                    opponent.SetWinnerAndLock(match.Round + 5)
                             .AwardExp(7 + match.Round);
                 }
                 else if (match.IsTurn(MatchRole.Opponent))
                 {
-                    host.SetWinner(match.Round + 5)
+                    host.SetWinnerAndLock(match.Round + 5)
                         .AwardExp(7 + match.Round);
-                    opponent.SetLoser(match.Round + 5)
+                    opponent.SetLoserAndLock(match.Round + 5)
                             .AwardExp(4 + match.Round);
                 }
 

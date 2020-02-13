@@ -97,17 +97,18 @@
                 <v-card-title>
                     {{$t('layout.levelUp')}}
                 </v-card-title>
-                <v-card-text>
+                <v-card-text class="py-0">
                     <span v-if="selectedPerk">{{$t(`layout.levelPerks.${selectedPerk.name}.description`)}}</span>
                     <span v-else>{{$t('layout.selectPerk')}}</span>
-                </v-card-text>
-                <v-card-text class="d-flex flex-wrap justify-center">
-                    <v-btn class="ma-1 grey" :class="{'primary': p.selected}" @click="selectPerk(p)" v-for="p in perks"
-                           :key="`perk-${p.id}`">
-                        {{$t(`layout.levelPerks.${p.name}.title`)}}
-                        <v-icon right>{{p.icon}}</v-icon>
-                    </v-btn>
-                    <p class="ma-0" v-if="selectedPerk">
+                    <div class="d-flex flex-wrap justify-center">
+                        <v-btn class="ma-1 grey" :class="{'primary': p.selected}" @click="selectPerk(p)"
+                               v-for="p in perks"
+                               :key="`perk-${p.id}`">
+                            {{$t(`layout.levelPerks.${p.name}.title`)}}
+                            <v-icon right>{{p.icon}}</v-icon>
+                        </v-btn>
+                    </div>
+                    <p class="ma-0 py-2 text-center" v-if="selectedPerk">
                         {{$t(`layout.levelPerks.${selectedPerk.name}.current`, [profile[selectedPerk.prop]])}}
                     </p>
                 </v-card-text>

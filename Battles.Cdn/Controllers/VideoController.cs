@@ -36,8 +36,7 @@ namespace Battles.Cdn.Controllers
         {
             try
             {
-                if (task != "update"
-                    && task != "upload")
+                if (task != "update" && task != "upload")
                 {
                     return BadRequest("Invalid Action");
                 }

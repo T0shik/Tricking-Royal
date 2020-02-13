@@ -12,7 +12,7 @@ using Battles.Models;
 
 namespace Battles.Application.ViewModels
 {
-    public class EvaluationViewModel : BaseMatchViewModel
+    public class EvaluationViewModel : BaseMatchViewModel<MatchUserViewModel>
     {
         public int Id { get; set; }
         public int MatchId { get; set; }

@@ -32,13 +32,13 @@ namespace Battles.Rules.Evaluations.Actions.Close
             }
             else if (winner == Winner.Host)
             {
-                host.SetWinner(10).AwardExp(12);
-                opponent.SetLoser(10).AwardExp(8);
+                host.SetWinnerAndLock(10).AwardExp(12);
+                opponent.SetLoserAndLock(10).AwardExp(8);
             }
             else if (winner == Winner.Opponent)
             {
-                host.SetLoser(10).AwardExp(8);
-                opponent.SetWinner(10).AwardExp(12);
+                host.SetLoserAndLock(10).AwardExp(8);
+                opponent.SetWinnerAndLock(10).AwardExp(12);
             }
 
             host.User.Hosting--;

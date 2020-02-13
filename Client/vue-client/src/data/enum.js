@@ -36,4 +36,5 @@ export const STORAGE_KEYS = {
     RULES_READ: 'tr_rules_read',
     LANGUAGE: 'tr_language',
     // LANGUAGE_PACK: 'tr_language_pack_',
+    UPDATE_PROMPT: 'tr_update_app'
 };
