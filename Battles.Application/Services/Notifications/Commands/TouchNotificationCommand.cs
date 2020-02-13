@@ -8,13 +8,13 @@ using TrickingRoyal.Database;
 
 namespace Battles.Application.Services.Notifications.Commands
 {
-    public class TouchNotificationCommand : IRequest<BaseResponse>
+    public class TouchNotificationCommand : IRequest<Unit>
     {
         public int NotificationId { get; set; }
         public string UserId { get; set; }
     }
 
-    public class TouchNotificationCommandHandler : IRequestHandler<TouchNotificationCommand, BaseResponse>
+    public class TouchNotificationCommandHandler : IRequestHandler<TouchNotificationCommand, Unit>
     {
         private readonly AppDbContext _ctx;
 
@@ -23,7 +23,7 @@ namespace Battles.Application.Services.Notifications.Commands
             _ctx = ctx;
         }
 
-        public async Task<BaseResponse> Handle(TouchNotificationCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(TouchNotificationCommand request, CancellationToken cancellationToken)
         {
             var notification = _ctx.NotificationMessages
                 .FirstOrDefault(x => x.Id == request.NotificationId
@@ -38,7 +38,7 @@ namespace Battles.Application.Services.Notifications.Commands
 
             await _ctx.SaveChangesAsync(cancellationToken);
 
-            return new BaseResponse("Notification touched", true);
+            return new Unit();
         }
     }
 }

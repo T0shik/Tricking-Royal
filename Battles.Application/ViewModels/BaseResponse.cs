@@ -2,7 +2,7 @@
 {
     public class BaseResponse
     {
-        public BaseResponse(string message, bool success = default)
+        protected BaseResponse(string message, bool success = default)
         {
             Message = message;
             Success = success;
@@ -15,6 +15,5 @@
         public static BaseResponse<T> Ok<T>(string message, T value) => new BaseResponse<T>(message, value);
         public static BaseResponse Fail(string message) => new BaseResponse(message);
         public static BaseResponse<T> Fail<T>(string message) => new BaseResponse<T>(message);
-
     }
 }

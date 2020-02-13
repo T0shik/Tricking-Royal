@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Battles.Application.ViewModels;
 using MediatR;
+using Transmogrify;
 using TrickingRoyal.Database;
 
 namespace Battles.Application.Services.Notifications.Commands
@@ -15,10 +16,14 @@ namespace Battles.Application.Services.Notifications.Commands
     public class ClearNotificationsCommandHandler : IRequestHandler<ClearNotificationsCommand, BaseResponse>
     {
         private readonly AppDbContext _ctx;
+        private readonly ITranslator _translator;
 
-        public ClearNotificationsCommandHandler(AppDbContext ctx)
+        public ClearNotificationsCommandHandler(
+            AppDbContext ctx, 
+            ITranslator translator)
         {
             _ctx = ctx;
+            _translator = translator;
         }
 
         public async Task<BaseResponse> Handle(ClearNotificationsCommand request, CancellationToken cancellationToken)
@@ -28,9 +33,7 @@ namespace Battles.Application.Services.Notifications.Commands
                 .ToList();
 
             if (notifications.Count == 0)
-            {
-                return new BaseResponse("Notification are already cleared.", true);
-            }
+                return BaseResponse.Ok(await _translator.GetTranslation("Notification", "Clear"));
 
             foreach (var n in notifications)
             {
@@ -39,7 +42,7 @@ namespace Battles.Application.Services.Notifications.Commands
 
             await _ctx.SaveChangesAsync(cancellationToken);
 
-            return new BaseResponse("Notifications cleared.", true);
+            return BaseResponse.Ok(await _translator.GetTranslation("Notification", "Cleared"));
         }
     }
 }

@@ -6,6 +6,8 @@
   "PassedAndWon": "{0} passed round {1}, you won!",
   "Passed": "{0} passed round {1}.",
   "MatchInTribunal": "Your match is now in the tribunal for voting.",
-  "MatchUpdated": "{0} updated a match you are in."
+  "MatchUpdated": "{0} updated a match you are in.",
 
+  "Clear": "Notifications are already cleared.",
+  "Cleared": "Notifications cleared.",
 }

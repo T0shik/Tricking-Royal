@@ -1,3 +1,8 @@
 ﻿{
-  "NotFound": "User not found"
+  "NotFound": "User not found",
+  "InvalidPerk": "Invalid perk selected",
+  "LeveledUp": "Leveled Up!",
+  "UsernameTaken": "Username taken",
+  "ProfileSaved": "Profile saved",
+  "PictureUpdated": "Profile picture updated"
 }

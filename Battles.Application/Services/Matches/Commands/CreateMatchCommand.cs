@@ -38,7 +38,7 @@ namespace Battles.Application.Services.Matches.Commands
             }
             catch (Exception e)
             {
-                return new BaseResponse(e.Message, false);
+                return BaseResponse.Fail(e.Message);
             }
 
             await _ctx.SaveChangesAsync(cancellationToken);
