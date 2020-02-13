@@ -150,6 +150,8 @@ namespace TrickingRoyal.Database.Migrations.App
 
                     b.Property<int>("TurnType");
 
+                    b.Property<bool>("Updating");
+
                     b.HasKey("Id");
 
                     b.ToTable("Matches");
@@ -213,6 +215,8 @@ namespace TrickingRoyal.Database.Migrations.App
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Force");
 
                     b.Property<string>("Message");
 

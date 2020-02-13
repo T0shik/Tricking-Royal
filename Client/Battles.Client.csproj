@@ -23,8 +23,11 @@
     <Content Include="vue-client\public\service-worker.js" />
     <Content Include="vue-client\src\components\layout\modals\EditProfile.vue" />
     <Content Include="vue-client\src\components\layout\modals\Rules.vue" />
+    <Content Include="vue-client\src\components\layout\navigation\StatusBar.vue" />
     <Content Include="vue-client\src\components\layout\navigation\UserSearch.vue" />
     <Content Include="vue-client\src\components\tribunal\voting\VotingResults.vue" />
+    <Content Include="vue-client\src\stores\modules\signalr.js" />
+    <Content Include="vue-client\src\stores\modules\statusBar.js" />
     <None Remove="$(SpaRoot)**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
     <None Include="vue-client\src\components\layout\modals\EditProfile.vue" />

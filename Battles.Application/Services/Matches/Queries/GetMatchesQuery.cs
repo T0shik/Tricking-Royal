@@ -12,7 +12,7 @@ using TrickingRoyal.Database;
 
 namespace Battles.Application.Services.Matches.Queries
 {
-    public class GetMatchesQuery : IRequest<IEnumerable<MatchViewModel>>
+    public class GetMatchesQuery : IRequest<IEnumerable<object>>
     {
         public string Filter { get; set; }
         public int Index { get; set; }
@@ -20,7 +20,7 @@ namespace Battles.Application.Services.Matches.Queries
         public string UserId { get; set; }
     }
 
-    public class GetMatchesQueryHandler : RequestHandler<GetMatchesQuery, IEnumerable<MatchViewModel>>
+    public class GetMatchesQueryHandler : RequestHandler<GetMatchesQuery, IEnumerable<object>>
     {
         private readonly AppDbContext _ctx;
         private readonly IOpponentChecker _opponentChecker;
@@ -32,7 +32,7 @@ namespace Battles.Application.Services.Matches.Queries
             _ctx.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }
 
-        protected override IEnumerable<MatchViewModel> Handle(GetMatchesQuery request)
+        protected override IEnumerable<object> Handle(GetMatchesQuery request)
         {
             switch (request.Filter)
             {
@@ -51,16 +51,16 @@ namespace Battles.Application.Services.Matches.Queries
             }
         }
 
-        private IEnumerable<MatchViewModel> GetHostedMatches(string userId)
+        private IEnumerable<OpenMatchViewModel> GetHostedMatches(string userId)
         {
             return OpenMatchQuery()
                 .Where(x => x.MatchUsers
                     .Any(y => y.Role == MatchRole.Host && y.UserId == userId))
                 .ToList()
-                .Select(x => MatchViewModel.GetOpenMatch(x, userId));
+                .Select(x => OpenMatchViewModel.GetOpenMatch(x, userId));
         }
 
-        private IEnumerable<MatchViewModel> GetOpenMatches(string userId, string displayName)
+        private IEnumerable<OpenMatchViewModel> GetOpenMatches(string userId, string displayName)
         {
             var matches = OpenMatchQuery()
                 .FilterByUser(displayName)
@@ -71,7 +71,7 @@ namespace Battles.Application.Services.Matches.Queries
             return matches.Select(x =>
             {
                 var host = x.GetHost();
-                var vm = MatchViewModel.GetOpenMatch(x, userId);
+                var vm = OpenMatchViewModel.GetOpenMatch(x, userId);
                 vm.CanJoin = !vm.CanClose && !_opponentChecker.AreOpponents(host.UserId, userId);
                 return vm;
             });

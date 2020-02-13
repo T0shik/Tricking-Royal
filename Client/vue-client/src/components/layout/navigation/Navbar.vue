@@ -126,7 +126,7 @@
 
 <style lang="scss" scoped>
     ::v-deep .v-badge--overlap.v-badge--left .v-badge__badge {
-        top: 0;
-        left: 0;
+        top: 0 !important;
+        left: 0 !important;
     }
 </style>

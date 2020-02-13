@@ -16,6 +16,8 @@ namespace Battles.Models
         public Mode Mode { get; set; } = Mode.OneUp;
         public Surface Surface { get; set; } = Surface.Any;
 
+        public bool Updating { get; set; }
+
         public string Finished { get; set; } = "";
         public int Round { get; set; } = 1;
         public string Chain { get; set; } = "";

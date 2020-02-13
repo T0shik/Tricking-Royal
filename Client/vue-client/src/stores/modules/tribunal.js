@@ -1,9 +1,5 @@
-import Vue from "vue";
-import Vuex from "vuex"
 import axios from "axios";
 import Logger from "../../logger/logger";
-
-Vue.use(Vuex);
 
 export default {
     state: {

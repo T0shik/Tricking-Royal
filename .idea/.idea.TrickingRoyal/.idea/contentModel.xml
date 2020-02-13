@@ -7,11 +7,11 @@
     <e p="C:\Users\Toshik\.nuget\packages\xunit.runner.visualstudio\2.4.0\build\netcoreapp1.0\xunit.runner.reporters.netcoreapp10.dll" t="Include" />
     <e p="C:\Users\Toshik\.nuget\packages\xunit.runner.visualstudio\2.4.0\build\netcoreapp1.0\xunit.runner.utility.netcoreapp10.dll" t="Include" />
     <e p="C:\Users\Toshik\.nuget\packages\xunit.runner.visualstudio\2.4.0\build\netcoreapp1.0\xunit.runner.visualstudio.dotnetcore.testadapter.dll" t="Include" />
-    <e p="C:\Users\Toshik\.Rider2019.2\config\consoles\db" t="IncludeRecursive" />
-    <e p="C:\Users\Toshik\.Rider2019.2\config\Extensions" t="IncludeRecursive" />
-    <e p="C:\Users\Toshik\.Rider2019.2\config\scratches" t="IncludeRecursive" />
-    <e p="C:\Users\Toshik\.Rider2019.2\system\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\Toshik\.Rider2019.2\system\resharper-host\local\Transient\ReSharperHost\v192\SolutionCaches\_TrickingRoyal.-167241190.00" t="ExcludeRecursive" />
+    <e p="C:\Users\Toshik\.Rider2019.3\config\consoles\db" t="IncludeRecursive" />
+    <e p="C:\Users\Toshik\.Rider2019.3\config\Extensions" t="IncludeRecursive" />
+    <e p="C:\Users\Toshik\.Rider2019.3\config\scratches" t="IncludeRecursive" />
+    <e p="C:\Users\Toshik\.Rider2019.3\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\Toshik\.Rider2019.3\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_TrickingRoyal.-167241190.00" t="ExcludeRecursive" />
     <e p="D:\WS\Visual Studio 2017\TrickingRoyal" t="IncludeFlat">
       <e p="Battles" t="IncludeRecursive">
         <e p="attributes" t="Include">
@@ -19,9 +19,7 @@
         </e>
         <e p="Battles.csproj" t="IncludeRecursive" />
         <e p="bin" t="ExcludeRecursive" />
-        <e p="Configuration" t="Include">
-          <e p="Routing.cs" t="Include" />
-        </e>
+        <e p="Configuration" t="Include" />
         <e p="Enums" t="Include">
           <e p="EvaluationType.cs" t="Include" />
           <e p="MatchRole.cs" t="Include" />
@@ -115,32 +113,24 @@
           <e p="MatchesController.cs" t="Include" />
           <e p="NotificationsController.cs" t="Include" />
           <e p="PlatformController.cs" t="Include" />
+          <e p="TestController.cs" t="Include" />
           <e p="UsersController.cs" t="Include" />
         </e>
-        <e p="CustomTokenRetriever.cs" t="Include" />
+        <e p="ffmpeg" t="Include">
+          <e p="ffmpeg.exe" t="Include" />
+          <e p="ffplay.exe" t="Include" />
+          <e p="ffprobe.exe" t="Include" />
+        </e>
         <e p="Infrastructure" t="Include">
           <e p="BaseController.cs" t="Include" />
           <e p="ServiceRegistrar.cs" t="Include" />
-        </e>
-        <e p="NotificationProcessor.cs" t="Include" />
-        <e p="Notifications" t="Include">
-          <e p="Dispatchers" t="Include">
-            <e p="DispatcherFactory.cs" t="Include" />
-            <e p="EmailDispatcher.cs" t="Include" />
-            <e p="IDispatcher.cs" t="Include" />
-            <e p="OneSignalDispatcher.cs" t="Include" />
-          </e>
-          <e p="INotificationSender.cs" t="Include" />
-          <e p="NotificationQueue.cs" t="Include" />
-          <e p="RegisterNotificationServices.cs" t="Include" />
-          <e p="Settings" t="Include">
-            <e p="OneSignal.cs" t="Include" />
-          </e>
+          <e p="UserIdProvider.cs" t="Include" />
         </e>
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
             <e p="netcoreapp2.2" t="Include">
               <e p="Battles.Api.AssemblyInfo.cs" t="Include" />
+              <e p="Battles.Api.RazorAssemblyInfo.cs" t="Include" />
             </e>
           </e>
         </e>
@@ -149,11 +139,32 @@
           <e p="launchSettings.json" t="Include" />
         </e>
         <e p="secrets.json" t="Include" />
-        <e p="Settings" t="Include">
-          <e p="OAuth.cs" t="Include" />
-          <e p="Resource.cs" t="Include" />
-        </e>
         <e p="Startup.cs" t="Include" />
+        <e p="Workers" t="Include">
+          <e p="IWorker.cs" t="Include" />
+          <e p="MatchUpdater" t="Include">
+            <e p="MatchUpdater.cs" t="Include" />
+            <e p="MatchUpdaterHub.cs" t="Include" />
+            <e p="MatchUpdaterNotifications.cs" t="Include" />
+            <e p="MatchUpdaterServices.cs" t="Include" />
+          </e>
+          <e p="Notifications" t="Include">
+            <e p="Dispatchers" t="Include">
+              <e p="DispatcherFactory.cs" t="Include" />
+              <e p="EmailDispatcher.cs" t="Include" />
+              <e p="IDispatcher.cs" t="Include" />
+              <e p="OneSignalDispatcher.cs" t="Include" />
+            </e>
+            <e p="NotificationQueue.cs" t="Include" />
+            <e p="NotificationSender.cs" t="Include" />
+            <e p="NotificationServices.cs" t="Include" />
+            <e p="Settings" t="Include">
+              <e p="OneSignal.cs" t="Include" />
+            </e>
+          </e>
+          <e p="RegisterWorkers.cs" t="Include" />
+          <e p="WorkerManager.cs" t="Include" />
+        </e>
       </e>
       <e p="Battles.Application" t="IncludeRecursive">
         <e p="Battles.Application.csproj" t="IncludeRecursive" />
@@ -168,9 +179,6 @@
           <e p="MatchExtensions.cs" t="Include" />
           <e p="QueryExtensions.cs" t="Include" />
           <e p="TimeSpanExtensions.cs" t="Include" />
-        </e>
-        <e p="Interfaces" t="Include">
-          <e p="INotificationQueue.cs" t="Include" />
         </e>
         <e p="Jobs" t="Include">
           <e p="HangfireJobs.cs" t="Include" />
@@ -221,21 +229,25 @@
               <e p="JoinMatchCommand.cs" t="Include" />
               <e p="PassRoundCommand.cs" t="Include" />
               <e p="ReadyMatchCommand.cs" t="Include" />
+              <e p="StartMatchUpdateCommand.cs" t="Include" />
               <e p="TimeoutMatchCommand.cs" t="Include" />
               <e p="UpdateMatchCommand.cs" t="Include" />
               <e p="UpdateMatchVideoCommand.cs" t="Include" />
             </e>
+            <e p="IMatchUpdaterNotifications.cs" t="Include" />
             <e p="Queries" t="Include">
               <e p="GetAnonMatchesQuery.cs" t="Include" />
               <e p="GetMatchesQuery.cs" t="Include" />
               <e p="GetMatchQuery.cs" t="Include" />
             </e>
+            <e p="UpdateMatchQueue.cs" t="Include" />
           </e>
           <e p="Notifications" t="Include">
             <e p="Commands" t="Include">
               <e p="ClearNotificationsCommand.cs" t="Include" />
               <e p="TouchNotificationCommand.cs" t="Include" />
             </e>
+            <e p="INotificationQueue.cs" t="Include" />
             <e p="Queries" t="Include">
               <e p="GetNotificationsQuery.cs" t="Include" />
             </e>
@@ -265,6 +277,10 @@
         <e p="SubServices" t="Include">
           <e p="OpponentChecker.cs" t="Include" />
           <e p="SubServiceSpec.cs" t="Include" />
+          <e p="VideoConversion" t="Include">
+            <e p="VideoConversionResult.cs" t="Include" />
+            <e p="VideoConverter.cs" t="Include" />
+          </e>
         </e>
         <e p="ViewModels" t="Include">
           <e p="BaseResponse.cs" t="Include" />
@@ -277,6 +293,8 @@
             <e p="MatchCommentsViewModel.cs" t="Include" />
             <e p="MatchUserViewModel.cs" t="Include" />
             <e p="MatchViewModel.cs" t="Include" />
+            <e p="OpenMatchUserViewModel.cs" t="Include" />
+            <e p="OpenMatchViewModel.cs" t="Include" />
             <e p="VideoViewModel.cs" t="Include" />
           </e>
           <e p="NotificationConfigViewModel.cs" t="Include" />
@@ -295,9 +313,7 @@
           <e p="ImageController.cs" t="Include" />
           <e p="VideoController.cs" t="Include" />
         </e>
-        <e p="ffmpeg" t="Include" />
         <e p="FileServices" t="Include">
-          <e p="BaseFileManager.cs" t="Include" />
           <e p="FileStreams.cs" t="Include" />
           <e p="ImageManager.cs" t="Include" />
           <e p="VideoManager.cs" t="Include" />
@@ -309,6 +325,7 @@
           <e p="Debug" t="Include">
             <e p="netcoreapp2.2" t="Include">
               <e p="Battles.Cdn.AssemblyInfo.cs" t="Include" />
+              <e p="Battles.Cdn.RazorAssemblyInfo.cs" t="Include" />
             </e>
           </e>
         </e>
@@ -316,18 +333,7 @@
         <e p="Properties" t="Include">
           <e p="launchSettings.json" t="Include" />
         </e>
-        <e p="Settings" t="Include">
-          <e p="FilePaths.cs" t="Include" />
-          <e p="OAuth.cs" t="Include" />
-          <e p="Resource.cs" t="Include" />
-          <e p="Routing.cs" t="Include" />
-        </e>
         <e p="Startup.cs" t="Include" />
-        <e p="ViewModels" t="Include">
-          <e p="Response.cs" t="Include" />
-          <e p="TrimOptions.cs" t="Include" />
-          <e p="VideoInfo.cs" t="Include" />
-        </e>
         <e p="wwwroot" t="Include">
           <e p="content" t="Include">
             <e p="match" t="Include">
@@ -847,6 +853,54 @@
                 <e p="thumb_02-11-2019-13-38-24.jpg" t="Include" />
                 <e p="thumb_02-11-2019-13-45-37.jpg" t="Include" />
               </e>
+              <e p="44" t="Include">
+                <e p="c_01-12-2019-12-43-30.mp4" t="Include" />
+                <e p="c_01-12-2019-12-45-35.mp4" t="Include" />
+                <e p="c_01-12-2019-12-46-15.mp4" t="Include" />
+                <e p="c_01-12-2019-12-51-36.mp4" t="Include" />
+                <e p="c_01-12-2019-14-02-34.mp4" t="Include" />
+                <e p="c_01-12-2019-14-03-35.mp4" t="Include" />
+                <e p="c_01-12-2019-14-05-11.mp4" t="Include" />
+                <e p="c_01-12-2019-14-06-44.mp4" t="Include" />
+                <e p="c_01-12-2019-14-55-23.mp4" t="Include" />
+                <e p="c_01-12-2019-14-57-45.mp4" t="Include" />
+                <e p="c_01-12-2019-15-09-08.mp4" t="Include" />
+                <e p="c_01-12-2019-15-13-38.mp4" t="Include" />
+                <e p="c_01-12-2019-15-18-13.mp4" t="Include" />
+                <e p="c_01-12-2019-15-23-16.mp4" t="Include" />
+                <e p="c_01-12-2019-15-24-07.mp4" t="Include" />
+                <e p="c_23-11-2019-20-58-56.mp4" t="Include" />
+                <e p="c_23-11-2019-21-31-17.mp4" t="Include" />
+                <e p="c_23-11-2019-21-32-23.mp4" t="Include" />
+                <e p="c_23-11-2019-21-34-10.mp4" t="Include" />
+                <e p="thumb_01-12-2019-12-43-30.jpg" t="Include" />
+                <e p="thumb_01-12-2019-12-45-35.jpg" t="Include" />
+                <e p="thumb_01-12-2019-12-46-15.jpg" t="Include" />
+                <e p="thumb_01-12-2019-12-51-36.jpg" t="Include" />
+                <e p="thumb_01-12-2019-14-02-34.jpg" t="Include" />
+                <e p="thumb_01-12-2019-14-03-35.jpg" t="Include" />
+                <e p="thumb_01-12-2019-14-05-11.jpg" t="Include" />
+                <e p="thumb_01-12-2019-14-06-44.jpg" t="Include" />
+                <e p="thumb_01-12-2019-14-55-23.jpg" t="Include" />
+                <e p="thumb_01-12-2019-14-57-45.jpg" t="Include" />
+                <e p="thumb_01-12-2019-15-09-08.jpg" t="Include" />
+                <e p="thumb_01-12-2019-15-13-38.jpg" t="Include" />
+                <e p="thumb_01-12-2019-15-18-13.jpg" t="Include" />
+                <e p="thumb_01-12-2019-15-23-16.jpg" t="Include" />
+                <e p="thumb_01-12-2019-15-24-07.jpg" t="Include" />
+                <e p="thumb_23-11-2019-20-58-56.jpg" t="Include" />
+                <e p="thumb_23-11-2019-21-31-17.jpg" t="Include" />
+                <e p="thumb_23-11-2019-21-32-23.jpg" t="Include" />
+                <e p="thumb_23-11-2019-21-34-10.jpg" t="Include" />
+              </e>
+              <e p="48" t="Include">
+                <e p="c_05-01-2020-19-18-16.mp4" t="Include" />
+                <e p="thumb_05-01-2020-19-18-16.jpg" t="Include" />
+              </e>
+              <e p="49" t="Include">
+                <e p="c_18-01-2020-11-46-49.mp4" t="Include" />
+                <e p="thumb_18-01-2020-11-46-49.jpg" t="Include" />
+              </e>
               <e p="5" t="Include">
                 <e p="c_06-10-2019-14-00-31.mp4" t="Include" />
                 <e p="c_06-10-2019-16-04-36.mp4" t="Include" />
@@ -938,6 +992,22 @@
           </e>
         </e>
       </e>
+      <e p="Battles.Shared" t="IncludeRecursive">
+        <e p="BaseFileManager.cs" t="Include" />
+        <e p="Battles.Shared.csproj" t="IncludeRecursive" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="FilePaths.cs" t="Include" />
+        <e p="OAuth.cs" t="Include" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netstandard2.0" t="Include">
+              <e p="Battles.Shared.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Resource.cs" t="Include" />
+        <e p="Routing.cs" t="Include" />
+      </e>
       <e p="Battles.Tests" t="IncludeRecursive">
         <e p="Battles.Tests.csproj" t="IncludeRecursive" />
         <e p="bin" t="ExcludeRecursive" />
@@ -973,6 +1043,7 @@
           <e p="Debug" t="Include">
             <e p="netcoreapp2.2" t="Include">
               <e p="Battles.Client.AssemblyInfo.cs" t="Include" />
+              <e p="Battles.Client.RazorAssemblyInfo.cs" t="Include" />
             </e>
           </e>
         </e>
@@ -987,10 +1058,8 @@
           <e p=".env.production" t="Include" />
           <e p=".eslintrc.js" t="Include" />
           <e p=".gitignore" t="Include" />
-          <e p=".vscode" t="Include">
-            <e p="settings.json" t="Include" />
-          </e>
           <e p="babel.config.js" t="Include" />
+          <e p="node_modules\@aspnet\signalr" t="IncludeRecursive" />
           <e p="node_modules\@mdi\js" t="IncludeRecursive" />
           <e p="node_modules\@types" t="IncludeRecursive">
             <e p="events" t="IncludeRecursive" />
@@ -1075,6 +1144,7 @@
                 </e>
                 <e p="navigation" t="Include">
                   <e p="Navbar.vue" t="Include" />
+                  <e p="StatusBar.vue" t="Include" />
                   <e p="UserSearch.vue" t="Include" />
                 </e>
                 <e p="SideMenu.vue" t="Include" />
@@ -1142,6 +1212,8 @@
                 <e p="notifications.js" t="Include" />
                 <e p="popup.js" t="Include" />
                 <e p="profile.js" t="Include" />
+                <e p="signalr.js" t="Include" />
+                <e p="statusBar.js" t="Include" />
                 <e p="tribunal.js" t="Include" />
                 <e p="updateMatch.js" t="Include" />
                 <e p="user.js" t="Include" />
@@ -1176,9 +1248,6 @@
         <e p="Configuration" t="Include">
           <e p="AppSecrets.cs" t="Include" />
           <e p="Facebook.cs" t="Include" />
-          <e p="OAuth.cs" t="Include" />
-          <e p="Resource.cs" t="Include" />
-          <e p="Routing.cs" t="Include" />
         </e>
         <e p="Controllers" t="Include">
           <e p="AccountController.cs" t="Include" />
@@ -1219,6 +1288,7 @@
           <e p="Debug" t="Include">
             <e p="netcoreapp2.2" t="Include">
               <e p="IdentityServer.AssemblyInfo.cs" t="Include" />
+              <e p="IdentityServer.RazorAssemblyInfo.cs" t="Include" />
             </e>
           </e>
         </e>
@@ -1354,6 +1424,8 @@
             <e p="20191005092339_notificationUserIdFix.Designer.cs" t="Include" />
             <e p="20191005132350_notificationMessageUserIdFix.cs" t="Include" />
             <e p="20191005132350_notificationMessageUserIdFix.Designer.cs" t="Include" />
+            <e p="20191123191711_matchUpdatingStatus.cs" t="Include" />
+            <e p="20191123191711_matchUpdatingStatus.Designer.cs" t="Include" />
             <e p="AppDbContextModelSnapshot.cs" t="Include" />
           </e>
           <e p="IdentityServer" t="Include">

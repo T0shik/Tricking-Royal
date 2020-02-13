@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Battles.Application.Interfaces;
+using Battles.Application.Services.Notifications;
 using Battles.Application.ViewModels;
 using Battles.Enums;
 using Battles.Extensions;
@@ -16,9 +16,7 @@ using Battles.Models;
 
 namespace Battles.Application.Services.Matches.Commands
 {
-    public class UpdateMatchCommand : UpdateSettings, IRequest<BaseResponse>
-    {
-    }
+    public class UpdateMatchCommand : UpdateSettings, IRequest<BaseResponse> { }
 
     public class UpdateMatchHandler : IRequestHandler<UpdateMatchCommand, BaseResponse>
     {
@@ -39,10 +37,10 @@ namespace Battles.Application.Services.Matches.Commands
         public async Task<BaseResponse> Handle(UpdateMatchCommand request, CancellationToken cancellationToken)
         {
             var match = _ctx.Matches
-                .Include(x => x.MatchUsers)
-                .ThenInclude(x => x.User)
-                .Include(x => x.Videos)
-                .FirstOrDefault(x => x.Id == request.MatchId);
+                            .Include(x => x.MatchUsers)
+                            .ThenInclude(x => x.User)
+                            .Include(x => x.Videos)
+                            .FirstOrDefault(x => x.Id == request.MatchId);
 
             if (match == null)
             {
@@ -65,6 +63,8 @@ namespace Battles.Application.Services.Matches.Commands
                 return new BaseResponse($"Failed to update match: {e.Message}", false);
             }
 
+            match.Updating = false;
+
             if (match.Mode == Mode.ThreeRoundPass
                 && (match.TurnType == TurnType.Classic || match.TurnType == TurnType.Alternating)
                 && match.Round > 3)
@@ -83,10 +83,10 @@ namespace Battles.Application.Services.Matches.Commands
                 await _ctx.SaveChangesAsync(cancellationToken);
 
                 _notifications.QueueNotification(
-                    "Your match is now in the tribunal for voting.",
-                    new[] {match.Id.ToString()}.DefaultJoin(),
-                    NotificationMessageType.TribunalHistory,
-                    match.GetUserIds());
+                                                 "Your match is now in the tribunal for voting.",
+                                                 new[] {match.Id.ToString()}.DefaultJoin(),
+                                                 NotificationMessageType.TribunalHistory,
+                                                 match.GetUserIds());
             }
             else
             {
@@ -95,10 +95,10 @@ namespace Battles.Application.Services.Matches.Commands
                 var currentUser = match.GetUser(request.UserId);
 
                 _notifications.QueueNotification(
-                    $"{currentUser.User.DisplayName} updated a match you are in.",
-                    new[] {match.Id.ToString()}.DefaultJoin(),
-                    NotificationMessageType.MatchActive,
-                    match.GetOtherUserIds(request.UserId));
+                                                 $"{currentUser.User.DisplayName} updated a match you are in.",
+                                                 new[] {match.Id.ToString()}.DefaultJoin(),
+                                                 NotificationMessageType.MatchActive,
+                                                 match.GetOtherUserIds(request.UserId));
             }
 
             return new BaseResponse("Match updated.", true);

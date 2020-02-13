@@ -1,10 +1,8 @@
 ﻿using TrickingRoyal.Database;
-using Battles.Domain.Models;
 using Battles.Rules.Matches.Extensions;
 using MediatR;
 using System;
 using System.Linq;
-using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
 using Battles.Application.Extensions;
@@ -60,13 +58,13 @@ namespace Battles.Application.Services.Evaluations.Commands
             }
             else if (winner == Winner.Host)
             {
-                host.SetWinner(10).AwardExp(12);
-                opponent.SetLoser(10).AwardExp(8);
+                host.SetWinnerAndLock(10).AwardExp(12);
+                opponent.SetLoserAndLock(10).AwardExp(8);
             }
             else if (winner == Winner.Opponent)
             {
-                host.SetLoser(10).AwardExp(8);
-                opponent.SetWinner(10).AwardExp(12);
+                host.SetLoserAndLock(10).AwardExp(8);
+                opponent.SetWinnerAndLock(10).AwardExp(12);
             }
 
             host.User.Hosting--;

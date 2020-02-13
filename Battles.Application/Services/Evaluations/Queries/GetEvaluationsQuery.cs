@@ -1,6 +1,5 @@
 ﻿using TrickingRoyal.Database;
 using Battles.Application.ViewModels;
-using Battles.Domain.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;

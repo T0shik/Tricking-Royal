@@ -1,5 +1,4 @@
 ﻿using Battles.Application.ViewModels;
-using Battles.Rules.Matches;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;

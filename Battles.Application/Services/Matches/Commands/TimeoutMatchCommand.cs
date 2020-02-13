@@ -1,5 +1,4 @@
 ﻿using TrickingRoyal.Database;
-using Battles.Domain.Models;
 using Battles.Rules.Matches.Extensions;
 using MediatR;
 using System;
@@ -8,7 +7,6 @@ using System.Threading.Tasks;
 using Battles.Enums;
 using Battles.Models;
 using Battles.Rules.Levels;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Battles.Application.Services.Matches.Commands
 {
@@ -49,13 +47,13 @@ namespace Battles.Application.Services.Matches.Commands
                     }
                     else if (!host.Ready)
                     {
-                        host.SetLoser(-5);
-                        opponent.SetWinner(5).AwardExp(5);
+                        host.SetLoserAndLock(-5);
+                        opponent.SetWinnerAndLock(5).AwardExp(5);
                     }
                     else if (!opponent.Ready)
                     {
-                        opponent.SetLoser(-5);
-                        host.SetWinner(5).AwardExp(5);
+                        opponent.SetLoserAndLock(-5);
+                        host.SetWinnerAndLock(5).AwardExp(5);
                     }
                 }
                 else
@@ -70,19 +68,17 @@ namespace Battles.Application.Services.Matches.Commands
             {
                 if (match.IsTurn(MatchRole.Host))
                 {
-                    host.SetLoser(-5);
-                    opponent.SetWinner(5)
-                        .AwardExp(2 + match.Round);
+                    host.SetLoserAndLock(-5);
+                    opponent.SetWinnerAndLock(5)
+                            .AwardExp(2 + match.Round);
                 }
-                else if (match.IsTurn(MatchRole.Host))
+                else if (match.IsTurn(MatchRole.Opponent))
                 {
-                    host.SetWinner(5)
+                    host.SetWinnerAndLock(5)
                         .AwardExp(2 + match.Round);
-                    opponent.SetLoser(-5);
+                    opponent.SetLoserAndLock(-5);
                 }
 
-                host.SetGoFlagUpdatePassLock(false, false, false);
-                opponent.SetGoFlagUpdatePassLock(false, false, false);
                 match.Status = Status.Complete;
                 match.LastUpdate = DateTime.Now;
                 match.Finished = DateTime.Now.ToString("dddd, dd MMMM yyyy, HH:mm");

@@ -7,7 +7,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Battles.Application.Interfaces;
+using Battles.Application.Services.Notifications;
 using Battles.Application.ViewModels;
 using Battles.Enums;
 using Battles.Extensions;
@@ -37,9 +37,9 @@ namespace Battles.Application.Services.Matches.Commands
         public async Task<BaseResponse> Handle(PassRoundCommand request, CancellationToken cancellationToken)
         {
             var match = _ctx.Matches
-                .Include(x => x.MatchUsers)
-                .ThenInclude(x => x.User)
-                .FirstOrDefault(x => x.Id == request.MatchId);
+                            .Include(x => x.MatchUsers)
+                            .ThenInclude(x => x.User)
+                            .FirstOrDefault(x => x.Id == request.MatchId);
 
             if (match == null)
             {
@@ -78,18 +78,18 @@ namespace Battles.Application.Services.Matches.Commands
             if (finished)
             {
                 _notifications.QueueNotification(
-                    $"{user.User.DisplayName} passed round {match.Round}, you won!",
-                    new[] {match.Id.ToString()}.DefaultJoin(),
-                    NotificationMessageType.MatchHistory,
-                    match.GetOtherUserIds(user.UserId));
+                                                 $"{user.User.DisplayName} passed round {match.Round}, you won!",
+                                                 new[] {match.Id.ToString()}.DefaultJoin(),
+                                                 NotificationMessageType.MatchHistory,
+                                                 match.GetOtherUserIds(user.UserId));
             }
             else
             {
                 _notifications.QueueNotification(
-                    $"{user.User.DisplayName} passed round {match.Round}.",
-                    new[] {match.Id.ToString()}.DefaultJoin(),
-                    NotificationMessageType.MatchActive,
-                    match.GetOtherUserIds(user.UserId));
+                                                 $"{user.User.DisplayName} passed round {match.Round}.",
+                                                 new[] {match.Id.ToString()}.DefaultJoin(),
+                                                 NotificationMessageType.MatchActive,
+                                                 match.GetOtherUserIds(user.UserId));
             }
 
             return new BaseResponse("Round passed.", true);

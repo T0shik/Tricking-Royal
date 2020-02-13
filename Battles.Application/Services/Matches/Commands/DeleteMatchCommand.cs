@@ -2,7 +2,6 @@
 using Battles.Rules.Matches.Extensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Battles.Application.ViewModels;
@@ -27,9 +26,9 @@ namespace Battles.Application.Services.Matches.Commands
         public async Task<BaseResponse> Handle(DeleteMatchCommand request, CancellationToken cancellationToken)
         {
             var match = await _ctx.Matches
-                .Include(x => x.MatchUsers)
-                .ThenInclude(x => x.User)
-                .FirstAsync(x => x.Id == request.MatchId, cancellationToken: cancellationToken);
+                                  .Include(x => x.MatchUsers)
+                                  .ThenInclude(x => x.User)
+                                  .FirstAsync(x => x.Id == request.MatchId, cancellationToken: cancellationToken);
 
             if (!match.CanClose(request.UserId))
                 return new BaseResponse("Can't delete match", false);

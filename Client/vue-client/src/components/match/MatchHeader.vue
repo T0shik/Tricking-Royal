@@ -1,30 +1,29 @@
 <template>
-    <v-card-title>
-        <v-container class="pa-0">
-            <v-row dense>
-                <v-col class="d-flex align-center" cols="5">
-                    <router-link class="white--text" :to="`/user/${host.displayName}`">
-                        <ProfileImage v-if="host" :class="{'playing': host.index === playingIndex}"
-                                     :picture="host.picture"
-                                     :level="host.level"
-                                     :winner="host.winner"></ProfileImage>
-                        <span>{{host.displayName}}</span>
-                    </router-link>
-                </v-col>
-                <v-col class="d-flex align-center justify-center title font-rock" cols="2">
-                    VS
-                </v-col>
-                <v-col class="d-flex align-center justify-end" cols="5">
-                    <router-link class="white--text" :to="`/user/${opponent.displayName}`">
-                        <span>{{opponent.displayName}}</span>
-                        <ProfileImage v-if="opponent" :class="{'playing': opponent.index === playingIndex}"
-                                     :picture="opponent.picture"
-                                     :level="opponent.level"
-                                     :winner="opponent.winner"></ProfileImage>
-                    </router-link>
-                </v-col>
-            </v-row>
-        </v-container>
+    <v-card-title class="pa-0 py-2 px-1">
+        <div class="d-flex justify-space-between align-center fullwidth">
+            <div class="d-flex flex-column flex-1">
+                <router-link class="white--text" :to="`/user/${host.displayName}`">
+                    <ProfileImage v-if="host" :class="{'playing': host.index === playingIndex}"
+                                  :picture="host.picture"
+                                  :level="host.level"
+                                  :size="38"
+                                  :winner="host.winner"></ProfileImage>
+                    <span class="pl-1">{{host.displayName}}</span>
+                </router-link>
+            </div>
+            <div class="font-rock">
+                VS
+            </div>
+            <div class="d-flex flex-column flex-1">
+                <router-link class="white--text text-right" :to="`/user/${opponent.displayName}`">
+                    <span class="pr-1">{{opponent.displayName}}</span>
+                    <ProfileImage v-if="opponent" :class="{'playing': opponent.index === playingIndex}"
+                                  :picture="opponent.picture"
+                                  :level="opponent.level"
+                                  :winner="opponent.winner"></ProfileImage>
+                </router-link>
+            </div>
+        </div>
     </v-card-title>
 </template>
 
@@ -64,8 +63,7 @@
     }
 
     span {
-        padding: 0 2px;
-        font-size: 12px;
+        font-size: 0.8rem;
     }
 
     .playing {

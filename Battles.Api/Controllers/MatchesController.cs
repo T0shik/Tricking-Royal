@@ -50,7 +50,7 @@ namespace Battles.Api.Controllers
         }
 
         [HttpPut("{matchId}/update")]
-        public async Task<IActionResult> UpdateMatch(int matchId, [FromBody] UpdateMatchCommand command)
+        public async Task<IActionResult> UpdateMatch(int matchId, [FromBody] StartMatchUpdateCommand command)
         {
             command.MatchId = matchId;
             command.UserId = UserId;

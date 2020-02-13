@@ -9,7 +9,6 @@
     <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="2.6.0" />
     <PackageReference Include="PhotoSauce.MagicScaler" Version="0.9.1" />
     <PackageReference Include="Serilog.Extensions.Logging.File" Version="1.1.0" />
-    <PackageReference Include="Xabe.FFmpeg" Version="3.4.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,6 +22,6 @@
   </ItemGroup>
   
   <ItemGroup>
-    <Folder Include="ffmpeg" />
+    <Folder Include="wwwroot\content\match\44" />
   </ItemGroup>
 </Project>

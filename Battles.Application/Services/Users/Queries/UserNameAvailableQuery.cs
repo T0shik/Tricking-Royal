@@ -2,7 +2,6 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using System;
 
 namespace Battles.Application.Services.Users.Queries
 {

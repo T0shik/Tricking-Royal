@@ -1,8 +1,9 @@
 ﻿using System;
-using Battles.Configuration;
 using Battles.Enums;
 using Battles.Models;
 using Battles.Rules.Matches.Actions.Update;
+using Battles.Shared;
+
 //using Battles.Rules.Matches.Actions.ReUpload;
 
 namespace Battles.Rules.Matches

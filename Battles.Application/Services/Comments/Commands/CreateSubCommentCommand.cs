@@ -5,14 +5,12 @@ using Battles.Rules.Matches;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
-using Battles.Application.Interfaces;
+using Battles.Application.Services.Notifications;
 using Battles.Enums;
 using Battles.Extensions;
-using Battles.Models;
 using Battles.Rules.Matches.Extensions;
 using static System.String;
 

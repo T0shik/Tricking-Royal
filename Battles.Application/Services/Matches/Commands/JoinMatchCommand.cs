@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using TrickingRoyal.Database;
 using Battles.Rules.Matches.Actions.Join;
 using Battles.Rules.Matches.Extensions;
@@ -8,11 +7,10 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Battles.Application.Interfaces;
+using Battles.Application.Services.Notifications;
 using Battles.Application.ViewModels;
 using Battles.Enums;
 using Battles.Extensions;
-using Battles.Models;
 
 namespace Battles.Application.Services.Matches.Commands
 {
@@ -41,15 +39,15 @@ namespace Battles.Application.Services.Matches.Commands
         public async Task<BaseResponse> Handle(JoinMatchCommand request, CancellationToken cancellationToken)
         {
             var match = _ctx.Matches
-                .Include(x => x.MatchUsers)
-                .ThenInclude(x => x.User)
-                .FirstOrDefault(x => x.Id == request.MatchId);
+                            .Include(x => x.MatchUsers)
+                            .ThenInclude(x => x.User)
+                            .FirstOrDefault(x => x.Id == request.MatchId);
 
             if (match == null)
                 return new BaseResponse("Match not found.", false);
 
             var currentUser = _ctx.UserInformation
-                .FirstOrDefault(x => x.Id == request.UserId);
+                                  .FirstOrDefault(x => x.Id == request.UserId);
 
             if (currentUser == null)
             {
@@ -68,10 +66,10 @@ namespace Battles.Application.Services.Matches.Commands
             await _ctx.SaveChangesAsync(cancellationToken);
 
             _notification.QueueNotification(
-                $"{currentUser.DisplayName} joined your match.",
-                new[] {match.Id.ToString()}.DefaultJoin(),
-                NotificationMessageType.MatchActive,
-                new[] {match.GetHost().UserId});
+                                            $"{currentUser.DisplayName} joined your match.",
+                                            new[] {match.Id.ToString()}.DefaultJoin(),
+                                            NotificationMessageType.MatchActive,
+                                            new[] {match.GetHost().UserId});
 
             return new BaseResponse("Match joined", true);
         }

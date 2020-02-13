@@ -5,13 +5,13 @@
             <v-card color="secondary">
                 <v-card-title class="headline" primary-title>
                     <span>Update Match</span>
-                    <v-spacer></v-spacer>
+                    <v-spacer/>
                     <v-btn text icon @click="reset">
                         <v-icon>{{icons.close}}</v-icon>
                     </v-btn>
+                    <p class="error--text" v-if="error">{{error}}</p>
                 </v-card-title>
                 <v-card-text class="pa-0">
-                    <div class="error--text" v-if="error">{{error}}</div>
                     <div class="custom-container">
                         <video
                                 v-show="tempFile"
@@ -24,7 +24,7 @@
                                 autoplay
                                 loop="loop"
                                 playsinline
-                        ></video>
+                        />
                     </div>
                     <v-window touchless v-model="stage">
                         <v-window-item :value="0" class="text-center pa-3">
@@ -47,7 +47,7 @@
                                         :step="0.1"
                                         @start="$refs.video.pause()"
                                         @end="$refs.video.play()"
-                                ></v-range-slider>
+                                />
 
                                 <div class="re-upload text-center" v-if="isBlitzReUpload">
                                     <v-btn :color="index === 0 ? 'primary' : 'success'" @click="index = 0">1</v-btn>
@@ -56,7 +56,7 @@
                                 </div>
                             </div>
 
-                            <v-divider></v-divider>
+                            <v-divider/>
 
                             <v-card-actions class="justify-center">
                                 <v-btn color="info" @click="completeTrim" :disabled="needIndex">
@@ -70,10 +70,10 @@
                         <v-window-item :value="2">
                             <div class="px-4">
                                 <v-text-field v-model="move" :label="trickLabel" id="trick-input"
-                                              @focus="focusTrickInput"></v-text-field>
+                                              @focus="focusTrickInput"/>
                             </div>
 
-                            <v-divider></v-divider>
+                            <v-divider/>
 
                             <v-card-actions class="justify-center">
                                 <v-btn color="info" :disabled="move.length < 2" @click="startMatchUpdate">Finish</v-btn>
@@ -101,12 +101,14 @@
         move: "",
         trim: {
             value: [0, 0],
-            duration: 0
+            duration: 0,
         },
         index: -1,
-        error: ""
+        error: "",
     });
 
+    const maximumFileSize = 40;
+    
     export default {
         data: initialState,
         watch: {
@@ -114,7 +116,7 @@
                 if (v) {
                     this.$refs.file.click();
                 } else {
-                    this.clear();
+                    this.clearVideo();
                 }
             },
             "trim.value": function (prev, next) {
@@ -126,16 +128,16 @@
             }
         },
         methods: {
-            ...mapMutations(['reset', 'hide']),
-            ...mapActions(['uploadInitial', 'uploadTrimOptions', 'updateMatch']),
-            clear() {
+            ...mapMutations(['hide']),
+            ...mapActions(['reset', 'uploadVideo', 'startUpdate']),
+            clearVideo() {
                 this.$refs.file.value = null;
                 this.$refs.video.load();
                 Object.assign(this.$data, initialState());
             },
             videoError() {
                 if (this.$refs.video.error) {
-                    this.clear();
+                    this.clearVideo();
                     this.error = `Failed to load video, please try another video. Error: ${this.$refs.video.error.message}`;
                 }
             },
@@ -155,10 +157,18 @@
             selectFile() {
                 this.stage = 1;
                 this.file = this.$refs.file.files[0];
+                let fileSize = this.file.size / 1024 / 1024;               
+                if(fileSize > maximumFileSize) {
+                    this.$logger.log("[UpdateMatch.vue] file size:", fileSize);
+                    this.clearVideo();
+                    this.error = `Video is too big, maximum upload size is ${maximumFileSize}MB your file is ${fileSize | 0}MB`;
+                    return;
+                }
+                
                 this.tempFile = URL.createObjectURL(this.file);
                 const formData = new FormData();
                 formData.append("video", this.file);
-                this.uploadInitial(formData);
+                this.uploadVideo(formData);
             },
             focusTrickInput() {
                 if (window.innerWidth < 960) {
@@ -184,14 +194,6 @@
                 }
             },
             completeTrim() {
-                let trimOptions = {
-                    start: this.trim.value[0],
-                    end: this.trim.value[1]
-                };
-
-                this.safeWatch(UPLOAD_STATUS.INITIAL_FINISHED, () =>
-                    this.uploadTrimOptions(trimOptions));
-
                 if (this.needTrick && !this.videoUpdate) {
                     this.stage = 2;
                 } else {
@@ -202,17 +204,11 @@
                 let options = {
                     move: this.move,
                     index: this.index,
+                    start: this.trim.value[0],
+                    end: this.trim.value[1],
                 };
 
-                this.safeWatch(UPLOAD_STATUS.TRIM_FINISHED, () =>
-                    this.updateMatch(options));
-
-                this.$store.dispatch('DISPLAY_POPUP', {
-                    message: "Match update in progress, please do NOT close",
-                    type: "success",
-                    progress: true,
-                });
-
+                this.safeWatch(UPLOAD_STATUS.INITIAL_FINISHED, () => this.startUpdate(options));
                 this.hide();
             }
         },

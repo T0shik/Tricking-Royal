@@ -24,11 +24,9 @@ const showPopup = ({state, commit}, action) =>{
 export default {
     state: initialState(),
     mutations: {
-        SET_POPUP(state, payload) {
-            let {message, type, progress} = payload;
+        SET_POPUP(state, {message, type}) {
             state.message = message;
             state.type = type;
-            state.progress = progress;
             state.display = true
         },
         HIDE_POPUP(state) {

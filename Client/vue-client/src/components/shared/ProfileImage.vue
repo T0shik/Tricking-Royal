@@ -24,7 +24,7 @@
             },
             size: {
                 required: false,
-                type: String
+                type: Number
             },
             winner: {
                 required: false,
@@ -39,7 +39,7 @@
         }),
         computed: {
             imgSize() {
-                return this.size ? this.size : "48px";
+                return this.size ? this.size : 40;
             }
         }
     }

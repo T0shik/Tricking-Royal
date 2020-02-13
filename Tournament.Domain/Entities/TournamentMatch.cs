@@ -1,5 +1,4 @@
-﻿using Battles.Domain.Models;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using Battles.Enums;
 using Battles.Models;

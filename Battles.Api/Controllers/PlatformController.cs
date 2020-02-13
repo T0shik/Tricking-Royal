@@ -1,5 +1,5 @@
 ﻿using Battles.Api.Infrastructure;
-using Battles.Api.Notifications;
+using Battles.Api.Workers.Notifications.Settings;
 using Battles.Application.Services.Platform.Queries;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

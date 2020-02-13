@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using Battles.Domain.Models;
 using Battles.Models;
 using Microsoft.EntityFrameworkCore;
 

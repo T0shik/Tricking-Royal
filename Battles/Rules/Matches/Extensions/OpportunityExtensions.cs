@@ -1,5 +1,4 @@
-﻿using Battles.Domain.Models;
-using System.Linq;
+﻿using System.Linq;
 using Battles.Enums;
 using Battles.Models;
 

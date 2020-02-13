@@ -11,7 +11,7 @@
             <div class="d-flex flex-row align-center mb-2">
                 <ProfileImage :picture="users[evaluation.target].picture"
                              :level="users[evaluation.target].level"
-                             size="68px"></ProfileImage>
+                             :size="68"></ProfileImage>
                 <span class="pl-2 title">{{users[evaluation.target].displayName}}</span>
             </div>
             <h1 class="title text--white">Reason</h1>
@@ -36,6 +36,7 @@
     import {mapActions, mapState} from "vuex";
     import {mdiThumbDown, mdiThumbUp, mdiClose} from "@mdi/js";
     import VotingResults from "./VotingResults";
+    import ProfileImage from "../../shared/ProfileImage";
 
     export default {
         props: {
@@ -51,6 +52,7 @@
         },
         components: {
             VotingResults,
+            ProfileImage
         },
         computed: {
             ...mapState('voting', {

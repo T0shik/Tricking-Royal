@@ -1,5 +1,4 @@
-﻿using Battles.Domain.Models;
-using Battles.Models;
+﻿using Battles.Models;
 
 namespace Battles.Tests.Mocks
 {

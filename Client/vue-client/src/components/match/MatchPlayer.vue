@@ -11,6 +11,7 @@
         ></component>
         <div class="d-flex flex-row my-1">
             <v-spacer></v-spacer>
+            <v-chip small v-if="match.updating" color="primary">Updating</v-chip>
             <v-chip small>{{match.mode}}</v-chip>
             <v-chip v-if="!match.finished" small>{{match.timeLeft}}</v-chip>
         </div>

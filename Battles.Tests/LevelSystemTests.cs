@@ -1,6 +1,4 @@
-﻿using Battles.Domain.Models;
-using Battles.Models;
-using Battles.Rules;
+﻿using Battles.Models;
 using Battles.Rules.Levels;
 using Xunit;
 

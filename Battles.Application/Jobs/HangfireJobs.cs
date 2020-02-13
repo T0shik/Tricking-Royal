@@ -1,14 +1,13 @@
 ﻿using TrickingRoyal.Database;
 using Battles.Application.Services.Evaluations.Commands;
 using Battles.Application.Services.Matches.Commands;
-using Battles.Domain.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Battles.Application.Interfaces;
+using Battles.Application.Services.Notifications;
 using Battles.Enums;
 using Battles.Extensions;
 using Battles.Models;

@@ -1,13 +1,12 @@
 ﻿using TrickingRoyal.Database;
-using Battles.Configuration;
 using MediatR;
-using Microsoft.Extensions.Options;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Battles.Application.ViewModels;
 using Battles.Helpers;
+using Battles.Shared;
 
 namespace Battles.Application.Services.Users.Commands
 {
