@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Battles.Attributes
+namespace Battles
 {
     public class ServiceAttribute : Attribute
     {

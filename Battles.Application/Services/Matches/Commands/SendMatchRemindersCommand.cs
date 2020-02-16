@@ -1,49 +1,49 @@
-﻿using TrickingRoyal.Database;
-using Battles.Application.Services.Evaluations.Commands;
-using Battles.Application.Services.Matches.Commands;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Battles.Application.Services.Notifications;
 using Battles.Enums;
 using Battles.Extensions;
 using Battles.Models;
 using Battles.Rules.Matches.Extensions;
-using Microsoft.Extensions.Logging;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
+using Transmogrify;
+using TrickingRoyal.Database;
 
-namespace Battles.Application.Jobs
+namespace Battles.Application.Services.Matches.Commands
 {
-    public class HangfireJobs : IHangfireJobs
+    public class SendMatchRemindersCommand : IRequest<Unit> { }
+
+    public class SendMatchRemindersCommandHandler : IRequestHandler<SendMatchRemindersCommand, Unit>
     {
         private readonly AppDbContext _ctx;
-        private readonly IMediator _mediator;
+        private readonly ITranslator _translator;
         private readonly INotificationQueue _notificationQueue;
 
-        public HangfireJobs(
-            AppDbContext ctx, 
-            IMediator mediator, 
+        public SendMatchRemindersCommandHandler(
+            AppDbContext ctx,
+            ITranslator translator,
             INotificationQueue notificationQueue)
         {
             _ctx = ctx;
-            _mediator = mediator;
+            _translator = translator;
             _notificationQueue = notificationQueue;
         }
 
-        public void MatchReminder()
+        public async Task<Unit> Handle(SendMatchRemindersCommand request, CancellationToken cancellationToken)
         {
-            var days = new[] {1, 3};
-            foreach (var d in days)
+            foreach (var d in new[] {1, 3})
             {
                 var matches = GetMatchesToNotify(d);
                 foreach (var match in matches)
                 {
                     var turnUser = match.GetTurnUser();
                     var otherUserNames = match.GetOtherUsers(turnUser.UserId).Select(x => x.User.DisplayName);
-                    var message =
-                        $"Your match with {string.Join(", ", otherUserNames)} is going to expire in {d} days. You will lose reputation if you don't respond.";
+                    var message = await _translator.GetTranslation("Notification", "MatchReminder",
+                                                                   string.Join(", ", otherUserNames), d.ToString());
                     _notificationQueue.QueueNotification(message,
                                                          new[] {match.Id.ToString()}.DefaultJoin(),
                                                          NotificationMessageType.MatchActive,
@@ -52,12 +52,8 @@ namespace Battles.Application.Jobs
                                                          save: false);
                 }
             }
-        }
 
-        public async Task CloseExpiredMatches()
-        {
-            foreach (var match in GetExpiredMatches())
-                await _mediator.Send(new TimeoutMatchCommand(match));
+            return new Unit();
         }
 
         private IEnumerable<Match> GetMatchesToNotify(int days) =>
@@ -67,14 +63,5 @@ namespace Battles.Application.Jobs
                 .Where(x => x.Status == Status.Active)
                 .Where(x => EF.Functions.DateDiffDay(DateTime.Now, x.LastUpdate.AddDays(x.TurnDays)) == days)
                 .ToList();
-
-        private IEnumerable<Match> GetExpiredMatches() =>
-            _ctx.Matches
-                .Include(x => x.MatchUsers)
-                .ThenInclude(x => x.User)
-                .Where(x => x.Status == Status.Active)
-                .Where(x => EF.Functions.DateDiffHour(x.LastUpdate, DateTime.Now) >= x.TurnDays * 24)
-                .ToList();
-
     }
 }

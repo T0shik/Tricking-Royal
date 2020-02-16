@@ -2,37 +2,40 @@
 using Battles.Rules.Matches.Extensions;
 using MediatR;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Battles.Enums;
 using Battles.Models;
 using Battles.Rules.Levels;
+using Microsoft.EntityFrameworkCore;
 
 namespace Battles.Application.Services.Matches.Commands
 {
-    public class TimeoutMatchCommand : IRequest<Unit>
-    {
-        public TimeoutMatchCommand(Match match)
-        {
-            Match = match;
-        }
+    public class CloseExpiredMatchesCommand : IRequest<Unit> {    }
 
-        public Match Match { get; }
-    }
-
-    public class TimeoutMatchCommandHandler : IRequestHandler<TimeoutMatchCommand, Unit>
+    public class CloseExpiredMatchesCommandHandler : IRequestHandler<CloseExpiredMatchesCommand, Unit>
     {
         private readonly AppDbContext _ctx;
 
-        public TimeoutMatchCommandHandler(AppDbContext ctx)
+        public CloseExpiredMatchesCommandHandler(AppDbContext ctx)
         {
             _ctx = ctx;
         }
 
-        public async Task<Unit> Handle(TimeoutMatchCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(CloseExpiredMatchesCommand request, CancellationToken cancellationToken)
         {
-            var match = request.Match;
+            foreach (var match in GetExpiredMatches())
+                TimeoutMatch(match);
 
+            await _ctx.SaveChangesAsync(cancellationToken);
+
+            return new Unit();
+        }
+
+        private void TimeoutMatch(Match match)
+        {
             var host = match.GetHost();
             var opponent = match.GetOpponent();
 
@@ -86,10 +89,14 @@ namespace Battles.Application.Services.Matches.Commands
 
             host.User.Hosting--;
             opponent.User.Joined--;
-
-            await _ctx.SaveChangesAsync(cancellationToken);
-
-            return new Unit();
         }
+        
+        private IEnumerable<Match> GetExpiredMatches() =>
+            _ctx.Matches
+                .Include(x => x.MatchUsers)
+                .ThenInclude(x => x.User)
+                .Where(x => x.Status == Status.Active)
+                .Where(x => EF.Functions.DateDiffHour(x.LastUpdate, DateTime.Now) >= x.TurnDays * 24)
+                .ToList();
     }
 }

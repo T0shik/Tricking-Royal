@@ -18,8 +18,6 @@ namespace Battles.Application.SubServices
             _opponents = new List<string>();
         }
 
-        //Todo: perhaps cache this?
-        //Todo: write some tests for this service.
         public void LoadOpponents(string userId)
         {
             var activeMatchUsers = _ctx.Matches

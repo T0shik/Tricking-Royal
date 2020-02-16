@@ -7,6 +7,7 @@
   "Passed": "{0} passed round {1}.",
   "MatchInTribunal": "Your match is now in the tribunal for voting.",
   "MatchUpdated": "{0} updated a match you are in.",
+  "MatchReminder": "Your match with {0} is going to expire in {1} days. You will lose reputation if you don't respond.",
 
   "Clear": "Notifications are already cleared.",
   "Cleared": "Notifications cleared.",

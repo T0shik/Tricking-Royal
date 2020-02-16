@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using System.Net.Http.Headers;
-using Battles.Application.Jobs;
 using Battles.Application.Services.Users.Queries;
 using Battles.Configuration;
 using Hangfire;
@@ -17,6 +16,7 @@ using Battles.Api.Workers;
 using Battles.Api.Workers.MatchUpdater;
 using Battles.Api.Workers.Notifications.Settings;
 using Battles.Application.Services.Evaluations.Commands;
+using Battles.Application.Services.Matches.Commands;
 using Battles.Application.SubServices;
 using Battles.Shared;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -53,7 +53,6 @@ namespace Battles.Api
 
             var connectionString = _config.GetConnectionString("DefaultConnection");
             services.AddTrickingRoyalDatabase(connectionString)
-                    .AddHangfireServices()
                     .AddHangfire(options => options.UseSqlServerStorage(connectionString));
 
             services.AddAuthentication("Bearer")
@@ -143,9 +142,9 @@ namespace Battles.Api
 
         private static void SetupHangfireJobs()
         {
-            RecurringJob.AddOrUpdate<IHangfireJobs>(jobs => jobs.CloseExpiredMatches(), Cron.Hourly);
+            RecurringJob.AddOrUpdate<CloseExpiredMatchesCommandHandler>(handler => handler.Handle(new CloseExpiredMatchesCommand(), CancellationToken.None), Cron.Hourly);
             RecurringJob.AddOrUpdate<CloseEvaluationsCommandHandler>(handler => handler.Handle(new CloseEvaluationsCommand(), CancellationToken.None), Cron.Minutely);
-            RecurringJob.AddOrUpdate<IHangfireJobs>(jobs => jobs.MatchReminder(), Cron.Daily);
+            RecurringJob.AddOrUpdate<SendMatchRemindersCommandHandler>(handler => handler.Handle(new SendMatchRemindersCommand(), CancellationToken.None), Cron.Daily);
         }
     }
 }
