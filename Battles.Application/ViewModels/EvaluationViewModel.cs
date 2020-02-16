@@ -33,7 +33,7 @@ namespace Battles.Application.ViewModels
                                    .OrderBy(x => x.Role)
                                    .Select(MatchUserViewModel.Projection),
 
-                Mode = eval.Match.Mode.GetString(),
+                Mode = (int) eval.Match.Mode,
                 Surface = (int) eval.Match.Surface,
 
                 Flag = eval.EvaluationType == EvaluationT.Flag,

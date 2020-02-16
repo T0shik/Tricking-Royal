@@ -14,9 +14,6 @@
     <e p="C:\Users\Toshik\.Rider2019.3\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_TrickingRoyal.-167241190.00" t="ExcludeRecursive" />
     <e p="D:\WS\Visual Studio 2017\TrickingRoyal" t="IncludeFlat">
       <e p="Battles" t="IncludeRecursive">
-        <e p="attributes" t="Include">
-          <e p="ServiceAttribute.cs" t="Include" />
-        </e>
         <e p="Battles.csproj" t="IncludeRecursive" />
         <e p="bin" t="ExcludeRecursive" />
         <e p="Enums" t="Include">
@@ -33,7 +30,6 @@
         </e>
         <e p="Extensions" t="Include">
           <e p="DateTimeExtensions.cs" t="Include" />
-          <e p="EnumExtensions.cs" t="Include" />
           <e p="StringExtensions.cs" t="Include" />
         </e>
         <e p="Helpers" t="Include">
@@ -107,6 +103,7 @@
             <e p="MatchExceptions.cs" t="Include" />
           </e>
         </e>
+        <e p="ServiceAttribute.cs" t="Include" />
       </e>
       <e p="Battles.Api" t="IncludeRecursive">
         <e p="appsettings.json" t="Include" />
@@ -203,11 +200,6 @@
           <e p="QueryExtensions.cs" t="Include" />
           <e p="TimeSpanExtensions.cs" t="Include" />
         </e>
-        <e p="Jobs" t="Include">
-          <e p="HangfireJobs.cs" t="Include" />
-          <e p="HangfireJobsServiceRegister.cs" t="Include" />
-          <e p="IHangfireJobs.cs" t="Include" />
-        </e>
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">
             <e p="netcoreapp2.2" t="Include">
@@ -228,7 +220,6 @@
           </e>
           <e p="Evaluations" t="Include">
             <e p="Commands" t="Include">
-              <e p="CloseCompleteEvaluationCommand.cs" t="Include" />
               <e p="CloseEvaluationsCommand.cs" t="Include" />
               <e p="VoteCommand.cs" t="Include" />
             </e>
@@ -245,6 +236,7 @@
           </e>
           <e p="Matches" t="Include">
             <e p="Commands" t="Include">
+              <e p="CloseExpiredMatchesCommand.cs" t="Include" />
               <e p="CreateMatchCommand.cs" t="Include" />
               <e p="DeleteMatchCommand.cs" t="Include" />
               <e p="FlagMatchCommand.cs" t="Include" />
@@ -252,8 +244,8 @@
               <e p="JoinMatchCommand.cs" t="Include" />
               <e p="PassRoundCommand.cs" t="Include" />
               <e p="ReadyMatchCommand.cs" t="Include" />
+              <e p="SendMatchRemindersCommand.cs" t="Include" />
               <e p="StartMatchUpdateCommand.cs" t="Include" />
-              <e p="TimeoutMatchCommand.cs" t="Include" />
               <e p="UpdateMatchCommand.cs" t="Include" />
               <e p="UpdateMatchVideoCommand.cs" t="Include" />
             </e>
@@ -1265,6 +1257,9 @@
               <e p="logger.js" t="Include" />
             </e>
             <e p="main.js" t="Include" />
+            <e p="mixins" t="Include">
+              <e p="mode.js" t="Include" />
+            </e>
             <e p="plugins" t="Include">
               <e p="i18n.js" t="Include" />
               <e p="vuetify.js" t="Include" />

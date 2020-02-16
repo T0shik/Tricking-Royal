@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Battles.Application.Extensions;
 using Battles.Extensions;
 using Battles.Models;
@@ -14,7 +15,6 @@ namespace Battles.Application.ViewModels.Matches
     {
         public int Id { get; set; }
         public int Round { get; set; }
-        public string Status { get; set; }
         public int TurnType { get; set; }
         public string Turn { get; set; }
         public string Finished { get; set; }
@@ -45,8 +45,8 @@ namespace Battles.Application.ViewModels.Matches
 
                 Turn = match.Turn,
                 Round = match.Round,
-                Status = match.Status.GetString(),
-                Mode = match.Mode.GetString(),
+                Status = (int) match.Status,
+                Mode = (int) match.Mode,
                 Surface = (int) match.Surface,
                 TurnType = (int) match.TurnType,
                 Chain = match.Chain.DefaultSplit(),
@@ -70,8 +70,8 @@ namespace Battles.Application.ViewModels.Matches
 
                 Turn = match.Turn,
                 Round = match.Round,
-                Status = match.Status.GetString(),
-                Mode = match.Mode.GetString(),
+                Status = (int) match.Status,
+                Mode = (int) match.Mode,
                 Surface = (int) match.Surface,
                 TurnType = (int) match.TurnType,
                 Chain = match.Chain.DefaultSplit(),
@@ -105,8 +105,8 @@ namespace Battles.Application.ViewModels.Matches
 
                 Turn = match.Turn,
                 Round = match.Round,
-                Status = match.Status.GetString(),
-                Mode = match.Mode.GetString(),
+                Status = (int) match.Status,
+                Mode = (int) match.Mode,
                 Surface = (int) match.Surface,
                 TurnType = (int) match.TurnType,
                 Chain = match.Chain.DefaultSplit(),

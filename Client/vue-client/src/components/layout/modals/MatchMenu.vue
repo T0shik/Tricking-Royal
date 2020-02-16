@@ -35,7 +35,7 @@
                             <v-list-item two-line>
                                 <v-list-item-content>
                                     <v-list-item-subtitle>{{$t('create.stage.mode.title')}}</v-list-item-subtitle>
-                                    <v-list-item-title>{{match.mode}}</v-list-item-title>
+                                    <v-list-item-title>{{matchModeNames[match.mode]}}</v-list-item-title>
                                 </v-list-item-content>
                             </v-list-item>
                             <v-list-item two-line>
@@ -95,6 +95,7 @@
     import {mapMutations, mapActions, mapState, mapGetters} from "vuex";
     import {mdiClose} from "@mdi/js";
     import {MATCH_TYPES} from "../../../data/enum";
+    import mode from "../../../mixins/mode";
 
     const initialState = () => ({
         step: 0,
@@ -109,6 +110,7 @@
 
     export default {
         data: initialState,
+        mixins: [mode],
         methods: {
             ...mapMutations({
                 closeMenu: 'menu/closeMenu',

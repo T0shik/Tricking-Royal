@@ -58,6 +58,7 @@
     <Content Include="vue-client\src\lang\ru\user.js" />
     <Content Include="vue-client\src\lang\ru\watch.js" />
     <Content Include="vue-client\src\lang\ru\_index.js" />
+    <Content Include="vue-client\src\mixins\mode.js" />
     <Content Include="vue-client\src\plugins\i18n.js" />
     <Content Include="vue-client\src\stores\modules\signalr.js" />
     <Content Include="vue-client\src\stores\modules\statusBar.js" />

@@ -90,7 +90,7 @@
             }),
             pending() {
                 if (this.match === null) return false;
-                return this.match.status === "Pending";
+                return this.match.status === 3;
             }
         }
     };

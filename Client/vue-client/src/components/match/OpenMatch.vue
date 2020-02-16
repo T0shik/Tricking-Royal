@@ -36,7 +36,7 @@
             <div class="d-flex white--text">
                 <div>
                     <h1 class="body-1 mb-0">{{$t('create.stage.mode.title')}}</h1>
-                    <h1 class="body-2">{{match.mode}}</h1>
+                    <h1 class="body-2">{{matchModeNames[match.mode]}}</h1>
                     <h1 class="body-2" v-if="mode">{{mode}}</h1>
                 </div>
                 <v-spacer/>
@@ -68,6 +68,7 @@
 
 <script>
     import ProfileImage from "../shared/ProfileImage";
+    import mode from "../../mixins/mode";
 
     export default {
         props: {
@@ -80,6 +81,7 @@
                 type: Boolean
             }
         },
+        mixins: [mode],
         components: {
             ProfileImage
         },

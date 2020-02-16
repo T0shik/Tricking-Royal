@@ -5,10 +5,16 @@
     INITIAL_FINISHED: 2,
 };
 
+export const MATCH_MODE_NAMES = [
+    'One Up', 
+    'Three Round Pass', 
+    'Copy Cat',
+];
+
 export const MATCH_MODE = {
-    ONE_UP: 'One Up',
-    THREE_ROUND_PASS: 'Three Round Pass',
-    COPY_CAT: 'Copy Cat',
+    ONE_UP: 0,
+    THREE_ROUND_PASS: 1,
+    COPY_CAT: 2,
 };
 
 export const MATCH_TYPES = {

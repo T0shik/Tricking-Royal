@@ -97,7 +97,7 @@
             </div>
             <v-list class="secondary">
                 <v-list-item v-for="match in hosted" :key="match.id">
-                    <v-list-item-title>{{match.mode}}</v-list-item-title>
+                    <v-list-item-title>{{matchModeNames[match.mode]}}</v-list-item-title>
                     <v-list-item-subtitle>{{$t(`match.surfaces[${match.surface}]`)}} - {{match.turnTime}}
                     </v-list-item-subtitle>
                     <v-spacer/>
@@ -120,6 +120,7 @@
     import {MATCH_TYPES} from "../data/enum";
     import {matches} from "../data/shared";
     import Rules from "../components/layout/modals/Rules";
+    import mode from "../mixins/mode";
 
     const initialForm = () => ({
         mode: {value: -1},
@@ -129,6 +130,7 @@
     });
 
     export default {
+        mixins: [mode],
         data: () => ({
             stage: 1,
             loading: false,

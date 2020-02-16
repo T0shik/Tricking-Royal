@@ -12,7 +12,7 @@
         <div class="d-flex flex-row my-1">
             <v-spacer/>
             <v-chip small v-if="match.updating" color="primary">{{$t('misc.updating')}}</v-chip>
-            <v-chip small>{{match.mode}}</v-chip>
+            <v-chip small>{{matchModeNames[match.mode]}}</v-chip>
             <v-chip v-if="!match.finished" small>{{match.timeLeft}}</v-chip>
         </div>
         <div class="text-center">
@@ -52,6 +52,7 @@
     import CommentSection from "./comments/CommentSection.vue";
     import {mapGetters, mapMutations, mapActions} from "vuex";
     import {mdiChevronUp, mdiComment, mdiFire, mdiMore} from "@mdi/js";
+    import mode from "../../mixins/mode";
 
     export default {
         props: {
@@ -64,12 +65,11 @@
                 type: Boolean
             }
         },
-        data() {
-            return {
-                openComments: false,
-                playingIndex: -1,
-            };
-        },
+        data: () => ({
+            openComments: false,
+            playingIndex: -1,
+        }),
+        mixins: [mode],
         components: {
             MatchHeader,
             OneUp,
@@ -103,7 +103,7 @@
                 loading: 'updateMatch/loading'
             }),
             mode() {
-                return this.match.mode.toLowerCase().replace(/ /g, "-");
+                return this.matchModeNames[this.match.mode].toLowerCase().replace(/ /g, '-');
             },
             icons() {
                 return {
