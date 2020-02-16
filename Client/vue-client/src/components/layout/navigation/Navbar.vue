@@ -18,14 +18,12 @@
                 offset-x
         >
             <template v-slot:activator="{ on }">
-                <v-badge overlap left color="red">
-                    <template v-slot:badge v-if="notificationCount > 0">{{notificationCount}}</template>
-                    <template>
-                        <v-btn text icon v-on="on" @click="toggleNotifications">
-                            <v-icon>{{icons.bell}}</v-icon>
-                        </v-btn>
-                    </template>
-                </v-badge>
+                <v-btn text icon v-on="on" @click="toggleNotifications">
+                    <v-badge offset-y="12" offset-x="12" left v-model="notificationCount" :content="notificationCount"
+                             color="red">
+                        <v-icon>{{icons.bell}}</v-icon>
+                    </v-badge>
+                </v-btn>
             </template>
 
             <v-card color="secondary">
@@ -65,7 +63,7 @@
 
     export default {
         components: {
-          UserSearch  
+            UserSearch
         },
         methods: {
             ...mapMutations('notifications', ['toggleNotifications']),

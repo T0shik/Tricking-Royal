@@ -97,7 +97,7 @@
                 <v-card-title>
                     {{$t('layout.levelUp')}}
                 </v-card-title>
-                <v-card-text class="py-0">
+                <v-card-text class="pt-0">
                     <span v-if="selectedPerk">{{$t(`layout.levelPerks.${selectedPerk.name}.description`)}}</span>
                     <span v-else>{{$t('layout.selectPerk')}}</span>
                     <div class="d-flex flex-wrap justify-center">
@@ -108,7 +108,7 @@
                             <v-icon right>{{p.icon}}</v-icon>
                         </v-btn>
                     </div>
-                    <p class="ma-0 py-2 text-center" v-if="selectedPerk">
+                    <p class="ma-0 pt-2 text-center" v-if="selectedPerk">
                         {{$t(`layout.levelPerks.${selectedPerk.name}.current`, [profile[selectedPerk.prop]])}}
                     </p>
                 </v-card-text>
@@ -173,6 +173,13 @@
         props: {
             show: {
                 required: true
+            }
+        },
+        watch: {
+            levelUp: function (v) {
+                if(!v){
+                    Object.assign(this.$data, initialState());
+                }      
             }
         },
         components: {

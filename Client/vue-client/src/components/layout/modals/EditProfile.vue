@@ -1,5 +1,5 @@
 <template>
-    <v-dialog dark v-model="dialog" fullscreen persistent hide-overlay transition="dialog-bottom-transition">
+    <v-dialog dark v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
         <template v-slot:activator="{ on }">
             <v-btn text icon color="white" v-on="on">
                 <v-icon>{{icons.settings}}</v-icon>
@@ -13,10 +13,12 @@
                 <v-spacer/>
                 <v-toolbar-title class="white--text">{{$t('editProfile.settings')}}</v-toolbar-title>
                 <v-spacer/>
-                <v-progress-circular color="primary" v-if="loadingName" indeterminate/>
-                <v-btn v-else icon @click="save" :color="valid ? 'green' : 'red'" :disabled="!valid">
-                    <v-icon>{{valid ? icons.check : icons.ban }}</v-icon>
-                </v-btn>
+                <v-toolbar-items>
+                    <v-progress-circular class="align-self-center mr-2" color="primary" v-if="loadingName" indeterminate/>
+                    <v-btn v-else icon @click="save" :color="valid ? 'green' : 'red'" :disabled="!valid">
+                        <v-icon>{{valid ? icons.check : icons.ban }}</v-icon>
+                    </v-btn>
+                </v-toolbar-items>
             </v-toolbar>
             <v-form class="px-4 edit-profile" ref="form" v-model="valid">
                 <v-container>
