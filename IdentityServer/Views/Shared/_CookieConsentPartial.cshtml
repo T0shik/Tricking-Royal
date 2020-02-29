@@ -1,6 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Http.Features
+@inject Library Library
 
 @{
+    var context = await Library.GetContext();
     var consentFeature = Context.Features.Get<ITrackingConsentFeature>();
     var showBanner = !consentFeature?.CanTrack ?? false;
     var cookieString = consentFeature?.CreateConsentCookie();
@@ -12,15 +14,15 @@
         <div class="level-left">
             <div class="level-item has-text-centered ">
                 <span class="has-text-weight-bold">
-                    We use persistent cookies to keep you logged in, we don't keep any ad related cookies
+                    @context.Read("Shared", "CookieConsent")
                 </span>
             </div>
         </div>
         <div class="level-right">
             <div class="level-item has-text-centered">
                 <div class="buttons">
-                    <a asp-controller="Home" asp-action="Privacy" class="button is-text has-text-link">Learn More</a>
-                    <button type="button" class="button is-primary" data-cookie-string="@cookieString">Accept</button>
+                    <a asp-controller="Home" asp-action="Privacy" class="button is-text has-text-link">@context.Read("Shared", "LearnMore")</a>
+                    <button type="button" class="button is-primary" data-cookie-string="@cookieString">@context.Read("Shared", "Accept")</button>
                 </div>
             </div>
         </div>

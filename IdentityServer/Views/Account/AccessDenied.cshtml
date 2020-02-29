@@ -1,8 +1,12 @@
-﻿@{
-    ViewData["Title"] = "Access Denied";
+﻿@inject Library Library
+
+@{
+    var context = await Library.GetContext();
+    var tDenied = context.Read("Account", "Denied");
+    ViewData["Title"] = tDenied;
 }
 
 <header>
-    <h1 class="text-danger">Access Denied.</h1>
-    <p class="text-danger">You do not have access to this resource.</p>
+    <h1 class="text-danger">@tDenied</h1>
+    <p class="text-danger">@context.Read("Account", "DeniedDesc"))</p>
 </header>

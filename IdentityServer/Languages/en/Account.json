@@ -1,0 +1,14 @@
+﻿{
+  "Denied": "Access Denied.",
+  "DeniedDesc": "You do not have access to this resource.",
+  "AuthWith": "Authenticated with",
+  "Email": "Email",
+  "Username": "Username",
+  "Password": "Password",
+  "Register": "Register",
+  "LoginFail": "Login Failure",
+  "LoginFailDesc": "Unsuccessful login with service",
+  "ForgotPassword": "Forgot your password?",
+  "BackToLogin": "Back to Login",
+  "Recover": "Account Recovery"
+}

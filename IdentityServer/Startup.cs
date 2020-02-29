@@ -14,8 +14,10 @@ using System.IO;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using Battles.Shared;
+using IdentityServer.Infrastructure;
 using NETCore.MailKit.Extensions;
 using NETCore.MailKit.Infrastructure.Internal;
+using Transmogrify.DependencyInjection.Newtonsoft;
 using TrickingRoyal.Database;
 
 namespace IdentityServer
@@ -77,6 +79,14 @@ namespace IdentityServer
                             return System.Threading.Tasks.Task.FromResult(0);
                         };
                     });
+
+            services.AddHttpContextAccessor();
+            services.AddNewtonsoftTransmogrify(config =>
+            {
+                config.DefaultLanguage = "en";
+                config.LanguagePath = Path.Combine(_env.ContentRootPath, "Languages");
+                config.AddResolver(typeof(DefaultLanguageResolver));
+            });
 
             SetupCors(services, routing.Client);
 
