@@ -11,8 +11,8 @@
     <e p="C:\Users\Toshik\.Rider2019.3\config\Extensions" t="IncludeRecursive" />
     <e p="C:\Users\Toshik\.Rider2019.3\config\scratches" t="IncludeRecursive" />
     <e p="C:\Users\Toshik\.Rider2019.3\system\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\Toshik\.Rider2019.3\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_TrickingRoyal.-167241190.00" t="ExcludeRecursive" />
-    <e p="D:\WS\Visual Studio 2017\TrickingRoyal" t="IncludeFlat">
+    <e p="C:\Users\Toshik\.Rider2019.3\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_TrickingRoyal.31971660.00" t="ExcludeRecursive" />
+    <e p="D:\WS\Rider\TrickingRoyal" t="IncludeFlat">
       <e p="Battles" t="IncludeRecursive">
         <e p="Battles.csproj" t="IncludeRecursive" />
         <e p="bin" t="ExcludeRecursive" />
@@ -1332,7 +1332,11 @@
             <e p="Home.json" t="Include" />
             <e p="Shared.json" t="Include" />
           </e>
-          <e p="ru" t="Include" />
+          <e p="ru" t="Include">
+            <e p="Account.json" t="Include" />
+            <e p="Home.json" t="Include" />
+            <e p="Shared.json" t="Include" />
+          </e>
         </e>
         <e p="Models" t="Include">
           <e p="AccountViewModels" t="Include">
@@ -1396,8 +1400,6 @@
             <e p="Register.cshtml" t="Include" />
             <e p="ResetPassword.cshtml" t="Include" />
             <e p="ResetPasswordConfirmation.cshtml" t="Include" />
-            <e p="SendCode.cshtml" t="Include" />
-            <e p="VerifyCode.cshtml" t="Include" />
           </e>
           <e p="Home" t="Include">
             <e p="Index.cshtml" t="Include" />
