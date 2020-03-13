@@ -77,7 +77,7 @@
             },
             login() {
                 this.connecting = true;
-                this.$store.state.userMgr.signinRedirect();
+                this.$store.dispatch("SIGN_IN")
             }
         },
         components: {

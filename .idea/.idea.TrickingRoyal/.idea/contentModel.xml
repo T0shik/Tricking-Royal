@@ -1330,11 +1330,13 @@
           <e p="en" t="Include">
             <e p="Account.json" t="Include" />
             <e p="Home.json" t="Include" />
+            <e p="Manage.json" t="Include" />
             <e p="Shared.json" t="Include" />
           </e>
           <e p="ru" t="Include">
             <e p="Account.json" t="Include" />
             <e p="Home.json" t="Include" />
+            <e p="Manage.json" t="Include" />
             <e p="Shared.json" t="Include" />
           </e>
         </e>
@@ -1352,15 +1354,7 @@
             <e p="ErrorViewModel.cs" t="Include" />
           </e>
           <e p="ManageViewModels" t="Include">
-            <e p="AddPhoneNumberViewModel.cs" t="Include" />
             <e p="ChangePasswordViewModel.cs" t="Include" />
-            <e p="ConfigureTwoFactorViewModel.cs" t="Include" />
-            <e p="FactorViewModel.cs" t="Include" />
-            <e p="IndexViewModel.cs" t="Include" />
-            <e p="ManageLoginsViewModel.cs" t="Include" />
-            <e p="RemoveLoginViewModel.cs" t="Include" />
-            <e p="SetPasswordViewModel.cs" t="Include" />
-            <e p="VerifyPhoneNumberViewModel.cs" t="Include" />
           </e>
         </e>
         <e p="obj" t="ExcludeRecursive">
@@ -1406,12 +1400,8 @@
             <e p="Privacy.cshtml" t="Include" />
           </e>
           <e p="Manage" t="Include">
-            <e p="AddPhoneNumber.cshtml" t="Include" />
             <e p="ChangePassword.cshtml" t="Include" />
             <e p="Index.cshtml" t="Include" />
-            <e p="ManageLogins.cshtml" t="Include" />
-            <e p="SetPassword.cshtml" t="Include" />
-            <e p="VerifyPhoneNumber.cshtml" t="Include" />
           </e>
           <e p="Shared" t="Include">
             <e p="_CookieConsentPartial.cshtml" t="Include" />

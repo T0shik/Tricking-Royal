@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using Battles.Shared;
@@ -104,6 +105,7 @@ namespace IdentityServer
             app.UseCors(_env.IsDevelopment() ? "AllowAll" : "AllowClients");
             app.UseHealthChecks("/healthcheck");
 
+
             if (_env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage()
@@ -120,6 +122,15 @@ namespace IdentityServer
 
                 app.UseExceptionHandler("/Shared/Error");
             }
+
+            app.Use((context, next) =>
+            {
+                var request = context.Request;
+                if (!request.Cookies.ContainsKey("lang") && 
+                    request.Query.TryGetValue("lang", out var lang))
+                    context.Response.Cookies.Append("lang", lang);
+                return next();
+            });
 
             app.UseCookiePolicy()
                .UseStaticFiles()

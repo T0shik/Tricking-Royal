@@ -48,7 +48,7 @@
             <div id="navbarBasicExample" class="navbar-menu has-background-black has-text-centered">
                 <div class="navbar-start">
                     <a class="navbar-item has-text-white is-hoverless" asp-area="" asp-controller="Manage" asp-action="Index">
-                        <strong>@context.Read("Shared", "ManageAccount")</strong>
+                        <strong>@context.Read("Manage", "Title")</strong>
                     </a>
                     <a class="navbar-item has-text-white is-hoverless" asp-area="" asp-controller="Home" asp-action="Privacy">
                         <strong>@context.Read("Shared", "PrivacyPolicy")</strong>

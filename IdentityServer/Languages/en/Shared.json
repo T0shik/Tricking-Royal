@@ -1,9 +1,11 @@
 ﻿{
-  "ManageAccount": "Manage Account",
   "PrivacyPolicy": "Privacy Policy",
   "LogOut": "Log out",
   "CookieConsent": "We use persistent cookies to keep you logged in, we don't track you or use ad related cookies",
   "Accept": "Accept",
   "Submit": "Submit",
-  "LearnMore": "Learn More"
+  "LearnMore": "Learn More",
+  "Back": "Back",
+  "Change": "Change",
+  "Cancel": "Cancel"
 }

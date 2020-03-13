@@ -12,6 +12,7 @@ import editProfile from "./editProfile";
 import comments from './comments'
 import updateMatch from "./updateMatch";
 import menu from "./menu";
+import confirmations from "./confirmations";
 
 export default {
     landing,
@@ -28,4 +29,5 @@ export default {
     comments,
     updateMatch,
     menu,
+    confirmations
 }

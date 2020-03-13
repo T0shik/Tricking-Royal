@@ -62,7 +62,7 @@
                         });
                         createOneSignalEventListener();
 
-                        if (activated) {
+                        if (activated && !window.iOS) {
                             this.$store.dispatch('confirmation/notificationsPrompt', {}, {root: true});
                         }
                     });

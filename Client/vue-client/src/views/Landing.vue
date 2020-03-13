@@ -6,13 +6,6 @@
                 px-0
         >
             <div class="d-flex flex-column align-center">
-                <div>
-                    <button v-for="entry in languages" :key="entry.name" @click="setLang(entry.locale)">
-                        <flag :iso="entry.icon" v-bind:squared="false"/>
-                        {{entry.name}}
-                    </button>
-                </div>
-                <v-spacer/>
                 <h1 class="font-weight-bold primary--text mb-3 font-rock"
                     :class="windowSize.x < 600 ? 'display-1' : 'display-3'">Tricking Royal</h1>
                 <h4 class="title">{{$t('landing.description')}}</h4>
@@ -26,6 +19,12 @@
                 <!--                            src="https://play.google.com/intl/en_gb/badges/images/generic/en_badge_web_generic.png"-->
                 <!--                    />-->
                 <!--                </a>-->
+                <div class="pt-4">
+                    <button class="mx-2" v-for="entry in languages" :key="entry.name" @click="setLang(entry.locale)">
+                        <flag :iso="entry.icon" v-bind:squared="false"/>
+                        {{entry.name}}
+                    </button>
+                </div>
                 <div class="pt-4">
                     <h4 class="text-center subtitle-1">{{$t('landing.partners')}}</h4>
                     <a class="kojos-tricklab" href="https://www.kojostricklab.com/?wpam_id=93" target="_blank_">
@@ -144,7 +143,7 @@
             },
             login() {
                 this.connecting = true;
-                this.$store.state.userMgr.signinRedirect();
+                this.$store.dispatch("SIGN_IN")
             },
             onResize() {
                 if (this.heightSet) {

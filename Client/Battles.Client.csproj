@@ -29,6 +29,7 @@
     <Content Include="vue-client\src\data\shared.js" />
     <Content Include="vue-client\src\lang\en\battles.js" />
     <Content Include="vue-client\src\lang\en\comments.js" />
+    <Content Include="vue-client\src\lang\en\confirmations.js" />
     <Content Include="vue-client\src\lang\en\create.js" />
     <Content Include="vue-client\src\lang\en\editProfile.js" />
     <Content Include="vue-client\src\lang\en\landing.js" />
@@ -45,6 +46,7 @@
     <Content Include="vue-client\src\lang\languages.json" />
     <Content Include="vue-client\src\lang\ru\battles.js" />
     <Content Include="vue-client\src\lang\ru\comments.js" />
+    <Content Include="vue-client\src\lang\ru\confirmations.js" />
     <Content Include="vue-client\src\lang\ru\create.js" />
     <Content Include="vue-client\src\lang\ru\editProfile.js" />
     <Content Include="vue-client\src\lang\ru\landing.js" />

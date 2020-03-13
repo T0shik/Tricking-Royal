@@ -6,34 +6,23 @@ import Logger from "../../logger/logger";
 
 Vue.use(Vuex);
 
-const initialState = ({
-                          title = '',
-                          description = '',
-                          buttonText = '',
-                          action = null
-                      }) => ({
-    title,
-    description,
-    buttonText,
+const initialState = ({type = '', descriptions = 0, action = null, display = true}) => ({
+    display,
+    type,
+    descriptions,
     loading: false,
     action,
 });
 
 export default {
     namespaced: true,
-    state: initialState({}),
-    getters: {
-        display: state => {
-            return state.title !== '';
-        }
-    },
+    state: initialState({display: false}),
     mutations: {
         set(state, payload) {
             Object.assign(state, payload);
         },
         dismiss(state) {
-            Logger.log("[confirmation.dismiss] dismissing.");
-            Object.assign(state, initialState({}));
+            Object.assign(state, initialState({display: false}));
         },
         toggleLoading(state) {
             state.loading = !state.loading;
@@ -53,9 +42,8 @@ export default {
             //6 days cooldown
             if (now - lastPrompt > 518400000) {
                 commit('set', initialState({
-                    title: 'Update',
-                    description: 'New version of the app is available, refresh to update.',
-                    buttonText: "Refresh",
+                    type: 'pwa',
+                    descriptions: 1,
                     action: () => {
                         window.location.reload(true);
                     }
@@ -65,12 +53,8 @@ export default {
         },
         copyCatPass({commit, dispatch}, {id}) {
             commit('set', initialState({
-                title: 'Pass?',
-                description: [
-                    "Are you sure you want to pass this round?",
-                    "Pass this round if you can't repeat the combo."
-                ],
-                buttonText: "Pass",
+                type: 'pass',
+                descriptions: 2,
                 action: () => {
                     return axios.post(`/matches/${id}/pass`)
                         .then(({data}) => {
@@ -94,9 +78,8 @@ export default {
                     if (now - lastPrompt > 259200000) {
                         Logger.log("[confirmation.notificationsPrompt] displaying notification prompt");
                         commit('set', initialState({
-                            title: 'Allow Notifications?',
-                            description: 'Let TrickingRoyal send you notifications when your matches are updated.',
-                            buttonText: "Turn On",
+                            type: 'notify',
+                            descriptions: 1,
                             action: () => {
                                 return dispatch('notifications/showPrompt', {}, {root: true});
                             }

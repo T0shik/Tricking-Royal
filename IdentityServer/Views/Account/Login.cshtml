@@ -68,16 +68,16 @@
                         <div class="field">
                             <div class="columns is-mobile">
                                 <div class="column">
-                                    <a class="button is-outlined is-fullwidth" asp-action="Register" asp-route-returnurl="@Model.ReturnUrl">
-                                        @context.Read("Account", "Register")
-                                    </a>
-                                </div>
-                                <div class="column">
-                                    <button type="submit" class="button is-info is-fullwidth">@context.Read("Account", "Login")</button>
+                                    <button type="submit" class="button is-info is-fullwidth">@context.Read("Account", "SignIn")</button>
                                 </div>
                             </div>
                         </div>
                     </form>
+                    <div class="column">
+                        <a class="button is-outlined is-fullwidth" asp-action="Register" asp-route-returnurl="@Model.ReturnUrl">
+                            @context.Read("Account", "Register")
+                        </a>
+                    </div>
                     <div class="field">
                         <a class="has-text-grey-lighter has-text-weight-bold" asp-action="ForgotPassword" asp-route-returnUrl="@Model.ReturnUrl">@context.Read("Account", "ForgotPassword")</a>
                     </div>
@@ -88,5 +88,5 @@
 </div>
 
 @section Scripts {
-    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }
