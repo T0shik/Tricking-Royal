@@ -36,6 +36,24 @@ a {
   }
 }
 
+@media screen and (max-width: 400px) {
+  .v-application {
+    .force {
+      .heading {
+        font-size: 0.825rem !important
+      }
+      
+      .body-1 {
+        font-size: 0.825rem !important
+      }
+
+      .body-2 {
+        font-size: 0.725rem !important
+      }
+    }
+  }
+}
+
 .score-board {
   margin-top: 0.2rem;
   text-align: center;

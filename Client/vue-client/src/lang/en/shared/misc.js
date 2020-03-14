@@ -26,4 +26,9 @@
     likes: "Likes",
     confirm: "Confirm",
     language: "Language",
+    win: "Win",
+    loss: "Loss",
+    draw: "Draw",
+    reputation: "Reputation",
+    style: "Style"
 }

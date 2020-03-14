@@ -49,23 +49,23 @@
 
                 <v-row class="score-board" dense>
                     <v-col cols="4">
-                        <span class="subheading">{{$t('layout.win')}}</span>
+                        <span class="subheading">{{$t('misc.win')}}</span>
                         <div class="title">{{user.win}}</div>
                     </v-col>
                     <v-col cols="4">
-                        <span class="subheading">{{$t('layout.loss')}}</span>
+                        <span class="subheading">{{$t('misc.loss')}}</span>
                         <div class="title">{{user.loss}}</div>
                     </v-col>
                     <v-col cols="4">
-                        <span class="subheading">{{$t('layout.draw')}}</span>
+                        <span class="subheading">{{$t('misc.draw')}}</span>
                         <div class="title">{{user.draw}}</div>
                     </v-col>
                     <v-col cols="6">
-                        <span class="subheading">{{$t('layout.reputation')}}</span>
+                        <span class="subheading">{{$t('misc.reputation')}}</span>
                         <div class="title">{{user.reputation}}</div>
                     </v-col>
                     <v-col cols="6">
-                        <span class="subheading">{{$t('layout.style')}}</span>
+                        <span class="subheading">{{$t('misc.style')}}</span>
                         <div class="title">{{user.style}}</div>
                     </v-col>
                 </v-row>

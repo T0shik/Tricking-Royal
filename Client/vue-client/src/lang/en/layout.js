@@ -2,11 +2,6 @@
     search: {
         label: "Search for trickers"
     },
-    win: "Win",
-    loss: "Loss",
-    draw: "Draw",
-    reputation: "Reputation",
-    style: "Style",
     menu: "Menu",
     sideNav: {
         battles: "Battles",

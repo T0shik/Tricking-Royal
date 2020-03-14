@@ -26,25 +26,25 @@
                 </v-col>
                 <EditProfile/>
             </v-row>
-            <v-row class="score-board" dense>
+            <v-row class="score-board force" dense>
                 <v-col cols="4">
-                    <span class="subheading">{{$t('layout.win')}}</span>
+                    <span class="subtitle-2">{{$t('misc.win')}}</span>
                     <div class="title">{{profile.win}}</div>
                 </v-col>
                 <v-col cols="4">
-                    <span class="subheading">{{$t('layout.loss')}}</span>
+                    <span class="subtitle-2">{{$t('misc.loss')}}</span>
                     <div class="title">{{profile.loss}}</div>
                 </v-col>
                 <v-col cols="4">
-                    <span class="subheading">{{$t('layout.draw')}}</span>
+                    <span class="subtitle-2">{{$t('misc.draw')}}</span>
                     <div class="title">{{profile.draw}}</div>
                 </v-col>
                 <v-col cols="6">
-                    <span class="subheading">{{$t('layout.reputation')}}</span>
+                    <span class="subtitle-2">{{$t('misc.reputation')}}</span>
                     <div class="title">{{profile.reputation}}</div>
                 </v-col>
                 <v-col cols="6">
-                    <span class="subheading">{{$t('layout.style')}}</span>
+                    <span class="subtitle-2">{{$t('misc.style')}}</span>
                     <div class="title">{{profile.style}}</div>
                 </v-col>
             </v-row>

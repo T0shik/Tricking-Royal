@@ -2,11 +2,6 @@
     search: {
         label: "Найти трикеров"
     },
-    win: "Победы",
-    loss: "Поражения",
-    draw: "Ничьи",
-    reputation: "Репутация",
-    style: "Стиль",
     menu: "Меню",
     sideNav: {
         battles: "Батлы",

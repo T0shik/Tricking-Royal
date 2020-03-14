@@ -1,5 +1,5 @@
 <template>
-    <v-card class="my-3" max-width="600px" width="100%" dark color="secondary">
+    <v-card class="my-3 force" max-width="600px" width="100%" dark color="secondary">
         <v-card-title class="pa-2">
             <router-link class="white--text" :to="`/user/${user.displayName}`">
                 <ProfileImage :picture="user.picture" :level="user.level"/>
@@ -14,20 +14,20 @@
         <v-card-text class="px-3 pt-1 pb-2">
             <div class="d-flex white--text">
                 <div class="text-center mr-2">
-                    <h1 class="body-1 mb-0">Reputation</h1>
+                    <h1 class="body-1 mb-0">{{$t('misc.reputation')}}</h1>
                     <h1 class="body-2">{{user.reputation}}</h1>
                 </div>
                 <v-spacer/>
                 <div class="text-center mx-2">
-                    <h1 class="body-1 mb-0">Wins</h1>
+                    <h1 class="body-1 mb-0">{{$t('misc.win')}}</h1>
                     <h1 class="body-2">{{user.win}}</h1>
                 </div>
                 <div class="text-center mx-2">
-                    <h1 class="body-1 mb-0">Loss</h1>
+                    <h1 class="body-1 mb-0">{{$t('misc.loss')}}</h1>
                     <h1 class="body-2">{{user.loss}}</h1>
                 </div>
                 <div class="text-center ml-2">
-                    <h1 class="body-1 mb-0">Draw</h1>
+                    <h1 class="body-1 mb-0">{{$t('misc.draw')}}</h1>
                     <h1 class="body-2">{{user.draw}}</h1>
                 </div>
             </div>

@@ -26,4 +26,9 @@
     likes: "Лайки",
     confirm: "Подтвердить",
     language: "Язык",
+    win: "Победы",
+    loss: "Поражения",
+    draw: "Ничьи",
+    reputation: "Репутация",
+    style: "Стиль"
 }

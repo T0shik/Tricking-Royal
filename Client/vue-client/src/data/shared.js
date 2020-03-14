@@ -1,7 +1,3 @@
-export const surfaces = [
-    "any", "sprungFloor", "grass", "concrete", "trampoline", "tumbling"
-];
-
 export const skills =
     [
         {name: 'beginner', value: 0},
