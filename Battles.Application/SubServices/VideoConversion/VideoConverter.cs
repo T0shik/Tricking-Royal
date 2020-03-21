@@ -20,14 +20,10 @@ namespace Battles.Application.SubServices.VideoConversion
         private readonly ILogger<VideoConverter> _logger;
         private readonly string _matchVideos;
 
-        public VideoConverter(ILogger<VideoConverter> logger)
-        {
-            _logger = logger;
-        }
-
         public VideoConverter(
             IHostingEnvironment env,
-            FilePaths filePaths)
+            FilePaths filePaths,
+            ILogger<VideoConverter> logger)
         {
             if (env.IsProduction())
             {
@@ -43,6 +39,8 @@ namespace Battles.Application.SubServices.VideoConversion
                 var cdnWebPath = Path.Combine(solutionRoot, "Battles.Cdn", "wwwroot");
                 _matchVideos = Path.Combine(cdnWebPath, filePaths.Videos);
             }
+
+            _logger = logger;
         }
 
         public async Task<VideoConversionResult> TrimVideoAsync(

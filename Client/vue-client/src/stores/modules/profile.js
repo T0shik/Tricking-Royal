@@ -38,6 +38,9 @@ export default {
                 .then(res => {
                     commit('UPDATE_PROFILE', res.data);
                 })
+        },
+        UPDATE_LANGUAGE({commit}, {language}) {
+            return axios.put('/users/language', {language});
         }
     }
 }

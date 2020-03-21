@@ -40,34 +40,37 @@ namespace Battles.Application.Services.Matches
         {
             _logger.LogInformation("Starting video conversion for match ({0})", command.MatchId);
 
-            try
+            using (var scope = _serviceProvider.CreateScope())
             {
-                var trimResult = await _videoConverter.TrimVideoAsync(command.MatchId.ToString(),
-                                                                      command.Video,
-                                                                      command.Start,
-                                                                      command.End);
+                var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
 
-                var updateCommand = new UpdateMatchCommand
+                try
                 {
-                    MatchId = command.MatchId,
-                    UserId = command.UserId,
-                    Thumb = trimResult.Thumb,
-                    Video = trimResult.Video,
-                    Move = command.Move,
-                };
+                    var trimResult = await _videoConverter.TrimVideoAsync(command.MatchId.ToString(),
+                                                                          command.Video,
+                                                                          command.Start,
+                                                                          command.End);
 
-                using (var scope = _serviceProvider.CreateScope())
-                {
-                    var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+                    var updateCommand = new UpdateMatchCommand
+                    {
+                        MatchId = command.MatchId,
+                        UserId = command.UserId,
+                        Thumb = trimResult.Thumb,
+                        Video = trimResult.Video,
+                        Move = command.Move,
+                    };
+
                     await mediator.Send(updateCommand, cancellationToken);
-
-                    var realtimeNotifications = scope.ServiceProvider.GetRequiredService<IMatchUpdaterNotifications>();
-                    await realtimeNotifications.NotifyMatchUpdated(command.UserId, command.MatchId);
                 }
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, "Failed to update match ({0})", command.MatchId);
+                catch (Exception e)
+                {
+                    _logger.LogError(e, "Failed to update match ({0}), stopping update.", command.MatchId);
+                    var stopCommand = new StopMatchUpdateCommand {UserId = command.UserId, MatchId = command.MatchId};
+                    await mediator.Send(stopCommand, cancellationToken);
+                }
+
+                var realtimeNotifications = scope.ServiceProvider.GetRequiredService<IMatchUpdaterNotifications>();
+                await realtimeNotifications.NotifyMatchUpdated(command.UserId, command.MatchId);
             }
         }
 
@@ -78,7 +81,14 @@ namespace Battles.Application.Services.Matches
 
             if (!cancellationToken.IsCancellationRequested)
             {
-                await task(cancellationToken);
+                try
+                {
+                    await task(cancellationToken);
+                }
+                catch (Exception e)
+                {
+                    _logger.LogError(e, "Match Update Task Failed, Preserving Queue Service");
+                }
             }
         }
     }

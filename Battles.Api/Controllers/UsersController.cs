@@ -67,11 +67,11 @@ namespace Battles.Api.Controllers
         [HttpPut("")]
         public async Task<IActionResult> UpdateUser([FromBody] UpdateUserCommand command)
         {
-            //TODO Validation Messages
             if (!ModelState.IsValid)
                 return BadRequest("Invalid information submitted");
 
-            var result = await Mediator.Send(command.AttachUserId(UserId));
+            command.UserId = UserId;
+            var result = await Mediator.Send(command);
 
             if (result == null)
                 return BadRequest();
@@ -91,6 +91,17 @@ namespace Battles.Api.Controllers
 
         [HttpPut("level-up")]
         public async Task<IActionResult> UpdateUserPicture([FromBody] LevelUpCommand command)
+        {
+            command.UserId = UserId;
+
+            var result = await Mediator.Send(command);
+
+            return Ok(result);
+        }
+
+
+        [HttpPut("language")]
+        public async Task<IActionResult> UpdateUserLanguage([FromBody] UpdateUserLanguageCommand command)
         {
             command.UserId = UserId;
 

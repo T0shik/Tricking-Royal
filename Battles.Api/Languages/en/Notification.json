@@ -8,7 +8,7 @@
   "MatchInTribunal": "Your match is now in the tribunal for voting.",
   "MatchUpdated": "{0} updated a match you are in.",
   "MatchReminder": "Your match with {0} is going to expire in {1} days. You will lose reputation if you don't respond.",
-
+  "StopMatchUpdate": "Failed to update match, please try again.",
   "Clear": "Notifications are already cleared.",
   "Cleared": "Notifications cleared."
 }

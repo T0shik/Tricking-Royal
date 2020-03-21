@@ -11,12 +11,17 @@ namespace Battles.Api.Infrastructure
 
         public DefaultLanguageResolver(IHttpContextAccessor httpContextAccessor)
         {
-            _httpContext = httpContextAccessor.HttpContext;
+            _httpContext = httpContextAccessor?.HttpContext;
         }
-        
+
         public Task<string> GetLanguageCode()
         {
-            return Task.FromResult(_httpContext.Request.Headers.TryGetValue("Accept-Language", out var lang) ? lang.First() : "");
+            if (_httpContext != null && _httpContext.Request.Headers.TryGetValue("Accept-Language", out var lang))
+            {
+                return Task.FromResult(lang.First());
+            }
+
+            return Task.FromResult("");
         }
     }
 }

@@ -1,5 +1,5 @@
 <template>
-    <v-snackbar :value="display" top multi-line right
+    <v-snackbar :value="display" bottom multi-line left
                 @input="hide" @click="hide" :timeout="3000">
         <span class="pr-2">{{ message }}</span>
         <v-icon :class="iconType.color">{{iconType.icon}}</v-icon>

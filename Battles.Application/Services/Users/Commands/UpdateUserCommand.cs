@@ -13,6 +13,7 @@ namespace Battles.Application.Services.Users.Commands
 {
     public class UpdateUserCommand : IRequest<BaseResponse>
     {
+        public string UserId { get; set; }
         [Required] [StringLength(15)] public string DisplayName { get; set; }
 
         [Required] public int Skill { get; set; }
@@ -26,14 +27,7 @@ namespace Battles.Application.Services.Users.Commands
         [StringLength(100)] public string Instagram { get; set; }
         [StringLength(100)] public string Facebook { get; set; }
         [StringLength(100)] public string Youtube { get; set; }
-
-        public string UserId { get; set; }
-
-        public UpdateUserCommand AttachUserId(string id)
-        {
-            UserId = id;
-            return this;
-        }
+        public string Language { get; set; }
     }
 
     public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, BaseResponse>
@@ -82,6 +76,7 @@ namespace Battles.Application.Services.Users.Commands
             user.Instagram = request.Instagram;
             user.Facebook = request.Facebook;
             user.Youtube = request.Youtube;
+            user.Language = request.Language;
 
             if (_ctx.ChangeTracker.HasChanges())
                 await _ctx.SaveChangesAsync(cancellationToken);

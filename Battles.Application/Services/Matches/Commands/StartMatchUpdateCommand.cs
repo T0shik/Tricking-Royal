@@ -14,7 +14,7 @@ namespace Battles.Application.Services.Matches.Commands
     {
         public double Start { get; set; }
         public double End { get; set; }
-        
+
         public bool VideoUpdate { get; set; }
     }
 
@@ -45,9 +45,8 @@ namespace Battles.Application.Services.Matches.Commands
 
             var match = await _ctx.Matches
                                   .Include(x => x.MatchUsers)
-                                  .ThenInclude(x => x.User)
                                   .FirstOrDefaultAsync(x => x.Id == command.MatchId,
-                                                       cancellationToken: cancellationToken);
+                                                               cancellationToken: cancellationToken);
 
             if (match == null)
                 return BaseResponse.Fail(translationContext.Read("Match", "NotFound"));

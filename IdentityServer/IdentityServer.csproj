@@ -11,7 +11,7 @@
         <PackageReference Include="IdentityServer4.EntityFramework" Version="2.5.2" />
         <PackageReference Include="NETCore.MailKit" Version="2.0.2" />
         <PackageReference Include="Serilog.Extensions.Logging.File" Version="1.1.0" />
-        <PackageReference Include="Transmogrify.DependencyInjection.Newtonsoft" Version="1.0.6" />
+        <PackageReference Include="Transmogrify.DependencyInjection.Newtonsoft" Version="1.0.8" />
     </ItemGroup>
 
     <ItemGroup>
