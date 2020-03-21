@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Battles.Shared;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using PhotoSauce.MagicScaler;
 
 namespace Battles.Cdn.FileServices
 {

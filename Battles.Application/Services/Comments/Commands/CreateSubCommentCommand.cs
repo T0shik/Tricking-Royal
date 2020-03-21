@@ -1,10 +1,8 @@
 ﻿using TrickingRoyal.Database;
 using Battles.Application.ViewModels;
 using Battles.Domain.Models;
-using Battles.Rules.Matches;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
@@ -29,23 +27,25 @@ namespace Battles.Application.Services.Comments.Commands
     {
         private readonly AppDbContext _ctx;
         private readonly INotificationQueue _notification;
-        private readonly ITranslator _translator;
+        private readonly Library _library;
 
         public CreateSubCommentCommandHandler(
             AppDbContext ctx,
             INotificationQueue notification,
-            ITranslator translator)
+            Library library)
         {
             _ctx = ctx;
             _notification = notification;
-            _translator = translator;
+            _library = library;
         }
 
         public async Task<BaseResponse<CommentViewModel>> Handle(CreateSubCommentCommand command, CancellationToken cancellationToken)
         {
+            var translationContext = await _library.GetContext();
+
             if (IsNullOrEmpty(command.Message))
             {
-                return BaseResponse.Fail<CommentViewModel>(await _translator.GetTranslation("Comment","NeedMessage"));
+                return BaseResponse.Fail<CommentViewModel>(translationContext.Read("Comment","NeedMessage"));
             }
 
             var comment = await _ctx.Comments
@@ -55,7 +55,7 @@ namespace Battles.Application.Services.Comments.Commands
 
             if (comment == null)
             {
-                return BaseResponse.Fail<CommentViewModel>(await _translator.GetTranslation("Comment", "NotFound"));
+                return BaseResponse.Fail<CommentViewModel>(translationContext.Read("Comment", "NotFound"));
             }
 
             var user = await _ctx.UserInformation
@@ -63,7 +63,7 @@ namespace Battles.Application.Services.Comments.Commands
 
             if (user == null)
             {
-                return BaseResponse.Fail<CommentViewModel>(await _translator.GetTranslation("User", "NotFound"));
+                return BaseResponse.Fail<CommentViewModel>(translationContext.Read("User", "NotFound"));
             }
 
             var subComment = new SubComment
@@ -83,20 +83,20 @@ namespace Battles.Application.Services.Comments.Commands
                     await _ctx.UserInformation.FirstAsync(x => x.DisplayName == command.TaggedUser, cancellationToken);
 
                 _notification.QueueNotification(
-                    await _translator.GetTranslation("Notification","CommentReply", user.DisplayName),
+                    translationContext.Read("Notification","CommentReply", user.DisplayName),
                     new[] {comment.MatchId.ToString(), comment.Id.ToString(), subComment.Id.ToString()}.DefaultJoin(),
                     NotificationMessageType.SubComment,
                     new[] {taggedUser.Id});
             }
 
             _notification.QueueNotification(
-                await _translator.GetTranslation("Notification","CommentCreated", user.DisplayName),
+                translationContext.Read("Notification","CommentCreated", user.DisplayName),
                 new[] {comment.MatchId.ToString(), comment.Id.ToString(), subComment.Id.ToString()}.DefaultJoin(),
                 NotificationMessageType.SubComment,
                 comment.Match.GetOtherUserIds(user.Id));
 
             
-            return BaseResponse.Ok(await _translator.GetTranslation("Comment","Created"),
+            return BaseResponse.Ok(translationContext.Read("Comment","Created"),
                                    CommentViewModel.CommentProjection.Compile().Invoke(comment));
         }
     }

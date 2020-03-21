@@ -17,20 +17,22 @@ namespace Battles.Application.Services.Users.Commands
     public class LevelUpCommandHandler : IRequestHandler<LevelUpCommand, BaseResponse>
     {
         private readonly AppDbContext _ctx;
-        private readonly ITranslator _translation;
+        private readonly Library _library;
 
-        public LevelUpCommandHandler(AppDbContext ctx, ITranslator translation)
+        public LevelUpCommandHandler(AppDbContext ctx, Library library)
         {
             _ctx = ctx;
-            _translation = translation;
+            _library = library;
         }
         
         public async Task<BaseResponse> Handle(LevelUpCommand request, CancellationToken cancellationToken)
         {
+            var translationContext = await _library.GetContext();
+
             var user = _ctx.UserInformation.FirstOrDefault(x => x.Id == request.UserId);
 
             if (user == null)
-                return BaseResponse.Fail(await _translation.GetTranslation("User", "NotFound"));
+                return BaseResponse.Fail(translationContext.Read("User", "NotFound"));
             
             switch ((PerkType) request.Type)
             {
@@ -44,14 +46,14 @@ namespace Battles.Application.Services.Users.Commands
                     user.VotingPower++;
                     break;
                 default:
-                    return BaseResponse.Fail(await _translation.GetTranslation("User", "InvalidPerk"));
+                    return BaseResponse.Fail(translationContext.Read("User", "InvalidPerk"));
             }
 
             user.LevelUpPoints--;
 
             await _ctx.SaveChangesAsync(cancellationToken);
             
-            return BaseResponse.Ok(await _translation.GetTranslation("User", "LeveledUp"));
+            return BaseResponse.Ok(translationContext.Read("User", "LeveledUp"));
         }
     }
 

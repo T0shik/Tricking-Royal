@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Threading.Tasks;
 using Battles.Enums;
 using Battles.Extensions;
 using Battles.Models;

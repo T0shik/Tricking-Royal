@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using Battles.Application.Extensions;
 using Battles.Extensions;
 using Battles.Models;
-using Newtonsoft.Json;
 
 // ReSharper disable MemberCanBePrivate.Global
 namespace Battles.Application.ViewModels.Matches

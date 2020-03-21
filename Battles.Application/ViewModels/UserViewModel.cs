@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq.Expressions;
-using Battles.Enums;
 using Battles.Models;
 
 // ReSharper disable MemberCanBePrivate.Global

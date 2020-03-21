@@ -60,9 +60,9 @@ namespace Battles.Application.Services.Matches
                 {
                     var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
                     await mediator.Send(updateCommand, cancellationToken);
-                    var notificationSender =
-                        scope.ServiceProvider.GetRequiredService<IMatchUpdaterNotifications>();
-                    await notificationSender.NotifyMatchUpdated(command.UserId, command.MatchId);
+
+                    var realtimeNotifications = scope.ServiceProvider.GetRequiredService<IMatchUpdaterNotifications>();
+                    await realtimeNotifications.NotifyMatchUpdated(command.UserId, command.MatchId);
                 }
             }
             catch (Exception e)

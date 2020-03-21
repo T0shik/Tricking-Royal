@@ -18,16 +18,18 @@ namespace Battles.Application.Services.Matches.Commands
     public class CreateMatchCommandHandler : IRequestHandler<CreateMatchCommand, BaseResponse>
     {
         private readonly AppDbContext _ctx;
-        private readonly ITranslator _translator;
+        private readonly Library _library;
 
-        public CreateMatchCommandHandler(AppDbContext ctx, ITranslator translator)
+        public CreateMatchCommandHandler(AppDbContext ctx, Library library)
         {
             _ctx = ctx;
-            _translator = translator;
+            _library = library;
         }
 
         public async Task<BaseResponse> Handle(CreateMatchCommand request, CancellationToken cancellationToken)
         {
+            var translationContext = await _library.GetContext();
+
             request.Host = await _ctx.UserInformation
                                      .FirstAsync(x => x.Id == request.UserId, cancellationToken);
 
@@ -42,7 +44,7 @@ namespace Battles.Application.Services.Matches.Commands
             }
 
             await _ctx.SaveChangesAsync(cancellationToken);
-            return BaseResponse.Ok(await _translator.GetTranslation("Match", "Created"));
+            return BaseResponse.Ok(translationContext.Read("Match", "Created"));
         }
 
     }

@@ -26,30 +26,32 @@ namespace Battles.Application.Services.Matches.Commands
     {
         private readonly AppDbContext _ctx;
         private readonly INotificationQueue _notifications;
-        private readonly ITranslator _translator;
+        private readonly Library _library;
 
         public PassRoundCommandHandler(
             AppDbContext ctx,
             INotificationQueue notifications,
-            ITranslator translator)
+            Library library)
         {
             _ctx = ctx;
             _notifications = notifications;
-            _translator = translator;
+            _library = library;
         }
 
         public async Task<BaseResponse> Handle(PassRoundCommand request, CancellationToken cancellationToken)
         {
+            var translationContext = await _library.GetContext();
+
             var match = _ctx.Matches
                             .Include(x => x.MatchUsers)
                             .ThenInclude(x => x.User)
                             .FirstOrDefault(x => x.Id == request.MatchId);
 
             if (match == null)
-                return BaseResponse.Fail(await _translator.GetTranslation("Match", "NotFound"));
+                return BaseResponse.Fail(translationContext.Read("Match", "NotFound"));
 
             if (!match.CanPass(request.UserId))
-                return BaseResponse.Fail(await _translator.GetTranslation("Match", "CantPass"));
+                return BaseResponse.Fail(translationContext.Read("Match", "CantPass"));
 
             var user = match.GetUser(request.UserId);
 
@@ -78,7 +80,7 @@ namespace Battles.Application.Services.Matches.Commands
             if (finished)
             {
                 var notificationMessage =
-                    await _translator.GetTranslation("Notification", "PassedAndWon", user.User.DisplayName,
+                    translationContext.Read("Notification", "PassedAndWon", user.User.DisplayName,
                                                      match.Round.ToString());
 
                 _notifications.QueueNotification(notificationMessage,
@@ -89,7 +91,7 @@ namespace Battles.Application.Services.Matches.Commands
             else
             {
                 var notificationMessage =
-                    await _translator.GetTranslation("Notification", "Passed", user.User.DisplayName,
+                    translationContext.Read("Notification", "Passed", user.User.DisplayName,
                                                      match.Round.ToString());
 
                 _notifications.QueueNotification(notificationMessage,
@@ -98,7 +100,7 @@ namespace Battles.Application.Services.Matches.Commands
                                                  match.GetOtherUserIds(user.UserId));
             }
             
-            return BaseResponse.Ok(await _translator.GetTranslation("Match", "Passed"));
+            return BaseResponse.Ok(translationContext.Read("Match", "Passed"));
         }
     }
 }

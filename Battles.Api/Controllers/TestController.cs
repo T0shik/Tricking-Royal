@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-using Battles.Application.Services.Matches;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace Battles.Api.Controllers
 {

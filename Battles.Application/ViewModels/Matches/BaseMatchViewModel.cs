@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Battles.Models;
 
 namespace Battles.Application.ViewModels.Matches
 {

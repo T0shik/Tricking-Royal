@@ -22,30 +22,32 @@ namespace Battles.Application.Services.Users.Commands
     {
         private readonly AppDbContext _ctx;
         private readonly Routing _routing;
-        private readonly ITranslator _translation;
+        private readonly Library _library;
 
         public UpdateUserPictureCommandHandler(
             AppDbContext ctx,
             Routing routing,
-            ITranslator translation)
+            Library library)
         {
             _ctx = ctx;
             _routing = routing;
-            _translation = translation;
+            _library = library;
         }
 
         public async Task<BaseResponse> Handle(UpdateUserPictureCommand request, CancellationToken cancellationToken)
         {
+            var translationContext = await _library.GetContext();
+
             var user = _ctx.UserInformation.FirstOrDefault(x => x.Id == request.UserId);
 
             if (user == null)
-                return BaseResponse.Fail(await _translation.GetTranslation("User", "NotFound"));
+                return BaseResponse.Fail(translationContext.Read("User", "NotFound"));
 
             user.Picture = CdnUrlHelper.CreateImageUrl(_routing.Cdn, user.Id, request.Picture);
 
             await _ctx.SaveChangesAsync(cancellationToken);
 
-            return BaseResponse.Ok(await _translation.GetTranslation("User", "PictureUpdated"), user.Picture);
+            return BaseResponse.Ok(translationContext.Read("User", "PictureUpdated"), user.Picture);
         }
     }
 }

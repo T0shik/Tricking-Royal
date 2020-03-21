@@ -16,24 +16,26 @@ namespace Battles.Application.Services.Notifications.Commands
     public class ClearNotificationsCommandHandler : IRequestHandler<ClearNotificationsCommand, BaseResponse>
     {
         private readonly AppDbContext _ctx;
-        private readonly ITranslator _translator;
+        private readonly Library _library;
 
         public ClearNotificationsCommandHandler(
             AppDbContext ctx, 
-            ITranslator translator)
+            Library library)
         {
             _ctx = ctx;
-            _translator = translator;
+            _library = library;
         }
 
         public async Task<BaseResponse> Handle(ClearNotificationsCommand request, CancellationToken cancellationToken)
         {
+            var translationContext = await _library.GetContext();
+
             var notifications = _ctx.NotificationMessages
                 .Where(x => x.UserInformationId == request.UserId && x.New)
                 .ToList();
 
             if (notifications.Count == 0)
-                return BaseResponse.Ok(await _translator.GetTranslation("Notification", "Clear"));
+                return BaseResponse.Ok(translationContext.Read("Notification", "Clear"));
 
             foreach (var n in notifications)
             {
@@ -42,7 +44,7 @@ namespace Battles.Application.Services.Notifications.Commands
 
             await _ctx.SaveChangesAsync(cancellationToken);
 
-            return BaseResponse.Ok(await _translator.GetTranslation("Notification", "Cleared"));
+            return BaseResponse.Ok(translationContext.Read("Notification", "Cleared"));
         }
     }
 }

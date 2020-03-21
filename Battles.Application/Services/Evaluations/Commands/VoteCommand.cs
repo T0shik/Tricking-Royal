@@ -20,30 +20,31 @@ namespace Battles.Application.Services.Evaluations.Commands
     public class VoteCommandHandler : IRequestHandler<VoteCommand, BaseResponse>
     {
         private readonly AppDbContext _ctx;
-        private readonly ITranslator _translator;
+        private readonly Library _library;
 
         public VoteCommandHandler(
             AppDbContext ctx, 
-            ITranslator translator)
+            Library library)
         {
             _ctx = ctx;
-            _translator = translator;
+            _library = library;
         }
 
         public async Task<BaseResponse> Handle(VoteCommand request, CancellationToken cancellationToken)
         {
+            var translationContext = await _library.GetContext();
             var evaluation = _ctx.Evaluations.CanVote(request.EvaluationId, request.UserId);
 
             if (evaluation == null)
             {
-                return BaseResponse.Fail(await _translator.GetTranslation("Evaluation", "NotAllowed"));
+                return BaseResponse.Fail(translationContext.Read("Evaluation", "NotAllowed"));
             }
 
             var user = _ctx.UserInformation.FirstOrDefault(x => x.Id == request.UserId);
 
             if (user == null)
             {
-                return BaseResponse.Fail(await _translator.GetTranslation("User", "NotFound"));
+                return BaseResponse.Fail(translationContext.Read("User", "NotFound"));
             }
 
             evaluation.Decisions.Add(new Decision
@@ -56,7 +57,7 @@ namespace Battles.Application.Services.Evaluations.Commands
 
             await _ctx.SaveChangesAsync(cancellationToken);
 
-            return BaseResponse.Ok(await _translator.GetTranslation("Evaluation", "VoteCreated"));
+            return BaseResponse.Ok(translationContext.Read("Evaluation", "VoteCreated"));
         }
     }
 }

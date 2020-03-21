@@ -40,25 +40,27 @@ namespace Battles.Application.Services.Users.Commands
     {
         private readonly AppDbContext _ctx;
         private readonly IMediator _mediator;
-        private readonly ITranslator _translation;
+        private readonly Library _library;
 
         public UpdateUserCommandHandler(
             AppDbContext ctx,
             IMediator mediator,
-            ITranslator translation)
+            Library library)
         {
             _ctx = ctx;
             _mediator = mediator;
-            _translation = translation;
+            _library = library;
         }
 
         public async Task<BaseResponse> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
+            var translationContext = await _library.GetContext();
+
             var user = _ctx.UserInformation
                            .FirstOrDefault(x => x.Id == request.UserId);
 
             if (user == null)
-                return BaseResponse.Fail(await _translation.GetTranslation("User", "NotFound"));
+                return BaseResponse.Fail(translationContext.Read("User", "NotFound"));
 
             var newDisplayName = request.DisplayName.Replace(" ", "_");
 
@@ -69,7 +71,7 @@ namespace Battles.Application.Services.Users.Commands
             }, cancellationToken);
 
             if (!nameAvailable)
-                return BaseResponse.Fail(await _translation.GetTranslation("User", "UsernameTaken"));
+                return BaseResponse.Fail(translationContext.Read("User", "UsernameTaken"));
 
             user.DisplayName = newDisplayName;
             user.Skill = (Skill) request.Skill;
@@ -84,7 +86,7 @@ namespace Battles.Application.Services.Users.Commands
             if (_ctx.ChangeTracker.HasChanges())
                 await _ctx.SaveChangesAsync(cancellationToken);
 
-            return BaseResponse.Ok(await _translation.GetTranslation("User", "ProfileSaved"));
+            return BaseResponse.Ok(translationContext.Read("User", "ProfileSaved"));
         }
     }
 }

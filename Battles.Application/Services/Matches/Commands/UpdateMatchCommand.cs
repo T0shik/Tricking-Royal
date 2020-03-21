@@ -9,7 +9,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Battles.Application.Services.Notifications;
-using Battles.Application.ViewModels;
 using Battles.Enums;
 using Battles.Extensions;
 using Battles.Models;
@@ -24,22 +23,24 @@ namespace Battles.Application.Services.Matches.Commands
         private readonly AppDbContext _ctx;
         private readonly MatchActionFactory _managerFactory;
         private readonly INotificationQueue _notifications;
-        private readonly ITranslator _translator;
+        private readonly Library _library;
 
         public UpdateMatchHandler(
             AppDbContext ctx,
             MatchActionFactory managerFactory,
             INotificationQueue notifications,
-            ITranslator translator)
+            Library library)
         {
             _ctx = ctx;
             _managerFactory = managerFactory;
             _notifications = notifications;
-            _translator = translator;
+            _library = library;
         }
 
         public async Task<Unit> Handle(UpdateMatchCommand request, CancellationToken cancellationToken)
         {
+            var translationContext = await _library.GetContext();
+
             var match = _ctx.Matches
                             .Include(x => x.MatchUsers)
                             .ThenInclude(x => x.User)
@@ -69,7 +70,7 @@ namespace Battles.Application.Services.Matches.Commands
 
                 await _ctx.SaveChangesAsync(cancellationToken);
 
-                var notificationMessage = await _translator.GetTranslation("Notification", "MatchInTribunal");
+                var notificationMessage = translationContext.Read("Notification", "MatchInTribunal");
                 
                 _notifications.QueueNotification(notificationMessage,
                                                  new[] {match.Id.ToString()}.DefaultJoin(),
@@ -82,7 +83,7 @@ namespace Battles.Application.Services.Matches.Commands
 
                 var currentUser = match.GetUser(request.UserId);
                 
-                var notificationMessage = await _translator.GetTranslation("Notification", "MatchUpdated", currentUser.User.DisplayName);
+                var notificationMessage = translationContext.Read("Notification", "MatchUpdated", currentUser.User.DisplayName);
                 
                 _notifications.QueueNotification(notificationMessage,
                                                  new[] {match.Id.ToString()}.DefaultJoin(),
