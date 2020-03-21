@@ -24,6 +24,11 @@
 </head>
 <body>
 @inject SignInManager<ApplicationUser> SignInManager
+@inject Library Library
+
+@{
+    var context = await Library.GetContext();
+}
 
 @if (SignInManager.IsSignedIn(User))
 {
@@ -43,10 +48,10 @@
             <div id="navbarBasicExample" class="navbar-menu has-background-black has-text-centered">
                 <div class="navbar-start">
                     <a class="navbar-item has-text-white is-hoverless" asp-area="" asp-controller="Manage" asp-action="Index">
-                        <strong>Manage Account</strong>
+                        <strong>@context.Read("Manage", "Title")</strong>
                     </a>
                     <a class="navbar-item has-text-white is-hoverless" asp-area="" asp-controller="Home" asp-action="Privacy">
-                        <strong>Privacy Policy</strong>
+                        <strong>@context.Read("Shared", "PrivacyPolicy")</strong>
                     </a>
                 </div>
 

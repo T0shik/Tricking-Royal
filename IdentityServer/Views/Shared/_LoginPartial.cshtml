@@ -1,9 +1,14 @@
+@inject Library Library
+
+@{
+    var context = await Library.GetContext();
+}
 
 @if (User.Identity.IsAuthenticated)
 {
     <a class="navbar-item is-text is-hoverless has-text-white" asp-area="" asp-controller="Account" asp-action="Logout">
         <strong>
-            Log out
+            @context.Read("Shared", "LogOut")
         </strong>
     </a>
 }

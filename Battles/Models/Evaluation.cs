@@ -8,7 +8,7 @@ namespace Battles.Models
     {
         public int Id { get; set; }
 
-        public bool Complete { get; set; } = false;
+        public bool Complete { get; set; }
 
         public int MatchId { get; set; }
         public Match Match { get; set; }

@@ -1,6 +1,6 @@
 <template>
     <v-card class="mb-5" color="secondary" width="100%">
-        <match-header :users="match.participants" :playingIndex="playingIndex"></match-header>
+        <match-header :users="match.participants" :playingIndex="playingIndex"/>
         <component
                 v-bind:is="mode"
                 :match="match"
@@ -8,24 +8,20 @@
                 @lock-in="lockIn(match)"
                 @update-video="setPlayingIndex"
                 @respond="respond({match, isReuplaod: false})"
-        ></component>
+        />
         <div class="d-flex flex-row my-1">
-            <v-spacer></v-spacer>
-            <v-chip small v-if="match.updating" color="primary">Updating</v-chip>
-            <v-chip small>{{match.mode}}</v-chip>
+            <v-spacer/>
+            <v-chip small v-if="match.updating" color="primary">{{$t('misc.updating')}}</v-chip>
+            <v-chip small>{{matchModeNames[match.mode]}}</v-chip>
             <v-chip v-if="!match.finished" small>{{match.timeLeft}}</v-chip>
         </div>
         <div class="text-center">
-            <v-btn v-if="match.canVote" @click="startVote(match)" color="info">vote</v-btn>
+            <v-btn v-if="match.canVote" @click="startVote(match)" color="info">{{$t('misc.vote')}}</v-btn>
         </div>
         <v-card-actions class="justify-space-between">
             <div>
-                <v-btn @click="like(match)"
-                       :class="{'red--text darken-1': !match.canLike}"
-                       :disabled="disabled"
-                       text
-                       icon
-                >
+                <v-btn @click="like(match)" :class="{'red--text darken-1': !match.canLike}" :disabled="disabled" text
+                       icon>
                     <v-icon>{{icons.fire}}</v-icon>
                 </v-btn>
                 <v-btn @click="openComments = !openComments"
@@ -43,8 +39,8 @@
                 </v-btn>
             </div>
         </v-card-actions>
-        <v-divider></v-divider>
-        <CommentSection :match="match" :open="openComments"></CommentSection>
+        <v-divider/>
+        <CommentSection :match="match" :open="openComments"/>
     </v-card>
 </template>
 
@@ -56,6 +52,7 @@
     import CommentSection from "./comments/CommentSection.vue";
     import {mapGetters, mapMutations, mapActions} from "vuex";
     import {mdiChevronUp, mdiComment, mdiFire, mdiMore} from "@mdi/js";
+    import mode from "../../mixins/mode";
 
     export default {
         props: {
@@ -68,12 +65,11 @@
                 type: Boolean
             }
         },
-        data() {
-            return {
-                openComments: false,
-                playingIndex: -1,
-            };
-        },
+        data: () => ({
+            openComments: false,
+            playingIndex: -1,
+        }),
+        mixins: [mode],
         components: {
             MatchHeader,
             OneUp,
@@ -107,7 +103,7 @@
                 loading: 'updateMatch/loading'
             }),
             mode() {
-                return this.match.mode.toLowerCase().replace(/ /g, "-");
+                return this.matchModeNames[this.match.mode].toLowerCase().replace(/ /g, '-');
             },
             icons() {
                 return {

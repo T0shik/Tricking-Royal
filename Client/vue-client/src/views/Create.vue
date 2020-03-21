@@ -1,10 +1,10 @@
 <template>
     <div class="main-card">
-        <Rules></Rules>
+        <Rules/>
         <v-card>
             <v-card-title>
                 <span>{{stageInfo.title}}</span>
-                <v-spacer></v-spacer>
+                <v-spacer/>
                 <v-btn color="info" icon @click="$store.commit('SET_DISPLAY_RULES', {display: true})">
                     <v-icon>{{icons.info}}</v-icon>
                 </v-btn>
@@ -14,95 +14,93 @@
                 <v-window v-model="stage" touchless>
                     <v-window-item :value="1">
                         <v-card-actions class="justify-center">
-                            <v-btn @click="selectMode('One Up', 0, true)">One Up</v-btn>
-                            <v-btn @click="selectMode('Three Round Pass', 1, false)">Three Round Pass</v-btn>
-                            <v-btn @click="selectMode('Copy Cat', 2, true)">Copy Cat</v-btn>
-                            <!-- <v-btn outline color="primary" @click="selectMode('TRICK', 3)">TRICK</v-btn> -->
+                            <v-btn v-for="(m, index) in matches" :key="`mm-${m.value}`"
+                                   @click="selectOption('mode', index, m.turnTypes)">
+                                {{$t(`match.modes[${index}].name`)}}
+                            </v-btn>
                         </v-card-actions>
                     </v-window-item>
                     <v-window-item :value="2">
-                        <v-card-actions class="justify-center">
-                            <v-btn @click="selectType('Blitz', 0)">Blitz</v-btn>
-                            <v-btn @click="selectType('Classic', 1)">Classic</v-btn>
-                            <v-btn @click="selectType('Alternating', 2)">Alternating</v-btn>
+                        <v-card-actions class="justify-center flex-wrap">
+                            <v-btn v-for="t in turnTypes" :key="`mtt-${t}`" @click="selectOption('turnType', t, {})">
+                                {{$t(`match.turnTypes[${t}]`)}}
+                            </v-btn>
                         </v-card-actions>
                     </v-window-item>
                     <v-window-item :value="3">
                         <v-card-actions class="justify-center flex-wrap">
-                            <v-btn @click="selectSurface('Any', 0)">Any</v-btn>
-                            <v-btn @click="selectSurface('Sprung Floor', 1)">Sprung Floor</v-btn>
-                            <v-btn @click="selectSurface('Grass', 2)">Grass</v-btn>
-                            <v-btn @click="selectSurface('Concrete', 3)">Concrete</v-btn>
-                            <v-btn @click="selectSurface('Trampoline', 4)">Trampoline</v-btn>
-                            <v-btn @click="selectSurface('Tumbling Track', 5)">Tumbling Track</v-btn>
+                            <v-btn v-for="s in surfaces" :key="`ms-${s}`" @click="selectOption('surface', s, {})">
+                                {{$t(`match.surfaces[${s}]`)}}
+                            </v-btn>
                         </v-card-actions>
                     </v-window-item>
                     <v-window-item :value="4">
                         <v-card-actions class="flex-column">
                             <v-text-field
                                     class="align-self-stretch"
-                                    label="Time per turn"
-                                    :rules="turnTypeRules"
+                                    :label="$t('create.stage.time.title')"
+                                    :rules="turnTimeRules"
                                     required
                                     mask="##"
                                     v-model="form.turnTime"
                                     suffix="Days"
-                            ></v-text-field>
-                            <v-btn color="primary" @click="stage++" :disabled="!valid">pick</v-btn>
+                            />
+                            <v-btn color="primary" @click="stage++" :disabled="!valid">{{$t('misc.select')}}</v-btn>
                         </v-card-actions>
                     </v-window-item>
                     <v-window-item :value="5">
                         <v-list class="secondary">
                             <v-list-item @click="edit(1)">
                                 <v-list-item-title>
-                                    <strong class="primary--text">Mode:</strong>
-                                    {{form.mode.name}}
+                                    <strong class="primary--text">{{$t('create.stage.mode.title')}}:</strong>
+                                    {{$t(`match.modes[${form.mode.value}].name`)}}
                                 </v-list-item-title>
                             </v-list-item>
 
                             <v-list-item @click="edit(2)" v-if="form.turnType.value >= 0">
                                 <v-list-item-title>
-                                    <strong class="primary--text">Type:</strong>
-                                    {{form.turnType.name}}
+                                    <strong class="primary--text">{{$t('create.stage.turnType.title')}}:</strong>
+                                    {{$t(`match.turnTypes[${form.turnType.value}]`)}}
                                 </v-list-item-title>
                             </v-list-item>
 
                             <v-list-item @click="edit(3)">
                                 <v-list-item-title>
-                                    <strong class="primary--text">Surface:</strong>
-                                    {{form.surface.name}}
+                                    <strong class="primary--text">{{$t('create.stage.surface.title')}}:</strong>
+                                    {{$t(`match.surfaces[${form.surface.value}]`)}}
                                 </v-list-item-title>
                             </v-list-item>
 
                             <v-list-item @click="edit(4)">
                                 <v-list-item-title>
-                                    <strong class="primary--text">Time:</strong>
-                                    {{form.turnTime}} Days
+                                    <strong class="primary--text">{{$t('create.stage.time.title')}}:</strong>
+                                    {{form.turnTime}} {{$t('misc.days')}}
                                 </v-list-item-title>
                             </v-list-item>
                         </v-list>
                         <v-card-actions class="justify-center">
                             <v-btn :loading="loading" @click="create" :disabled="!valid || limitReached || loading">
-                                Create
+                                {{$t('misc.create')}}
                             </v-btn>
                         </v-card-actions>
                     </v-window-item>
                 </v-window>
+                <p class="error--text text-center" v-if="limitReached">{{$t('create.limitReached')}}</p>
             </v-form>
         </v-card>
-        <p class="error--text text-center" v-if="limitReached">Match limit reached.</p>
         <v-card color="secondary" class="mt-3">
             <v-card-title class="display-1 justify-center">
-                <span>Hosted Matches</span>
+                <span>{{$t('create.hostedMatches')}}</span>
             </v-card-title>
             <div class="d-flex justify-center" v-if="loadingMatches">
-                <v-progress-circular color="primary" indeterminate></v-progress-circular>
+                <v-progress-circular color="primary" indeterminate/>
             </div>
             <v-list class="secondary">
                 <v-list-item v-for="match in hosted" :key="match.id">
-                    <v-list-item-title>{{match.mode}}</v-list-item-title>
-                    <v-list-item-subtitle>{{match.surface}} - {{match.turnTime}}</v-list-item-subtitle>
-                    <v-spacer></v-spacer>
+                    <v-list-item-title>{{matchModeNames[match.mode]}}</v-list-item-title>
+                    <v-list-item-subtitle>{{$t(`match.surfaces[${match.surface}]`)}} - {{match.turnTime}}
+                    </v-list-item-subtitle>
+                    <v-spacer/>
                     <v-btn text icon color="error"
                            :loading="loadingDelete"
                            :disabled="loadingDelete"
@@ -113,7 +111,6 @@
             </v-list>
         </v-card>
     </div>
-
 </template>
 
 <script>
@@ -121,29 +118,27 @@
     import {mdiDelete, mdiInformation} from "@mdi/js";
     import {createMatch} from "../data/api";
     import {MATCH_TYPES} from "../data/enum";
-    import matchRules from "../data/matchRules";
+    import {matches} from "../data/shared";
     import Rules from "../components/layout/modals/Rules";
+    import mode from "../mixins/mode";
+
+    const initialForm = () => ({
+        mode: {value: -1},
+        turnType: {value: -1},
+        surface: {value: -1},
+        turnTime: 10
+    });
 
     export default {
-        data() {
-            return {
-                stage: 1,
-                matches: matchRules,
-                loading: false,
-                valid: false,
-                editing: false,
-                turnTypeRules: [
-                    v => v > 0 || "Turn time needs to be higher than 0",
-                    v => v <= 30 || "No longer than a month"
-                ],
-                form: {
-                    mode: {name: "", value: -1},
-                    turnType: {name: "", value: -1},
-                    surface: {name: "", value: -1},
-                    turnTime: 10
-                }
-            };
-        },
+        mixins: [mode],
+        data: () => ({
+            stage: 1,
+            loading: false,
+            valid: false,
+            editing: false,
+            form: initialForm(),
+            turnTypes: null
+        }),
         created() {
             this.setType({type: MATCH_TYPES.HOSTED});
         },
@@ -176,20 +171,12 @@
                         this.loading = false;
                     });
             },
-            selectMode(n, v, skip) {
-                this.form.mode.name = n;
-                this.form.mode.value = v;
-                this.upStage(skip);
-            },
-            selectType(n, v) {
-                this.form.turnType.name = n;
-                this.form.turnType.value = v;
-                this.upStage();
-            },
-            selectSurface(n, v) {
-                this.form.surface.name = n;
-                this.form.surface.value = v;
-                this.upStage();
+            selectOption(key, value, args) {
+                this.form[key].value = value;
+                if (args && key === 'mode') {
+                    this.turnTypes = args;
+                }
+                this.upStage(args === null)
             },
             upStage(skip = false) {
                 if (this.editing) {
@@ -201,7 +188,9 @@
                         }
                         this.stage = 5;
                     }
-                } else this.stage += skip ? 2 : 1;
+                } else {
+                    this.stage += skip ? 2 : 1;
+                }
             },
             edit(s) {
                 this.stage = s;
@@ -226,23 +215,47 @@
             hostMatchType() {
                 return MATCH_TYPES.HOSTED;
             },
+            surfaces() {
+                return [0, 1, 2, 3, 4, 5]
+            },
             stageInfo() {
                 switch (this.stage) {
                     case 1:
-                        return {title: 'Mode', description: "Select a battle mode, don't forget to read the rules."};
+                        return {
+                            title: this.$t('create.stage.mode.title'),
+                            description: this.$t('create.stage.mode.description')
+                        };
                     case 2:
-                        return {title: 'Turn Type', description: "What turn style do you prefer?"};
+                        return {
+                            title: this.$t('create.stage.turnType.title'),
+                            description: this.$t('create.stage.turnType.description')
+                        };
                     case 3:
-                        return {title: 'Surface', description: "Select a battle mode, don't forget to read the rules."};
+                        return {
+                            title: this.$t('create.stage.surface.title'),
+                            description: this.$t('create.stage.surface.description')
+                        };
                     case 4:
-                        return {title: 'Time per turn', description: "How long do you need per turn?"};
+                        return {
+                            title: this.$t('create.stage.time.title'),
+                            description: this.$t('create.stage.time.description')
+                        };
                     case 5:
                         return {
-                            title: 'Confirmation',
-                            description: "You made this match, are you proud? (click to edit)"
+                            title: this.$t('create.stage.confirm.title'),
+                            description: this.$t('create.stage.confirm.description')
                         };
                 }
                 return {title: '', description: ""};
+            },
+            matches() {
+                return matches;
+            },
+            turnTimeRules() {
+                return [
+                    v => v > 0 || this.$t('create.validation.turnTimeRequired'),
+                    v => v <= 30 || this.$t('create.validation.turnTimeMaxMonth')
+                ]
             }
         },
         components: {

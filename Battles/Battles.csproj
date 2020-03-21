@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Configuration" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Battles.Shared\Battles.Shared.csproj" />
   </ItemGroup>
 

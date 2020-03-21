@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Battles.Application.Extensions;
 using Battles.Extensions;
 using Battles.Models;
@@ -14,7 +15,6 @@ namespace Battles.Application.ViewModels.Matches
     {
         public int Id { get; set; }
         public int Round { get; set; }
-        public string Status { get; set; }
         public int TurnType { get; set; }
         public string Turn { get; set; }
         public string Finished { get; set; }
@@ -40,15 +40,14 @@ namespace Battles.Application.ViewModels.Matches
 
                 Finished = match.Finished,
                 TurnTime = $"{match.TurnDays} Days",
-                TimeLeft = match.LastUpdate.Add(new TimeSpan(match.TurnDays, 0, 0, 0)).
-                                 Subtract(DateTime.Now).
-                                 ConvertTimeSpan("Left"),
+                TimeLeft = match.LastUpdate.Add(new TimeSpan(match.TurnDays, 0, 0, 0))
+                                .Subtract(DateTime.Now).ConvertTimeSpan("Left"),
 
                 Turn = match.Turn,
                 Round = match.Round,
-                Status = match.Status.GetString(),
-                Mode = match.Mode.GetString(),
-                Surface = match.Surface.GetString(),
+                Status = (int) match.Status,
+                Mode = (int) match.Mode,
+                Surface = (int) match.Surface,
                 TurnType = (int) match.TurnType,
                 Chain = match.Chain.DefaultSplit(),
 
@@ -61,36 +60,32 @@ namespace Battles.Application.ViewModels.Matches
             {
                 Id = match.Id,
                 Key = $"{match.Id}-{match.LastUpdate.GetKeyTime()}",
-                Participants = match.MatchUsers.AsQueryable().Select(MatchUserViewModel.Projection),
+                Participants = match.MatchUsers.AsQueryable()
+                                    .Select(MatchUserViewModel.Projection),
 
                 Finished = match.Finished,
                 TurnTime = $"{match.TurnDays} Days",
-                TimeLeft = match.LastUpdate.Add(new TimeSpan(match.TurnDays, 0, 0, 0)).
-                                 Subtract(DateTime.Now).
-                                 ConvertTimeSpan("Left"),
+                TimeLeft = match.LastUpdate.Add(new TimeSpan(match.TurnDays, 0, 0, 0))
+                                .Subtract(DateTime.Now).ConvertTimeSpan("Left"),
 
                 Turn = match.Turn,
                 Round = match.Round,
-                Status = match.Status.GetString(),
-                Mode = match.Mode.GetString(),
-                Surface = match.Surface.GetString(),
+                Status = (int) match.Status,
+                Mode = (int) match.Mode,
+                Surface = (int) match.Surface,
                 TurnType = (int) match.TurnType,
                 Chain = match.Chain.DefaultSplit(),
                 Updating = match.Updating,
 
                 Videos = match.Videos.Select(VideoViewModel.ProjectionFunction),
 
-                CanGo = !match.Updating && (match.MatchUsers.FirstOrDefault(x => x.UserId == userId)?.CanGo ?? false),
-                CanFlag = !match.Updating
-                          && (match.MatchUsers.FirstOrDefault(x => x.UserId == userId)?.CanFlag ?? false),
-                CanUpdate = !match.Updating
-                            && (match.MatchUsers.FirstOrDefault(x => x.UserId == userId)?.CanUpdate ?? false),
-                CanPass = !match.Updating
-                          && (match.MatchUsers.FirstOrDefault(x => x.UserId == userId)?.CanPass ?? false),
-                CanLockIn = !match.Updating
-                            && (match.MatchUsers.FirstOrDefault(x => x.UserId == userId)?.CanLockIn ?? false),
+                CanGo = !match.Updating && (match.MatchUsers.FirstOrDefault(x => x.UserId == userId && !x.Freeze)?.CanGo ?? false),
+                CanFlag = !match.Updating && (match.MatchUsers.FirstOrDefault(x => x.UserId == userId && !x.Freeze)?.CanFlag ?? false),
+                CanUpdate = !match.Updating && (match.MatchUsers.FirstOrDefault(x => x.UserId == userId && !x.Freeze)?.CanUpdate ?? false),
+                CanPass = !match.Updating && (match.MatchUsers.FirstOrDefault(x => x.UserId == userId && !x.Freeze)?.CanPass ?? false),
+                CanLockIn = !match.Updating && (match.MatchUsers.FirstOrDefault(x => x.UserId == userId && !x.Freeze)?.CanLockIn ?? false),
 
-                Likes = match.Likes.Count(),
+                Likes = match.Likes.Count,
                 CanLike = match.Likes.All(x => x.UserId != userId),
             };
         }
@@ -105,32 +100,27 @@ namespace Battles.Application.ViewModels.Matches
 
                 Finished = match.Finished,
                 TurnTime = $"{match.TurnDays} Days",
-                TimeLeft = match.LastUpdate.Add(new TimeSpan(match.TurnDays, 0, 0, 0)).
-                                 Subtract(DateTime.Now).
-                                 ConvertTimeSpan("Left"),
+                TimeLeft = match.LastUpdate.Add(new TimeSpan(match.TurnDays, 0, 0, 0))
+                                .Subtract(DateTime.Now).ConvertTimeSpan("Left"),
 
                 Turn = match.Turn,
                 Round = match.Round,
-                Status = match.Status.GetString(),
-                Mode = match.Mode.GetString(),
-                Surface = match.Surface.GetString(),
+                Status = (int) match.Status,
+                Mode = (int) match.Mode,
+                Surface = (int) match.Surface,
                 TurnType = (int) match.TurnType,
                 Chain = match.Chain.DefaultSplit(),
                 Updating = match.Updating,
 
                 Videos = match.Videos.Select(VideoViewModel.ProjectionFunction),
 
-                CanGo = !match.Updating && (match.MatchUsers.FirstOrDefault(x => x.UserId == userId)?.CanGo ?? false),
-                CanFlag = !match.Updating
-                          && (match.MatchUsers.FirstOrDefault(x => x.UserId == userId)?.CanFlag ?? false),
-                CanUpdate = !match.Updating
-                            && (match.MatchUsers.FirstOrDefault(x => x.UserId == userId)?.CanUpdate ?? false),
-                CanPass = !match.Updating
-                          && (match.MatchUsers.FirstOrDefault(x => x.UserId == userId)?.CanPass ?? false),
-                CanLockIn = !match.Updating
-                            && (match.MatchUsers.FirstOrDefault(x => x.UserId == userId)?.CanLockIn ?? false),
+                CanGo = !match.Updating && (match.MatchUsers.FirstOrDefault(x => x.UserId == userId && !x.Freeze)?.CanGo ?? false),
+                CanFlag = !match.Updating && (match.MatchUsers.FirstOrDefault(x => x.UserId == userId && !x.Freeze)?.CanFlag ?? false),
+                CanUpdate = !match.Updating && (match.MatchUsers.FirstOrDefault(x => x.UserId == userId && !x.Freeze)?.CanUpdate ?? false),
+                CanPass = !match.Updating && (match.MatchUsers.FirstOrDefault(x => x.UserId == userId && !x.Freeze)?.CanPass ?? false),
+                CanLockIn = !match.Updating && (match.MatchUsers.FirstOrDefault(x => x.UserId == userId && !x.Freeze)?.CanLockIn ?? false),
 
-                Likes = match.Likes.Count(),
+                Likes = match.Likes.Count,
                 CanLike = match.Likes.All(x => x.UserId != userId),
                 Comments = match.Comments.Select(x => new MatchCommentsViewModel
                 {

@@ -6,30 +6,32 @@ using System.Threading.Tasks;
 using Battles.Application.ViewModels;
 using Battles.Models;
 using Microsoft.EntityFrameworkCore;
+using Transmogrify;
 
 namespace Battles.Application.Services.Likes.Commands
 {
     public class LikeMatchCommand : IRequest<BaseResponse>
     {
         public int MatchId { get; set; }
-
         public string UserId { get; set; }
     }
 
     public class LikeMatchCommandHandler : IRequestHandler<LikeMatchCommand, BaseResponse>
     {
         private readonly AppDbContext _ctx;
+        private readonly ITranslator _translation;
 
-        public LikeMatchCommandHandler(AppDbContext ctx)
+        public LikeMatchCommandHandler(AppDbContext ctx, ITranslator translation)
         {
             _ctx = ctx;
+            _translation = translation;
         }
 
         public async Task<BaseResponse> Handle(LikeMatchCommand request, CancellationToken cancellationToken)
         {
             if (_ctx.Likes.Any(x => x.MatchId == request.MatchId && x.UserId == request.UserId))
             {
-                return new BaseResponse("Already lit.", true);
+                return BaseResponse.Ok(await _translation.GetTranslation("Like", "Already"));
             }
 
             var users = _ctx.MatchUser
@@ -48,7 +50,7 @@ namespace Battles.Application.Services.Likes.Commands
 
             await _ctx.SaveChangesAsync(cancellationToken);
 
-            return new BaseResponse("Match lit.", true);
+            return BaseResponse.Ok(await _translation.GetTranslation("Like", "Created"));
         }
     }
 }

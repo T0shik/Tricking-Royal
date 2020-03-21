@@ -1,5 +1,5 @@
-﻿using System.Net.Http.Headers;
-using Battles.Application.Jobs;
+﻿using System.IO;
+using System.Net.Http.Headers;
 using Battles.Application.Services.Users.Queries;
 using Battles.Configuration;
 using Hangfire;
@@ -9,11 +9,14 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using Battles.Api.Infrastructure;
 using Battles.Api.Workers;
 using Battles.Api.Workers.MatchUpdater;
 using Battles.Api.Workers.Notifications.Settings;
+using Battles.Application.Services.Evaluations.Commands;
+using Battles.Application.Services.Matches.Commands;
 using Battles.Application.SubServices;
 using Battles.Shared;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -21,6 +24,7 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 using NETCore.MailKit.Extensions;
 using NETCore.MailKit.Infrastructure.Internal;
+using Transmogrify.DependencyInjection.Newtonsoft;
 using TrickingRoyal.Database;
 
 namespace Battles.Api
@@ -49,7 +53,6 @@ namespace Battles.Api
 
             var connectionString = _config.GetConnectionString("DefaultConnection");
             services.AddTrickingRoyalDatabase(connectionString)
-                    .AddHangfireServices()
                     .AddHangfire(options => options.UseSqlServerStorage(connectionString));
 
             services.AddAuthentication("Bearer")
@@ -77,6 +80,14 @@ namespace Battles.Api
                     });
 
             SetupCors(services);
+
+            services.AddHttpContextAccessor();
+            services.AddNewtonsoftTransmogrify(config =>
+            {
+                config.DefaultLanguage = "en";
+                config.LanguagePath = Path.Combine(_env.ContentRootPath, "Languages");
+                config.AddResolver(typeof(DefaultLanguageResolver));
+            });
 
             services.AddBattlesServices()
                     .AddSubServices()
@@ -131,9 +142,9 @@ namespace Battles.Api
 
         private static void SetupHangfireJobs()
         {
-            RecurringJob.AddOrUpdate<IHangfireJobs>(jobs => jobs.CloseExpiredMatches(), Cron.Hourly);
-            RecurringJob.AddOrUpdate<IHangfireJobs>(jobs => jobs.CloseExpiredEvaluations(), Cron.Hourly);
-            RecurringJob.AddOrUpdate<IHangfireJobs>(jobs => jobs.MatchReminder(), Cron.Daily);
+            RecurringJob.AddOrUpdate<CloseExpiredMatchesCommandHandler>(handler => handler.Handle(new CloseExpiredMatchesCommand(), CancellationToken.None), Cron.Hourly);
+            RecurringJob.AddOrUpdate<CloseEvaluationsCommandHandler>(handler => handler.Handle(new CloseEvaluationsCommand(), CancellationToken.None), Cron.Minutely);
+            RecurringJob.AddOrUpdate<SendMatchRemindersCommandHandler>(handler => handler.Handle(new SendMatchRemindersCommand(), CancellationToken.None), Cron.Daily);
         }
     }
 }

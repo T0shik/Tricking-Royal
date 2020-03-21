@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Battles.Application.Services.Users.Queries;
 using Battles.Enums;
+using Transmogrify;
 
 namespace Battles.Application.Services.Users.Commands
 {
@@ -39,13 +40,16 @@ namespace Battles.Application.Services.Users.Commands
     {
         private readonly AppDbContext _ctx;
         private readonly IMediator _mediator;
+        private readonly ITranslator _translation;
 
         public UpdateUserCommandHandler(
             AppDbContext ctx,
-            IMediator mediator)
+            IMediator mediator,
+            ITranslator translation)
         {
             _ctx = ctx;
             _mediator = mediator;
+            _translation = translation;
         }
 
         public async Task<BaseResponse> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
@@ -54,22 +58,20 @@ namespace Battles.Application.Services.Users.Commands
                            .FirstOrDefault(x => x.Id == request.UserId);
 
             if (user == null)
-            {
-                return BaseResponse.Fail("User not found");
-            }
+                return BaseResponse.Fail(await _translation.GetTranslation("User", "NotFound"));
+
+            var newDisplayName = request.DisplayName.Replace(" ", "_");
 
             var nameAvailable = await _mediator.Send(new UserNameAvailableQuery
             {
-                DisplayName = request.DisplayName.Replace(" ", "_"),
+                DisplayName = newDisplayName,
                 UserId = request.UserId
             }, cancellationToken);
 
             if (!nameAvailable)
-            {
-                return BaseResponse.Fail("Username already taken");
-            }
+                return BaseResponse.Fail(await _translation.GetTranslation("User", "UsernameTaken"));
 
-            user.DisplayName = request.DisplayName;
+            user.DisplayName = newDisplayName;
             user.Skill = (Skill) request.Skill;
             user.City = request.City;
             user.Country = request.Country;
@@ -79,16 +81,10 @@ namespace Battles.Application.Services.Users.Commands
             user.Facebook = request.Facebook;
             user.Youtube = request.Youtube;
 
-            if (!_ctx.ChangeTracker.HasChanges())
-            {
-                return new BaseResponse("Profile saved.", true);
-            }
+            if (_ctx.ChangeTracker.HasChanges())
+                await _ctx.SaveChangesAsync(cancellationToken);
 
-            var saved = await _ctx.SaveChangesAsync(cancellationToken) > 0;
-
-            return saved
-                       ? new BaseResponse("Profile updated.", true)
-                       : new BaseResponse("Failed to update profile", false);
+            return BaseResponse.Ok(await _translation.GetTranslation("User", "ProfileSaved"));
         }
     }
 }

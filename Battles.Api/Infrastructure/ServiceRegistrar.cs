@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using System.Reflection;
-using Battles.Attributes;
+using Battles.Rules.Evaluations;
 using Battles.Rules.Matches;
 using Microsoft.Extensions.DependencyInjection;
 

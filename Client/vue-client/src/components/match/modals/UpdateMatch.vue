@@ -4,7 +4,7 @@
         <v-dialog persistent :value="display" width="500">
             <v-card color="secondary">
                 <v-card-title class="headline" primary-title>
-                    <span>Update Match</span>
+                    <span>{{$t('updateMatch.title')}}</span>
                     <v-spacer/>
                     <v-btn text icon @click="reset">
                         <v-icon>{{icons.close}}</v-icon>
@@ -29,14 +29,14 @@
                     <v-window touchless v-model="stage">
                         <v-window-item :value="0" class="text-center pa-3">
                             <v-btn color="info" large @click="$refs.file.click()">
-                                Upload Video
+                                {{$t('updateMatch.uploadVideo')}}
                                 <v-icon right>{{icons.upload}}</v-icon>
                             </v-btn>
                         </v-window-item>
 
                         <v-window-item :value="1">
                             <div class="px-4">
-                                <p class="text-center title mb-4">Trim</p>
+                                <p class="text-center title mb-4">{{$t('updateMatch.trim')}}</p>
 
                                 <v-range-slider
                                         always-dirty
@@ -60,9 +60,9 @@
 
                             <v-card-actions class="justify-center">
                                 <v-btn color="info" @click="completeTrim" :disabled="needIndex">
-                                    <span v-if="needTrick">Next</span>
-                                    <span v-else-if="needIndex">select a pass</span>
-                                    <span v-else>Complete</span>
+                                    <span v-if="needTrick">{{$t('misc.next')}}</span>
+                                    <span v-else-if="needIndex">{{$t('updateMatch.selectPass')}}</span>
+                                    <span v-else>{{$t('misc.finish')}}</span>
                                 </v-btn>
                             </v-card-actions>
                         </v-window-item>
@@ -72,11 +72,11 @@
                                 <v-text-field v-model="move" :label="trickLabel" id="trick-input"
                                               @focus="focusTrickInput"/>
                             </div>
-
                             <v-divider/>
-
                             <v-card-actions class="justify-center">
-                                <v-btn color="info" :disabled="move.length < 2" @click="startMatchUpdate">Finish</v-btn>
+                                <v-btn color="info" :disabled="move.length < 2" @click="startMatchUpdate">
+                                    {{$t('misc.finish')}}
+                                </v-btn>
                             </v-card-actions>
                         </v-window-item>
                     </v-window>
@@ -138,7 +138,7 @@
             videoError() {
                 if (this.$refs.video.error) {
                     this.clearVideo();
-                    this.error = `Failed to load video, please try another video. Error: ${this.$refs.video.error.message}`;
+                    this.error = `${this.$t('updateMatch.videoUploadError')}. Error: ${this.$refs.video.error.message}`;
                 }
             },
             videoLoad() {
@@ -172,8 +172,6 @@
             },
             focusTrickInput() {
                 if (window.innerWidth < 960) {
-                    this.$logger.log("Screen should scroll to input");
-                    // this.$vuetify.goTo(this.$refs.trick, {container: '#match-update-modal'});
                     document.getElementById('trick-input').scrollIntoView();
                 }
             },
@@ -221,8 +219,9 @@
                 return this.isBlitzReUpload && this.index < 0;
             },
             trickLabel() {
-                if (this.match) return this.match.mode === MATCH_MODE.ONE_UP ? "Trick" : "Combo";
-                else return "";
+                return this.match
+                    ? this.$t(`battles.${this.match.mode === MATCH_MODE.ONE_UP ? 'trick' : 'combo'}`)
+                    : "";
             },
             needTrick() {
                 return (

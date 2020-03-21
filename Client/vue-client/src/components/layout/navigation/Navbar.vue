@@ -2,15 +2,15 @@
     <v-app-bar app clipped-left color="secondary">
         <router-link class="d-flex align-center" to="/battles">
             <v-avatar size="48">
-                <img src="https://cdn.trickingroyal.com/static/logo_final.png"/>
+                <img src="https://cdn.trickingroyal.com/static/logo_final.png" alt="logo"/>
             </v-avatar>
             <span
                     class="headline font-rock font-weight-black ml-1 primary--text hidden-sm-and-down"
             >Tricking Royal</span>
         </router-link>
-        <v-spacer></v-spacer>
-        <UserSearch></UserSearch>
-        <v-spacer></v-spacer>
+        <v-spacer/>
+        <UserSearch/>
+        <v-spacer/>
         <v-menu
                 :close-on-content-click="false"
                 :value="notificationsMenu"
@@ -18,25 +18,23 @@
                 offset-x
         >
             <template v-slot:activator="{ on }">
-                <v-badge overlap left color="red">
-                    <template v-slot:badge v-if="notificationCount > 0">{{notificationCount}}</template>
-                    <template>
-                        <v-btn text icon v-on="on" @click="toggleNotifications">
-                            <v-icon>{{icons.bell}}</v-icon>
-                        </v-btn>
-                    </template>
-                </v-badge>
+                <v-btn text icon v-on="on" @click="toggleNotifications">
+                    <v-badge offset-y="12" offset-x="12" left v-model="notificationCount" :content="notificationCount"
+                             color="red">
+                        <v-icon>{{icons.bell}}</v-icon>
+                    </v-badge>
+                </v-btn>
             </template>
 
             <v-card color="secondary">
-                <v-card-title>
-                    <v-btn text small @click="clearNotifications">clear all</v-btn>
-                    <v-spacer></v-spacer>
+                <v-card-title class="pa-2">
+                    <v-btn text small @click="clearNotifications">{{$t('misc.clearAll')}}</v-btn>
+                    <v-spacer/>
                     <v-btn text icon small @click="toggleNotifications">
                         <v-icon>{{icons.close}}</v-icon>
                     </v-btn>
                 </v-card-title>
-                <v-divider></v-divider>
+                <v-divider/>
                 <v-list class="py-0 overflow-y-auto" height="340" dense>
                     <v-list-item :class="{'blue': n.new}" @click="open(n)" two-line v-for="n in notifications"
                                  :key="`notification-${n.id}`">
@@ -46,9 +44,9 @@
                         </v-list-item-content>
                     </v-list-item>
                 </v-list>
-                <v-divider></v-divider>
+                <v-divider/>
                 <v-card-actions class="justify-center">
-                    <v-btn small text @click="getNotifications" v-if="!empty">Load More</v-btn>
+                    <v-btn small text @click="getNotifications" v-if="!empty">{{$t('misc.loadMore')}}</v-btn>
                 </v-card-actions>
             </v-card>
         </v-menu>
@@ -65,7 +63,7 @@
 
     export default {
         components: {
-          UserSearch  
+            UserSearch
         },
         methods: {
             ...mapMutations('notifications', ['toggleNotifications']),

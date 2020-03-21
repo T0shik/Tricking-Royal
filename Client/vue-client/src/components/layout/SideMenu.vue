@@ -10,11 +10,12 @@
     >
         <v-container class="px-4">
             <v-row class="justify-center" v-if="profile.levelUpPoints > 0">
-                <v-btn class="black--text" color="yellow accent-3" @click="levelUp = true">Level Up</v-btn>
+                <v-btn class="black--text" color="yellow accent-3" @click="levelUp = true">{{$t('misc.levelUp')}}
+                </v-btn>
             </v-row>
             <v-row class="align-center">
                 <ProfileImage :class="{'level-up': profile.levelUpPoints}" :picture="profile.picture"
-                              :level="profile.level"></ProfileImage>
+                              :level="profile.level"/>
                 <v-col class="px-1">
                     <span class="white--text subtitle-2">{{profile.displayName}}</span>
                     <div>
@@ -23,32 +24,32 @@
                         </v-progress-linear>
                     </div>
                 </v-col>
-                <EditProfile></EditProfile>
+                <EditProfile/>
             </v-row>
-            <v-row class="score-board" dense>
+            <v-row class="score-board force" dense>
                 <v-col cols="4">
-                    <span class="subheading">Wins</span>
+                    <span class="subtitle-2">{{$t('misc.win')}}</span>
                     <div class="title">{{profile.win}}</div>
                 </v-col>
                 <v-col cols="4">
-                    <span class="subheading">Loss</span>
+                    <span class="subtitle-2">{{$t('misc.loss')}}</span>
                     <div class="title">{{profile.loss}}</div>
                 </v-col>
                 <v-col cols="4">
-                    <span class="subheading">Draw</span>
+                    <span class="subtitle-2">{{$t('misc.draw')}}</span>
                     <div class="title">{{profile.draw}}</div>
                 </v-col>
                 <v-col cols="6">
-                    <span class="subheading">Reputation</span>
+                    <span class="subtitle-2">{{$t('misc.reputation')}}</span>
                     <div class="title">{{profile.reputation}}</div>
                 </v-col>
                 <v-col cols="6">
-                    <span class="subheading">Style</span>
+                    <span class="subtitle-2">{{$t('misc.style')}}</span>
                     <div class="title">{{profile.style}}</div>
                 </v-col>
             </v-row>
         </v-container>
-        <p class="title ml-2 white--text">Menu</p>
+        <p class="title ml-2 white--text">{{$t('layout.menu')}}</p>
         <v-list dense class="pt-0">
             <v-list-item-group color="primary">
                 <v-list-item to="/battles">
@@ -56,7 +57,7 @@
                         <v-icon>{{icons.battle}}</v-icon>
                     </v-list-item-icon>
                     <v-list-item-content>
-                        <v-list-item-title>Battles</v-list-item-title>
+                        <v-list-item-title>{{$t('layout.sideNav.battles')}}</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
                 <v-list-item to="/create-battle">
@@ -64,7 +65,7 @@
                         <v-icon>{{icons.add}}</v-icon>
                     </v-list-item-icon>
                     <v-list-item-content>
-                        <v-list-item-title>Create Battle</v-list-item-title>
+                        <v-list-item-title>{{$t('layout.sideNav.create')}}</v-list-item-title>
                     </v-list-item-content>
                     <span>{{profile.hosting}}/{{profile.hostingLimit}}</span>
                 </v-list-item>
@@ -73,7 +74,7 @@
                         <v-icon>{{icons.search}}</v-icon>
                     </v-list-item-icon>
                     <v-list-item-content>
-                        <v-list-item-title>Find Battle</v-list-item-title>
+                        <v-list-item-title>{{$t('layout.sideNav.find')}}</v-list-item-title>
                     </v-list-item-content>
                     <span>{{profile.joined}}/{{profile.joinedLimit}}</span>
                 </v-list-item>
@@ -82,10 +83,10 @@
                         <v-icon>{{icons.gavel}}</v-icon>
                     </v-list-item-icon>
                     <v-list-item-content>
-                        <v-list-item-title>Tribunal</v-list-item-title>
+                        <v-list-item-title>{{$t('layout.sideNav.tribunal')}}</v-list-item-title>
                     </v-list-item-content>
                     <span>
-                    <v-progress-circular v-if="loadingCount" :size="20" :width="2" indeterminate></v-progress-circular>
+                    <v-progress-circular v-if="loadingCount" :size="20" :width="2" indeterminate/>
                     <span v-else>{{tribunalCount}}</span>
                 </span>
                 </v-list-item>
@@ -94,21 +95,26 @@
         <v-dialog v-model="levelUp" :persistent="loading" max-width="500px">
             <v-card color="secondary">
                 <v-card-title>
-                    Level Up
+                    {{$t('layout.levelUp')}}
                 </v-card-title>
-                <v-card-text>
-                    <span v-if="selectedPerk">{{selectedPerk.description}}</span>
-                    <span v-else>Select your perk.</span>
-                </v-card-text>
-                <v-card-text class="d-flex flex-wrap justify-center">
-                    <v-btn class="ma-1 grey" :class="{'primary': p.selected}" @click="selectPerk(p)" v-for="p in perks"
-                           :key="`perk-${p.id}`">
-                        {{p.name}}
-                        <v-icon right>{{p.icon}}</v-icon>
-                    </v-btn>
+                <v-card-text class="pt-0">
+                    <span v-if="selectedPerk">{{$t(`layout.levelPerks.${selectedPerk.name}.description`)}}</span>
+                    <span v-else>{{$t('layout.selectPerk')}}</span>
+                    <div class="d-flex flex-wrap justify-center">
+                        <v-btn class="ma-1 grey" :class="{'primary': p.selected}" @click="selectPerk(p)"
+                               v-for="p in perks"
+                               :key="`perk-${p.id}`">
+                            {{$t(`layout.levelPerks.${p.name}.title`)}}
+                            <v-icon right>{{p.icon}}</v-icon>
+                        </v-btn>
+                    </div>
+                    <p class="ma-0 pt-2 text-center" v-if="selectedPerk">
+                        {{$t(`layout.levelPerks.${selectedPerk.name}.current`, [profile[selectedPerk.prop]])}}
+                    </p>
                 </v-card-text>
                 <v-card-actions v-if="selectedPerk" class="justify-center">
-                    <v-btn color="primary" @click="submitLevelUp" :loading="loading" :disabled="loading">select
+                    <v-btn color="primary" @click="submitLevelUp" :loading="loading" :disabled="loading">
+                        {{$t('misc.select')}}
                     </v-btn>
                 </v-card-actions>
             </v-card>
@@ -120,47 +126,77 @@
 <script>
     import EditProfile from "./modals/EditProfile";
     import {mapActions, mapGetters} from "vuex";
-
     import {
         mdiClose,
         mdiAccount,
         mdiSwordCross,
         mdiPlus,
         mdiGavel,
-        mdiAccountSearch
+        mdiAccountSearch,
+        mdiViewGridPlus,
+        mdiDoorOpen,
+        mdiScale
     } from "@mdi/js";
-    import perks from "../../data/perks";
     import ProfileImage from "../shared/ProfileImage";
 
     const initialState = () => ({
         levelUp: false,
-        perks: perks.map(x => ({
-            ...x,
-            selected: false
-        })),
-        loading: false
+        loading: false,
+        selectedPerk: null,
+        perks: [
+            {
+                id: 0,
+                name: 'host',
+                icon: mdiViewGridPlus,
+                selected: false,
+                prop: 'hostingLimit'
+            },
+            {
+                id: 1,
+                name: 'guest',
+                icon: mdiDoorOpen,
+                selected: false,
+                prop: 'joinedLimit'
+            },
+            {
+                id: 2,
+                name: 'voting',
+                icon: mdiScale,
+                selected: false,
+                prop: 'votingPower'
+            }
+        ]
     });
 
     export default {
+        data: () => initialState(),
         props: {
             show: {
                 required: true
+            }
+        },
+        watch: {
+            levelUp: function (v) {
+                if(!v){
+                    Object.assign(this.$data, initialState());
+                }      
             }
         },
         components: {
             EditProfile,
             ProfileImage
         },
-        data: initialState,
         methods: {
             ...mapActions({
                 popup: "DISPLAY_POPUP_DEFAULT",
                 refreshProfile: "REFRESH_PROFILE"
             }),
-            selectPerk(newPerk) {
-                for (let i = 0; i < this.perks.length; i++) {
-                    this.perks[i].selected = newPerk.id === this.perks[i].id;
+            selectPerk(perk) {
+                if (this.selectedPerk) {
+                    this.selectedPerk.selected = false;
                 }
+                perk.selected = true;
+                this.selectedPerk = perk;
             },
             submitLevelUp() {
                 this.loading = true;
@@ -194,9 +230,6 @@
                     search: mdiAccountSearch,
                     gavel: mdiGavel,
                 };
-            },
-            selectedPerk() {
-                return this.perks.filter(x => x.selected)[0];
             },
             expBar() {
                 return (parseInt(this.profile.experience) * 100 / parseInt(this.profile.experienceNeed)).toFixed(0)

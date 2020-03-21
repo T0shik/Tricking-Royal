@@ -1,4 +1,9 @@
 ﻿@model string
+@inject Library Library
+
+@{
+    var context = await Library.GetContext();
+}
 
 <div class="hero">
     <div class="hero-body">
@@ -6,17 +11,21 @@
             <div class="column is-4-desktop is-offset-4-desktop  is-6-tablet is-offset-3-tablet">
                 <h3 class="title is-font-rock has-text-weight-bold has-text-primary">Tricking Royal</h3>
                 <div class="box is-faded">
-                    <h3 class="title has-text-white">Menu</h3>
+                    <h3 class="title has-text-white">
+                        @context.Read("Home", "Menu")
+                    </h3>
                     <div class="field">
-                        <a class="button is-fullwidth is-large" href="@Model">Go Battle</a>
+                        <a class="button is-fullwidth is-large" href="@Model">
+                            @context.Read("Home", "GoBattles")
+                        </a>
                     </div>
-                    <h3 class="title has-text-white">Coming Soon</h3>
-                    <div class="field">
-                        <a class="button is-fullwidth is-large is-disabled has-background-grey-light">Shop</a>
-                    </div>
-                    <div class="field">
-                        <a class="button is-fullwidth is-large is-disabled has-background-grey-light">Tournament</a>
-                    </div>
+                    @* <h3 class="title has-text-white">Coming Soon</h3> *@
+                    @* <div class="field"> *@
+                    @*     <a class="button is-fullwidth is-large is-disabled has-background-grey-light">Shop</a> *@
+                    @* </div> *@
+                    @* <div class="field"> *@
+                    @*     <a class="button is-fullwidth is-large is-disabled has-background-grey-light">Tournament</a> *@
+                    @* </div> *@
                 </div>
             </div>
         </div>

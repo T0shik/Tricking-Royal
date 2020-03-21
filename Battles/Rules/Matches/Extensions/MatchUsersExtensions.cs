@@ -31,7 +31,10 @@ namespace Battles.Rules.Matches.Extensions
             return @this;
         }
 
-        public static MatchUser SetPenalty(this MatchUser @this, int penalty, bool close = false)
+        public static MatchUser SetPenalty(
+            this MatchUser @this,
+            int penalty,
+            bool close = false)
         {
             @this.User.Reputation -= penalty;
             if (close)
@@ -40,10 +43,12 @@ namespace Battles.Rules.Matches.Extensions
             return @this;
         }
 
-        public static void SetLockUser(this MatchUser @this) =>
-                @this.SetGoFlagUpdatePassLock(false, false, false);
+        public static void SetLockUser(this MatchUser @this) => @this.SetGoFlagUpdatePassLock(false, false, false);
 
-        public static MatchUser SetGoFlagUpdatePassLock(this MatchUser @this,
+        public static void SetFreeze(this MatchUser @this, bool status) => @this.Freeze = status;
+
+        public static MatchUser SetGoFlagUpdatePassLock(
+            this MatchUser @this,
             bool go,
             bool flag,
             bool update,

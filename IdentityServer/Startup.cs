@@ -11,11 +11,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using Battles.Shared;
+using IdentityServer.Infrastructure;
 using NETCore.MailKit.Extensions;
 using NETCore.MailKit.Infrastructure.Internal;
+using Transmogrify.DependencyInjection.Newtonsoft;
 using TrickingRoyal.Database;
 
 namespace IdentityServer
@@ -78,6 +81,14 @@ namespace IdentityServer
                         };
                     });
 
+            services.AddHttpContextAccessor();
+            services.AddNewtonsoftTransmogrify(config =>
+            {
+                config.DefaultLanguage = "en";
+                config.LanguagePath = Path.Combine(_env.ContentRootPath, "Languages");
+                config.AddResolver(typeof(DefaultLanguageResolver));
+            });
+
             SetupCors(services, routing.Client);
 
             var emailSettings = _config.GetSection(nameof(MailKitOptions)).Get<MailKitOptions>();
@@ -93,6 +104,7 @@ namespace IdentityServer
         {
             app.UseCors(_env.IsDevelopment() ? "AllowAll" : "AllowClients");
             app.UseHealthChecks("/healthcheck");
+
 
             if (_env.IsDevelopment())
             {
@@ -110,6 +122,15 @@ namespace IdentityServer
 
                 app.UseExceptionHandler("/Shared/Error");
             }
+
+            app.Use((context, next) =>
+            {
+                var request = context.Request;
+                if (!request.Cookies.ContainsKey("lang") && 
+                    request.Query.TryGetValue("lang", out var lang))
+                    context.Response.Cookies.Append("lang", lang);
+                return next();
+            });
 
             app.UseCookiePolicy()
                .UseStaticFiles()

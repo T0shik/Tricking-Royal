@@ -1,8 +1,12 @@
-﻿@{
-    ViewData["Title"] = "Login Failure";
+﻿@inject Library Library
+
+@{
+    var context = await Library.GetContext();
+    var tLoginFail = context.Read("Account", "LoginFail");
+    ViewData["Title"] = tLoginFail;
 }
 
 <header>
-    <h2>@ViewData["Title"].</h2>
-    <p class="text-danger">Unsuccessful login with service.</p>
+    <h2>@tLoginFail</h2>
+    <p class="text-danger">@context.Read("Account", "LoginFailDesc")</p>
 </header>

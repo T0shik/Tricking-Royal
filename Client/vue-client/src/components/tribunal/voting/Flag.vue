@@ -1,7 +1,7 @@
 <template>
     <v-card color="transparent" elevation="0" max-width="500" width="100%" v-if="evaluation">
         <v-card-title class="headline pt-0">
-            <v-spacer></v-spacer>
+            <v-spacer />
             <v-btn text icon @click="$emit('close')">
                 <v-icon>{{icons.close}}</v-icon>
             </v-btn>
@@ -11,22 +11,22 @@
             <div class="d-flex flex-row align-center mb-2">
                 <ProfileImage :picture="users[evaluation.target].picture"
                              :level="users[evaluation.target].level"
-                             :size="68"></ProfileImage>
+                             size="68px" />
                 <span class="pl-2 title">{{users[evaluation.target].displayName}}</span>
             </div>
-            <h1 class="title text--white">Reason</h1>
+            <h1 class="title text--white">{{$t('tribunal.reason')}}</h1>
             <h1 class="subtitle text--primary">{{evaluation.reason}}</h1>
         </v-card-text>
 
         <v-card-actions class="justify-center">
             <div class="text-center" v-if="loadingResults">
-                <p>Loading Results</p>
-                <v-progress-circular color="primary" indeterminate></v-progress-circular>
+                <p>{{$t('tribunal.loadingResults')}}</p>
+                <v-progress-circular color="primary" indeterminate />
             </div>
-            <VotingResults :schema="voteResultSchema" v-else-if="results"></VotingResults>
+            <VotingResults :schema="voteResultSchema" v-else-if="results" />
             <div v-else>
-                <v-btn color="ma-1 red darken-4" @click="judge({vote: 0})">punish</v-btn>
-                <v-btn color="ma-1 amber darken-3" @click="judge({vote: 1})">forgive</v-btn>
+                <v-btn color="ma-1 red darken-4" @click="judge({vote: 0})">{{$t('tribunal.punish')}}</v-btn>
+                <v-btn color="ma-1 amber darken-3" @click="judge({vote: 1})">{{$t('tribunal.forgive')}}</v-btn>
             </div>
         </v-card-actions>
     </v-card>

@@ -1,5 +1,5 @@
 <template>
-    <v-card class="my-3" max-width="600px" width="100%" dark color="secondary">
+    <v-card class="my-3 force" max-width="600px" width="100%" dark color="secondary">
         <v-card-title class="pa-2">
             <router-link class="white--text" :to="`/user/${user.displayName}`">
                 <ProfileImage :picture="user.picture" :level="user.level"/>
@@ -14,20 +14,20 @@
         <v-card-text class="px-3 pt-1 pb-2">
             <div class="d-flex white--text">
                 <div class="text-center mr-2">
-                    <h1 class="body-1 mb-0">Reputation</h1>
+                    <h1 class="body-1 mb-0">{{$t('misc.reputation')}}</h1>
                     <h1 class="body-2">{{user.reputation}}</h1>
                 </div>
                 <v-spacer/>
                 <div class="text-center mx-2">
-                    <h1 class="body-1 mb-0">Wins</h1>
+                    <h1 class="body-1 mb-0">{{$t('misc.win')}}</h1>
                     <h1 class="body-2">{{user.win}}</h1>
                 </div>
                 <div class="text-center mx-2">
-                    <h1 class="body-1 mb-0">Loss</h1>
+                    <h1 class="body-1 mb-0">{{$t('misc.loss')}}</h1>
                     <h1 class="body-2">{{user.loss}}</h1>
                 </div>
                 <div class="text-center ml-2">
-                    <h1 class="body-1 mb-0">Draw</h1>
+                    <h1 class="body-1 mb-0">{{$t('misc.draw')}}</h1>
                     <h1 class="body-2">{{user.draw}}</h1>
                 </div>
             </div>
@@ -35,40 +35,40 @@
         <v-card-text class="px-3 pt-1 pb-2">
             <div class="d-flex white--text">
                 <div>
-                    <h1 class="body-1 mb-0">Mode</h1>
-                    <h1 class="body-2">{{match.mode}}</h1>
+                    <h1 class="body-1 mb-0">{{$t('create.stage.mode.title')}}</h1>
+                    <h1 class="body-2">{{matchModeNames[match.mode]}}</h1>
                     <h1 class="body-2" v-if="mode">{{mode}}</h1>
                 </div>
                 <v-spacer/>
                 <div class="text-xs-right mr-3">
-                    <h1 class="body-1 mb-0">Surface</h1>
-                    <h1 class="body-2">{{match.surface}}</h1>
+                    <h1 class="body-1 mb-0">{{$t('create.stage.surface.title')}}</h1>
+                    <h1 class="body-2">{{$t(`match.surfaces[${match.surface}]`)}}</h1>
                 </div>
                 <div class="text-xs-right">
-                    <h1 class="body-1 mb-0">Turn Time</h1>
+                    <h1 class="body-1 mb-0">{{$t('create.stage.time.short')}}</h1>
                     <h1 class="body-2 text-right">{{match.turnTime}}</h1>
                 </div>
             </div>
         </v-card-text>
         <v-card-actions class="justify-center">
             <v-btn color="info" v-if="match.canJoin" @click="$emit('join')" :loading="loading" :disabled="loading">
-                Join
+                {{$t('misc.join')}}
             </v-btn>
             <v-btn color="error"
                    v-else-if="match.canClose"
                    @click="$emit('delete')"
                    :loading="loading"
                    :disabled="loading"
-            >Remove
+            >{{$t('misc.remove')}}
             </v-btn>
-            <span v-else>Can't join this match</span>
+            <span v-else>{{$t('battles.cantJoinOpen')}}</span>
         </v-card-actions>
     </v-card>
 </template>
 
 <script>
     import ProfileImage from "../shared/ProfileImage";
-    import {TURN_TYPE} from "../../data/enum";
+    import mode from "../../mixins/mode";
 
     export default {
         props: {
@@ -81,6 +81,7 @@
                 type: Boolean
             }
         },
+        mixins: [mode],
         components: {
             ProfileImage
         },
@@ -90,7 +91,7 @@
             },
             mode() {
                 return this.match.turnType >= 0
-                    ? TURN_TYPE.THREE_ROUND_PASS[this.match.turnType]
+                    ? this.$t(`match.turnTypes[${this.match.turnType}]`)
                     : "";
             }
         }

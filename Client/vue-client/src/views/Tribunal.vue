@@ -1,45 +1,44 @@
 <template>
     <div class="main-card">
-        <TribunalVoting></TribunalVoting>
+        <TribunalVoting/>
         <div class="ma-5 d-flex flex-column align-center" v-if="loading">
-            Loading Matches
-            <v-progress-circular color="primary" indeterminate></v-progress-circular>
+            {{$t('misc.loadingMatches')}}
+            <v-progress-circular color="primary" indeterminate/>
         </div>
-        <v-card v-else-if="evaluations.length === 0" class="mb-4" dark color="secondary" max-width="500" min-width="320"
-                width="100%">
+        <v-card v-else-if="evaluations.length === 0" class="mb-4" color="secondary" width="100%">
             <v-card-title class="justify-center">
-                <h1 class="title">No Matches</h1>
+                <h1 class="title">{{$t('tribunal.empty.title')}}</h1>
             </v-card-title>
             <v-card-text>
-                <p>Looks like there is nothing to vote for.</p>
-                <p>
-                    Check the history tab for your complete matches currently in the voting process
-                    or the ones you voted for.
-                </p>
-                <p>You can also take a look at the Flag section, see if anyone's been breaking the rules.</p>
+                <p>{{$t('tribunal.empty.description1')}}</p>
+                <p>{{$t('tribunal.empty.description2')}}</p>
+                <p>{{$t('tribunal.empty.description3')}}</p>
             </v-card-text>
             <v-card-actions class="justify-center">
-                <v-btn color="primary" :to="'/tribunal/history'">history</v-btn>
-                <v-btn color="primary" :to="'/tribunal/flag'">flag</v-btn>
+                <v-btn color="primary" v-if="type !== 'history'" :to="'/tribunal/history'">{{$t('tribunal.history')}}
+                </v-btn>
+                <v-btn color="primary" v-if="type !== 'flag'" :to="'/tribunal/flag'">{{$t('tribunal.flag')}}</v-btn>
+                <v-btn color="primary" v-if="type !== 'complete'" :to="'/tribunal/complete'">{{$t('tribunal.vote')}}
+                </v-btn>
             </v-card-actions>
         </v-card>
         <div v-else>
-            <MatchPlayer v-for="e in evaluations" :match="e" :key="e.key"></MatchPlayer>
+            <MatchPlayer v-for="e in evaluations" :match="e" :key="e.key"/>
         </div>
 
         <v-bottom-navigation class="secondary" mandatory absolute v-model="type" ref="nav" grow>
             <v-btn class="pa-0" color="primary" text :to="'/tribunal/history'" value="history">
-                <span>History</span>
+                <span>{{$t('tribunal.history')}}</span>
                 <v-icon>{{icons.history}}</v-icon>
             </v-btn>
 
             <v-btn class="pa-0" color="primary" text :to="'/tribunal/complete'" value="complete">
-                <span>Vote</span>
+                <span>{{$t('tribunal.vote')}}</span>
                 <v-icon>{{icons.star}}</v-icon>
             </v-btn>
 
             <v-btn class="pa-0" color="primary" text :to="'/tribunal/flag'" value="flag">
-                <span>Flag</span>
+                <span>{{$t('tribunal.flag')}}</span>
                 <v-icon>{{icons.flag}}</v-icon>
             </v-btn>
         </v-bottom-navigation>
@@ -47,10 +46,10 @@
 </template>
 
 <script>
-    import TribunalVoting from "../components/tribunal/modals/TribunalVoting";
     import {mapGetters, mapActions} from "vuex";
     import {mdiFlag, mdiHistory, mdiStar} from "@mdi/js";
-    import MatchPlayer from "../components/match/MatchPlayer";
+    import MatchPlayer from "@/components/match/MatchPlayer";
+    import TribunalVoting from "@/components/tribunal/modals/TribunalVoting";
 
     export default {
         data() {
@@ -59,8 +58,9 @@
             };
         },
         created() {
-            if (this.$route.params.type)
+            if (this.$route.params.type) {
                 this.type = this.$route.params.type;
+            }
         },
         watch: {
             type: {

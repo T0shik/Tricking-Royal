@@ -28,8 +28,8 @@
 </head>
 <body>
 <script>
-    var iOS = (/iP(hone|od|ad)/.test(navigator.userAgent));
-    if (iOS) {
+    window.iOS = (/iP(hone|od|ad)/.test(navigator.userAgent));
+    if (window.iOS) {
         var v = (navigator.appVersion).match(/OS (\d+)_(\d+)_?(\d+)?/);
         var iOSversion = parseInt(v[1], 10);
         if(iOSversion < 13) {

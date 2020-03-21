@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Battles.Application.ViewModels;
 using Battles.Helpers;
 using Battles.Shared;
+using Transmogrify;
 
 namespace Battles.Application.Services.Users.Commands
 {
@@ -21,11 +22,16 @@ namespace Battles.Application.Services.Users.Commands
     {
         private readonly AppDbContext _ctx;
         private readonly Routing _routing;
+        private readonly ITranslator _translation;
 
-        public UpdateUserPictureCommandHandler(AppDbContext ctx, Routing routing)
+        public UpdateUserPictureCommandHandler(
+            AppDbContext ctx,
+            Routing routing,
+            ITranslator translation)
         {
             _ctx = ctx;
             _routing = routing;
+            _translation = translation;
         }
 
         public async Task<BaseResponse> Handle(UpdateUserPictureCommand request, CancellationToken cancellationToken)
@@ -33,13 +39,13 @@ namespace Battles.Application.Services.Users.Commands
             var user = _ctx.UserInformation.FirstOrDefault(x => x.Id == request.UserId);
 
             if (user == null)
-                return new BaseResponse("Failed to find user", false);
+                return BaseResponse.Fail(await _translation.GetTranslation("User", "NotFound"));
 
             user.Picture = CdnUrlHelper.CreateImageUrl(_routing.Cdn, user.Id, request.Picture);
 
             await _ctx.SaveChangesAsync(cancellationToken);
 
-            return new BaseResponse(user.Picture, true);
+            return BaseResponse.Ok(await _translation.GetTranslation("User", "PictureUpdated"), user.Picture);
         }
     }
 }

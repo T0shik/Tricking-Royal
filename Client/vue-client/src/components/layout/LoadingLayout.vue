@@ -2,9 +2,9 @@
     <v-app>
         <div class="d-flex flex-column justify-center align-center fill-height">
             <div>
-                <img :src="logo">
+                <img :src="logo" alt="loading logo">
             </div>
-            <v-progress-linear indeterminate></v-progress-linear>
+            <v-progress-linear indeterminate />
         </div>
     </v-app>
 </template>

@@ -1,8 +1,10 @@
 ﻿@model LoginViewModel
 @inject SignInManager<ApplicationUser> SignInManager
+@inject Library Library
 
 @{
-    ViewData["Title"] = "Log in";
+    var context = await Library.GetContext();
+    ViewData["Title"] = context.Read("Account", "SignIn");
 }
 <div class="hero">
     <div class="hero-body">
@@ -10,7 +12,7 @@
             <div class="column is-4-desktop is-offset-4-desktop  is-6-tablet is-offset-3-tablet">
                 <h3 class="title is-font-rock has-text-weight-bold has-text-primary">Tricking Royal</h3>
                 <div class="box is-faded">
-                    <h3 class="title has-text-white">Login</h3>
+                    <h3 class="title has-text-white">@context.Read("Account", "SignIn")</h3>
                     <div class="field">
                         @foreach (var scheme in Model.ExternalAuth)
                         {
@@ -28,7 +30,7 @@
                                         </div>
                                         <div class="column">
                                             <span>
-                                                Continue with @scheme.DisplayName
+                                                @context.Read("Account", "ContinueWith") @scheme.DisplayName
                                             </span>
                                         </div>
                                     </div>
@@ -44,7 +46,7 @@
                                 <span class="icon is-medium is-left">
                                     <i class="fas fa-envelope"></i>
                                 </span>
-                                <input class="input" asp-for="Email" autocomplete="email" placeholder="Email" autofocus="">
+                                <input class="input" asp-for="Email" autocomplete="email" placeholder="@context.Read("Account", "Email")" autofocus="">
                                 <span asp-validation-for="Email" class="help is-danger"></span>
                             </div>
                         </div>
@@ -53,31 +55,31 @@
                                 <span class="icon is-medium is-left">
                                     <i class="fas fa-lock"></i>
                                 </span>
-                                <input class="input" asp-for="Password" autocomplete="password" placeholder="Password">
+                                <input class="input" asp-for="Password" autocomplete="password" placeholder="@context.Read("Account", "Password")">
                                 <span asp-validation-for="Password" class="help is-danger"></span>
                             </div>
                         </div>
                         <div class="field">
                             <label class="checkbox has-text-white">
                                 <input type="checkbox" asp-for="RememberMe" autocomplete="remember-me">
-                                Remember me
+                                @context.Read("Account", "RememberMe")
                             </label>
                         </div>
                         <div class="field">
                             <div class="columns is-mobile">
                                 <div class="column">
-                                    <a class="button is-outlined is-fullwidth" asp-action="Register" asp-route-returnurl="@Model.ReturnUrl">
-                                        Register
-                                    </a>
-                                </div>
-                                <div class="column">
-                                    <input type="submit" class="button is-info is-fullwidth" value="Login" /> 
+                                    <button type="submit" class="button is-info is-fullwidth">@context.Read("Account", "SignIn")</button>
                                 </div>
                             </div>
                         </div>
                     </form>
+                    <div class="column">
+                        <a class="button is-outlined is-fullwidth" asp-action="Register" asp-route-returnurl="@Model.ReturnUrl">
+                            @context.Read("Account", "Register")
+                        </a>
+                    </div>
                     <div class="field">
-                        <a class="has-text-grey-lighter has-text-weight-bold" asp-action="ForgotPassword" asp-route-returnUrl="@Model.ReturnUrl">Forgot Password?</a>
+                        <a class="has-text-grey-lighter has-text-weight-bold" asp-action="ForgotPassword" asp-route-returnUrl="@Model.ReturnUrl">@context.Read("Account", "ForgotPassword")</a>
                     </div>
                 </div>
             </div>
@@ -86,5 +88,5 @@
 </div>
 
 @section Scripts {
-    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }

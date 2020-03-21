@@ -1,29 +1,31 @@
 ﻿<template>
     <v-dialog :value="displayRules" persistent max-width="400">
         <v-card dark color="secondary">
-            <v-card-title class="title">Rules - {{title}}</v-card-title>
+            <v-card-title class="title">{{$t("misc.rules")}} - {{$t(`match.modes[${section}].name`)}}</v-card-title>
             <v-window v-model="section">
-                <v-window-item v-for="(match, index) in matchRules" :value="index + 1" :key="`match-rules-${index}`">
+                <v-window-item v-for="m in matches" :value="m.value" :key="`rules-${m.value}`">
                     <v-card-subtitle>
-                        {{match.description}}
+                        {{$t(`match.modes[${m.value}].description`)}}
                     </v-card-subtitle>
                     <v-card-text>
-                        <p v-for="(rule, index) in match.rules" :key="`rules-${section}-${index}`">{{rule}}</p>
+                        <p v-for="r in m.rules" :key="`rules-${m.value}-${r}`">
+                            {{$t(`match.modes[${m.value}].rules[${r}]`)}}
+                        </p>
                     </v-card-text>
                 </v-window-item>
             </v-window>
             <v-card-actions class="justify-center">
-                <v-btn :disabled="section === 1" text @click="section--">
-                    Back
+                <v-btn :disabled="section === 0" text @click="section--">
+                    {{$t("misc.back")}}
                 </v-btn>
-                <v-spacer></v-spacer>
-                <v-btn :disabled="section === matchRules.length" color="info" depressed @click="section++">
-                    Next
+                <v-spacer/>
+                <v-btn :disabled="section === matches.length - 1" color="info" depressed @click="section++">
+                    {{$t("misc.next")}}
                 </v-btn>
             </v-card-actions>
             <v-card-actions v-if="endReached" class="justify-center">
                 <v-btn color="primary" @click="confirm">
-                    I have read the rules
+                    {{$t("misc.rulesRead")}}
                 </v-btn>
             </v-card-actions>
         </v-card>
@@ -31,14 +33,15 @@
 </template>
 
 <script>
-    import matchRules from "../../../data/matchRules";
     import {mapState} from 'vuex';
     import {STORAGE_KEYS} from "../../../data/enum";
+    import {matches} from "../../../data/shared";
 
     export default {
         data: () => ({
-            section: 1,
+            section: 0,
             endReached: false,
+            matches
         }),
         watch: {
             displayRules: function (display) {
@@ -47,7 +50,7 @@
                 }
             },
             section: function (section) {
-                if (section === this.matchRules.length) {
+                if (section === this.matches.length - 1) {
                     this.endReached = true
                 }
             }
@@ -63,15 +66,7 @@
                 this.$store.commit('SET_DISPLAY_RULES', {display: false});
             }
         },
-        computed: {
-            ...mapState(['displayRules']),
-            matchRules() {
-                return matchRules
-            },
-            title() {
-                return matchRules[this.section - 1].name;
-            }
-        }
+        computed: mapState(['displayRules'])
     }
 </script>
 

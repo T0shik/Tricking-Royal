@@ -11,6 +11,7 @@ using Battles.Application.ViewModels;
 using Battles.Enums;
 using Battles.Extensions;
 using Battles.Rules.Levels;
+using Transmogrify;
 using static System.String;
 
 namespace Battles.Application.Services.Matches.Commands
@@ -25,13 +26,16 @@ namespace Battles.Application.Services.Matches.Commands
     {
         private readonly AppDbContext _ctx;
         private readonly INotificationQueue _notification;
+        private readonly ITranslator _translator;
 
         public ForfeitMatchCommandHandler(
             AppDbContext ctx,
-            INotificationQueue notification)
+            INotificationQueue notification,
+            ITranslator translator)
         {
             _ctx = ctx;
             _notification = notification;
+            _translator = translator;
         }
 
         //todo move to core level
@@ -40,11 +44,17 @@ namespace Battles.Application.Services.Matches.Commands
             var match = await _ctx.Matches
                                   .Include(x => x.MatchUsers)
                                   .ThenInclude(x => x.User)
-                                  .FirstOrDefaultAsync(x => x.Id == request.MatchId, cancellationToken: cancellationToken);
+                                  .FirstOrDefaultAsync(x => x.Id == request.MatchId,
+                                                       cancellationToken: cancellationToken);
+
+            if (match == null)
+            {
+                return BaseResponse.Fail(await _translator.GetTranslation("Match", "NotFound"));
+            }
 
             if (!match.CanGo(request.UserId))
             {
-                return new BaseResponse("Not allowed to forfeit match.", false);
+                return BaseResponse.Fail(await _translator.GetTranslation("Match", "CantForfeit"));
             }
 
             var host = match.GetHost();
@@ -54,7 +64,7 @@ namespace Battles.Application.Services.Matches.Commands
             if (match.Round == 1 || (match.Mode == Mode.ThreeRoundPass && match.TurnType == TurnType.Blitz))
             {
                 _ctx.Matches.Remove(match);
-                notificationExtension = "Match deleted.";
+                notificationExtension = $". {await _translator.GetTranslation("Match", "Deleted")}";
             }
             else
             {
@@ -89,13 +99,16 @@ namespace Battles.Application.Services.Matches.Commands
                                        : NotificationMessageType.Empty;
 
             var user = match.GetUser(request.UserId);
-            _notification.QueueNotification(
-                                            $"{user.User.DisplayName} forfeited the match. {notificationExtension}",
+            var message =
+                await _translator.GetTranslation("Notification", "Forfeited", user.User.DisplayName,
+                                                 notificationExtension);
+
+            _notification.QueueNotification(message,
                                             new[] {match.Id.ToString()}.DefaultJoin(),
                                             notificationType,
                                             match.GetOtherUserIds(request.UserId));
 
-            return new BaseResponse("Match forfeited.", true);
+            return BaseResponse.Ok(await _translator.GetTranslation("Match", "Forfeited"));
         }
     }
 }

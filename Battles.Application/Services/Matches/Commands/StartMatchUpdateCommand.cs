@@ -6,6 +6,7 @@ using Battles.Rules.Matches.Actions.Update;
 using Battles.Rules.Matches.Extensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Transmogrify;
 using TrickingRoyal.Database;
 
 namespace Battles.Application.Services.Matches.Commands
@@ -23,15 +24,18 @@ namespace Battles.Application.Services.Matches.Commands
         private readonly IMediator _mediator;
         private readonly AppDbContext _ctx;
         private readonly UpdateMatchQueue _matchQueue;
+        private readonly ITranslator _translator;
 
         public StartMatchUpdateCommandHandler(
             IMediator mediator,
             AppDbContext ctx,
-            UpdateMatchQueue matchQueue)
+            UpdateMatchQueue matchQueue,
+            ITranslator translator)
         {
             _mediator = mediator;
             _ctx = ctx;
             _matchQueue = matchQueue;
+            _translator = translator;
         }
 
         public async Task<BaseResponse> Handle(
@@ -45,20 +49,16 @@ namespace Battles.Application.Services.Matches.Commands
                                                        cancellationToken: cancellationToken);
 
             if (match == null)
-            {
-                return new BaseResponse("Match not found.", false);
-            }
+                return BaseResponse.Fail(await _translator.GetTranslation("Match", "NotFound"));
 
             if (!match.CanGo(command.UserId))
-            {
-                return new BaseResponse("Not allowed to go.", false);
-            }
+                return BaseResponse.Fail(await _translator.GetTranslation("Match", "CantGo"));
 
             _matchQueue.QueueUpdate(command);
             match.Updating = true;
             await _ctx.SaveChangesAsync(cancellationToken);
 
-            return new BaseResponse("Match Update started", true);
+            return BaseResponse.Ok(await _translator.GetTranslation("Match", "UpdateStarted"));
         }
     }
 }

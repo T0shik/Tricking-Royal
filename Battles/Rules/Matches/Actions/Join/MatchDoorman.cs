@@ -1,6 +1,5 @@
 ﻿using Battles.Rules.Matches.Extensions;
 using System;
-using Battles.Attributes;
 using Battles.Enums;
 using Battles.Interfaces;
 using Battles.Models;

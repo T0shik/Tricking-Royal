@@ -9,6 +9,7 @@ using Battles.Rules.Matches.Extensions;
 using Battles.Shared;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Transmogrify;
 using TrickingRoyal.Database;
 
 namespace Battles.Application.Services.Matches.Commands
@@ -26,13 +27,16 @@ namespace Battles.Application.Services.Matches.Commands
     {
         private readonly AppDbContext _ctx;
         private readonly Routing _routing;
+        private readonly ITranslator _translator;
 
         public UpdateMatchVideoHandler(
             AppDbContext ctx,
-            Routing routing)
+            Routing routing,
+            ITranslator translator)
         {
             _ctx = ctx;
             _routing = routing;
+            _translator = translator;
         }
 
         public async Task<BaseResponse> Handle(UpdateMatchVideoCommand request, CancellationToken cancellationToken)
@@ -42,10 +46,11 @@ namespace Battles.Application.Services.Matches.Commands
                             .Include(x => x.Videos)
                             .FirstOrDefault(x => x.Id == request.MatchId);
 
-            if (match == null) return new BaseResponse("Match not found.", false);
+            if (match == null)
+                return BaseResponse.Fail(await _translator.GetTranslation("Match", "NotFound"));
 
             if (!match.CanUpdate(request.UserId))
-                return new BaseResponse("Not allowed to update", false);
+                return BaseResponse.Fail(await _translator.GetTranslation("Match", "CantUpdate"));
 
             var videoToUpdate = GetVideoToUpdate(match, request);
 
@@ -56,7 +61,7 @@ namespace Battles.Application.Services.Matches.Commands
 
             await _ctx.SaveChangesAsync(cancellationToken);
 
-            return new BaseResponse("Video updated", true);
+            return BaseResponse.Ok(await _translator.GetTranslation("Match", "Updated"));
         }
 
         private static Video GetVideoToUpdate(Match match, UpdateMatchVideoCommand request)

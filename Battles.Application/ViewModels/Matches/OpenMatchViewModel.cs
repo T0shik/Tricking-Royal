@@ -14,7 +14,6 @@ namespace Battles.Application.ViewModels.Matches
     {
         public int Id { get; set; }
         public int Round { get; set; }
-        public string Status { get; set; }
         public int TurnType { get; set; }
         public bool CanJoin { get; set; }
         public bool CanClose { get; set; }
@@ -34,9 +33,9 @@ namespace Battles.Application.ViewModels.Matches
                                  Subtract(DateTime.Now).
                                  ConvertTimeSpan("Left"),
 
-                Status = match.Status.GetString(),
-                Mode = match.Mode.GetString(),
-                Surface = match.Surface.GetString(),
+                Status = (int) match.Status,
+                Mode = (int) match.Mode,
+                Surface = (int) match.Surface,
                 TurnType = (int) match.TurnType,
                 Chain = match.Chain.DefaultSplit(),
                 CanClose = match.MatchUsers.First().UserId == userId

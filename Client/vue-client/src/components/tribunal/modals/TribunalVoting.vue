@@ -1,7 +1,7 @@
 <template>
     <v-dialog :value="(evaluation ? 1 : 0)" persistent fullscreen transition="dialog-transition">
-        <v-layout class="custom-opacity" fill-height column align-center justify-center width="100%">
-            <component v-if="evaluation" :is="votingComponent" :evaluation="evaluation" @close="close"></component>
+        <v-layout class="custom-opacity" column width="100%">
+            <component v-if="evaluation" :is="votingComponent" :evaluation="evaluation" @close="close" />
         </v-layout>
     </v-dialog>
 </template>
@@ -20,7 +20,7 @@
         computed: {
             ...mapState('voting', ['evaluation']),
             votingComponent() {
-                if (this.evaluation === null) return;
+                if (this.evaluation == null) return;
                 return this.evaluation.flag ? Flag : Complete;
             }
         }

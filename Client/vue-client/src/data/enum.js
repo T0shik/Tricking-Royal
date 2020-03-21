@@ -5,16 +5,16 @@
     INITIAL_FINISHED: 2,
 };
 
-export const MATCH_MODE = {
-    ONE_UP: 'One Up',
-    THREE_ROUND_PASS: 'Three Round Pass',
-    COPY_CAT: 'Copy Cat',
-};
+export const MATCH_MODE_NAMES = [
+    'One Up', 
+    'Three Round Pass', 
+    'Copy Cat',
+];
 
-export const TURN_TYPE = {
-    ONE_UP: {},
-    THREE_ROUND_PASS: ['Blitz', 'Classic', 'Alternate'],
-    COPY_CAT: {},
+export const MATCH_MODE = {
+    ONE_UP: 0,
+    THREE_ROUND_PASS: 1,
+    COPY_CAT: 2,
 };
 
 export const MATCH_TYPES = {
@@ -40,5 +40,7 @@ export const LAYOUT = {
 export const STORAGE_KEYS = {
     NOTIFICATION_PROMPT: 'tr_notification_prompt_time',
     RULES_READ: 'tr_rules_read',
+    LANGUAGE: 'tr_language',
+    // LANGUAGE_PACK: 'tr_language_pack_',
     UPDATE_PROMPT: 'tr_update_app'
 };

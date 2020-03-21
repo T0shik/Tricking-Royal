@@ -1,6 +1,10 @@
 ﻿@model RegisterViewModel
+@inject Library Library
+
 @{
-    ViewData["Title"] = "Register";
+    var context = await Library.GetContext();
+    var tRegister = context.Read("Account", "Register");
+    ViewData["Title"] = tRegister;
 }
 
 <div class="hero">
@@ -9,30 +13,30 @@
             <div class="column is-4-desktop is-offset-4-desktop  is-6-tablet is-offset-3-tablet">
                 <h3 class="title is-font-rock has-text-weight-bold has-text-primary">Tricking Royal</h3>
                 <div class="box is-faded">
-                    <h3 class="title has-text-white">Register</h3>
+                    <h3 class="title has-text-white">@tRegister</h3>
                     <form asp-controller="Account" asp-action="Register" method="post" onsubmit="return submitForm(event);">
                         <input type="hidden" asp-for="@Model.ReturnUrl" value="@Model.ReturnUrl"/>
                         <div class="field">
                             <div class="control">
-                                <input class="input" asp-for="Email" autocomplete="email" placeholder="Email (trix_god@gmail.com)">
+                                <input class="input" asp-for="Email" autocomplete="email" placeholder="@context.Read("Account", "Email") (trix_god@gmail.com)">
                                 <span asp-validation-for="Email" class="help is-danger"></span>
                             </div>
                         </div>
                         <div class="field">
                             <div class="control">
-                                <input class="input" asp-for="Password" autocomplete="new-password" placeholder="Password...">
+                                <input class="input" asp-for="Password" autocomplete="new-password" placeholder="@context.Read("Account", "Password")">
                                 <span asp-validation-for="Password" class="help is-danger"></span>
                             </div>
                         </div>
                         <div class="field">
                             <div class="control">
-                                <input class="input" asp-for="ConfirmPassword" autocomplete="new-password" placeholder="Confirm Password...">
+                                <input class="input" asp-for="ConfirmPassword" autocomplete="new-password" placeholder="@context.Read("Account", "ConfirmPassword")">
                                 <span asp-validation-for="ConfirmPassword" class="help is-danger"></span>
                             </div>
                         </div>
                         <div class="field">
                             <div class="control">
-                                <input class="input" asp-for="NickName" autocomplete="nickname" placeholder="Username (trix_god)" autofocus="">
+                                <input class="input" asp-for="NickName" autocomplete="nickname" placeholder="@context.Read("Account", "Username") (trix_god)" autofocus="">
                                 <span asp-validation-for="NickName" class="help is-danger"></span>
                             </div>
                         </div>
@@ -40,11 +44,11 @@
                             <div class="help is-danger" asp-validation-summary="All"></div>
                         </div>
                         <div class="field">
-                            <input type="submit" class="button is-block is-info is-fullwidth" value="Register"/>
+                            <button type="submit" class="button is-block is-info is-fullwidth">@tRegister</button>
                         </div>
                     </form>
                     <div class="field">
-                        <a asp-controller="Account" asp-action="Login" asp-route-returnUrl="@Model.ReturnUrl" class="button">Back to Login</a>
+                        <a asp-controller="Account" asp-action="Login" asp-route-returnUrl="@Model.ReturnUrl" class="button">@context.Read("Account", "BackToLogin")</a>
                     </div>
                 </div>
             </div>

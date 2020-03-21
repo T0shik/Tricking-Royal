@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Battles.Application.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using Transmogrify;
 
 namespace Battles.Application.Services.Matches.Commands
 {
@@ -17,10 +18,12 @@ namespace Battles.Application.Services.Matches.Commands
     public class CreateMatchCommandHandler : IRequestHandler<CreateMatchCommand, BaseResponse>
     {
         private readonly AppDbContext _ctx;
+        private readonly ITranslator _translator;
 
-        public CreateMatchCommandHandler(AppDbContext ctx)
+        public CreateMatchCommandHandler(AppDbContext ctx, ITranslator translator)
         {
             _ctx = ctx;
+            _translator = translator;
         }
 
         public async Task<BaseResponse> Handle(CreateMatchCommand request, CancellationToken cancellationToken)
@@ -35,11 +38,12 @@ namespace Battles.Application.Services.Matches.Commands
             }
             catch (Exception e)
             {
-                return new BaseResponse(e.Message, false);
+                return BaseResponse.Fail(e.Message);
             }
 
             await _ctx.SaveChangesAsync(cancellationToken);
-            return new BaseResponse("Match Created", true);
+            return BaseResponse.Ok(await _translator.GetTranslation("Match", "Created"));
         }
+
     }
 }

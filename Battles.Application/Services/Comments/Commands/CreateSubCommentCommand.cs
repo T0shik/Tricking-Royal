@@ -12,11 +12,12 @@ using Battles.Application.Services.Notifications;
 using Battles.Enums;
 using Battles.Extensions;
 using Battles.Rules.Matches.Extensions;
+using Transmogrify;
 using static System.String;
 
 namespace Battles.Application.Services.Comments.Commands
 {
-    public class CreateSubCommentCommand : IRequest<CommentViewModel>
+    public class CreateSubCommentCommand : IRequest<BaseResponse<CommentViewModel>>
     {
         public string UserId { get; set; }
         [Required] public int CommentId { get; set; }
@@ -24,42 +25,45 @@ namespace Battles.Application.Services.Comments.Commands
         [Required] public string TaggedUser { get; set; }
     }
 
-    public class CreateSubCommentCommandHandler : IRequestHandler<CreateSubCommentCommand, CommentViewModel>
+    public class CreateSubCommentCommandHandler : IRequestHandler<CreateSubCommentCommand, BaseResponse<CommentViewModel>>
     {
         private readonly AppDbContext _ctx;
         private readonly INotificationQueue _notification;
+        private readonly ITranslator _translator;
 
         public CreateSubCommentCommandHandler(
             AppDbContext ctx,
-            INotificationQueue notification)
+            INotificationQueue notification,
+            ITranslator translator)
         {
             _ctx = ctx;
             _notification = notification;
+            _translator = translator;
         }
 
-        public async Task<CommentViewModel> Handle(CreateSubCommentCommand command, CancellationToken cancellationToken)
+        public async Task<BaseResponse<CommentViewModel>> Handle(CreateSubCommentCommand command, CancellationToken cancellationToken)
         {
             if (IsNullOrEmpty(command.Message))
             {
-                throw new Exception("Comment needs a message.");
+                return BaseResponse.Fail<CommentViewModel>(await _translator.GetTranslation("Comment","NeedMessage"));
             }
 
             var comment = await _ctx.Comments
-                .Include(x => x.Match)
-                .ThenInclude(x => x.MatchUsers)
-                .FirstAsync(x => x.Id == command.CommentId, cancellationToken: cancellationToken);
+                                    .Include(x => x.Match)
+                                    .ThenInclude(x => x.MatchUsers)
+                                    .FirstAsync(x => x.Id == command.CommentId, cancellationToken: cancellationToken);
 
             if (comment == null)
             {
-                throw new Exception("Main comment not found.");
+                return BaseResponse.Fail<CommentViewModel>(await _translator.GetTranslation("Comment", "NotFound"));
             }
 
             var user = await _ctx.UserInformation
-                .FirstAsync(x => x.Id == command.UserId, cancellationToken: cancellationToken);
+                                 .FirstAsync(x => x.Id == command.UserId, cancellationToken: cancellationToken);
 
             if (user == null)
             {
-                throw new UserNotFoundException();
+                return BaseResponse.Fail<CommentViewModel>(await _translator.GetTranslation("User", "NotFound"));
             }
 
             var subComment = new SubComment
@@ -71,28 +75,29 @@ namespace Battles.Application.Services.Comments.Commands
             };
 
             comment.SubComments.Add(subComment);
-
             await _ctx.SaveChangesAsync(cancellationToken);
 
             if (!IsNullOrEmpty(command.TaggedUser))
             {
-                var taggedUser = await _ctx.UserInformation
-                    .FirstAsync(x => x.DisplayName == command.TaggedUser, cancellationToken: cancellationToken);
+                var taggedUser =
+                    await _ctx.UserInformation.FirstAsync(x => x.DisplayName == command.TaggedUser, cancellationToken);
 
                 _notification.QueueNotification(
-                    $"{user.DisplayName} replied to your comment.",
+                    await _translator.GetTranslation("Notification","CommentReply", user.DisplayName),
                     new[] {comment.MatchId.ToString(), comment.Id.ToString(), subComment.Id.ToString()}.DefaultJoin(),
                     NotificationMessageType.SubComment,
                     new[] {taggedUser.Id});
             }
 
             _notification.QueueNotification(
-                $"{user.DisplayName} commented on your battle.",
+                await _translator.GetTranslation("Notification","CommentCreated", user.DisplayName),
                 new[] {comment.MatchId.ToString(), comment.Id.ToString(), subComment.Id.ToString()}.DefaultJoin(),
                 NotificationMessageType.SubComment,
                 comment.Match.GetOtherUserIds(user.Id));
 
-            return CommentViewModel.SubCommentProjection.Compile().Invoke(subComment);
+            
+            return BaseResponse.Ok(await _translator.GetTranslation("Comment","Created"),
+                                   CommentViewModel.CommentProjection.Compile().Invoke(comment));
         }
     }
 }

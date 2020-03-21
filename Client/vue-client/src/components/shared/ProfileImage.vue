@@ -1,9 +1,9 @@
 ﻿<template>
-    <v-avatar :size="imgSize" color="secondary">
+    <v-avatar class="overflow-visible" :size="imgSize" color="secondary">
         <img v-if="picture" :src="picture" alt="alt" :key="picture"/>
         <v-icon v-else>{{icons.user}}</v-icon>
         <span v-if="level" class="level">{{level}}</span>
-        <span class="winner" v-if="winner">
+        <span class="winner" :class="{'left': left, 'right': right}" v-if="winner">
             <v-icon>{{icons.winner}}</v-icon>
         </span>
     </v-avatar>
@@ -16,7 +16,6 @@
         props: {
             picture: {
                 required: true,
-                default: ""
             },
             level: {
                 required: false,
@@ -27,6 +26,14 @@
                 type: Number
             },
             winner: {
+                required: false,
+                type: Boolean
+            },
+            left: {
+                required: false,
+                type: Boolean
+            },
+            right: {
                 required: false,
                 type: Boolean
             }
@@ -61,10 +68,17 @@
     span.winner {
         position: absolute !important;
         top: -3px;
-        right: -6px;
-        font-size: 14px;
+        width: 24px;
+        
+        &.right {
+            right: -6px;
+        }
+        
+        &.left {
+            left: -6px;
+        }
 
-        .theme--dark.v-icon {
+        .v-icon {
             color: #ffe200;
         }
     }

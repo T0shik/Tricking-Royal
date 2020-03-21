@@ -9,12 +9,12 @@
                 loop="loop"
                 playsinline
                 @click="pause()"
-        ></video>
+        />
         <div class="play-button" @click="play()" v-if="!playing">
             <v-icon size="60px">{{icons.play}}</v-icon>
         </div>
         <div class="play-button" v-if="loading">
-            <v-progress-circular :size="50" color="primary" indeterminate></v-progress-circular>
+            <v-progress-circular :size="50" color="primary" indeterminate/>
         </div>
     </div>
 </template>
@@ -41,7 +41,10 @@
         data() {
             return {
                 playing: false,
-                loading: false
+                loading: false,
+                icons: {
+                    play: mdiPlay
+                }
             };
         },
         watch: {
@@ -85,13 +88,6 @@
                 this.$refs.video.pause();
             }
         },
-        computed: {
-            icons() {
-                return {
-                    play: mdiPlay
-                }
-            }
-        }
     };
 </script>
 

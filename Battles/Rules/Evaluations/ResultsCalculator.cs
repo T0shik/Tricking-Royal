@@ -39,7 +39,7 @@ namespace Battles.Rules.Evaluations
         }
 
         private static int GetPercent(int part, int total) =>
-            Convert.ToInt32(Math.Round((part * 100) / (double) total, MidpointRounding.AwayFromZero));
+            Convert.ToInt32(Math.Round(part * 100.0 / total, MidpointRounding.AwayFromZero));
 
         public int GetHostVotes()
         {
@@ -47,6 +47,16 @@ namespace Battles.Rules.Evaluations
         }
 
         public int GetOpponentVotes()
+        {
+            return _opponentVotes;
+        }
+        
+        public int GetPunishVotes()
+        {
+            return _hostVotes;
+        }
+
+        public int GetForgiveVotes()
         {
             return _opponentVotes;
         }

@@ -12,6 +12,7 @@ using Battles.Application.ViewModels;
 using Battles.Enums;
 using Battles.Extensions;
 using Battles.Models;
+using Transmogrify;
 
 namespace Battles.Application.Services.Matches.Commands
 {
@@ -25,13 +26,16 @@ namespace Battles.Application.Services.Matches.Commands
     {
         private readonly AppDbContext _ctx;
         private readonly INotificationQueue _notifications;
+        private readonly ITranslator _translator;
 
         public PassRoundCommandHandler(
             AppDbContext ctx,
-            INotificationQueue notifications)
+            INotificationQueue notifications,
+            ITranslator translator)
         {
             _ctx = ctx;
             _notifications = notifications;
+            _translator = translator;
         }
 
         public async Task<BaseResponse> Handle(PassRoundCommand request, CancellationToken cancellationToken)
@@ -42,14 +46,10 @@ namespace Battles.Application.Services.Matches.Commands
                             .FirstOrDefault(x => x.Id == request.MatchId);
 
             if (match == null)
-            {
-                return new BaseResponse("Match not found.", false);
-            }
+                return BaseResponse.Fail(await _translator.GetTranslation("Match", "NotFound"));
 
             if (!match.CanPass(request.UserId))
-            {
-                return new BaseResponse("Not allowed to pass.", false);
-            }
+                return BaseResponse.Fail(await _translator.GetTranslation("Match", "CantPass"));
 
             var user = match.GetUser(request.UserId);
 
@@ -77,22 +77,28 @@ namespace Battles.Application.Services.Matches.Commands
 
             if (finished)
             {
-                _notifications.QueueNotification(
-                                                 $"{user.User.DisplayName} passed round {match.Round}, you won!",
+                var notificationMessage =
+                    await _translator.GetTranslation("Notification", "PassedAndWon", user.User.DisplayName,
+                                                     match.Round.ToString());
+
+                _notifications.QueueNotification(notificationMessage,
                                                  new[] {match.Id.ToString()}.DefaultJoin(),
                                                  NotificationMessageType.MatchHistory,
                                                  match.GetOtherUserIds(user.UserId));
             }
             else
             {
-                _notifications.QueueNotification(
-                                                 $"{user.User.DisplayName} passed round {match.Round}.",
+                var notificationMessage =
+                    await _translator.GetTranslation("Notification", "Passed", user.User.DisplayName,
+                                                     match.Round.ToString());
+
+                _notifications.QueueNotification(notificationMessage,
                                                  new[] {match.Id.ToString()}.DefaultJoin(),
                                                  NotificationMessageType.MatchActive,
                                                  match.GetOtherUserIds(user.UserId));
             }
-
-            return new BaseResponse("Round passed.", true);
+            
+            return BaseResponse.Ok(await _translator.GetTranslation("Match", "Passed"));
         }
     }
 }

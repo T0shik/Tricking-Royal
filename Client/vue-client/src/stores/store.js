@@ -27,33 +27,33 @@ axios.interceptors.response.use(
     response => response,
     error => {
         const {config, response: {status}} = error;
-        Logger.log(error, config, status);
+        Logger.error("[store.js]", error, config, status);
 
         if (status === 401) {
             if (!store.getters.REFRESHING_TOKEN) {
                 store.commit('UPDATE_TOKEN_ACTIVITY', true);
-                Logger.log("starting silent refresh on startup");
+                Logger.log("[store.js]", "starting silent refresh on startup");
                 return store.state.userMgr.signinSilent().then((user) => {
                     if (user) {
-                        Logger.log("silent refresh complete, success refreshing token.");
+                        Logger.log("[store.js]", "silent refresh complete, success refreshing token.");
 
                         let bearerToken = `bearer ${user.access_token}`;
                         axios.defaults.headers.common['Authorization'] = bearerToken;
                         config.headers['Authorization'] = bearerToken;
                         return axios.request(config);
                     } else {
-                        Logger.log("silent refresh complete, failed signing out.");
+                        Logger.log("[store.js]", "silent refresh complete, failed signing out.");
                         store.commit("SIGN_OUT");
                         store.commit('layout/setLayout', LAYOUT.LOADING, {root: true});
 
                         router.push('landing');
-                        Logger.log("do we reach this ting or we are redirected back to auth.");
+                        Logger.log("[store.js]", "do we reach this ting or we are redirected back to auth.");
                     }
                 })
                     .catch(e => {
-                        Logger.log("Failed to re-authenticate.", e);
+                        Logger.log("[store.js]", "Failed to re-authenticate.", e);
                         if (e.error === 'login_required') {
-                            store.state.userMgr.signinRedirect();
+                            store.dispatch("SIGN_IN")
                         }
                     })
                     .then(result => {
@@ -164,7 +164,11 @@ export const store = new Vuex.Store({
             commit('layout/setLayout', LAYOUT.LOADING, {root: true});
         },
         SIGN_IN({state}) {
-            state.userMgr.signinRedirect();
+            let lang = document.querySelector('html').getAttribute("lang");
+            Logger.log("[store.js]", "current language:", lang);
+            state.userMgr.signinRedirect({
+                extraQueryParams: {lang}
+            })
         }
     },
     modules: {

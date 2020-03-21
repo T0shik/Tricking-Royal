@@ -1,6 +1,6 @@
 <template>
-    <v-snackbar :value="display" top multi-line right 
-                @input="hide" @click="hide" :timeout="timeout">
+    <v-snackbar :value="display" top multi-line right
+                @input="hide" @click="hide" :timeout="3000">
         <span class="pr-2">{{ message }}</span>
         <v-icon :class="iconType.color">{{iconType.icon}}</v-icon>
     </v-snackbar>
@@ -11,11 +11,9 @@
     import {mdiAlertBox, mdiCheckCircle, mdiShieldAlert} from "@mdi/js";
 
     export default {
-        methods: {
-            ...mapMutations({
-                hide: "HIDE_POPUP"
-            })
-        },
+        methods: mapMutations({
+            hide: "HIDE_POPUP"
+        }),
         computed: {
             ...mapState({
                 display: state => state.popup.display,
@@ -33,9 +31,6 @@
                     default:
                         return {color: '', icon: null}
                 }
-            },
-            timeout() {
-                return this.progress ? 0 : 3000;
             }
         }
     };

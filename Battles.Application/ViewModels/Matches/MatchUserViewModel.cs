@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
+using Battles.Enums;
 using Battles.Models;
 
 namespace Battles.Application.ViewModels.Matches
@@ -20,7 +21,7 @@ namespace Battles.Application.ViewModels.Matches
             {
                 DisplayName = matchUser.User.DisplayName,
                 Picture = matchUser.User.Picture,
-                Skill = matchUser.User.Skill.ToString(),
+                Skill = matchUser.User.Skill.ToString().ToLower(),
                 Level = matchUser.User.Level,
                 Index = matchUser.Index,
                 Role = (int) matchUser.Role,

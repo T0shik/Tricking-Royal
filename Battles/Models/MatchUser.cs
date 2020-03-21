@@ -18,5 +18,6 @@ namespace Battles.Models
         public bool CanFlag { get; set; }
         public bool CanPass { get; set; }
         public bool CanLockIn { get; set; }
+        public bool Freeze { get; set; }
     }
 }

@@ -1,6 +1,9 @@
-﻿@model IndexViewModel
+﻿@inject Library Library
+
 @{
-    ViewData["Title"] = "Manage your account";
+    var context = await Library.GetContext();
+    var title = context.Read("Manage", "Title");
+    ViewData["Title"] = title;
     var message = ViewData["StatusMessage"].ToString();
 }
 
@@ -17,12 +20,12 @@
         <div class="has-text-centered">
             <div class="column is-4-desktop is-offset-4-desktop  is-6-tablet is-offset-3-tablet">
                 <div class="box is-faded">
-                    <h3 class="title has-text-white">Manage Account</h3>
+                    <h3 class="title has-text-white">@title</h3>
                     <div class="field">
-                        <a class="button is-fullwidth is-large" asp-action="ChangePassword">Change Password</a>
+                        <a class="button is-fullwidth is-large" asp-action="ChangePassword">@context.Read("Manage", "ChangePassword")</a>
                     </div>
                     <div class="field">
-                        <a class="button is-medium" asp-controller="Home" asp-action="Index">Back</a>
+                        <a class="button is-medium" asp-controller="Home" asp-action="Index">@context.Read("Shared", "Back")</a>
                     </div>
                 </div>
             </div>

@@ -5,8 +5,8 @@
             @click="startComment({id: matchId, tag: ''})"
     >
         <div class="comment-tag px-2 py-1" v-if="taggedUser">
-            Replying to {{taggedUser}}
-            <v-btn text small>clear</v-btn>
+            {{$t('comments.replyingTo')}} {{taggedUser}}
+            <v-btn text small>{{$t('misc.clear')}}</v-btn>
         </div>
         <v-text-field
                 class="px-2 py-1"
@@ -37,11 +37,9 @@
                 type: Number
             }
         },
-        data() {
-            return {
-                message: ""
-            };
-        },
+        data: () => ({
+            message: ""
+        }),
         watch: {
             isCommenting: function (v) {
                 if (v) this.$refs.comment.focus();
@@ -82,7 +80,7 @@
         },
         computed: {
             commentLabel() {
-                return this.taggedUser || "Comment";
+                return this.taggedUser || this.$t('comments.comment');
             },
             activeClass() {
                 return this.isCommenting ? "active" : "";
@@ -110,6 +108,7 @@
 
 <style lang="scss" scoped>
     @import "../../../styles/colors";
+
     .comment-input.active {
         @media screen and (max-width: 900px) {
             box-shadow: 0 0 4px 0 #777;

@@ -173,6 +173,8 @@ namespace TrickingRoyal.Database.Migrations.App
 
                     b.Property<bool>("CanUpdate");
 
+                    b.Property<bool>("Freeze");
+
                     b.Property<int>("Index");
 
                     b.Property<int>("Points");
