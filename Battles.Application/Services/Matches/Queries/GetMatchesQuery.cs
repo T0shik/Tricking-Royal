@@ -9,6 +9,7 @@ using Battles.Rules.Matches.Extensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using TrickingRoyal.Database;
+using TrickingRoyal.Database.Extensions;
 
 namespace Battles.Application.Services.Matches.Queries
 {

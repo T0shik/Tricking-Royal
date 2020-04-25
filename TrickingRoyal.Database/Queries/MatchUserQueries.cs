@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 using Battles.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace TrickingRoyal.Database
+namespace TrickingRoyal.Database.Queries
 {
-    public static class MatchUserQueriesExtensions
+    public static class MatchUserQueries
     {
         public static Task<bool> CanGo(this AppDbContext @this, int matchId, string userId)
         {

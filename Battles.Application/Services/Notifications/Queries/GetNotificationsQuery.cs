@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Battles.Application.Extensions;
 using Microsoft.EntityFrameworkCore;
+using TrickingRoyal.Database.Extensions;
 
 namespace Battles.Application.Services.Notifications.Queries
 {

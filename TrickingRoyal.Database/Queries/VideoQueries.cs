@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 using Battles.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace TrickingRoyal.Database
+namespace TrickingRoyal.Database.Queries
 {
-    public static class VideoQueriesExtensions
+    public static class VideoQueries
     {
         public static Task<Video> GetVideo(this AppDbContext @this, int matchId, string userId)
         {

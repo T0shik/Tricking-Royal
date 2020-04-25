@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Battles.Application.Extensions;
 using Battles.Models;
 using Transmogrify;
+using TrickingRoyal.Database.Queries;
 
 namespace Battles.Application.Services.Evaluations.Commands
 {

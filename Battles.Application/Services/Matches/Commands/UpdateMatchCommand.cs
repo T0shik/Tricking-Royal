@@ -13,6 +13,7 @@ using Battles.Enums;
 using Battles.Extensions;
 using Battles.Models;
 using Transmogrify;
+using TrickingRoyal.Database.Queries;
 
 namespace Battles.Application.Services.Matches.Commands
 {

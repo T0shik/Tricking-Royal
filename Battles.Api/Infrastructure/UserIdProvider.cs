@@ -8,7 +8,7 @@ namespace Battles.Api.Infrastructure
     {
         public string GetUserId(HubConnectionContext connection)
         {
-            return connection.User?.Claims?.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
+            return connection.User?.Claims?.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
         }
     }
 }

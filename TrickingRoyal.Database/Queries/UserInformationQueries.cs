@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-namespace TrickingRoyal.Database
+namespace TrickingRoyal.Database.Queries
 {
     public static class UserInformationQueries
     {

@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using Battles.Application.ViewModels;
+using TrickingRoyal.Database.Queries;
 
 namespace Battles.Application.Services.Users.Queries
 {

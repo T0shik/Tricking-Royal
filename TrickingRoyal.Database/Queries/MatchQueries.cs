@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 using Battles.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace TrickingRoyal.Database
+namespace TrickingRoyal.Database.Queries
 {
-    public static class MatchQueriesExtensions
+    public static class MatchQueries
     {
         public static Task<bool> MatchIs(this AppDbContext @this, int matchId, Func<Match, bool> fn)
         {

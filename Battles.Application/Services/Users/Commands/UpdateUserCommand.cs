@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Battles.Application.Services.Users.Queries;
 using Battles.Enums;
 using Transmogrify;
+using TrickingRoyal.Database.Queries;
 
 namespace Battles.Application.Services.Users.Commands
 {

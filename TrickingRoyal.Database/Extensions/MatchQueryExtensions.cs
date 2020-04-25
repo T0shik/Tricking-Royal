@@ -2,9 +2,9 @@
 using Battles.Models;
 using static System.String;
 
-namespace Battles.Application.Extensions
+namespace TrickingRoyal.Database.Extensions
 {
-    public static class MatchExtensions
+    public static class MatchQueryExtensions
     {
         public static IQueryable<Match> OrderByDate(this IQueryable<Match> @this) =>
             @this.OrderByDescending(m => m.LastUpdate.Date).ThenByDescending(m => m.LastUpdate.TimeOfDay);

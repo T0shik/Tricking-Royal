@@ -8,6 +8,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Transmogrify;
 using TrickingRoyal.Database;
+using TrickingRoyal.Database.Queries;
 
 namespace Battles.Application.Services.Matches.Commands
 {

@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace Battles.Application.Extensions
+namespace TrickingRoyal.Database.Extensions
 {
     public static class QueryExtensions
     {
