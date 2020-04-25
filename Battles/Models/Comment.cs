@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Battles.Domain.Models;
 
 namespace Battles.Models
 {

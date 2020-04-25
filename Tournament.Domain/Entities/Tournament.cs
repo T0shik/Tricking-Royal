@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Tournament.Domain.Models
+namespace Tournaments.Entities
 {
     public class Tournament
     {

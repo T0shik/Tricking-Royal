@@ -15,5 +15,12 @@ namespace TrickingRoyal.Database
                  .Where(x => x.Id == userId)
                  .Select(x => x.Language)
                  .FirstAsync(ct);
+
+        public static bool NameTaken(
+            this AppDbContext @this,
+            string name,
+            string userId) =>
+            @this.UserInformation
+                 .Any(x => x.DisplayName == name && x.Id != userId);
     }
 }

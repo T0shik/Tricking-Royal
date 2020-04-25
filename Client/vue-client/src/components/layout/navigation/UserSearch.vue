@@ -15,8 +15,8 @@
     >
         <template v-slot:item="data">
             <template>
-                <div class="d-flex align-center justify-center w100">
-                    <ProfileImage :picture="data.item.picture" :size="'36px'" />
+                <div class="d-flex align-center justify-center fullwidth">
+                    <ProfileImage :picture="data.item.picture" :size="36" />
                     <span class="ml-2 body-2">{{data.item.displayName}}</span>
                     <span class="level body-2">{{data.item.level}}</span>
                 </div>
@@ -74,10 +74,6 @@
 <style scoped lang="scss">
     .mw300 {
         max-width: 300px;
-    }
-
-    .w100 {
-        width: 100%;
     }
 
     .level {

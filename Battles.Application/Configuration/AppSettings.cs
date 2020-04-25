@@ -1,4 +1,4 @@
-﻿namespace Battles.Configuration
+﻿namespace Battles.Application.Configuration
 {
     public class AppSettings
     {

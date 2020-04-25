@@ -10,9 +10,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Battles.Application.Services.Notifications.Queries
 {
-    public class GetNotificationsQuery : IRequest<IEnumerable<NotificationsViewModel>>
+    public class GetNotificationsQuery : BaseRequest, IRequest<IEnumerable<NotificationsViewModel>>
     {
-        public string UserId { get; set; }
         public int Index { get; set; }
     }
 

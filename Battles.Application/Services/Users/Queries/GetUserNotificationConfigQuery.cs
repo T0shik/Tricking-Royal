@@ -9,9 +9,8 @@ using TrickingRoyal.Database;
 
 namespace Battles.Application.Services.Users.Queries
 {
-    public class GetUserNotificationConfigQuery : IRequest<NotificationConfigViewModel>
+    public class GetUserNotificationConfigQuery : BaseRequest, IRequest<NotificationConfigViewModel>
     {
-        public string UserId { get; set; }
         public NotificationConfigurationType ConfigurationType { get; set; }
     }
 

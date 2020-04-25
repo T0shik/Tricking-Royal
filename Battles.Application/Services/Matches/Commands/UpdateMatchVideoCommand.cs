@@ -14,16 +14,15 @@ using TrickingRoyal.Database;
 
 namespace Battles.Application.Services.Matches.Commands
 {
-    public class UpdateMatchVideoCommand : IRequest<BaseResponse>
+    public class UpdateMatchVideoCommand : BaseRequest, IRequest<Response>
     {
         public int MatchId { get; set; }
-        public string UserId { get; set; }
         public string Video { get; set; }
         public string Thumb { get; set; }
         public int Index { get; set; }
     }
 
-    public class UpdateMatchVideoHandler : IRequestHandler<UpdateMatchVideoCommand, BaseResponse>
+    public class UpdateMatchVideoHandler : IRequestHandler<UpdateMatchVideoCommand, Response>
     {
         private readonly AppDbContext _ctx;
         private readonly Routing _routing;
@@ -39,7 +38,7 @@ namespace Battles.Application.Services.Matches.Commands
             _library = library;
         }
 
-        public async Task<BaseResponse> Handle(UpdateMatchVideoCommand request, CancellationToken cancellationToken)
+        public async Task<Response> Handle(UpdateMatchVideoCommand request, CancellationToken cancellationToken)
         {
             var translationContext = await _library.GetContext();
 
@@ -49,10 +48,10 @@ namespace Battles.Application.Services.Matches.Commands
                             .FirstOrDefault(x => x.Id == request.MatchId);
 
             if (match == null)
-                return BaseResponse.Fail(translationContext.Read("Match", "NotFound"));
+                return Response.Fail(translationContext.Read("Match", "NotFound"));
 
             if (!match.CanUpdate(request.UserId))
-                return BaseResponse.Fail(translationContext.Read("Match", "CantUpdate"));
+                return Response.Fail(translationContext.Read("Match", "CantUpdate"));
 
             var videoToUpdate = GetVideoToUpdate(match, request);
 
@@ -63,7 +62,7 @@ namespace Battles.Application.Services.Matches.Commands
 
             await _ctx.SaveChangesAsync(cancellationToken);
 
-            return BaseResponse.Ok(translationContext.Read("Match", "Updated"));
+            return Response.Ok(translationContext.Read("Match", "Updated"));
         }
 
         private static Video GetVideoToUpdate(Match match, UpdateMatchVideoCommand request)

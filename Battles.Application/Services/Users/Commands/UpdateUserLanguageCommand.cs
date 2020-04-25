@@ -11,14 +11,12 @@ using Transmogrify;
 
 namespace Battles.Application.Services.Users.Commands
 {
-    public class UpdateUserLanguageCommand : IRequest<BaseResponse>
+    public class UpdateUserLanguageCommand : BaseRequest, IRequest<Response>
     {
         [Required] public string Language { get; set; }
-
-        public string UserId { get; set; }
     }
 
-    public class UpdateUserLanguageCommandHandler : IRequestHandler<UpdateUserLanguageCommand, BaseResponse>
+    public class UpdateUserLanguageCommandHandler : IRequestHandler<UpdateUserLanguageCommand, Response>
     {
         private readonly AppDbContext _dbContext;
         private readonly Routing _routing;
@@ -34,20 +32,20 @@ namespace Battles.Application.Services.Users.Commands
             _library = library;
         }
 
-        public async Task<BaseResponse> Handle(UpdateUserLanguageCommand command, CancellationToken cancellationToken)
+        public async Task<Response> Handle(UpdateUserLanguageCommand command, CancellationToken cancellationToken)
         {
             var translationContext = await _library.GetContext();
 
             var user = _dbContext.UserInformation.FirstOrDefault(x => x.Id == command.UserId);
 
             if (user == null)
-                return BaseResponse.Fail(translationContext.Read("User", "NotFound"));
+                return Response.Fail(translationContext.Read("User", "NotFound"));
 
             user.Language = command.Language;
 
             await _dbContext.SaveChangesAsync(cancellationToken);
 
-            return BaseResponse.Ok(translationContext.Read("User", "LanguageUpdated"));
+            return Response.Ok(translationContext.Read("User", "LanguageUpdated"));
         }
     }
 }

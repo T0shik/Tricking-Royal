@@ -8,13 +8,12 @@ using TrickingRoyal.Database;
 
 namespace Battles.Application.Services.Users.Commands
 {
-    public class LevelUpCommand : IRequest<BaseResponse>
+    public class LevelUpCommand : BaseRequest, IRequest<Response>
     {
         public int Type { get; set; }
-        public string UserId { get; set; }
     }
     
-    public class LevelUpCommandHandler : IRequestHandler<LevelUpCommand, BaseResponse>
+    public class LevelUpCommandHandler : IRequestHandler<LevelUpCommand, Response>
     {
         private readonly AppDbContext _ctx;
         private readonly Library _library;
@@ -25,14 +24,14 @@ namespace Battles.Application.Services.Users.Commands
             _library = library;
         }
         
-        public async Task<BaseResponse> Handle(LevelUpCommand request, CancellationToken cancellationToken)
+        public async Task<Response> Handle(LevelUpCommand request, CancellationToken cancellationToken)
         {
             var translationContext = await _library.GetContext();
 
             var user = _ctx.UserInformation.FirstOrDefault(x => x.Id == request.UserId);
 
             if (user == null)
-                return BaseResponse.Fail(translationContext.Read("User", "NotFound"));
+                return Response.Fail(translationContext.Read("User", "NotFound"));
             
             switch ((PerkType) request.Type)
             {
@@ -46,14 +45,14 @@ namespace Battles.Application.Services.Users.Commands
                     user.VotingPower++;
                     break;
                 default:
-                    return BaseResponse.Fail(translationContext.Read("User", "InvalidPerk"));
+                    return Response.Fail(translationContext.Read("User", "InvalidPerk"));
             }
 
             user.LevelUpPoints--;
 
             await _ctx.SaveChangesAsync(cancellationToken);
             
-            return BaseResponse.Ok(translationContext.Read("User", "LeveledUp"));
+            return Response.Ok(translationContext.Read("User", "LeveledUp"));
         }
     }
 

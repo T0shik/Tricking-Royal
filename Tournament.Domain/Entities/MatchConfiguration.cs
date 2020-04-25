@@ -1,6 +1,6 @@
 ﻿using Battles.Enums;
 
-namespace Tournament.Domain.Models
+namespace Tournaments.Entities
 {
     public class MatchConfiguration
     {

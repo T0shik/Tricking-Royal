@@ -16,13 +16,12 @@ using Transmogrify;
 
 namespace Battles.Application.Services.Matches.Commands
 {
-    public class PassRoundCommand : IRequest<BaseResponse>
+    public class PassRoundCommand : BaseRequest, IRequest<Response>
     {
         public int MatchId { get; set; }
-        public string UserId { get; set; }
     }
 
-    public class PassRoundCommandHandler : IRequestHandler<PassRoundCommand, BaseResponse>
+    public class PassRoundCommandHandler : IRequestHandler<PassRoundCommand, Response>
     {
         private readonly AppDbContext _ctx;
         private readonly INotificationQueue _notifications;
@@ -38,7 +37,7 @@ namespace Battles.Application.Services.Matches.Commands
             _library = library;
         }
 
-        public async Task<BaseResponse> Handle(PassRoundCommand request, CancellationToken cancellationToken)
+        public async Task<Response> Handle(PassRoundCommand request, CancellationToken cancellationToken)
         {
             var translationContext = await _library.GetContext();
 
@@ -48,10 +47,10 @@ namespace Battles.Application.Services.Matches.Commands
                             .FirstOrDefault(x => x.Id == request.MatchId);
 
             if (match == null)
-                return BaseResponse.Fail(translationContext.Read("Match", "NotFound"));
+                return Response.Fail(translationContext.Read("Match", "NotFound"));
 
             if (!match.CanPass(request.UserId))
-                return BaseResponse.Fail(translationContext.Read("Match", "CantPass"));
+                return Response.Fail(translationContext.Read("Match", "CantPass"));
 
             var user = match.GetUser(request.UserId);
 
@@ -100,7 +99,7 @@ namespace Battles.Application.Services.Matches.Commands
                                                  match.GetOtherUserIds(user.UserId));
             }
             
-            return BaseResponse.Ok(translationContext.Read("Match", "Passed"));
+            return Response.Ok(translationContext.Read("Match", "Passed"));
         }
     }
 }

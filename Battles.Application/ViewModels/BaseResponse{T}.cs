@@ -1,11 +1,11 @@
 ﻿namespace Battles.Application.ViewModels
 {
-    public class BaseResponse<T> : BaseResponse
+    public class Response<T> : Response
     {
-        public BaseResponse(string message)
+        public Response(string message)
             : base(message) { }
 
-        public BaseResponse(string message, T value)
+        public Response(string message, T value)
             : base(message, true)
         {
             Value = value;

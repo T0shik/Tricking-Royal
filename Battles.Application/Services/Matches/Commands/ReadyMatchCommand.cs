@@ -13,13 +13,12 @@ using Transmogrify;
 
 namespace Battles.Application.Services.Matches.Commands
 {
-    public class ReadyMatchCommand : IRequest<BaseResponse>
+    public class ReadyMatchCommand : BaseRequest, IRequest<Response>
     {
         public int MatchId { get; set; }
-        public string UserId { get; set; }
     }
 
-    public class ReadyMatchCommandHandler : IRequestHandler<ReadyMatchCommand, BaseResponse>
+    public class ReadyMatchCommandHandler : IRequestHandler<ReadyMatchCommand, Response>
     {
         private readonly AppDbContext _ctx;
         private readonly Library _library;
@@ -30,7 +29,7 @@ namespace Battles.Application.Services.Matches.Commands
             _library = library;
         }
 
-        public async Task<BaseResponse> Handle(ReadyMatchCommand request, CancellationToken cancellationToken)
+        public async Task<Response> Handle(ReadyMatchCommand request, CancellationToken cancellationToken)
         {
             var translationContext = await _library.GetContext();
 
@@ -39,12 +38,12 @@ namespace Battles.Application.Services.Matches.Commands
                             .FirstOrDefault(x => x.Id == request.MatchId);
 
             if (match == null)
-                return BaseResponse.Fail(translationContext.Read("Match", "NotFound"));
+                return Response.Fail(translationContext.Read("Match", "NotFound"));
 
             var user = match.GetUser(request.UserId);
 
             if (!user.CanLockIn)
-                return BaseResponse.Fail(translationContext.Read("Match", "CantLockIn"));
+                return Response.Fail(translationContext.Read("Match", "CantLockIn"));
 
             user.SetGoFlagUpdatePassLock(false, false, false, ready: true);
 
@@ -62,7 +61,7 @@ namespace Battles.Application.Services.Matches.Commands
 
             await _ctx.SaveChangesAsync(cancellationToken);
 
-            return BaseResponse.Ok(translationContext.Read("Match", "LockedIn"));
+            return Response.Ok(translationContext.Read("Match", "LockedIn"));
         }
     }
 }

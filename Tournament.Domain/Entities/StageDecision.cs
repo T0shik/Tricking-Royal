@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Battles.Models;
 
-namespace Tournament.Domain.Models
+namespace Tournaments.Entities
 {
     public class StageDecision
     {

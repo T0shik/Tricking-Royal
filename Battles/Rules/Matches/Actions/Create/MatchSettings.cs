@@ -5,6 +5,7 @@ namespace Battles.Rules.Matches.Actions.Create
 {
     public class MatchSettings
     {
+        public string UserId { get; set; }
         public Mode Mode { get; set; }
         public TurnType TurnType { get; set; }
         public Surface Surface { get; set; }

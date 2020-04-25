@@ -264,12 +264,8 @@
                     function () {
                         axios
                             .get(`/users/${v}/can-use`)
-                            .then(({status}) => {
-                                if (status === 200) {
-                                    this.validName = true;
-                                } else if (status === 204) {
-                                    this.validName = false;
-                                }
+                            .then(({data}) => {
+                                this.validName = data.value;
                                 this.$refs.form.validate();
                             })
                             .catch(() => {

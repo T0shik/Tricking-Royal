@@ -3,20 +3,21 @@ using Battles.Application.Services.Likes.Commands;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Battles.Application.ViewModels;
+using MediatR;
 
 namespace Battles.Api.Controllers
 {
     [Authorize]
-    [Route("[controller]")]
-    [Produces("application/json")]
     public class LikesController : BaseController
     {
-        [HttpPost("{id}")]
-        public async Task<IActionResult> LikeMatch(int id)
-        {
-            var result = await Mediator.Send(new LikeMatchCommand { MatchId = id, UserId = UserId });
+        public LikesController(IMediator mediator)
+            : base(mediator) { }
 
-            return Ok(result);
+        [HttpPost("{matchId}")]
+        public Task<Response> LikeMatch([FromRoute] LikeMatchCommand command)
+        {
+            return Mediator.Send(command);
         }
     }
 }

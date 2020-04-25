@@ -18,4 +18,13 @@
         <ProjectReference Include="..\TrickingRoyal.Database\TrickingRoyal.Database.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Content Update="Views\Account\SendCode.cshtml">
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </Content>
+      <Content Update="Views\Account\VerifyCode.cshtml">
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </Content>
+    </ItemGroup>
+
 </Project>

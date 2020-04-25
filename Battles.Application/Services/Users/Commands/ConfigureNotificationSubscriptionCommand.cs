@@ -8,10 +8,8 @@ using Battles.Models;
 
 namespace Battles.Application.Services.Users.Commands
 {
-    public class ConfigureNotificationSubscriptionCommand : IRequest<int>
+    public class ConfigureNotificationSubscriptionCommand : BaseRequest, IRequest<int>
     {
-        public string UserId { get; set; }
-        public string UserEmail { get; set; }
         public string NotificationId { get; set; }
         public int Type { get; set; }
         public bool Active { get; set; }

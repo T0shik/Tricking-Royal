@@ -11,9 +11,8 @@ using Transmogrify;
 
 namespace Battles.Application.Services.Users.Commands
 {
-    public class UpdateUserCommand : IRequest<BaseResponse>
+    public class UpdateUserCommand : BaseRequest, IRequest<Response>
     {
-        public string UserId { get; set; }
         [Required] [StringLength(15)] public string DisplayName { get; set; }
 
         [Required] public int Skill { get; set; }
@@ -30,23 +29,20 @@ namespace Battles.Application.Services.Users.Commands
         public string Language { get; set; }
     }
 
-    public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, BaseResponse>
+    public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, Response>
     {
         private readonly AppDbContext _ctx;
-        private readonly IMediator _mediator;
         private readonly Library _library;
 
         public UpdateUserCommandHandler(
             AppDbContext ctx,
-            IMediator mediator,
             Library library)
         {
             _ctx = ctx;
-            _mediator = mediator;
             _library = library;
         }
 
-        public async Task<BaseResponse> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
+        public async Task<Response> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
             var translationContext = await _library.GetContext();
 
@@ -54,18 +50,13 @@ namespace Battles.Application.Services.Users.Commands
                            .FirstOrDefault(x => x.Id == request.UserId);
 
             if (user == null)
-                return BaseResponse.Fail(translationContext.Read("User", "NotFound"));
+                return Response.Fail(translationContext.Read("User", "NotFound"));
 
             var newDisplayName = request.DisplayName.Replace(" ", "_");
 
-            var nameAvailable = await _mediator.Send(new UserNameAvailableQuery
-            {
-                DisplayName = newDisplayName,
-                UserId = request.UserId
-            }, cancellationToken);
-
-            if (!nameAvailable)
-                return BaseResponse.Fail(translationContext.Read("User", "UsernameTaken"));
+            var nameTaken = _ctx.NameTaken(request.DisplayName, request.UserId);
+            if (nameTaken)
+                return Response.Fail(translationContext.Read("User", "UsernameTaken"));
 
             user.DisplayName = newDisplayName;
             user.Skill = (Skill) request.Skill;
@@ -81,7 +72,7 @@ namespace Battles.Application.Services.Users.Commands
             if (_ctx.ChangeTracker.HasChanges())
                 await _ctx.SaveChangesAsync(cancellationToken);
 
-            return BaseResponse.Ok(translationContext.Read("User", "ProfileSaved"));
+            return Response.Ok(translationContext.Read("User", "ProfileSaved"));
         }
     }
 }

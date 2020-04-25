@@ -1,7 +1,6 @@
 ﻿using System.IO;
 using System.Net.Http.Headers;
 using Battles.Application.Services.Users.Queries;
-using Battles.Configuration;
 using Hangfire;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -15,27 +14,29 @@ using Battles.Api.Infrastructure;
 using Battles.Api.Workers;
 using Battles.Api.Workers.MatchUpdater;
 using Battles.Api.Workers.Notifications.Settings;
+using Battles.Application.Configuration;
 using Battles.Application.Services.Evaluations.Commands;
 using Battles.Application.Services.Matches.Commands;
 using Battles.Application.SubServices;
 using Battles.Shared;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NETCore.MailKit.Extensions;
 using NETCore.MailKit.Infrastructure.Internal;
-using Transmogrify.DependencyInjection.Newtonsoft;
+using Transmogrify.DependencyInjection.Json;
 using TrickingRoyal.Database;
 
 namespace Battles.Api
 {
     public class Startup
     {
-        private readonly IHostingEnvironment _env;
+        private readonly IWebHostEnvironment _env;
         private readonly IConfiguration _config;
         private readonly OAuth _oAuth;
 
-        public Startup(IHostingEnvironment env, IConfiguration config)
+        public Startup(IWebHostEnvironment env, IConfiguration config)
         {
             _env = env;
             _config = config;
@@ -82,7 +83,7 @@ namespace Battles.Api
             SetupCors(services);
 
             services.AddHttpContextAccessor();
-            services.AddNewtonsoftTransmogrify(config =>
+            services.AddTransmogrify(config =>
             {
                 config.DefaultLanguage = "en";
                 config.LanguagePath = Path.Combine(_env.ContentRootPath, "Languages");
@@ -92,7 +93,6 @@ namespace Battles.Api
             services.AddBattlesServices()
                     .AddSubServices()
                     .AddWorkers()
-                    .AddMediatR(typeof(GetUserQuery).GetTypeInfo().Assembly)
                     .AddHttpClient("default",
                                    config =>
                                    {
@@ -100,11 +100,14 @@ namespace Battles.Api
                                              .Add(new MediaTypeWithQualityHeaderValue("application/json"));
                                    });
 
+            services.AddMediatR(typeof(GetUserQuery).GetTypeInfo().Assembly)
+                    .AddScoped(typeof(IPipelineBehavior<,>), typeof(AppendUserIdPipelineBehaviour<,>));
+
             var emailSettings = _config.GetSection(nameof(MailKitOptions)).Get<MailKitOptions>();
             services.AddMailKit(optionBuilder => { optionBuilder.UseMailKit(emailSettings); });
 
             services.AddHealthChecks();
-            services.AddMvc();
+            services.AddControllers();
 
             services.AddSingleton<IUserIdProvider, UserIdProvider>();
             services.AddSignalR();
@@ -113,7 +116,6 @@ namespace Battles.Api
         public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
         {
             app.UseCors("AllowClients");
-            app.UseHealthChecks("/healthcheck");
 
             if (_env.IsProduction())
             {
@@ -123,9 +125,17 @@ namespace Battles.Api
             app.UseHangfireServer();
             SetupHangfireJobs();
 
-            app.UseAuthentication()
-               .UseMvc()
-               .UseSignalR(routes => { routes.MapHub<MatchUpdaterHub>("/hub/match-updater"); });
+            app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+            app.UseEndpoints(builder =>
+            {
+                builder.MapHealthChecks("/healthcheck");
+                builder.MapDefaultControllerRoute();
+                builder.MapHub<MatchUpdaterHub>("/hub/match-updater");
+            });
         }
 
         private void SetupCors(IServiceCollection services)

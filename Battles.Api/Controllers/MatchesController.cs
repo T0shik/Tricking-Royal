@@ -1,120 +1,90 @@
-﻿using Battles.Api.Infrastructure;
+﻿using System.Collections.Generic;
+using Battles.Api.Infrastructure;
 using Battles.Application.Services.Matches.Commands;
 using Battles.Application.Services.Matches.Queries;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Battles.Application.ViewModels;
+using Battles.Application.ViewModels.Matches;
+using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Battles.Api.Controllers
 {
     [Authorize]
-    [Route("[controller]")]
-    [Produces("application/json")]
     public class MatchesController : BaseController
     {
-        [HttpGet("")]
-        public async Task<IActionResult> MatchList([FromQuery] GetMatchesQuery query)
+        public MatchesController(IMediator mediator)
+            : base(mediator) { }
+
+        [HttpGet]
+        public Task<IEnumerable<object>> MatchList([FromQuery] GetMatchesQuery query)
         {
-            query.UserId = UserId;
-
-            var matches = await Mediator.Send(query);
-
-            return Ok(matches);
+            return Mediator.Send(query);
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Match(int id)
+        [HttpGet("{matchId}")]
+        public Task<MatchViewModel> Match([FromRoute] GetMatchQuery query)
         {
-            var match = await Mediator.Send(new GetMatchQuery {MatchId = id, UserId = UserId});
-
-            if (match == null)
-                return NoContent();
-
-            return Ok(match);
+            return Mediator.Send(query);
         }
 
         [HttpDelete("{matchId}")]
-        public async Task<IActionResult> DeleteMatch(int matchId)
+        public Task<Response> DeleteMatch([FromRoute] DeleteMatchCommand command)
         {
-            var response = await Mediator.Send(new DeleteMatchCommand {MatchId = matchId, UserId = UserId});
-
-            return Ok(response);
+            return Mediator.Send(command);
         }
 
         [HttpPut("{matchId}")]
-        public async Task<IActionResult> JoinMatch(int matchId)
+        public Task<Response> JoinMatch([FromRoute] JoinMatchCommand command)
         {
-            var result = await Mediator.Send(new JoinMatchCommand {MatchId = matchId, UserId = UserId});
-
-            return Ok(result);
+            return Mediator.Send(command);
         }
 
         [HttpPut("{matchId}/update")]
-        public async Task<IActionResult> UpdateMatch(int matchId, [FromBody] StartMatchUpdateCommand command)
+        public Task<Response> UpdateMatch(int matchId, [FromBody] StartMatchUpdateCommand command)
         {
             command.MatchId = matchId;
-            command.UserId = UserId;
-
-            var response = await Mediator.Send(command);
-
-            return Ok(response);
+            return Mediator.Send(command);
         }
 
         [HttpPut("{matchId}/video")]
-        public async Task<IActionResult> UpdateVideo(int matchId, [FromBody] UpdateMatchVideoCommand command)
+        public Task<Response> UpdateVideo(int matchId, [FromBody] UpdateMatchVideoCommand command)
         {
             command.MatchId = matchId;
-            command.UserId = UserId;
-
-            var result = await Mediator.Send(command);
-
-            return Ok(result);
+            return Mediator.Send(command);
         }
 
-        [HttpPost("{id}/three-round-pass/ready")]
-        public async Task<IActionResult> ReadyThreeRoundPass(int id)
+        [HttpPost("{matchId}/three-round-pass/ready")]
+        public Task<Response> ReadyThreeRoundPass([FromRoute] ReadyMatchCommand command)
         {
-            var response = await Mediator.Send(new ReadyMatchCommand {MatchId = id, UserId = UserId});
-
-            return Ok(response);
+            return Mediator.Send(command);
         }
 
-        [HttpPost("{id}/pass")]
-        public async Task<IActionResult> PassMatch(int id)
+        [HttpPost("{matchId}/pass")]
+        public Task<Response> PassMatch([FromRoute] PassRoundCommand command)
         {
-            var result = await Mediator.Send(new PassRoundCommand {MatchId = id, UserId = UserId});
-
-            return Ok(result);
+            return Mediator.Send(command);
         }
 
-        [HttpPost("{id}/forfeit")]
-        public async Task<IActionResult> ForfeitMatch(int id)
+        [HttpPost("{matchId}/forfeit")]
+        public Task<Response> ForfeitMatch([FromRoute] ForfeitMatchCommand command)
         {
-            var response = await Mediator.Send(new ForfeitMatchCommand {MatchId = id, UserId = UserId});
-
-            return Ok(response);
+            return Mediator.Send(command);
         }
 
-        [HttpPost("{id}/flag")]
-        public async Task<IActionResult> FlagMatch(int id, [FromBody] FlagMatchCommand command)
+        [HttpPost("{matchId}/flag")]
+        public Task<Response> FlagMatch(int matchId, [FromBody] FlagMatchCommand command)
         {
-            command.MatchId = id;
-            command.UserId = UserId;
-
-            var response = await Mediator.Send(command);
-
-            return Ok(response);
+            command.MatchId = matchId;
+            return Mediator.Send(command);
         }
 
-
-        [HttpPost("")]
-        public async Task<IActionResult> CreateMatch([FromBody] CreateMatchCommand command)
+        [HttpPost]
+        public Task<Response> CreateMatch([FromBody] CreateMatchCommand command)
         {
-            command.UserId = UserId;
-
-            var created = await Mediator.Send(command);
-
-            return Ok(created);
+            return Mediator.Send(command);
         }
     }
 }

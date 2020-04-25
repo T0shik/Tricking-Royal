@@ -10,13 +10,12 @@ using Transmogrify;
 
 namespace Battles.Application.Services.Likes.Commands
 {
-    public class LikeMatchCommand : IRequest<BaseResponse>
+    public class LikeMatchCommand : BaseRequest, IRequest<Response>
     {
         public int MatchId { get; set; }
-        public string UserId { get; set; }
     }
 
-    public class LikeMatchCommandHandler : IRequestHandler<LikeMatchCommand, BaseResponse>
+    public class LikeMatchCommandHandler : IRequestHandler<LikeMatchCommand, Response>
     {
         private readonly AppDbContext _ctx;
         private readonly Library _library;
@@ -27,13 +26,13 @@ namespace Battles.Application.Services.Likes.Commands
             _library = library;
         }
 
-        public async Task<BaseResponse> Handle(LikeMatchCommand request, CancellationToken cancellationToken)
+        public async Task<Response> Handle(LikeMatchCommand request, CancellationToken cancellationToken)
         {
             var translationContext = await _library.GetContext();
 
             if (_ctx.Likes.Any(x => x.MatchId == request.MatchId && x.UserId == request.UserId))
             {
-                return BaseResponse.Ok(translationContext.Read("Like", "Already"));
+                return Response.Ok(translationContext.Read("Like", "Already"));
             }
 
             var users = _ctx.MatchUser
@@ -52,7 +51,7 @@ namespace Battles.Application.Services.Likes.Commands
 
             await _ctx.SaveChangesAsync(cancellationToken);
 
-            return BaseResponse.Ok(translationContext.Read("Like", "Created"));
+            return Response.Ok(translationContext.Read("Like", "Created"));
         }
     }
 }

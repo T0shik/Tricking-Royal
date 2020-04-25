@@ -15,13 +15,12 @@ using static System.String;
 
 namespace Battles.Application.Services.Matches.Commands
 {
-    public class ForfeitMatchCommand : IRequest<BaseResponse>
+    public class ForfeitMatchCommand : BaseRequest, IRequest<Response>
     {
         public int MatchId { get; set; }
-        public string UserId { get; set; }
     }
 
-    public class ForfeitMatchCommandHandler : IRequestHandler<ForfeitMatchCommand, BaseResponse>
+    public class ForfeitMatchCommandHandler : IRequestHandler<ForfeitMatchCommand, Response>
     {
         private readonly AppDbContext _ctx;
         private readonly INotificationQueue _notification;
@@ -38,7 +37,7 @@ namespace Battles.Application.Services.Matches.Commands
         }
 
         //todo move to core level
-        public async Task<BaseResponse> Handle(ForfeitMatchCommand request, CancellationToken cancellationToken)
+        public async Task<Response> Handle(ForfeitMatchCommand request, CancellationToken cancellationToken)
         {
             var translationContext = await _library.GetContext();
 
@@ -50,12 +49,12 @@ namespace Battles.Application.Services.Matches.Commands
 
             if (match == null)
             {
-                return BaseResponse.Fail(translationContext.Read("Match", "NotFound"));
+                return Response.Fail(translationContext.Read("Match", "NotFound"));
             }
 
             if (!match.CanGo(request.UserId))
             {
-                return BaseResponse.Fail(translationContext.Read("Match", "CantForfeit"));
+                return Response.Fail(translationContext.Read("Match", "CantForfeit"));
             }
 
             var host = match.GetHost();
@@ -109,7 +108,7 @@ namespace Battles.Application.Services.Matches.Commands
                                             notificationType,
                                             match.GetOtherUserIds(request.UserId));
 
-            return BaseResponse.Ok(translationContext.Read("Match", "Forfeited"));
+            return Response.Ok(translationContext.Read("Match", "Forfeited"));
         }
     }
 }

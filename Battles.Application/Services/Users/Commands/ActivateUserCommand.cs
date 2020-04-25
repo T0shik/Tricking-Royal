@@ -9,10 +9,9 @@ using TrickingRoyal.Database;
 
 namespace Battles.Application.Services.Users.Commands
 {
-    public class ActivateUserCommand : IRequest<UserViewModel>
+    public class ActivateUserCommand : BaseRequest, IRequest<UserViewModel>
     {
         public int Skill { get; set; }
-        public string UserId { get; set; }
     }
 
     public class CreateUserCommandHandler : IRequestHandler<ActivateUserCommand, UserViewModel>

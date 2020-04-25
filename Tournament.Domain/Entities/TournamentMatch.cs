@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Battles.Enums;
 using Battles.Models;
 
-namespace Tournament.Domain.Models
+namespace Tournaments.Entities
 {
     public class TournamentMatch
     {

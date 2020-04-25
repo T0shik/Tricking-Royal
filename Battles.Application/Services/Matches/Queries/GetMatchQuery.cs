@@ -7,10 +7,9 @@ using TrickingRoyal.Database;
 
 namespace Battles.Application.Services.Matches.Queries
 {
-    public class GetMatchQuery : IRequest<MatchViewModel>
+    public class GetMatchQuery : BaseRequest, IRequest<MatchViewModel>
     {
         public int MatchId { get; set; }
-        public string UserId { get; set; }
     }
 
     public class GetMatchQueryHandler : RequestHandler<GetMatchQuery, MatchViewModel>

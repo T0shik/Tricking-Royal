@@ -1,4 +1,4 @@
-﻿namespace Tournament.Domain.Enums
+﻿namespace Tournaments.Enumerations
 {
     public enum TournamentRole
     {

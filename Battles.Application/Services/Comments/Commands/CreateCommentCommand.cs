@@ -16,14 +16,13 @@ using static System.String;
 
 namespace Battles.Application.Services.Comments.Commands
 {
-    public class CreateCommentCommand : IRequest<BaseResponse<CommentViewModel>>
+    public class CreateCommentCommand : BaseRequest, IRequest<Response<CommentViewModel>>
     {
         public int MatchId { get; set; }
-        public string UserId { get; set; }
         [Required] public string Message { get; set; }
     }
 
-    public class CreateCommentCommandHandler : IRequestHandler<CreateCommentCommand, BaseResponse<CommentViewModel>>
+    public class CreateCommentCommandHandler : IRequestHandler<CreateCommentCommand, Response<CommentViewModel>>
     {
         private readonly AppDbContext _ctx;
         private readonly INotificationQueue _notification;
@@ -39,7 +38,7 @@ namespace Battles.Application.Services.Comments.Commands
             _library = library;
         }
 
-        public async Task<BaseResponse<CommentViewModel>> Handle(
+        public async Task<Response<CommentViewModel>> Handle(
             CreateCommentCommand request,
             CancellationToken cancellationToken)
         {
@@ -47,7 +46,7 @@ namespace Battles.Application.Services.Comments.Commands
 
             if (IsNullOrEmpty(request.Message))
             {
-                return BaseResponse.Fail<CommentViewModel>(translationContext.Read("Comment","NeedMessage"));
+                return Response.Fail<CommentViewModel>(translationContext.Read("Comment","NeedMessage"));
             }
 
             var match = await _ctx.Matches.AsNoTracking()
@@ -56,14 +55,14 @@ namespace Battles.Application.Services.Comments.Commands
 
             if (match == null)
             {
-                return BaseResponse.Fail<CommentViewModel>(translationContext.Read("Match","NotFound"));
+                return Response.Fail<CommentViewModel>(translationContext.Read("Match","NotFound"));
             }
 
             var user = _ctx.UserInformation.AsNoTracking().FirstOrDefault(x => x.Id == request.UserId);
 
             if (user == null)
             {
-                return BaseResponse.Fail<CommentViewModel>(translationContext.Read("User","NotFound"));
+                return Response.Fail<CommentViewModel>(translationContext.Read("User","NotFound"));
             }
 
             var comment = new Comment
@@ -84,7 +83,7 @@ namespace Battles.Application.Services.Comments.Commands
                                             NotificationMessageType.Comment,
                                             match.GetOtherUserIds(user.Id));
 
-            return BaseResponse.Ok(translationContext.Read("Comment","Created"),
+            return Response.Ok(translationContext.Read("Comment","Created"),
                                    CommentViewModel.CommentProjection.Compile().Invoke(comment));
         }
     }

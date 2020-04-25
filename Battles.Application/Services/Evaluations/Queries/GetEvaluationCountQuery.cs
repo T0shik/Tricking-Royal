@@ -5,10 +5,7 @@ using System.Linq;
 
 namespace Battles.Application.Services.Evaluations.Queries
 {
-    public class GetEvaluationCountQuery : IRequest<int>
-    {
-        public string UserId { get; set; }
-    }
+    public class GetEvaluationCountQuery : BaseRequest, IRequest<int> { }
 
     public class GetEvaluationCountQueryHandler : RequestHandler<GetEvaluationCountQuery, int>
     {
@@ -22,9 +19,8 @@ namespace Battles.Application.Services.Evaluations.Queries
 
         protected override int Handle(GetEvaluationCountQuery request) =>
             _ctx.Evaluations
-               .Include(e => e.Decisions)
-               .Where(x => !x.Complete)
-               .Where(x => !x.Decisions.Select(y => y.UserId).Contains(request.UserId))
-               .Count();
+                .Include(e => e.Decisions)
+                .Where(x => !x.Complete)
+                .Count(x => !x.Decisions.Select(y => y.UserId).Contains(request.UserId));
     }
 }

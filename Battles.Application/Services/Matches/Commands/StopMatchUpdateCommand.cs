@@ -11,10 +11,9 @@ using TrickingRoyal.Database;
 
 namespace Battles.Application.Services.Matches.Commands
 {
-    public class StopMatchUpdateCommand : IRequest<Unit>
+    public class StopMatchUpdateCommand : BaseRequest, IRequest<Unit>
     {
         public int MatchId { get; set; }
-        public string UserId { get; set; }
     }
 
     public class StopMatchUpdateCommandHandler : IRequestHandler<StopMatchUpdateCommand, Unit>

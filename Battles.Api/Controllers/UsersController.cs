@@ -1,113 +1,70 @@
-﻿using Battles.Api.Infrastructure;
+﻿using System.Collections.Generic;
+using Battles.Api.Infrastructure;
 using Battles.Application.Services.Users.Commands;
 using Battles.Application.Services.Users.Queries;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Battles.Application;
+using Battles.Application.ViewModels;
+using MediatR;
 
 namespace Battles.Api.Controllers
 {
     [Authorize]
-    [Route("[controller]")]
-    [Produces("application/json")]
     public class UsersController : BaseController
     {
-        [HttpGet("")]
-        public async Task<IActionResult> GetUsers([FromQuery] string searchString)
-        {
-            var result = await Mediator.Send(new GetUsersQuery {Search = searchString});
+        public UsersController(IMediator mediator)
+            : base(mediator) { }
 
-            return Ok(result);
+        [HttpGet("")]
+        public Task<IEnumerable<UserViewModel>> GetUsers([FromQuery] GetUsersQuery query)
+        {
+            return Mediator.Send(query);
         }
 
         [HttpGet("{displayName}")]
-        public async Task<IActionResult> GetUser(string displayName)
+        public Task<UserViewModel> GetUser([FromRoute] GetUserQuery query)
         {
-            var user = await Mediator.Send(new GetUserQuery
-            {
-                DisplayName = displayName,
-                UserId = UserId
-            });
-
-            if (user == null)
-            {
-                return NoContent();
-            }
-
-            return Ok(user);
+            return Mediator.Send(query);
         }
 
         [HttpGet("{displayName}/can-use")]
-        public async Task<IActionResult> CanUseDisplayName(string displayName)
+        public Task<Response<bool>> CanUseDisplayName([FromRoute] UserNameAvailableQuery query)
         {
-            var available = await Mediator.Send(new UserNameAvailableQuery
-            {
-                DisplayName = displayName,
-                UserId = UserId
-            });
-
-            if (available)
-            {
-                return Ok();
-            }
-
-            return NoContent();
+            return Mediator.Send(query);
         }
 
         [HttpPost("")]
-        public async Task<IActionResult> CreateUser([FromBody] ActivateUserCommand command)
+        public Task<UserViewModel> CreateUser([FromBody] ActivateUserCommand command)
         {
-            command.UserId = UserId;
-
-            var result = await Mediator.Send(command);
-
-            return Ok(result);
+            return Mediator.Send(command);
         }
 
         [HttpPut("")]
-        public async Task<IActionResult> UpdateUser([FromBody] UpdateUserCommand command)
+        public Task<Response> UpdateUser([FromBody] UpdateUserCommand command)
         {
-            if (!ModelState.IsValid)
-                return BadRequest("Invalid information submitted");
-
-            command.UserId = UserId;
-            var result = await Mediator.Send(command);
-
-            if (result == null)
-                return BadRequest();
-
-            return Ok(result);
+            return ModelState.IsValid
+                       ? Mediator.Send(command)
+                       : Task.FromResult(Application.ViewModels.Response.Fail("Invalid information submitted"));
         }
 
         [HttpPut("picture")]
-        public async Task<IActionResult> UpdateUserPicture([FromBody] UpdateUserPictureCommand command)
+        public Task<Response> UpdateUserPicture([FromBody] UpdateUserPictureCommand command)
         {
-            command.UserId = UserId;
-
-            var result = await Mediator.Send(command);
-
-            return Ok(result);
+            return Mediator.Send(command);
         }
 
         [HttpPut("level-up")]
-        public async Task<IActionResult> UpdateUserPicture([FromBody] LevelUpCommand command)
+        public Task<Response> UpdateUserPicture([FromBody] LevelUpCommand command)
         {
-            command.UserId = UserId;
-
-            var result = await Mediator.Send(command);
-
-            return Ok(result);
+            return  Mediator.Send(command);
         }
 
-
         [HttpPut("language")]
-        public async Task<IActionResult> UpdateUserLanguage([FromBody] UpdateUserLanguageCommand command)
+        public Task<Response> UpdateUserLanguage([FromBody] UpdateUserLanguageCommand command)
         {
-            command.UserId = UserId;
-
-            var result = await Mediator.Send(command);
-
-            return Ok(result);
+            return Mediator.Send(command);
         }
     }
 }

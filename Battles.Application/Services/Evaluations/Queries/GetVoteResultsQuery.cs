@@ -9,9 +9,8 @@ using TrickingRoyal.Database;
 
 namespace Battles.Application.Services.Evaluations.Queries
 {
-    public class GetVoteResultsQuery : IRequest<DecisionResultViewModel>
+    public class GetVoteResultsQuery : BaseRequest, IRequest<DecisionResultViewModel>
     {
-        public string UserId { get; set; }
         public int EvaluationId { get; set; }
     }
 

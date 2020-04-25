@@ -15,13 +15,12 @@ using Transmogrify;
 
 namespace Battles.Application.Services.Matches.Commands
 {
-    public class JoinMatchCommand : IRequest<BaseResponse>
+    public class JoinMatchCommand : BaseRequest, IRequest<Response>
     {
         public int MatchId { get; set; }
-        public string UserId { get; set; }
     }
 
-    public class JoinMatchCommandHandler : IRequestHandler<JoinMatchCommand, BaseResponse>
+    public class JoinMatchCommandHandler : IRequestHandler<JoinMatchCommand, Response>
     {
         private readonly AppDbContext _ctx;
         private readonly MatchDoorman _matchDoorman;
@@ -40,7 +39,7 @@ namespace Battles.Application.Services.Matches.Commands
             _library = library;
         }
 
-        public async Task<BaseResponse> Handle(JoinMatchCommand request, CancellationToken cancellationToken)
+        public async Task<Response> Handle(JoinMatchCommand request, CancellationToken cancellationToken)
         {
             var translationContext = await _library.GetContext();
 
@@ -50,12 +49,12 @@ namespace Battles.Application.Services.Matches.Commands
                             .FirstOrDefault(x => x.Id == request.MatchId);
 
             if (match == null)
-                return BaseResponse.Fail(translationContext.Read("Match", "NotFound"));
+                return Response.Fail(translationContext.Read("Match", "NotFound"));
 
             var currentUser = _ctx.UserInformation.FirstOrDefault(x => x.Id == request.UserId);
 
             if (currentUser == null)
-                return BaseResponse.Fail(translationContext.Read("User", "NotFound"));
+                return Response.Fail(translationContext.Read("User", "NotFound"));
 
             try
             {
@@ -63,7 +62,7 @@ namespace Battles.Application.Services.Matches.Commands
             }
             catch (Exception e)
             {
-                return BaseResponse.Fail(e.Message);
+                return Response.Fail(e.Message);
             }
 
             await _ctx.SaveChangesAsync(cancellationToken);
@@ -76,7 +75,7 @@ namespace Battles.Application.Services.Matches.Commands
                                             NotificationMessageType.MatchActive,
                                             new[] {match.GetHost().UserId});
 
-            return BaseResponse.Ok(translationContext.Read("Match", "Joined"));
+            return Response.Ok(translationContext.Read("Match", "Joined"));
         }
     }
 }

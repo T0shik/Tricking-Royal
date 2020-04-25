@@ -11,14 +11,12 @@ using Transmogrify;
 
 namespace Battles.Application.Services.Users.Commands
 {
-    public class UpdateUserPictureCommand : IRequest<BaseResponse>
+    public class UpdateUserPictureCommand : BaseRequest, IRequest<Response>
     {
         [Required] public string Picture { get; set; }
-
-        public string UserId { get; set; }
     }
 
-    public class UpdateUserPictureCommandHandler : IRequestHandler<UpdateUserPictureCommand, BaseResponse>
+    public class UpdateUserPictureCommandHandler : IRequestHandler<UpdateUserPictureCommand, Response>
     {
         private readonly AppDbContext _ctx;
         private readonly Routing _routing;
@@ -34,20 +32,20 @@ namespace Battles.Application.Services.Users.Commands
             _library = library;
         }
 
-        public async Task<BaseResponse> Handle(UpdateUserPictureCommand request, CancellationToken cancellationToken)
+        public async Task<Response> Handle(UpdateUserPictureCommand request, CancellationToken cancellationToken)
         {
             var translationContext = await _library.GetContext();
 
             var user = _ctx.UserInformation.FirstOrDefault(x => x.Id == request.UserId);
 
             if (user == null)
-                return BaseResponse.Fail(translationContext.Read("User", "NotFound"));
+                return Response.Fail(translationContext.Read("User", "NotFound"));
 
             user.Picture = CdnUrlHelper.CreateImageUrl(_routing.Cdn, user.Id, request.Picture);
 
             await _ctx.SaveChangesAsync(cancellationToken);
 
-            return BaseResponse.Ok(translationContext.Read("User", "PictureUpdated"), user.Picture);
+            return Response.Ok(translationContext.Read("User", "PictureUpdated"), user.Picture);
         }
     }
 }

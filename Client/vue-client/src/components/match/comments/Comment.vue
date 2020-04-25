@@ -1,7 +1,7 @@
 <template>
     <div>
         <router-link :to="`/user/${comment.displayName}`">
-            <ProfileImage size="36px" :picture="comment.picture"/>
+            <ProfileImage :size="36" :picture="comment.picture"/>
             <span class="subtitle px-2 primary--text">{{comment.displayName}}</span>
         </router-link>
         <span class="caption">

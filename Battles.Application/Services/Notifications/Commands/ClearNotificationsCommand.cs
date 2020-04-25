@@ -8,12 +8,10 @@ using TrickingRoyal.Database;
 
 namespace Battles.Application.Services.Notifications.Commands
 {
-    public class ClearNotificationsCommand : IRequest<BaseResponse>
-    {
-        public string UserId { get; set; }
-    }
+    public class ClearNotificationsCommand : BaseRequest, IRequest<Response>
+    {   }
 
-    public class ClearNotificationsCommandHandler : IRequestHandler<ClearNotificationsCommand, BaseResponse>
+    public class ClearNotificationsCommandHandler : IRequestHandler<ClearNotificationsCommand, Response>
     {
         private readonly AppDbContext _ctx;
         private readonly Library _library;
@@ -26,7 +24,7 @@ namespace Battles.Application.Services.Notifications.Commands
             _library = library;
         }
 
-        public async Task<BaseResponse> Handle(ClearNotificationsCommand request, CancellationToken cancellationToken)
+        public async Task<Response> Handle(ClearNotificationsCommand request, CancellationToken cancellationToken)
         {
             var translationContext = await _library.GetContext();
 
@@ -35,7 +33,7 @@ namespace Battles.Application.Services.Notifications.Commands
                 .ToList();
 
             if (notifications.Count == 0)
-                return BaseResponse.Ok(translationContext.Read("Notification", "Clear"));
+                return Response.Ok(translationContext.Read("Notification", "Clear"));
 
             foreach (var n in notifications)
             {
@@ -44,7 +42,7 @@ namespace Battles.Application.Services.Notifications.Commands
 
             await _ctx.SaveChangesAsync(cancellationToken);
 
-            return BaseResponse.Ok(translationContext.Read("Notification", "Cleared"));
+            return Response.Ok(translationContext.Read("Notification", "Cleared"));
         }
     }
 }

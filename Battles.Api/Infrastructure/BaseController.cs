@@ -6,20 +6,15 @@ using System.Security.Claims;
 
 namespace Battles.Api.Infrastructure
 {
-    public class BaseController : Controller
+    [Route("[controller]")]
+    [Produces("application/json")]
+    public class BaseController : ControllerBase
     {
-        private IMediator _mediator;
+        protected readonly IMediator Mediator;
 
-        protected IMediator Mediator => _mediator ?? (_mediator = HttpContext.RequestServices.GetService<IMediator>());
-
-        protected string UserId =>
-            HttpContext.User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier)
-                .Select(c => c.Value)
-                .FirstOrDefault();
-
-        protected string UserEmail =>
-            HttpContext.User.Claims.Where(c => c.Type == ClaimTypes.Email)
-                .Select(c => c.Value)
-                .FirstOrDefault();
+        public BaseController(IMediator mediator)
+        {
+            Mediator = mediator;
+        }
     }
 }

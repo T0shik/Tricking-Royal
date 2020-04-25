@@ -10,7 +10,7 @@ using TrickingRoyal.Database;
 
 namespace Battles.Application.Services.Matches.Commands
 {
-    public class StartMatchUpdateCommand : UpdateSettings, IRequest<BaseResponse>
+    public class StartMatchUpdateCommand : UpdateSettings, IRequest<Response>
     {
         public double Start { get; set; }
         public double End { get; set; }
@@ -18,7 +18,7 @@ namespace Battles.Application.Services.Matches.Commands
         public bool VideoUpdate { get; set; }
     }
 
-    public class StartMatchUpdateCommandHandler : IRequestHandler<StartMatchUpdateCommand, BaseResponse>
+    public class StartMatchUpdateCommandHandler : IRequestHandler<StartMatchUpdateCommand, Response>
     {
         private readonly IMediator _mediator;
         private readonly AppDbContext _ctx;
@@ -37,7 +37,7 @@ namespace Battles.Application.Services.Matches.Commands
             _library = library;
         }
 
-        public async Task<BaseResponse> Handle(
+        public async Task<Response> Handle(
             StartMatchUpdateCommand command,
             CancellationToken cancellationToken)
         {
@@ -49,16 +49,16 @@ namespace Battles.Application.Services.Matches.Commands
                                                                cancellationToken: cancellationToken);
 
             if (match == null)
-                return BaseResponse.Fail(translationContext.Read("Match", "NotFound"));
+                return Response.Fail(translationContext.Read("Match", "NotFound"));
 
             if (!match.CanGo(command.UserId))
-                return BaseResponse.Fail(translationContext.Read("Match", "CantGo"));
+                return Response.Fail(translationContext.Read("Match", "CantGo"));
 
             _matchQueue.QueueUpdate(command);
             match.Updating = true;
             await _ctx.SaveChangesAsync(cancellationToken);
 
-            return BaseResponse.Ok(translationContext.Read("Match", "UpdateStarted"));
+            return Response.Ok(translationContext.Read("Match", "UpdateStarted"));
         }
     }
 }
