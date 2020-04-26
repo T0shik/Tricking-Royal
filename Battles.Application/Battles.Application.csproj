@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AWSSDK.S3" Version="3.3.110.57" />
     <PackageReference Include="IdentityModel" Version="4.1.0" />
     <PackageReference Include="MediatR" Version="8.0.1" />
     <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0007" />

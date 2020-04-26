@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using Amazon.S3;
 using Battles.Api.Infrastructure;
 using Battles.Api.Workers;
 using Battles.Api.Workers.MatchUpdater;
