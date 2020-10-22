@@ -2,18 +2,19 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using Battles.Application.ViewModels;
+using TrickingRoyal.Database.Queries;
 
 namespace Battles.Application.Services.Users.Queries
 {
-    public class UserNameAvailableQuery : IRequest<bool>
+    public class UserNameAvailableQuery : BaseRequest, IRequest<Response<bool>>
     {
-        public string UserId { get; set; }
         public string DisplayName { get; set; }
     }
 
-    public class UserNameExistsHandler : RequestHandler<UserNameAvailableQuery, bool>
+    public class UserNameExistsHandler : RequestHandler<UserNameAvailableQuery, Response<bool>>
     {
-        private AppDbContext _ctx;
+        private readonly AppDbContext _ctx;
 
         public UserNameExistsHandler(AppDbContext ctx)
         {
@@ -21,13 +22,11 @@ namespace Battles.Application.Services.Users.Queries
             _ctx.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }
 
-        protected override bool Handle(UserNameAvailableQuery request)
+        protected override Response<bool> Handle(UserNameAvailableQuery request)
         {
-            var nameTaken = _ctx.UserInformation
-                    .Any(x => x.DisplayName == request.DisplayName 
-                        && x.Id != request.UserId);
+            var nameTaken = _ctx.NameTaken(request.DisplayName, request.UserId);
 
-            return !nameTaken;
+            return Response.Ok(!nameTaken) ;
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq.Expressions;
-using Battles.Enums;
 using Battles.Models;
 
 // ReSharper disable MemberCanBePrivate.Global
@@ -19,6 +18,7 @@ namespace Battles.Application.ViewModels
         public string Youtube { get; set; }
         public string Facebook { get; set; }
         public string Picture { get; set; }
+        public string Language { get; set; }
         public int Win { get; set; }
         public int Loss { get; set; }
         public int Draw { get; set; }
@@ -65,6 +65,7 @@ namespace Battles.Application.ViewModels
                 Experience = user.Experience,
                 Level = user.Level,
                 LevelUpPoints = user.LevelUpPoints,
+                Language = user.Language,
             };
     }
 }

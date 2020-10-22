@@ -9,45 +9,46 @@ using Transmogrify;
 
 namespace Battles.Application.Services.Matches.Commands
 {
-    public class DeleteMatchCommand : IRequest<BaseResponse>
+    public class DeleteMatchCommand : BaseRequest, IRequest<Response>
     {
         public int MatchId { get; set; }
-        public string UserId { get; set; }
     }
 
-    public class DeleteMatchCommandHandler : IRequestHandler<DeleteMatchCommand, BaseResponse>
+    public class DeleteMatchCommandHandler : IRequestHandler<DeleteMatchCommand, Response>
     {
         private readonly AppDbContext _ctx;
-        private readonly ITranslator _translator;
+        private readonly Library _library;
 
         public DeleteMatchCommandHandler(
             AppDbContext ctx,
-            ITranslator translator)
+            Library library)
         {
             _ctx = ctx;
-            _translator = translator;
+            _library = library;
         }
 
-        public async Task<BaseResponse> Handle(DeleteMatchCommand request, CancellationToken cancellationToken)
+        public async Task<Response> Handle(DeleteMatchCommand request, CancellationToken cancellationToken)
         {
+            var translationContext = await _library.GetContext();
+
             var match = await _ctx.Matches
                                   .Include(x => x.MatchUsers)
                                   .ThenInclude(x => x.User)
                                   .FirstAsync(x => x.Id == request.MatchId, cancellationToken: cancellationToken);
 
             if (!match.CanClose(request.UserId))
-                return BaseResponse.Fail(await _translator.GetTranslation("Match", "CantDelete"));
+                return Response.Fail(translationContext.Read("Match", "CantDelete"));
 
             var host = match.GetHost();
             if(host == null)
-                return BaseResponse.Fail(await _translator.GetTranslation("Match", "CantDelete"));
+                return Response.Fail(translationContext.Read("Match", "CantDelete"));
             
             host.User.Hosting--;
             _ctx.Matches.Remove(match);
 
             await _ctx.SaveChangesAsync(cancellationToken);
 
-            return BaseResponse.Ok(await _translator.GetTranslation("Match", "Deleted"));
+            return Response.Ok(translationContext.Read("Match", "Deleted"));
         }
     }
 }

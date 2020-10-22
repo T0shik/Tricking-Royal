@@ -19,6 +19,9 @@ export default {
         UPDATE_PROFILE(state, payload) {
             state.profile = payload
         },
+        SET_PROFILE_LANGUAGE(state, {langauge}) {
+            state.profile.language = langauge
+        },
         CLEAR_PROFILE(state) {
             state.profile = null
         },
@@ -38,6 +41,14 @@ export default {
                 .then(res => {
                     commit('UPDATE_PROFILE', res.data);
                 })
+        },
+        UPDATE_LANGUAGE({commit}, payload) {
+            return axios.put('/users/language', payload)
+                .then(res => {
+                    if (res.data.success) {
+                        commit('SET_PROFILE_LANGUAGE', payload)
+                    }
+                });
         }
     }
 }

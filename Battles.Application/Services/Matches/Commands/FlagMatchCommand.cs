@@ -14,40 +14,41 @@ using Transmogrify;
 
 namespace Battles.Application.Services.Matches.Commands
 {
-    public class FlagMatchCommand : IRequest<BaseResponse>
+    public class FlagMatchCommand : BaseRequest, IRequest<Response>
     {
         [Required] public string Reason { get; set; }
         public int MatchId { get; set; }
-        public string UserId { get; set; }
     }
 
-    public class FlagMatchCommandHandler : IRequestHandler<FlagMatchCommand, BaseResponse>
+    public class FlagMatchCommandHandler : IRequestHandler<FlagMatchCommand, Response>
     {
         private readonly AppDbContext _ctx;
-        private readonly ITranslator _translator;
+        private readonly Library _library;
 
         public FlagMatchCommandHandler(
             AppDbContext ctx,
-            ITranslator translator)
+            Library library)
         {
             _ctx = ctx;
-            _translator = translator;
+            _library = library;
         }
 
-        public async Task<BaseResponse> Handle(FlagMatchCommand request, CancellationToken cancellationToken)
+        public async Task<Response> Handle(FlagMatchCommand request, CancellationToken cancellationToken)
         {
+            var translationContext = await _library.GetContext();
+
             var match = _ctx.Matches
                             .Include(x => x.MatchUsers)
                             .FirstOrDefault(x => x.Id == request.MatchId);
 
             if (match == null)
             {
-                return BaseResponse.Fail(await _translator.GetTranslation("Match", "NotFound"));
+                return Response.Fail(translationContext.Read("Match", "NotFound"));
             }
 
             if (!match.CanFlag(request.UserId))
             {
-                return BaseResponse.Fail(await _translator.GetTranslation("Match", "CantFlag"));
+                return Response.Fail(translationContext.Read("Match", "CantFlag"));
             }
 
             match.Status = Status.Pending;
@@ -66,7 +67,7 @@ namespace Battles.Application.Services.Matches.Commands
 
             await _ctx.SaveChangesAsync(cancellationToken);
 
-            return BaseResponse.Ok(await _translator.GetTranslation("Match", "Flagged"));
+            return Response.Ok(translationContext.Read("Match", "Flagged"));
         }
     }
 }

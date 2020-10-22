@@ -273,6 +273,8 @@ namespace TrickingRoyal.Database.Migrations.App
 
                     b.Property<int>("JoinedLimit");
 
+                    b.Property<string>("Language");
+
                     b.Property<int>("Level");
 
                     b.Property<int>("LevelUpPoints");

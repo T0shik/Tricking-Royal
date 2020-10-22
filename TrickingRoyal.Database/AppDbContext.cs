@@ -1,5 +1,4 @@
-﻿using Battles.Domain.Models;
-using Battles.Models;
+﻿using Battles.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 

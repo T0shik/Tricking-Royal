@@ -1,6 +1,4 @@
-﻿using Battles.Models;
-
-namespace Battles.Domain.Models
+﻿namespace Battles.Models
 {
     public class SubComment
     {

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Battles.Cdn.FileServices;
 using Battles.Cdn.Infrastructure;
 using TrickingRoyal.Database;
+using TrickingRoyal.Database.Queries;
 
 namespace Battles.Cdn.Controllers
 {

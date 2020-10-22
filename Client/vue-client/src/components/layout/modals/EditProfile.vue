@@ -14,7 +14,8 @@
                 <v-toolbar-title class="white--text">{{$t('editProfile.settings')}}</v-toolbar-title>
                 <v-spacer/>
                 <v-toolbar-items>
-                    <v-progress-circular class="align-self-center mr-2" color="primary" v-if="loadingName" indeterminate/>
+                    <v-progress-circular class="align-self-center mr-2" color="primary" v-if="loadingName"
+                                         indeterminate/>
                     <v-btn v-else icon @click="save" :color="valid ? 'green' : 'red'" :disabled="!valid">
                         <v-icon>{{valid ? icons.check : icons.ban }}</v-icon>
                     </v-btn>
@@ -65,7 +66,7 @@
                                     :items="languages"
                                     item-text="name"
                                     item-value="locale"
-                                    v-model="lang"
+                                    v-model="profile.language"
                                     @change="loadLanguageAsync"
                                     :label="$t('misc.language')"
                             >
@@ -225,12 +226,12 @@
                 instagram: "",
                 facebook: "",
                 youtube: "",
+                language: localStorage.getItem(STORAGE_KEYS.LANGUAGE),
             },
             emailConfig: null,
             emailConfigLoading: false,
             skills,
             languages,
-            lang: localStorage.getItem(STORAGE_KEYS.LANGUAGE),
         }),
         watch: {
             dialog: async function (v) {
@@ -247,6 +248,7 @@
                         instagram: profile.instagram,
                         facebook: profile.facebook,
                         youtube: profile.youtube,
+                        language: profile.language ? profile.language : localStorage.getItem(STORAGE_KEYS.LANGUAGE)
                     };
 
                     this.pushEnabled = await this.getPushState();
@@ -262,12 +264,8 @@
                     function () {
                         axios
                             .get(`/users/${v}/can-use`)
-                            .then(({status}) => {
-                                if (status === 200) {
-                                    this.validName = true;
-                                } else if (status === 204) {
-                                    this.validName = false;
-                                }
+                            .then(({data}) => {
+                                this.validName = data.value;
                                 this.$refs.form.validate();
                             })
                             .catch(() => {
@@ -279,6 +277,10 @@
                     }.bind(this),
                     500);
             },
+            "profile.language": function (language) {
+                this.updateLanguage({language})
+                    .then(({data}) => this.popup(data));
+            }
         },
         methods: {
             loadLanguageAsync,
@@ -289,6 +291,7 @@
                 enablePushNotifications: "notifications/showPrompt",
                 getPushState: "notifications/getPushState",
                 refreshProfile: "REFRESH_PROFILE",
+                updateLanguage: "UPDATE_LANGUAGE",
                 popup: "DISPLAY_POPUP_DEFAULT",
                 signOut: "SIGN_OUT",
             }),
@@ -371,7 +374,7 @@
         },
         computed: {
             languageFlag() {
-                return this.languages.filter(x => x.locale === this.lang)[0].icon
+                return this.languages.filter(x => x.locale === this.profile.language)[0].icon
             },
             icons() {
                 return {

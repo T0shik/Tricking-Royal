@@ -2,16 +2,14 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Battles.Application.ViewModels;
 using MediatR;
 using TrickingRoyal.Database;
 
 namespace Battles.Application.Services.Notifications.Commands
 {
-    public class TouchNotificationCommand : IRequest<Unit>
+    public class TouchNotificationCommand : BaseRequest, IRequest<Unit>
     {
         public int NotificationId { get; set; }
-        public string UserId { get; set; }
     }
 
     public class TouchNotificationCommandHandler : IRequestHandler<TouchNotificationCommand, Unit>

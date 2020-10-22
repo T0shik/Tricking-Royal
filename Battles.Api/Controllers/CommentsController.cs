@@ -1,49 +1,44 @@
-﻿using Battles.Api.Infrastructure;
+﻿using System.Collections;
+using System.Collections.Generic;
+using Battles.Api.Infrastructure;
 using Battles.Application.Services.Comments.Commands;
 using Battles.Application.Services.Comments.Queries;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Battles.Application.ViewModels;
+using MediatR;
 
 namespace Battles.Api.Controllers
 {
     [Authorize]
-    [Route("[controller]")]
-    [Produces("application/json")]
     public class CommentsController : BaseController
     {
-        [HttpGet("")]
-        public async Task<IActionResult> GetComments([FromQuery] GetCommentsQuery query)
-        {
-            var comments = await Mediator.Send(query);
+        public CommentsController(IMediator mediator)
+            : base(mediator) { }
 
-            return Ok(comments);
+        [HttpGet]
+        public Task<IEnumerable<CommentViewModel>> GetComments([FromQuery] GetCommentsQuery query)
+        {
+            return Mediator.Send(query);
         }
 
         [HttpGet("sub")]
-        public async Task<IActionResult> GetSubComments([FromQuery] GetSubCommentsQuery query)
+        public Task<IEnumerable<CommentViewModel>> GetSubComments([FromQuery] GetSubCommentsQuery query)
         {
-            var comments = await Mediator.Send(query);
-
-            return Ok(comments);
+            return Mediator.Send(query);
         }
 
         [HttpPost("")]
-        public async Task<IActionResult> CreateComment([FromBody] CreateCommentCommand command)
+        public Task<Response<CommentViewModel>> CreateComment([FromBody] CreateCommentCommand command)
         {
-            command.UserId = UserId;
-            var response = await Mediator.Send(command);
-
-            return Ok(response);
+            return Mediator.Send(command);
         }
 
         [HttpPost("sub")]
-        public async Task<IActionResult> CreateSubComment([FromBody] CreateSubCommentCommand command)
+        public Task<Response<CommentViewModel>> CreateSubComment([FromBody] CreateSubCommentCommand command)
         {
-            command.UserId = UserId;
-            var response = await Mediator.Send(command);
-
-            return Ok(response);
+            return Mediator.Send(command);
         }
     }
 }

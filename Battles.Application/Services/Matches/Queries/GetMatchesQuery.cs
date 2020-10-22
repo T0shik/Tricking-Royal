@@ -9,15 +9,15 @@ using Battles.Rules.Matches.Extensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using TrickingRoyal.Database;
+using TrickingRoyal.Database.Extensions;
 
 namespace Battles.Application.Services.Matches.Queries
 {
-    public class GetMatchesQuery : IRequest<IEnumerable<object>>
+    public class GetMatchesQuery : BaseRequest, IRequest<IEnumerable<object>>
     {
         public string Filter { get; set; }
         public int Index { get; set; }
         public string DisplayName { get; set; }
-        public string UserId { get; set; }
     }
 
     public class GetMatchesQueryHandler : RequestHandler<GetMatchesQuery, IEnumerable<object>>

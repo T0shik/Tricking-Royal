@@ -28,6 +28,7 @@ namespace Battles.Models
         public string Youtube { get; set; }
         public string Facebook { get; set; }
         public string Picture { get; set; }
+        public string Language { get; set; }
         public int Win { get; set; }
         public int Loss { get; set; }
         public int Draw { get; set; }

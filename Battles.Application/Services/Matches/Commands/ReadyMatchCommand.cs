@@ -13,36 +13,37 @@ using Transmogrify;
 
 namespace Battles.Application.Services.Matches.Commands
 {
-    public class ReadyMatchCommand : IRequest<BaseResponse>
+    public class ReadyMatchCommand : BaseRequest, IRequest<Response>
     {
         public int MatchId { get; set; }
-        public string UserId { get; set; }
     }
 
-    public class ReadyMatchCommandHandler : IRequestHandler<ReadyMatchCommand, BaseResponse>
+    public class ReadyMatchCommandHandler : IRequestHandler<ReadyMatchCommand, Response>
     {
         private readonly AppDbContext _ctx;
-        private readonly ITranslator _translator;
+        private readonly Library _library;
 
-        public ReadyMatchCommandHandler(AppDbContext ctx, ITranslator translator)
+        public ReadyMatchCommandHandler(AppDbContext ctx, Library library)
         {
             _ctx = ctx;
-            _translator = translator;
+            _library = library;
         }
 
-        public async Task<BaseResponse> Handle(ReadyMatchCommand request, CancellationToken cancellationToken)
+        public async Task<Response> Handle(ReadyMatchCommand request, CancellationToken cancellationToken)
         {
+            var translationContext = await _library.GetContext();
+
             var match = _ctx.Matches
                             .Include(x => x.MatchUsers)
                             .FirstOrDefault(x => x.Id == request.MatchId);
 
             if (match == null)
-                return BaseResponse.Fail(await _translator.GetTranslation("Match", "NotFound"));
+                return Response.Fail(translationContext.Read("Match", "NotFound"));
 
             var user = match.GetUser(request.UserId);
 
             if (!user.CanLockIn)
-                return BaseResponse.Fail(await _translator.GetTranslation("Match", "CantLockIn"));
+                return Response.Fail(translationContext.Read("Match", "CantLockIn"));
 
             user.SetGoFlagUpdatePassLock(false, false, false, ready: true);
 
@@ -60,7 +61,7 @@ namespace Battles.Application.Services.Matches.Commands
 
             await _ctx.SaveChangesAsync(cancellationToken);
 
-            return BaseResponse.Ok(await _translator.GetTranslation("Match", "LockedIn"));
+            return Response.Ok(translationContext.Read("Match", "LockedIn"));
         }
     }
 }

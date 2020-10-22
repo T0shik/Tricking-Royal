@@ -7,43 +7,44 @@ using System.Threading.Tasks;
 using Battles.Application.Extensions;
 using Battles.Models;
 using Transmogrify;
+using TrickingRoyal.Database.Queries;
 
 namespace Battles.Application.Services.Evaluations.Commands
 {
-    public class VoteCommand : IRequest<BaseResponse>
+    public class VoteCommand : BaseRequest, IRequest<Response>
     {
         public int EvaluationId { get; set; }
         public int Vote { get; set; }
-        public string UserId { get; set; }
     }
 
-    public class VoteCommandHandler : IRequestHandler<VoteCommand, BaseResponse>
+    public class VoteCommandHandler : IRequestHandler<VoteCommand, Response>
     {
         private readonly AppDbContext _ctx;
-        private readonly ITranslator _translator;
+        private readonly Library _library;
 
         public VoteCommandHandler(
-            AppDbContext ctx, 
-            ITranslator translator)
+            AppDbContext ctx,
+            Library library)
         {
             _ctx = ctx;
-            _translator = translator;
+            _library = library;
         }
 
-        public async Task<BaseResponse> Handle(VoteCommand request, CancellationToken cancellationToken)
+        public async Task<Response> Handle(VoteCommand request, CancellationToken cancellationToken)
         {
+            var translationContext = await _library.GetContext();
             var evaluation = _ctx.Evaluations.CanVote(request.EvaluationId, request.UserId);
 
             if (evaluation == null)
             {
-                return BaseResponse.Fail(await _translator.GetTranslation("Evaluation", "NotAllowed"));
+                return Response.Fail(translationContext.Read("Evaluation", "NotAllowed"));
             }
 
             var user = _ctx.UserInformation.FirstOrDefault(x => x.Id == request.UserId);
 
             if (user == null)
             {
-                return BaseResponse.Fail(await _translator.GetTranslation("User", "NotFound"));
+                return Response.Fail(translationContext.Read("User", "NotFound"));
             }
 
             evaluation.Decisions.Add(new Decision
@@ -56,7 +57,7 @@ namespace Battles.Application.Services.Evaluations.Commands
 
             await _ctx.SaveChangesAsync(cancellationToken);
 
-            return BaseResponse.Ok(await _translator.GetTranslation("Evaluation", "VoteCreated"));
+            return Response.Ok(translationContext.Read("Evaluation", "VoteCreated"));
         }
     }
 }

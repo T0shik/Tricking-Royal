@@ -140,6 +140,10 @@ export const store = new Vuex.Store({
                     };
                     if (success) {
                         const {data: profile} = await axios.get('users/me');
+                        if(!profile.language){
+                            let language = document.querySelector('html').getAttribute("lang");
+                            dispatch('UPDATE_LANGUAGE', {language})
+                        }
                         commit('UPDATE_PROFILE', profile);
                         result.activated = profile.activated;
                         commit('layout/setLayout', result.activated ? LAYOUT.USER : LAYOUT.VISITOR, {root: true});

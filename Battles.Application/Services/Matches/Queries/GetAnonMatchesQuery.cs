@@ -6,16 +6,12 @@ using Battles.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using TrickingRoyal.Database;
+using TrickingRoyal.Database.Extensions;
 
 namespace Battles.Application.Services.Matches.Queries
 {
     public class GetAnonMatchesQuery : IRequest<IEnumerable<MatchViewModel>>
     {
-        public GetAnonMatchesQuery(int index)
-        {
-            Index = index;
-        }
-
         public int Index { get; set; }
     }
 

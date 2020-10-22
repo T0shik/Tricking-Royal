@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Battles.Application.Extensions;
+using TrickingRoyal.Database.Extensions;
 
 namespace Battles.Application.Services.Comments.Queries
 {

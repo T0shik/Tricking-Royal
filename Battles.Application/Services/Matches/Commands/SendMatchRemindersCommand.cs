@@ -20,21 +20,23 @@ namespace Battles.Application.Services.Matches.Commands
     public class SendMatchRemindersCommandHandler : IRequestHandler<SendMatchRemindersCommand, Unit>
     {
         private readonly AppDbContext _ctx;
-        private readonly ITranslator _translator;
+        private readonly Library _library;
         private readonly INotificationQueue _notificationQueue;
 
         public SendMatchRemindersCommandHandler(
             AppDbContext ctx,
-            ITranslator translator,
+            Library library,
             INotificationQueue notificationQueue)
         {
             _ctx = ctx;
-            _translator = translator;
+            _library = library;
             _notificationQueue = notificationQueue;
         }
 
         public async Task<Unit> Handle(SendMatchRemindersCommand request, CancellationToken cancellationToken)
         {
+            var translationContext = await _library.GetContext();
+
             foreach (var d in new[] {1, 3})
             {
                 var matches = GetMatchesToNotify(d);
@@ -42,7 +44,7 @@ namespace Battles.Application.Services.Matches.Commands
                 {
                     var turnUser = match.GetTurnUser();
                     var otherUserNames = match.GetOtherUsers(turnUser.UserId).Select(x => x.User.DisplayName);
-                    var message = await _translator.GetTranslation("Notification", "MatchReminder",
+                    var message = translationContext.Read("Notification", "MatchReminder",
                                                                    string.Join(", ", otherUserNames), d.ToString());
                     _notificationQueue.QueueNotification(message,
                                                          new[] {match.Id.ToString()}.DefaultJoin(),

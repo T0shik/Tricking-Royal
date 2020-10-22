@@ -1,6 +1,11 @@
-﻿using Battles.Api.Infrastructure;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Battles.Api.Infrastructure;
 using Battles.Api.Workers.Notifications.Settings;
 using Battles.Application.Services.Platform.Queries;
+using Battles.Application.ViewModels;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -8,24 +13,22 @@ using Microsoft.Extensions.Options;
 namespace Battles.Api.Controllers
 {
     [Authorize]
-    [Route("[controller]")]
     public class PlatformController : BaseController
     {
+        public PlatformController(IMediator mediator)
+            : base(mediator) { }
+
         [AllowAnonymous]
         [HttpGet("platform")]
-        public IActionResult PlatformStats()
+        public Task<PlatformStatsViewModel> PlatformStats()
         {
-            var stats = Mediator.Send(new GetPlatformInfoQuery());
-
-            return Ok(stats);
+            return Mediator.Send(new GetPlatformInfoQuery());
         }
 
         [HttpGet("ranking")]
-        public IActionResult Ranking()
+        public Task<IEnumerable<UserViewModel>> Ranking()
         {
-            var ranking = Mediator.Send(new GetRankingQuery());
-
-            return Ok(ranking);
+            return Mediator.Send(new GetRankingQuery());
         }
 
         [HttpGet("one-signal")]

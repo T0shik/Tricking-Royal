@@ -1,7 +1,7 @@
 ﻿using Battles.Models;
-using Tournament.Domain.Enums;
+using Tournaments.Enumerations;
 
-namespace Tournament.Domain.Models
+namespace Tournaments.Entities
 {
     public class Participant
     {

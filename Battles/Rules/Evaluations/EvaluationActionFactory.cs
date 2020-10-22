@@ -2,7 +2,6 @@
 using Battles.Enums;
 using Battles.Models;
 using Battles.Rules.Evaluations.Actions.Close;
-using Battles.Rules.Matches.Actions.Update;
 using Battles.Shared;
 
 //using Battles.Rules.Matches.Actions.ReUpload;

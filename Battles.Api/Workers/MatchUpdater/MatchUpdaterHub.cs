@@ -1,5 +1,4 @@
-﻿using Battles.Application.Services.Matches;
-using Microsoft.AspNetCore.SignalR;
+﻿using Microsoft.AspNetCore.SignalR;
 
 namespace Battles.Api.Workers.MatchUpdater
 {

@@ -7,12 +7,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using Battles.Application.Extensions;
 using Microsoft.EntityFrameworkCore;
+using TrickingRoyal.Database.Extensions;
 
 namespace Battles.Application.Services.Notifications.Queries
 {
-    public class GetNotificationsQuery : IRequest<IEnumerable<NotificationsViewModel>>
+    public class GetNotificationsQuery : BaseRequest, IRequest<IEnumerable<NotificationsViewModel>>
     {
-        public string UserId { get; set; }
         public int Index { get; set; }
     }
 

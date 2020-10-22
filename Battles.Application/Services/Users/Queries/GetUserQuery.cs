@@ -9,10 +9,9 @@ using TrickingRoyal.Database;
 
 namespace Battles.Application.Services.Users.Queries
 {
-    public class GetUserQuery : IRequest<UserViewModel>
+    public class GetUserQuery : BaseRequest, IRequest<UserViewModel>
     {
         public string DisplayName { get; set; }
-        public string UserId { get; set; }
     }
 
     public class GetUserQueryHandler : IRequestHandler<GetUserQuery, UserViewModel>
