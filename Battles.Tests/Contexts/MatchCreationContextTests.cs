@@ -1,11 +1,11 @@
 ﻿using Battles.Enums;
 using Battles.Rules.Matches;
-using Battles.Tests.Mocks;
+using Battles.Tests._Mocks;
 using Xunit;
 
-namespace Battles.Tests.Matches
+namespace Battles.Tests.Contexts
 {
-    public class MatchCreationTests
+    public class MatchCreationContextTests
     {
         [Theory]
         [InlineData(Mode.OneUp, TurnType.Classic)]

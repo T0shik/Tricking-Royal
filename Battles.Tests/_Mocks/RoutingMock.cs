@@ -1,6 +1,6 @@
 ﻿using Battles.Shared;
 
-namespace Battles.Tests.Mocks
+namespace Battles.Tests._Mocks
 {
     public static class RoutingMock
     {

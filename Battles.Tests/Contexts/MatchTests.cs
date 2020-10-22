@@ -4,7 +4,7 @@ using System.Reflection;
 using Battles.Models;
 using Xunit;
 
-namespace Battles.Tests.Matches
+namespace Battles.Tests.Contexts
 {
     public class MatchTests
     {

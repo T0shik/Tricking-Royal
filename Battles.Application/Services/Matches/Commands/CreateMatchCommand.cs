@@ -1,6 +1,5 @@
 ﻿using System;
 using TrickingRoyal.Database;
-using Battles.Rules.Matches.Actions.Create;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,15 +9,22 @@ using Transmogrify;
 
 namespace Battles.Application.Services.Matches.Commands
 {
-    public class CreateMatchCommand : MatchSettings, IRequest<Response> { }
+    public class CreateMatchCommand : MatchCreationContext.MatchSettings, IRequest<Response>
+    {
+    }
 
     public class CreateMatchCommandHandler : IRequestHandler<CreateMatchCommand, Response>
     {
+        private readonly MatchCreationContext _matchCreationContext;
         private readonly AppDbContext _ctx;
         private readonly Library _library;
 
-        public CreateMatchCommandHandler(AppDbContext ctx, Library library)
+        public CreateMatchCommandHandler(
+            MatchCreationContext matchCreationContext,
+            AppDbContext ctx,
+            Library library)
         {
+            _matchCreationContext = matchCreationContext;
             _ctx = ctx;
             _library = library;
         }
@@ -28,12 +34,12 @@ namespace Battles.Application.Services.Matches.Commands
             var translationContext = await _library.GetContext();
 
             request.Host = await _ctx.UserInformation
-                                     .FirstAsync(x => x.Id == request.UserId, cancellationToken);
+                .FirstAsync(x => x.Id == request.UserId, cancellationToken);
 
             try
             {
-                var match = MatchCreator.CreateMatch(request);
-                _ctx.Matches.Add(match);
+                var match = _matchCreationContext.CreateMatch(request);
+                await _ctx.Matches.AddAsync(match, cancellationToken);
             }
             catch (Exception e)
             {

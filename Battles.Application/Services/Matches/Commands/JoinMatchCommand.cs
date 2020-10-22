@@ -1,6 +1,5 @@
 ﻿using System;
 using TrickingRoyal.Database;
-using Battles.Rules.Matches.Actions.Join;
 using Battles.Rules.Matches.Extensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -23,18 +22,21 @@ namespace Battles.Application.Services.Matches.Commands
     public class JoinMatchCommandHandler : IRequestHandler<JoinMatchCommand, Response>
     {
         private readonly AppDbContext _ctx;
-        private readonly MatchDoorman _matchDoorman;
+        private readonly JoinMatchContext _joinMatchContext;
+        private readonly StartMatchContext _startMatchContext;
         private readonly INotificationQueue _notification;
         private readonly Library _library;
 
         public JoinMatchCommandHandler(
             AppDbContext ctx,
-            MatchDoorman matchDoorman,
+            JoinMatchContext joinMatchContext,
+            StartMatchContext startMatchContext,
             INotificationQueue notification,
             Library library)
         {
             _ctx = ctx;
-            _matchDoorman = matchDoorman;
+            _joinMatchContext = joinMatchContext;
+            _startMatchContext = startMatchContext;
             _notification = notification;
             _library = library;
         }
@@ -58,7 +60,11 @@ namespace Battles.Application.Services.Matches.Commands
 
             try
             {
-                _matchDoorman.AddOpponent(match, currentUser);
+                _joinMatchContext.Setup(match)
+                    .AddOpponent(currentUser);
+
+                _startMatchContext.Setup(match)
+                    .Start();
             }
             catch (Exception e)
             {

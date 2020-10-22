@@ -4,7 +4,7 @@ using Battles.Models;
 using Battles.Rules.Evaluations;
 using Xunit;
 
-namespace Battles.Tests.EvaluationTests
+namespace Battles.Tests.Evaluations
 {
     public class ResultsCalculatorTests
     {

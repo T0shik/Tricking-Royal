@@ -107,8 +107,7 @@ namespace IdentityServer
 
             if (_env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage()
-                   .UseDatabaseErrorPage();
+                app.UseDeveloperExceptionPage();
             }
             else
             {

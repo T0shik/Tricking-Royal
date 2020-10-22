@@ -1,12 +1,16 @@
 ﻿using System;
 using Battles.Enums;
 using Battles.Models;
+using Battles.Rules.Matches;
 
-namespace Battles.Rules.Matches.Actions.Create
+namespace Battles
 {
-    public static class MatchCreator
+    public class MatchCreationContext: IContext
     {
-        public static Match CreateMatch(MatchSettings settings)
+        public MatchCreationContext()
+        { }
+        
+        public Match CreateMatch(MatchSettings settings)
         {
             if (settings.Host == null)
             {
@@ -38,6 +42,17 @@ namespace Battles.Rules.Matches.Actions.Create
             });
 
             return match;
+        }
+        
+        public class MatchSettings
+        {
+            public string UserId { get; set; }
+            public Mode Mode { get; set; }
+            public TurnType TurnType { get; set; }
+            public Surface Surface { get; set; }
+            public int TurnTime { get; set; }
+            public UserInformation Host { get; set; }
+            public bool IsInvite { get; set; }
         }
     }
 }
